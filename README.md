@@ -97,7 +97,7 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
 
 - **Onboarding.** Target language (Wolof, preselected), then interface language, daily goal
   (10/20/30/50 XP) and an optional name. This creates a local *guest* profile.
-- **Path.** 8 units with 2 lessons each (16 lessons, about 190 words and phrases). Lesson
+- **Path.** 8 units with 2 lessons each (16 lessons, 163 words and phrases). Lesson
   cards unlock one after another:
   1. Greetings · Introductions
   2. Numbers 1–10 · Bigger numbers and prices
