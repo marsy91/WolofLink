@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { IconCheck, IconLock, UNIT_GLYPHS } from "@/components/icons";
+import { IconBook, IconCheck, IconLock, UNIT_GLYPHS } from "@/components/icons";
+import { MAX_LEVEL } from "@/lib/engine";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import { allLessons, course } from "@/content/course";
 import type { Unit } from "@/content/types";
@@ -64,6 +65,8 @@ export default function Learn() {
                     const record = progress.lessons[lesson.id];
                     const unlocked = isUnlocked(order, lesson.id, progress);
                     const done = !!record;
+                    const levels = Math.min(MAX_LEVEL, record?.times ?? 0);
+                    const mastered = levels >= MAX_LEVEL;
                     return (
                       <li key={lesson.id} className="relative">
                         <span
@@ -82,17 +85,24 @@ export default function Learn() {
                             <div className="flex-1">
                               <h3 className="font-display text-lg font-extrabold text-night">{translate(lesson.title, lang)}</h3>
                               <p className="text-sm text-muted">
-                                {done
-                                  ? `${t("path.done")} · ${Math.round(record.bestAccuracy * 100)}%`
-                                  : t("path.exercises", { n: lesson.exercises.length })}
+                                {mastered
+                                  ? `${t("path.mastered")} · ${Math.round(record!.bestAccuracy * 100)}%`
+                                  : done
+                                    ? t("path.level", { n: levels, total: MAX_LEVEL })
+                                    : t("path.exercises", { n: lesson.exercises.length })}
                               </p>
+                              <span className="mt-1.5 flex gap-1" aria-hidden>
+                                {Array.from({ length: MAX_LEVEL }, (_, i) => (
+                                  <span key={i} className={`h-2 w-6 rounded-full ${i < levels ? "bg-dusk" : "bg-sand-3"}`} />
+                                ))}
+                              </span>
                             </div>
                             <span
                               className={`rounded-xl px-3 py-2 font-display text-sm font-extrabold ${
-                                done ? "bg-sea-soft text-sea" : "bg-clay text-white"
+                                mastered ? "bg-sea-soft text-sea" : done ? "bg-dusk text-white" : "bg-clay text-white"
                               }`}
                             >
-                              {done ? t("path.again") : t("path.start")}
+                              {mastered ? t("path.again") : done ? t("path.levelUp", { n: levels + 1 }) : t("path.start")}
                             </span>
                           </Link>
                         ) : (
@@ -107,6 +117,50 @@ export default function Learn() {
                       </li>
                     );
                   })}
+                  {unit.story ? (
+                    <li className="relative">
+                      {(() => {
+                        const storyOpen = unit.lessons.every((l) => progress.lessons[l.id]);
+                        const read = !!progress.stories[unit.story.id];
+                        return (
+                          <>
+                            <span
+                              aria-hidden
+                              className={`absolute top-1/2 -left-[2.4rem] grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full border-4 border-sand ${
+                                read ? "bg-sea text-white" : storyOpen ? "bg-dusk text-white" : "bg-sand-3 text-muted"
+                              }`}
+                            >
+                              {read ? <IconCheck size={14} /> : <IconBook size={12} />}
+                            </span>
+                            {storyOpen ? (
+                              <Link
+                                href={`/story/${unit.story.id}/`}
+                                className="flex items-center gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 shadow-[0_3px_0_var(--color-sand-3)] transition active:translate-y-[2px] active:shadow-none"
+                              >
+                                <IconBook size={28} className="shrink-0 text-dusk" />
+                                <div className="flex-1">
+                                  <p className="text-xs font-bold tracking-widest text-dusk uppercase">{t("story.label")}</p>
+                                  <h3 className="font-display text-lg font-extrabold text-night">{translate(unit.story.title, lang)}</h3>
+                                </div>
+                                <span className="rounded-xl bg-dusk px-3 py-2 font-display text-sm font-extrabold text-white">
+                                  {read ? t("path.again") : t("story.start")}
+                                </span>
+                              </Link>
+                            ) : (
+                              <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-sand-3 p-4 text-muted">
+                                <IconBook size={28} className="shrink-0" />
+                                <div className="flex-1">
+                                  <p className="text-xs font-bold tracking-widest uppercase">{t("story.label")}</p>
+                                  <h3 className="font-display text-lg font-extrabold">{translate(unit.story.title, lang)}</h3>
+                                  <p className="text-sm">{t("story.locked")}</p>
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        );
+                      })()}
+                    </li>
+                  ) : null}
                 </ol>
               )}
             </li>

@@ -18,3 +18,9 @@ export function findLesson(id: string) {
   }
   return null;
 }
+
+export const allStories = course.units.flatMap((u) => (u.story ? [{ unit: u, story: u.story }] : []));
+
+export function findStory(id: string) {
+  return allStories.find((s) => s.story.id === id) ?? null;
+}

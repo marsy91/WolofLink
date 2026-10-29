@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { course, findLesson } from "@/content/course";
-import { buildExercise, buildLesson, correctAnswerText, isCorrect, normalize, seeded, tokensOf } from "./engine";
+import { buildExercise, buildLesson, correctAnswerText, gradeTyped, isCorrect, normalize, seeded, tokensOf } from "./engine";
 import { buildReview } from "./review";
 import { answer, next, startSession, accuracy, xpFor } from "./session";
 
@@ -116,5 +116,47 @@ describe("review", () => {
     const ex = buildReview(["g.salaam", "n.3", "f.begg"], "it", seeded(5));
     expect(ex).toHaveLength(3);
     expect(ex.flatMap((e) => e.entryIds).sort()).toEqual(["f.begg", "g.salaam", "n.3"]);
+  });
+});
+
+describe("typing and levels", () => {
+  it("grades typed Wolof leniently but not loosely", () => {
+    expect(gradeTyped("Jërëjëf", "jërëjëf")).toBe("exact");
+    expect(gradeTyped("Jërëjëf", "jerejef")).toBe("accents");
+    expect(gradeTyped("Na nga def?", "na nga def")).toBe("exact");
+    expect(gradeTyped("Ba beneen yoon", "Ba beneen yon")).toBe("typo");
+    expect(gradeTyped("ñaar", "naar")).toBe("accents");
+    expect(gradeTyped("ñaar", "ñett")).toBe("wrong");
+    expect(gradeTyped("benn", "ben")).toBe("wrong"); // short words get no typo allowance
+    expect(gradeTyped("benn", "  ")).toBe("wrong");
+  });
+
+  it("type exercises accept accent-free answers", () => {
+    const ex = buildExercise({ type: "type_wolof", entry: "g.jerejef" }, 0, opts());
+    expect(ex.kind).toBe("type");
+    expect(isCorrect(ex, { kind: "type", text: "jerejef" })).toBe(true);
+    expect(isCorrect(ex, { kind: "type", text: "waaw" })).toBe(false);
+  });
+
+  it("hardens exercises as the level rises", () => {
+    const lesson = findLesson("greetings-1")!.lesson;
+    const types = (level: number) => buildLesson(lesson, { course, lang: "en", rng: seeded(1) }, level).map((e) => e.type);
+    const l1 = types(1);
+    const l2 = types(2);
+    const l3 = types(3);
+    expect(l1).not.toContain("type_wolof");
+    expect(l2).not.toContain("pick_meaning");
+    expect(l3).toContain("type_wolof");
+    expect(l3).toContain("listen_type");
+    expect(l3.filter((t) => t === "type_wolof").length).toBeGreaterThan(l2.filter((t) => t === "type_wolof").length);
+    // Lengths never change, so every level keeps the authored 8–12 exercises.
+    expect(new Set([l1.length, l2.length, l3.length]).size).toBe(1);
+  });
+
+  it("awards more XP at higher levels", () => {
+    const ex = () => buildLesson(findLesson("greetings-1")!.lesson, { course, lang: "en", rng: seeded(7) });
+    let s = startSession(ex(), 5, "lesson", 3);
+    while (s.status === "playing") s = next(answer(s, true));
+    expect(xpFor(s)).toBe(10 + 2 * 5 + 5);
   });
 });

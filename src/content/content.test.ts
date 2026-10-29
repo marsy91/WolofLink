@@ -7,7 +7,7 @@ import { fr } from "@/i18n/fr";
 import { it as itDict } from "@/i18n/it";
 import { buildLesson, normalize, seeded, tokensOf } from "@/lib/engine";
 import { ACHIEVEMENTS } from "@/lib/progress";
-import { allLessons, course } from "./course";
+import { allLessons, allStories, course } from "./course";
 import { duplicateIds } from "./entries";
 import { UI_LANGS } from "./types";
 
@@ -73,6 +73,28 @@ describe("course content", () => {
     for (const lesson of allLessons) {
       expect(() => buildLesson(lesson, { course, lang, rng: seeded(1) })).not.toThrow();
     }
+  });
+});
+
+describe("stories", () => {
+  it("has original stories with complete translations and valid answers", () => {
+    expect(allStories.length).toBeGreaterThanOrEqual(4);
+    for (const { unit, story } of allStories) {
+      expect(unit.lessons.length).toBeGreaterThan(0);
+      expect(story.lines.length).toBeGreaterThanOrEqual(5);
+      expect(story.questions.length).toBeGreaterThanOrEqual(3);
+      for (const lang of UI_LANGS) {
+        expect(story.title[lang], story.id).toBeTruthy();
+        for (const l of story.lines) expect(l.tr[lang], `${story.id} ${l.wo}`).toBeTruthy();
+        for (const q of story.questions) {
+          expect(q.prompt[lang]).toBeTruthy();
+          expect(q.options[q.answer]).toBeDefined();
+          const labels = q.options.map((o) => o[lang]);
+          expect(new Set(labels).size, `${story.id} ${lang}`).toBe(labels.length);
+        }
+      }
+    }
+    expect(new Set(allStories.map((s) => s.story.id)).size).toBe(allStories.length);
   });
 });
 

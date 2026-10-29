@@ -42,7 +42,8 @@ export interface Progress {
   xpTotal: number;
   /** XP per local calendar day, keyed YYYY-MM-DD. */
   xpByDay: Record<string, number>;
-  streak: { count: number; best: number; lastDay: string | null };
+  /** `shields` cover one missed day each; earned every 7 streak days, max MAX_SHIELDS. */
+  streak: { count: number; best: number; lastDay: string | null; shields: number };
   drops: { count: number; updatedAt: number };
   lessons: Record<string, { times: number; bestAccuracy: number; lastAt: number }>;
   srs: Record<string, SrsCard>;
@@ -50,7 +51,13 @@ export interface Progress {
   recentMistakes: string[];
   achievements: Record<string, number>;
   reviews: number;
-  settings: { sound: boolean; autoplay: boolean };
+  stories: Record<string, { times: number; lastAt: number }>;
+  settings: {
+    sound: boolean;
+    autoplay: boolean;
+    haptics: boolean;
+    reminder: { enabled: boolean; hour: number; minute: number };
+  };
 }
 
 export function emptyProgress(now = Date.now()): Progress {
@@ -59,14 +66,15 @@ export function emptyProgress(now = Date.now()): Progress {
     profile: null,
     xpTotal: 0,
     xpByDay: {},
-    streak: { count: 0, best: 0, lastDay: null },
+    streak: { count: 0, best: 0, lastDay: null, shields: 0 },
     drops: { count: MAX_DROPS, updatedAt: now },
     lessons: {},
     srs: {},
     recentMistakes: [],
     achievements: {},
     reviews: 0,
-    settings: { sound: true, autoplay: true },
+    stories: {},
+    settings: { sound: true, autoplay: true, haptics: true, reminder: { enabled: false, hour: 19, minute: 0 } },
   };
 }
 
@@ -77,17 +85,27 @@ export function dayKey(time: number): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
-function previousDay(day: string): string {
-  const [y, m, d] = day.split("-").map(Number) as [number, number, number];
-  return dayKey(new Date(y, m - 1, d - 1, 12).getTime());
+export const MAX_SHIELDS = 2;
+export const SHIELD_EVERY = 7;
+
+/** Whole calendar days from `from` to `to` (both YYYY-MM-DD), DST-safe. */
+export function daysBetween(from: string, to: string): number {
+  const noon = (k: string) => {
+    const [y, m, d] = k.split("-").map(Number) as [number, number, number];
+    return Date.UTC(y, m - 1, d);
+  };
+  return Math.round((noon(to) - noon(from)) / DAY_MS);
 }
 
-/** The streak as it stands now: it lapses if neither today nor yesterday was practised. */
+/**
+ * The streak as it stands now. It survives if today or yesterday was
+ * practised, or if exactly one day was missed and a shield is available.
+ */
 export function currentStreak(p: Progress, now: number): number {
-  const { lastDay, count } = p.streak;
+  const { lastDay, count, shields } = p.streak;
   if (!lastDay) return 0;
-  const today = dayKey(now);
-  return lastDay === today || lastDay === previousDay(today) ? count : 0;
+  const gap = daysBetween(lastDay, dayKey(now));
+  return gap <= 1 || (gap === 2 && shields > 0) ? count : 0;
 }
 
 export function xpToday(p: Progress, now: number): number {
@@ -146,8 +164,11 @@ export function dueEntries(p: Progress, now: number, limit = 10): string[] {
 }
 
 export interface SessionResult {
-  mode: "lesson" | "review";
+  mode: "lesson" | "review" | "story";
   lessonId?: string;
+  storyId?: string;
+  /** Lesson level just played (1–3). */
+  level?: number;
   xp: number;
   accuracy: number;
   outcomes: Record<string, boolean>;
@@ -156,7 +177,7 @@ export interface SessionResult {
 
 export interface AchievementDef {
   id: string;
-  glyph: "path" | "wave" | "count" | "bowl" | "drop" | "sun" | "sprout" | "loop" | "compass" | "chat";
+  glyph: "path" | "wave" | "count" | "bowl" | "drop" | "sun" | "sprout" | "loop" | "compass" | "chat" | "ring" | "book";
   test: (p: Progress, r: SessionResult | null, now: number) => boolean;
 }
 
@@ -171,12 +192,18 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: "second", glyph: "loop", test: (p) => p.reviews >= 1 },
   { id: "road", glyph: "compass", test: (p) => Object.keys(p.lessons).length >= 8 },
   { id: "teraanga", glyph: "chat", test: (p) => allLessons.every((l) => p.lessons[l.id]) },
+  { id: "ring", glyph: "ring", test: (p) => Object.values(p.lessons).some((l) => l.times >= 3) },
+  { id: "reader", glyph: "book", test: (p) => Object.keys(p.stories).length >= 1 },
 ];
 
 export interface ApplyOutcome {
   progress: Progress;
   newAchievements: string[];
   streakExtended: boolean;
+  /** A shield was spent to bridge a missed day. */
+  shieldUsed: boolean;
+  /** A new shield was earned by this session. */
+  shieldEarned: boolean;
 }
 
 export function applySession(p: Progress, r: SessionResult, now: number): ApplyOutcome {
@@ -191,11 +218,24 @@ export function applySession(p: Progress, r: SessionResult, now: number): ApplyO
   };
 
   // Streak: the first finished session of a day extends it.
-  const streakBefore = currentStreak(next, now);
   const streakExtended = next.streak.lastDay !== today;
+  let shieldUsed = false;
+  let shieldEarned = false;
   if (streakExtended) {
-    const count = streakBefore + 1;
-    next = { ...next, streak: { count, best: Math.max(next.streak.best, count), lastDay: today } };
+    const { lastDay, shields } = next.streak;
+    const gap = lastDay ? daysBetween(lastDay, today) : Infinity;
+    shieldUsed = gap === 2 && shields > 0;
+    const alive = gap === 1 || shieldUsed;
+    const count = alive ? next.streak.count + 1 : 1;
+    let nextShields = shieldUsed ? shields - 1 : alive ? shields : 0;
+    if (count % SHIELD_EVERY === 0 && nextShields < MAX_SHIELDS) {
+      nextShields += 1;
+      shieldEarned = true;
+    }
+    next = {
+      ...next,
+      streak: { count, best: Math.max(next.streak.best, count), lastDay: today, shields: nextShields },
+    };
   }
 
   // Lesson record
@@ -212,6 +252,11 @@ export function applySession(p: Progress, r: SessionResult, now: number): ApplyO
         },
       },
     };
+  }
+
+  if (r.mode === "story" && r.storyId) {
+    const prev = next.stories[r.storyId];
+    next = { ...next, stories: { ...next.stories, [r.storyId]: { times: (prev?.times ?? 0) + 1, lastAt: now } } };
   }
 
   // Spaced repetition + recent mistakes
@@ -240,7 +285,12 @@ export function applySession(p: Progress, r: SessionResult, now: number): ApplyO
   }
   next = { ...next, achievements };
 
-  return { progress: next, newAchievements, streakExtended };
+  return { progress: next, newAchievements, streakExtended, shieldUsed, shieldEarned };
+}
+
+/** Level the next play of a lesson will use (1–3); replays after that stay at 3. */
+export function nextLevel(p: Progress, lessonId: string, max = 3): number {
+  return Math.min(max, (p.lessons[lessonId]?.times ?? 0) + 1);
 }
 
 /** Lessons unlock in course order. */
@@ -261,6 +311,6 @@ export function migrate(raw: unknown, now = Date.now()): Progress {
     ...r,
     streak: { ...base.streak, ...r.streak },
     drops: { ...base.drops, ...r.drops },
-    settings: { ...base.settings, ...r.settings },
+    settings: { ...base.settings, ...r.settings, reminder: { ...base.settings.reminder, ...r.settings?.reminder } },
   };
 }

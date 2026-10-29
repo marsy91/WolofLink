@@ -107,19 +107,35 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
   6. Around town · Directions
   7. Days of the week · Telling time
   8. Getting by · Teraanga: guests and meals
-- **Lessons.** 12 exercises each: Wolof→meaning, meaning→Wolof, picture choice, listening,
-  tap-the-words, fill in the blank, matching pairs, and speaking (self-checked). A missed
-  exercise is queued again at the end of the lesson. The results screen lists the mistakes.
+- **Lessons.** 12 exercises each, from 10 types: Wolof→meaning, meaning→Wolof, picture
+  choice, listening, tap-the-words, fill in the blank, matching pairs, speaking
+  (self-checked), typing the Wolof, and typing what you hear. A missed exercise is queued
+  again at the end of the lesson. The results screen lists the mistakes.
+- **Levels.** Each lesson has 3 levels (`harden()` in `engine.ts`). Level 2 swaps
+  recognition for recall, and level 3 makes you type. XP rises 5 per level. Typing
+  forgives missing accents or one slip in a longer word, then shows the exact spelling. An
+  accent bar adds à é ë ó ñ ŋ.
+- **Stories.** Units 1, 3, 6 and 8 end with an original dialogue (tap a
+  line to hear it, translations optional), followed by comprehension questions. Stories
+  unlock when the unit's lessons are done. Add one by giving a unit a `story` (see the
+  `line()` and `question()` helpers).
 - **Drops** are the lives. You have 5. Each wrong answer in a lesson spills one, and one
   comes back every 30 minutes. Reviews never cost drops and refill one when finished.
 - **Streak** is shown as a rising sun. Your first finished session of a day extends it;
-  missing a full day resets it.
+  missing a full day resets it, unless you have a **sun shield**. You earn one shield for
+  every 7 days in a row (max 2), and it covers one missed day automatically.
+- **Daily reminder** (Android/iOS): one local notification at a time you choose, in the
+  interface language (`src/lib/native.ts`). The restricted exact-alarm permission is
+  removed from the manifest, since a reminder doesn't need to-the-minute timing.
+- **Haptics:** vibration on right and wrong answers and on completion, with a toggle in
+  Settings. Lesson and story completion also show a short confetti burst, which is
+  skipped when reduced motion is on.
 - **Spaced repetition** uses Leitner boxes with 0/1/2/4/8/16-day intervals. A miss goes back
   to box 0 and is due again straight away. The Practice tab reviews due cards first, then
   recent mistakes.
-- **Achievements** are 10 original badges (First Steps, Teranga Greeter, Counting to Fukk,
+- **Achievements** are 12 original badges (First Steps, Teranga Greeter, Counting to Fukk,
   Ceebu Chef, Clear Water, Three Sunrises, Baobab Sprout, Second Look, Long Road,
-  Full Teraanga).
+  Full Teraanga, Third Ring, Storyteller).
 - **League** is a clearly labelled demo with sample learners until accounts exist.
 - **Accessibility:** colour pairs meet WCAG AA, the body font is Atkinson Hyperlegible, and
   every control works from the keyboard. Number keys pick answers and Enter checks or

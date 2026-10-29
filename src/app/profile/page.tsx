@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { BADGE_GLYPHS, IconLock, IconProfile, IconRosette, IconSliders } from "@/components/icons";
+import { BADGE_GLYPHS, IconLock, IconProfile, IconRosette, IconShield, IconSliders } from "@/components/icons";
 import { TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
-import { ACHIEVEMENTS, currentStreak } from "@/lib/progress";
+import { ACHIEVEMENTS, currentStreak, MAX_SHIELDS } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
 export default function Profile() {
@@ -44,6 +44,18 @@ export default function Profile() {
           </div>
         ))}
       </dl>
+
+      <section className="mb-6 flex gap-3 rounded-2xl bg-night p-4 text-sand" aria-labelledby="shield-h">
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-sun">
+          <IconShield size={28} />
+        </span>
+        <div>
+          <h2 id="shield-h" className="font-display font-extrabold">
+            {t("shield.title")} · {t("shield.count", { n: progress.streak.shields, max: MAX_SHIELDS })}
+          </h2>
+          <p className="text-sm text-sand/80">{t("shield.body")}</p>
+        </div>
+      </section>
 
       <h2 className="mb-3 flex items-center gap-2 font-display text-lg font-extrabold text-night">
         <IconRosette size={22} className="text-clay" />

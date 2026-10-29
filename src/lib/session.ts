@@ -8,6 +8,8 @@ export type SessionMode = "lesson" | "review";
 
 export interface SessionState {
   mode: SessionMode;
+  /** Lesson level 1–3 (always 1 for reviews). */
+  level: number;
   queue: Exercise[];
   index: number;
   /** Number of exercises before any retries were added. */
@@ -24,9 +26,10 @@ export interface SessionState {
   status: "playing" | "complete" | "failed";
 }
 
-export function startSession(queue: Exercise[], drops: number, mode: SessionMode): SessionState {
+export function startSession(queue: Exercise[], drops: number, mode: SessionMode, level = 1): SessionState {
   return {
     mode,
+    level,
     queue,
     index: 0,
     baseCount: queue.length,
@@ -97,9 +100,10 @@ export function progressValue(state: SessionState): number {
   return Math.min(1, done / state.queue.length);
 }
 
-export const XP = { lesson: 10, perfectBonus: 5, review: 5 } as const;
+export const XP = { lesson: 10, perLevel: 5, perfectBonus: 5, review: 5 } as const;
 
+/** 10 XP per lesson, +5 for each level above 1, +5 for a flawless run. */
 export function xpFor(state: SessionState): number {
   if (state.mode === "review") return XP.review;
-  return XP.lesson + (state.mistakes.length === 0 ? XP.perfectBonus : 0);
+  return XP.lesson + (state.level - 1) * XP.perLevel + (state.mistakes.length === 0 ? XP.perfectBonus : 0);
 }

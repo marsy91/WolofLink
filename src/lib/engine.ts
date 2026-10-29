@@ -41,7 +41,41 @@ export function tokensOf(entry: Entry): string[] {
 
 /** Lenient comparison: case, punctuation and extra spaces don't matter; diacritics do. */
 export function normalize(text: string): string {
-  return text.replace(PUNCT, "").replace(/\s+/g, " ").trim().toLowerCase();
+  return text.replace(PUNCT, "").replace(/['’]/g, "'").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+/** Drops accents and tildes (ë → e, ñ → n) for typo-tolerant typing. */
+export function stripMarks(text: string): string {
+  return normalize(text).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function editDistance(a: string, b: string): number {
+  const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    let prev = row[0]!;
+    row[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = row[j]!;
+      row[j] = Math.min(row[j]! + 1, row[j - 1]! + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+      prev = tmp;
+    }
+  }
+  return row[b.length]!;
+}
+
+/**
+ * Grades typed Wolof. Missing accents or one slip in a longer answer still
+ * count as correct, but the learner is shown the exact spelling.
+ */
+export type TypedGrade = "exact" | "accents" | "typo" | "wrong";
+export function gradeTyped(expected: string, typed: string): TypedGrade {
+  if (!typed.trim()) return "wrong";
+  if (normalize(typed) === normalize(expected)) return "exact";
+  const a = stripMarks(typed);
+  const b = stripMarks(expected);
+  if (a === b) return "accents";
+  if (b.length >= 6 && editDistance(a, b) <= 1) return "typo";
+  return "wrong";
 }
 
 export interface Choice {
@@ -101,6 +135,14 @@ export interface MatchExercise extends Base {
   right: Choice[];
 }
 
+export interface TypeExercise extends Base {
+  kind: "type";
+  type: "type_wolof" | "listen_type";
+  entry: Entry;
+  /** Meaning to translate; empty for listen_type. */
+  prompt: string;
+}
+
 export interface SpeakExercise extends Base {
   kind: "speak";
   type: "speak";
@@ -108,7 +150,7 @@ export interface SpeakExercise extends Base {
   meaning: string;
 }
 
-export type Exercise = ChoiceExercise | BuildExercise | FillExercise | MatchExercise | SpeakExercise;
+export type Exercise = ChoiceExercise | BuildExercise | FillExercise | MatchExercise | SpeakExercise | TypeExercise;
 
 function entryOf(course: Course, id: string): Entry {
   const entry = course.entries[id];
@@ -245,6 +287,20 @@ export function buildExercise(spec: ExerciseSpec, index: number, opts: BuildOpti
         right: shuffle(items, rng).map((e) => ({ id: e.id, label: meaning(e) })),
       };
     }
+    case "type_wolof":
+    case "listen_type": {
+      const entry = entryOf(course, spec.entry);
+      return {
+        key,
+        kind: "type",
+        type: spec.type,
+        entryIds: [entry.id],
+        isNew,
+        isRetry: false,
+        entry,
+        prompt: spec.type === "type_wolof" ? meaning(entry) : "",
+      };
+    }
     case "speak": {
       const entry = entryOf(course, spec.entry);
       return {
@@ -261,13 +317,34 @@ export function buildExercise(spec: ExerciseSpec, index: number, opts: BuildOpti
   }
 }
 
+export const MAX_LEVEL = 3;
+
+/**
+ * Replays get harder: level 2 swaps recognition for recall, level 3 asks the
+ * learner to type. Authored specs are level 1.
+ */
+export function harden(spec: ExerciseSpec, level: number, course: Course): ExerciseSpec {
+  if (level <= 1 || spec.type === "match" || spec.type === "fill_blank" || spec.type === "speak") return spec;
+  if (spec.type === "type_wolof" || spec.type === "listen_type") return spec;
+  const words = tokensOf(entryOf(course, spec.entry)).length;
+  if (level === 2) {
+    if (spec.type === "pick_meaning" || spec.type === "pick_picture") return { type: "pick_wolof", entry: spec.entry };
+    if (spec.type === "pick_wolof") return words <= 3 ? { type: "type_wolof", entry: spec.entry } : spec;
+    return spec;
+  }
+  if (spec.type === "listen") return { type: "listen_type", entry: spec.entry };
+  if (spec.type === "build") return words <= 4 ? { type: "type_wolof", entry: spec.entry } : spec;
+  return { type: "type_wolof", entry: spec.entry };
+}
+
 /** Build every exercise of a lesson, flagging the first appearance of each entry. */
-export function buildLesson(lesson: Lesson, opts: Omit<BuildOptions, "pool">): Exercise[] {
+export function buildLesson(lesson: Lesson, opts: Omit<BuildOptions, "pool">, level = 1): Exercise[] {
   const seen = new Set<string>();
-  return lesson.exercises.map((spec, i) => {
+  return lesson.exercises.map((authored, i) => {
+    const spec = harden(authored, level, opts.course);
     const ids = spec.type === "match" ? spec.entries : [spec.entry];
     // Only recognition-style exercises introduce words; production comes later.
-    const introduces = spec.type === "pick_meaning" || spec.type === "pick_picture";
+    const introduces = level === 1 && (spec.type === "pick_meaning" || spec.type === "pick_picture");
     const isNew = introduces && ids.some((id) => !seen.has(id));
     ids.forEach((id) => seen.add(id));
     return buildExercise(spec, i, { ...opts, pool: lesson.entries }, isNew);
@@ -279,7 +356,8 @@ export type Answer =
   | { kind: "build"; words: string[] }
   | { kind: "fill"; choiceId: string }
   | { kind: "match"; mistakes: number }
-  | { kind: "speak"; said: boolean };
+  | { kind: "speak"; said: boolean }
+  | { kind: "type"; text: string };
 
 export function isCorrect(ex: Exercise, answer: Answer): boolean {
   switch (ex.kind) {
@@ -293,6 +371,8 @@ export function isCorrect(ex: Exercise, answer: Answer): boolean {
     case "speak":
       // Self-assessed until speech recognition exists, so it never costs a drop.
       return true;
+    case "type":
+      return answer.kind === "type" && gradeTyped(ex.entry.wo, answer.text) !== "wrong";
   }
 }
 
@@ -308,6 +388,7 @@ export function correctAnswerText(ex: Exercise): string {
     case "match":
       return "";
     case "speak":
+    case "type":
       return ex.entry.wo;
   }
 }

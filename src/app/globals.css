@@ -83,3 +83,22 @@ body {
   .anim-pop, .anim-slide-up, .anim-shake { animation: none; }
   * { transition-duration: 0ms !important; }
 }
+
+/* Lesson-complete confetti (see components/Confetti.tsx). */
+.confetti span {
+  position: absolute;
+  top: -12px;
+  transform: rotate(45deg);
+  animation-name: confetti-fall;
+  animation-timing-function: cubic-bezier(0.2, 0.6, 0.4, 1);
+  animation-fill-mode: forwards;
+}
+@keyframes confetti-fall {
+  to {
+    transform: translate(var(--drift), 105vh) rotate(var(--spin));
+    opacity: 0.2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti { display: none; }
+}

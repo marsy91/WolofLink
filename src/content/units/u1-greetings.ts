@@ -1,5 +1,5 @@
 import type { Unit } from "../types";
-import { entry, tx } from "./helpers";
+import { entry, line, question, tx } from "./helpers";
 
 export const entries = [
   // greetings-1
@@ -197,4 +197,36 @@ export const unit: Unit = {
       ],
     },
   ],
+  story: {
+    id: "story-meeting",
+    title: tx(["Meeting Awa", "La rencontre avec Awa", "Conociendo a Awa", "Awa kennenlernen", "L'incontro con Awa"]),
+    lines: [
+      line("Moodu", "Salaam aleekum!", ["Hello!", "Bonjour !", "¡Hola!", "Hallo!", "Ciao!"]),
+      line("Awa", "Maalekum salaam! Na nga def?", ["Hello! How are you?", "Bonjour ! Comment vas-tu ?", "¡Hola! ¿Cómo estás?", "Hallo! Wie geht es dir?", "Ciao! Come stai?"]),
+      line("Moodu", "Maa ngi fi rekk. Naka nga tudd?", ["I'm fine. What's your name?", "Je vais bien. Comment t'appelles-tu ?", "Estoy bien. ¿Cómo te llamas?", "Mir geht es gut. Wie heißt du?", "Sto bene. Come ti chiami?"]),
+      line("Awa", "Maa ngi tudd Awa. Fan nga dëkk?", ["My name is Awa. Where do you live?", "Je m'appelle Awa. Où habites-tu ?", "Me llamo Awa. ¿Dónde vives?", "Ich heiße Awa. Wo wohnst du?", "Mi chiamo Awa. Dove abiti?"]),
+      line("Moodu", "Dakar laa dëkk.", ["I live in Dakar.", "J'habite à Dakar.", "Vivo en Dakar.", "Ich wohne in Dakar.", "Abito a Dakar."]),
+      line("Awa", "Jërëjëf! Ba beneen yoon!", ["Thank you! See you next time!", "Merci ! À la prochaine !", "¡Gracias! ¡Hasta la próxima!", "Danke! Bis zum nächsten Mal!", "Grazie! Alla prossima!"]),
+    ],
+    questions: [
+      question(
+        ["What is the woman's name?", "Comment s'appelle la femme ?", "¿Cómo se llama la mujer?", "Wie heißt die Frau?", "Come si chiama la donna?"],
+        ["Awa", "Awa", "Awa", "Awa", "Awa"],
+        ["Fatou", "Fatou", "Fatou", "Fatou", "Fatou"],
+        ["Moodu", "Moodu", "Moodu", "Moodu", "Moodu"],
+      ),
+      question(
+        ["Where does Moodu live?", "Où habite Moodu ?", "¿Dónde vive Moodu?", "Wo wohnt Moodu?", "Dove abita Moodu?"],
+        ["In Dakar", "À Dakar", "En Dakar", "In Dakar", "A Dakar"],
+        ["In Saint-Louis", "À Saint-Louis", "En Saint-Louis", "In Saint-Louis", "A Saint-Louis"],
+        ["He doesn't say", "Il ne le dit pas", "No lo dice", "Er sagt es nicht", "Non lo dice"],
+      ),
+      question(
+        ["How is Moodu?", "Comment va Moodu ?", "¿Cómo está Moodu?", "Wie geht es Moodu?", "Come sta Moodu?"],
+        ["He's fine", "Il va bien", "Está bien", "Es geht ihm gut", "Sta bene"],
+        ["He's tired", "Il est fatigué", "Está cansado", "Er ist müde", "È stanco"],
+        ["He's hungry", "Il a faim", "Tiene hambre", "Er hat Hunger", "Ha fame"],
+      ),
+    ],
+  },
 };

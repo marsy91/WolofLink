@@ -1,5 +1,5 @@
 import type { Unit } from "../types";
-import { entry, tx } from "./helpers";
+import { entry, line, question, tx } from "./helpers";
 
 export const entries = [
   // conversation-1
@@ -174,4 +174,37 @@ export const unit: Unit = {
       ],
     },
   ],
+  story: {
+    id: "story-dinner",
+    title: tx(["Dinner at Awa's", "Dîner chez Awa", "Cena en casa de Awa", "Abendessen bei Awa", "Cena da Awa"]),
+    lines: [
+      line("Awa", "Dalal ak jàmm! Toogal.", ["Welcome! Sit down.", "Bienvenue ! Assieds-toi.", "¡Bienvenido! Siéntate.", "Willkommen! Setz dich.", "Benvenuto! Siediti."]),
+      line("Lamine", "Jërëjëf. Ana waa kër gi?", ["Thank you. How is the family?", "Merci. Comment va la famille ?", "Gracias. ¿Cómo está la familia?", "Danke. Wie geht es der Familie?", "Grazie. Come sta la famiglia?"]),
+      line("Awa", "Ñu ngi fa. Kaay lekk! Ceebu jën la.", ["They're fine. Come and eat! It's rice with fish.", "Ils vont bien. Viens manger ! C'est du riz au poisson.", "Están bien. ¡Ven a comer! Es arroz con pescado.", "Es geht ihnen gut. Komm essen! Es gibt Reis mit Fisch.", "Stanno bene. Vieni a mangiare! È riso con pesce."]),
+      line("Lamine", "Neex na lool!", ["It's really delicious!", "C'est vraiment délicieux !", "¡Está riquísimo!", "Es ist sehr lecker!", "È buonissimo!"]),
+      line("Awa", "Lekkal, lekkal!", ["Eat, eat!", "Mange, mange !", "¡Come, come!", "Iss, iss!", "Mangia, mangia!"]),
+      line("Lamine", "Suur naa. Jërëjëf, Awa!", ["I'm full. Thank you, Awa!", "J'ai assez mangé. Merci, Awa !", "Estoy lleno. ¡Gracias, Awa!", "Ich bin satt. Danke, Awa!", "Sono sazio. Grazie, Awa!"]),
+      line("Awa", "Ñoo ko bokk.", ["You're welcome.", "De rien.", "De nada.", "Gern geschehen.", "Prego."]),
+    ],
+    questions: [
+      question(
+        ["What do they eat?", "Que mangent-ils ?", "¿Qué comen?", "Was essen sie?", "Cosa mangiano?"],
+        ["Rice with fish", "Du riz au poisson", "Arroz con pescado", "Reis mit Fisch", "Riso con pesce"],
+        ["Bread and coffee", "Du pain et du café", "Pan y café", "Brot und Kaffee", "Pane e caffè"],
+        ["Meat and onions", "De la viande et des oignons", "Carne y cebolla", "Fleisch und Zwiebeln", "Carne e cipolle"],
+      ),
+      question(
+        ["How is Awa's family?", "Comment va la famille d'Awa ?", "¿Cómo está la familia de Awa?", "Wie geht es Awas Familie?", "Come sta la famiglia di Awa?"],
+        ["They're fine", "Ils vont bien", "Están bien", "Es geht ihnen gut", "Stanno bene"],
+        ["They're tired", "Ils sont fatigués", "Están cansados", "Sie sind müde", "Sono stanchi"],
+        ["They're at the market", "Ils sont au marché", "Están en el mercado", "Sie sind auf dem Markt", "Sono al mercato"],
+      ),
+      question(
+        ["Why does Lamine stop eating?", "Pourquoi Lamine arrête-t-il de manger ?", "¿Por qué deja de comer Lamine?", "Warum hört Lamine auf zu essen?", "Perché Lamine smette di mangiare?"],
+        ["He's full", "Il a assez mangé", "Está lleno", "Er ist satt", "È sazio"],
+        ["He doesn't like it", "Il n'aime pas ça", "No le gusta", "Es schmeckt ihm nicht", "Non gli piace"],
+        ["It's too hot", "C'est trop chaud", "Está demasiado caliente", "Es ist zu heiß", "È troppo caldo"],
+      ),
+    ],
+  },
 };

@@ -1,5 +1,5 @@
 import type { Unit } from "../types";
-import { entry, tx } from "./helpers";
+import { entry, line, question, tx } from "./helpers";
 
 export const entries = [
   // food-1
@@ -163,4 +163,36 @@ export const unit: Unit = {
       ],
     },
   ],
+  story: {
+    id: "story-market",
+    title: tx(["Mangoes at the market", "Des mangues au marché", "Mangos en el mercado", "Mangos auf dem Markt", "Manghi al mercato"]),
+    lines: [
+      line("Awa", "Salaam aleekum! Ñaata la mango bi?", ["Hello! How much is the mango?", "Bonjour ! Combien coûte la mangue ?", "¡Hola! ¿Cuánto cuesta el mango?", "Hallo! Wie viel kostet die Mango?", "Ciao! Quanto costa il mango?"]),
+      line("Fatou", "Maalekum salaam. Juróom-fukk.", ["Hello. Fifty.", "Bonjour. Cinquante.", "Hola. Cincuenta.", "Hallo. Fünfzig.", "Ciao. Cinquanta."]),
+      line("Awa", "Dafa seer! Wàññi ko tuuti.", ["That's expensive! Lower the price a little.", "C'est cher ! Baisse un peu le prix.", "¡Es caro! Baja un poco el precio.", "Das ist teuer! Mach es ein bisschen billiger.", "È caro! Abbassa un po' il prezzo."]),
+      line("Fatou", "Waaw. Ñeent-fukk.", ["OK. Forty.", "D'accord. Quarante.", "Vale. Cuarenta.", "Gut. Vierzig.", "Va bene. Quaranta."]),
+      line("Awa", "Jërëjëf! Dama bëgg jënd mburu itam.", ["Thank you! I also want to buy bread.", "Merci ! Je veux aussi acheter du pain.", "¡Gracias! También quiero comprar pan.", "Danke! Ich möchte auch Brot kaufen.", "Grazie! Voglio comprare anche del pane."]),
+      line("Fatou", "Baal ma, mburu amul.", ["Sorry, there's no bread.", "Désolée, il n'y a pas de pain.", "Lo siento, no hay pan.", "Tut mir leid, es gibt kein Brot.", "Mi dispiace, non c'è pane."]),
+    ],
+    questions: [
+      question(
+        ["What does Awa ask about first?", "Sur quoi Awa se renseigne-t-elle d'abord ?", "¿Por qué pregunta Awa primero?", "Wonach fragt Awa zuerst?", "Di cosa chiede prima Awa?"],
+        ["A mango", "Une mangue", "Un mango", "Eine Mango", "Un mango"],
+        ["Bread", "Du pain", "Pan", "Brot", "Pane"],
+        ["Fish", "Du poisson", "Pescado", "Fisch", "Pesce"],
+      ),
+      question(
+        ["What does Awa think of the price?", "Que pense Awa du prix ?", "¿Qué opina Awa del precio?", "Was hält Awa vom Preis?", "Cosa pensa Awa del prezzo?"],
+        ["It's expensive", "C'est cher", "Es caro", "Er ist zu teuer", "È caro"],
+        ["It's cheap", "C'est bon marché", "Es barato", "Er ist günstig", "È economico"],
+        ["It's delicious", "C'est délicieux", "Está delicioso", "Er ist lecker", "È delizioso"],
+      ),
+      question(
+        ["Can Awa buy bread?", "Awa peut-elle acheter du pain ?", "¿Puede Awa comprar pan?", "Kann Awa Brot kaufen?", "Awa può comprare il pane?"],
+        ["No, there isn't any", "Non, il n'y en a pas", "No, no hay", "Nein, es gibt keins", "No, non ce n'è"],
+        ["Yes, for fifty", "Oui, pour cinquante", "Sí, por cincuenta", "Ja, für fünfzig", "Sì, per cinquanta"],
+        ["Only tomorrow", "Seulement demain", "Solo mañana", "Erst morgen", "Solo domani"],
+      ),
+    ],
+  },
 };

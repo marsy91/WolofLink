@@ -163,6 +163,46 @@ export const IconInfo = (p: IconProps) => (
   </Svg>
 );
 
+/** Lesson levels: three linked rings. */
+export const IconRings = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="7" cy="12" r="4" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17" cy="12" r="4" />
+  </Svg>
+);
+
+/** Stories: an open book with a speech mark. */
+export const IconBook = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-4-.5-7 0-9 1.5ZM12 6.5v13" />
+    <path d="M6.5 9.5h2.5M6.5 12.5h2.5M15 9.5h2.5" />
+  </Svg>
+);
+
+/** Streak shield: a shield with a small sun. */
+export const IconShield = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.9 7.5-9.5V6Z" />
+    <path d="M9 14a3 3 0 0 1 6 0M12 8.5v1.5M8.6 10.3l1 .8M15.4 10.3l-1 .8" />
+  </Svg>
+);
+
+/** Reminders: a bell. */
+export const IconBell = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15ZM10 21h4" />
+  </Svg>
+);
+
+/** Keyboard (accent bar label). */
+export const IconKeyboard = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="2.5" y="6" width="19" height="12" rx="3" />
+    <path d="M6.5 10h.01M10 10h.01M13.5 10h.01M17 10h.01M7.5 14h9" />
+  </Svg>
+);
+
 /* ── Unit and badge glyphs ─────────────────────────────────────────────── */
 
 export const GlyphWave = (p: IconProps) => (
@@ -245,4 +285,6 @@ export const BADGE_GLYPHS = {
   loop: IconLoop,
   compass: GlyphCompass,
   chat: GlyphChat,
+  ring: IconRings,
+  book: IconBook,
 } as const;

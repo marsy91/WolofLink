@@ -5,10 +5,12 @@ import { useState } from "react";
 import { Button, Dialog, TabScreen } from "@/components/ui";
 import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_NAMES } from "@/i18n";
+import { IconBell } from "@/components/icons";
+import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-const VERSION = "0.2.0";
+const VERSION = "0.3.0";
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -31,6 +33,7 @@ export default function Settings() {
   const { progress, update, reset, t } = useStore();
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
+  const [reminderState, setReminderState] = useState<ReminderResult | null>(null);
   const profile = progress.profile;
   if (!profile) return <TabScreen>{null}</TabScreen>;
 
@@ -38,6 +41,16 @@ export default function Settings() {
     update((p) => (p.profile ? { ...p, profile: { ...p.profile, ...patch } } : p));
   const setSettings = (patch: Partial<Progress["settings"]>) =>
     update((p) => ({ ...p, settings: { ...p.settings, ...patch } }));
+
+  const reminder = progress.settings.reminder;
+  const time = `${String(reminder.hour).padStart(2, "0")}:${String(reminder.minute).padStart(2, "0")}`;
+  const setReminder = async (patch: Partial<Progress["settings"]["reminder"]>, lang = profile.uiLang) => {
+    const next = { ...reminder, ...patch };
+    const result = await syncReminder({ ...next, lang });
+    // Keep the switch off if the phone refused notifications.
+    setSettings({ reminder: { ...next, enabled: next.enabled && result === "scheduled" } });
+    setReminderState(result);
+  };
 
   const field = "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
 
@@ -57,7 +70,15 @@ export default function Settings() {
 
         <label className="block">
           <span className="mb-1 block text-sm font-bold text-muted">{t("settings.uiLang")}</span>
-          <select className={field} value={profile.uiLang} onChange={(e) => setProfile({ uiLang: e.target.value as UiLang })}>
+          <select
+            className={field}
+            value={profile.uiLang}
+            onChange={(e) => {
+              const uiLang = e.target.value as UiLang;
+              setProfile({ uiLang });
+              if (reminder.enabled) void setReminder({}, uiLang);
+            }}
+          >
             {UI_LANGS.map((code) => (
               <option key={code} value={code}>
                 {LANG_NAMES[code]}
@@ -80,7 +101,40 @@ export default function Settings() {
         <div className="divide-y-2 divide-sand-2 rounded-2xl border-2 border-sand-3 bg-white px-4">
           <Toggle label={t("settings.sound")} checked={progress.settings.sound} onChange={(v) => setSettings({ sound: v })} />
           <Toggle label={t("settings.audio")} checked={progress.settings.autoplay} onChange={(v) => setSettings({ autoplay: v })} />
+          <Toggle label={t("settings.haptics")} checked={progress.settings.haptics} onChange={(v) => setSettings({ haptics: v })} />
         </div>
+
+        <section className="rounded-2xl border-2 border-sand-3 bg-white px-4 py-2" aria-labelledby="remind-h">
+          <h2 id="remind-h" className="flex items-center gap-2 pt-2 font-display text-lg font-extrabold text-night">
+            <IconBell size={22} className="text-clay" />
+            {t("remind.title")}
+          </h2>
+          {remindersSupported() ? (
+            <>
+              <Toggle label={t("remind.on")} checked={reminder.enabled} onChange={(v) => void setReminder({ enabled: v })} />
+              <label className="flex items-center justify-between gap-4 pb-3">
+                <span className="font-bold">{t("remind.time")}</span>
+                <input
+                  type="time"
+                  value={time}
+                  disabled={!reminder.enabled}
+                  onChange={(e) => {
+                    const [h, m] = e.target.value.split(":").map(Number);
+                    if (Number.isFinite(h) && Number.isFinite(m)) void setReminder({ hour: h!, minute: m! });
+                  }}
+                  className="rounded-xl border-2 border-sand-3 px-3 py-2 font-display font-extrabold disabled:opacity-50"
+                />
+              </label>
+              {reminderState === "denied" ? (
+                <p role="alert" className="pb-3 text-sm text-berry">
+                  {t("remind.denied")}
+                </p>
+              ) : null}
+            </>
+          ) : (
+            <p className="pb-3 text-sm text-muted">{t("remind.webOnly")}</p>
+          )}
+        </section>
 
         <section className="rounded-2xl bg-white p-4">
           <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("settings.about")}</h2>

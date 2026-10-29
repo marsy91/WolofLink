@@ -1,4 +1,4 @@
-import type { Entry, Translations } from "../types";
+import type { Entry, StoryLine, StoryQuestion, Translations } from "../types";
 
 /** Translations in fixed order: English, French, Spanish, German, Italian. */
 export type Five = [en: string, fr: string, es: string, de: string, it: string];
@@ -16,4 +16,13 @@ export function entry(
 ): Entry {
   const { note, ...rest } = extra;
   return { id, wo, tr: tx(tr), ...rest, ...(note ? { note: tx(note) } : {}) };
+}
+
+export function line(speaker: string, wo: string, tr: Five): StoryLine {
+  return { speaker, wo, tr: tx(tr) };
+}
+
+/** A question whose first option is the correct one (options are shuffled at runtime). */
+export function question(prompt: Five, correct: Five, ...wrong: Five[]): StoryQuestion {
+  return { prompt: tx(prompt), options: [correct, ...wrong].map(tx), answer: 0 };
 }

@@ -1,5 +1,5 @@
 import type { Unit } from "../types";
-import { entry, tx } from "./helpers";
+import { entry, line, question, tx } from "./helpers";
 
 export const entries = [
   // places-1
@@ -155,4 +155,36 @@ export const unit: Unit = {
       ],
     },
   ],
+  story: {
+    id: "story-taxi",
+    title: tx(["A taxi ride", "Un trajet en taxi", "Un viaje en taxi", "Eine Taxifahrt", "Un giro in taxi"]),
+    lines: [
+      line("Lamine", "Salaam aleekum! Dama bëgg dem marse.", ["Hello! I want to go to the market.", "Bonjour ! Je veux aller au marché.", "¡Hola! Quiero ir al mercado.", "Hallo! Ich möchte zum Markt.", "Ciao! Voglio andare al mercato."]),
+      line("Moodu", "Maalekum salaam. Waaw, ñu dem!", ["Hello. OK, let's go!", "Bonjour. D'accord, allons-y !", "Hola. ¡Vale, vamos!", "Hallo. Gut, los geht's!", "Ciao. Va bene, andiamo!"]),
+      line("Lamine", "Marse bi, dafa sore?", ["The market, is it far?", "Le marché, c'est loin ?", "El mercado, ¿está lejos?", "Der Markt, ist er weit?", "Il mercato, è lontano?"]),
+      line("Moodu", "Déedéet, dafa jege.", ["No, it's near.", "Non, c'est près.", "No, está cerca.", "Nein, er ist nah.", "No, è vicino."]),
+      line("Lamine", "Taxawal fii! Jërëjëf.", ["Stop here! Thank you.", "Arrête-toi ici ! Merci.", "¡Para aquí! Gracias.", "Halt hier an! Danke.", "Fermati qui! Grazie."]),
+      line("Moodu", "Ñoo ko bokk. Ba beneen yoon!", ["You're welcome. See you next time!", "De rien. À la prochaine !", "De nada. ¡Hasta la próxima!", "Gern geschehen. Bis zum nächsten Mal!", "Prego. Alla prossima!"]),
+    ],
+    questions: [
+      question(
+        ["Where does Lamine want to go?", "Où Lamine veut-il aller ?", "¿Adónde quiere ir Lamine?", "Wohin möchte Lamine?", "Dove vuole andare Lamine?"],
+        ["To the market", "Au marché", "Al mercado", "Zum Markt", "Al mercato"],
+        ["To school", "À l'école", "A la escuela", "Zur Schule", "A scuola"],
+        ["To the hospital", "À l'hôpital", "Al hospital", "Ins Krankenhaus", "All'ospedale"],
+      ),
+      question(
+        ["Is the market far?", "Le marché est-il loin ?", "¿Está lejos el mercado?", "Ist der Markt weit?", "Il mercato è lontano?"],
+        ["No, it's near", "Non, c'est près", "No, está cerca", "Nein, er ist nah", "No, è vicino"],
+        ["Yes, very far", "Oui, très loin", "Sí, muy lejos", "Ja, sehr weit", "Sì, molto lontano"],
+        ["Moodu doesn't know", "Moodu ne sait pas", "Moodu no lo sabe", "Moodu weiß es nicht", "Moodu non lo sa"],
+      ),
+      question(
+        ["What does Lamine say at the end?", "Que dit Lamine à la fin ?", "¿Qué dice Lamine al final?", "Was sagt Lamine am Ende?", "Cosa dice Lamine alla fine?"],
+        ["Stop here, thank you", "Arrête-toi ici, merci", "Para aquí, gracias", "Halt hier an, danke", "Fermati qui, grazie"],
+        ["Go straight on", "Va tout droit", "Sigue recto", "Geh geradeaus", "Vai dritto"],
+        ["How much is it?", "C'est combien ?", "¿Cuánto cuesta?", "Wie viel kostet das?", "Quanto costa?"],
+      ),
+    ],
+  },
 };

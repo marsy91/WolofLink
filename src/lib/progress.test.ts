@@ -9,6 +9,7 @@ import {
   MAX_DROPS,
   migrate,
   minutesToNextDrop,
+  nextLevel,
   refreshDrops,
   spendDrop,
   type SessionResult,
@@ -112,5 +113,59 @@ describe("migrate", () => {
     expect(migrate(null).profile).toBeNull();
     expect(migrate({ version: 99 }).xpTotal).toBe(0);
     expect(migrate({ version: 1, xpTotal: 40 }).xpTotal).toBe(40);
+  });
+});
+
+describe("streak shields", () => {
+  it("earns a shield every 7 days and spends it on one missed day", () => {
+    let p = emptyProgress(day(1));
+    for (let d = 1; d <= 7; d++) p = applySession(p, lesson(), day(d)).progress;
+    expect(p.streak.count).toBe(7);
+    expect(p.streak.shields).toBe(1);
+    // Day 8 missed: the streak still shows on day 9 thanks to the shield…
+    expect(currentStreak(p, day(9))).toBe(7);
+    const r = applySession(p, lesson(), day(9));
+    expect(r.shieldUsed).toBe(true);
+    expect(r.progress.streak.count).toBe(8);
+    expect(r.progress.streak.shields).toBe(0);
+    // …but two missed days break it.
+    expect(currentStreak(r.progress, day(12))).toBe(0);
+    expect(applySession(r.progress, lesson(), day(12)).progress.streak.count).toBe(1);
+  });
+
+  it("caps shields", () => {
+    let p = emptyProgress(day(1));
+    for (let d = 1; d <= 28; d++) p = applySession(p, lesson(), day(d)).progress;
+    expect(p.streak.shields).toBe(2);
+  });
+});
+
+describe("levels and stories", () => {
+  it("plays the next level until mastered", () => {
+    let p = emptyProgress(day(1));
+    expect(nextLevel(p, "greetings-1")).toBe(1);
+    for (let i = 0; i < 4; i++) p = applySession(p, lesson(), day(1)).progress;
+    expect(nextLevel(p, "greetings-1")).toBe(3);
+    expect(p.achievements.ring).toBeDefined();
+  });
+
+  it("records stories and unlocks the reader badge", () => {
+    const r = applySession(
+      emptyProgress(day(1)),
+      { mode: "story", storyId: "story-meeting", xp: 10, accuracy: 1, outcomes: {}, mistakes: 0 },
+      day(1),
+    );
+    expect(r.progress.stories["story-meeting"]?.times).toBe(1);
+    expect(r.newAchievements).toContain("reader");
+  });
+
+  it("migrates settings written by older versions", () => {
+    const old = { version: 1, settings: { sound: false, autoplay: true }, streak: { count: 3, best: 3, lastDay: "2026-01-01" } };
+    const p = migrate(old);
+    expect(p.settings.sound).toBe(false);
+    expect(p.settings.haptics).toBe(true);
+    expect(p.settings.reminder.hour).toBe(19);
+    expect(p.streak.shields).toBe(0);
+    expect(p.stories).toEqual({});
   });
 });

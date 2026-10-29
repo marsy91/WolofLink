@@ -3,7 +3,7 @@ import { allLessons, course } from "@/content/course";
 import type { ExerciseSpec, UiLang } from "@/content/types";
 import { buildExercise, shuffle, tokensOf, type Exercise, type Rng } from "./engine";
 
-const ROTATION: ExerciseSpec["type"][] = ["pick_wolof", "listen", "pick_meaning", "build"];
+const ROTATION: ExerciseSpec["type"][] = ["pick_wolof", "listen", "type_wolof", "pick_meaning", "build"];
 
 function poolFor(entryId: string): string[] {
   return allLessons.find((l) => l.entries.includes(entryId))?.entries ?? [];

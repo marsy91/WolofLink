@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Entry } from "@/content/types";
 import { audioSourceFor, playEntry } from "@/lib/audio";
 import type {
@@ -11,10 +11,11 @@ import type {
   FillExercise,
   MatchExercise,
   SpeakExercise,
+  TypeExercise,
 } from "@/lib/engine";
 import { getSpeechChecker } from "@/lib/speech";
 import { useStore } from "@/lib/store";
-import { IconMic, IconSnail, IconSpeaker } from "./icons";
+import { IconKeyboard, IconMic, IconSnail, IconSpeaker } from "./icons";
 import { Button } from "./ui";
 
 export interface ExerciseProps<E extends Exercise = Exercise> {
@@ -368,6 +369,82 @@ export function MatchView({ ex, locked, onSubmit }: ExerciseProps<MatchExercise>
   );
 }
 
+/* ── Typing ─────────────────────────────────────────────────────────────── */
+
+/** Letters most keyboards lack. Wolof's Latin alphabet also uses ŋ. */
+const SPECIAL = ["à", "é", "ë", "ó", "ñ", "ŋ"];
+
+export function TypeView({ ex, locked, onChange }: ExerciseProps<TypeExercise>) {
+  const { t } = useStore();
+  const [text, setText] = useState("");
+  const input = useRef<HTMLInputElement>(null);
+  const set = (v: string) => {
+    setText(v);
+    onChange(v.trim() ? { kind: "type", text: v } : null);
+  };
+  useEffect(() => {
+    input.current?.focus({ preventScroll: true });
+  }, []);
+
+  const insert = (ch: string) => {
+    const el = input.current;
+    const start = el?.selectionStart ?? text.length;
+    const end = el?.selectionEnd ?? text.length;
+    set(text.slice(0, start) + ch + text.slice(end));
+    requestAnimationFrame(() => {
+      el?.focus();
+      el?.setSelectionRange(start + ch.length, start + ch.length);
+    });
+  };
+
+  return (
+    <div className="flex flex-1 flex-col">
+      {ex.type === "listen_type" ? (
+        <div className="mb-5 flex flex-col items-center gap-2 py-2">
+          <AudioButtons entry={ex.entry} autoplay big />
+          <TtsNote entry={ex.entry} />
+        </div>
+      ) : (
+        <div className="mb-5 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+          <span className="font-display text-2xl font-extrabold text-night">{ex.prompt}</span>
+        </div>
+      )}
+      <label className="block">
+        <span className="sr-only">{t("ex.typePlaceholder")}</span>
+        <input
+          ref={input}
+          lang="wo"
+          value={text}
+          disabled={locked}
+          onChange={(e) => set(e.target.value)}
+          placeholder={t("ex.typePlaceholder")}
+          autoCapitalize="off"
+          autoCorrect="off"
+          autoComplete="off"
+          spellCheck={false}
+          enterKeyHint="done"
+          className="w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-4 font-display text-xl font-extrabold text-night outline-none focus:border-clay disabled:opacity-80"
+        />
+      </label>
+      <div role="group" aria-label={t("ex.keyboard")} className="mt-3 flex flex-wrap items-center gap-2">
+        <IconKeyboard size={20} className="text-muted" />
+        {SPECIAL.map((ch) => (
+          <button
+            key={ch}
+            type="button"
+            disabled={locked}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => insert(ch)}
+            className="h-11 min-w-11 rounded-xl border-2 border-sand-3 bg-white font-display text-lg font-extrabold text-night shadow-[0_3px_0_var(--color-sand-3)] active:translate-y-[2px] active:shadow-none"
+          >
+            {ch}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ── Speaking (self-checked placeholder) ──────────────────────────────── */
 
 export function SpeakView({ ex, locked, onSubmit }: ExerciseProps<SpeakExercise>) {
@@ -416,5 +493,7 @@ export function ExerciseView(props: ExerciseProps) {
       return <MatchView {...props} ex={ex} />;
     case "speak":
       return <SpeakView {...props} ex={ex} />;
+    case "type":
+      return <TypeView {...props} ex={ex} />;
   }
 }

@@ -9,6 +9,7 @@ const config: CapacitorConfig = {
     // Edge-to-edge: the page gets --safe-area-inset-* CSS vars and pads itself
     // (see .safe-top / .safe-bottom in globals.css).
     SystemBars: { insetsHandling: "css", initialViewportFitValueHint: "cover" },
+    LocalNotifications: { smallIcon: "ic_stat_woloflink", iconColor: "#b9481f" },
   },
 };
 

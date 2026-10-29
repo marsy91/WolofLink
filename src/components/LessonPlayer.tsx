@@ -6,13 +6,25 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { course, findLesson } from "@/content/course";
 import { translate, type UiKey } from "@/i18n";
 import { playTone, stopAudio } from "@/lib/audio";
-import { buildLesson, correctAnswerText, isCorrect, seeded, type Answer, type Exercise } from "@/lib/engine";
+import {
+  buildLesson,
+  correctAnswerText,
+  gradeTyped,
+  isCorrect,
+  MAX_LEVEL,
+  seeded,
+  type Answer,
+  type Exercise,
+  type TypedGrade,
+} from "@/lib/engine";
+import { haptic } from "@/lib/native";
 import {
   ACHIEVEMENTS,
   applySession,
   currentStreak,
   dueEntries,
   minutesToNextDrop,
+  nextLevel,
   refreshDrops,
   spendDrop,
   type ApplyOutcome,
@@ -30,7 +42,8 @@ import {
 } from "@/lib/session";
 import { useNow, useStore } from "@/lib/store";
 import { ExerciseView } from "./exercises";
-import { BADGE_GLYPHS, IconClose, IconDrop, IconInfo, IconSpark, IconSun } from "./icons";
+import { Confetti } from "./Confetti";
+import { BADGE_GLYPHS, IconClose, IconDrop, IconInfo, IconRings, IconShield, IconSpark, IconSun } from "./icons";
 import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 
 type Props = { mode: "lesson"; lessonId: string } | { mode: "review" };
@@ -46,6 +59,7 @@ export function LessonPlayer(props: Props) {
   const [pending, setPending] = useState<Answer | null>(null);
   const [outcome, setOutcome] = useState<ApplyOutcome | null>(null);
   const [quitOpen, setQuitOpen] = useState(false);
+  const [typed, setTyped] = useState<TypedGrade | null>(null);
   const saved = useRef(false);
 
   const exit = useCallback(() => {
@@ -53,29 +67,34 @@ export function LessonPlayer(props: Props) {
     router.replace(props.mode === "review" ? "/practice/" : "/learn/");
   }, [router, props.mode]);
 
+  const level = props.mode === "lesson" ? nextLevel(progress, props.lessonId, MAX_LEVEL) : 1;
+
   const begin = () => {
     // `now` (refreshed by useNow) keeps render pure; second precision is plenty here.
     const rng = seeded(now);
     let exercises: Exercise[];
     if (props.mode === "lesson") {
       if (!found) return;
-      exercises = buildLesson(found.lesson, { course, lang, rng });
+      exercises = buildLesson(found.lesson, { course, lang, rng }, level);
     } else {
       const due = dueEntries(progress, now, 10);
       exercises = buildReview(due.length ? due : progress.recentMistakes.slice(0, 10), lang, rng);
     }
     if (exercises.length === 0) return exit();
     const drops = refreshDrops(progress, now).drops.count;
-    setSession(startSession(exercises, drops, props.mode));
+    setSession(startSession(exercises, drops, props.mode, level));
   };
 
   const ex = session ? current(session) : undefined;
   const sound = progress.settings.sound;
+  const vibrate = progress.settings.haptics;
 
   const submit = (a: Answer) => {
     if (!session || !ex || session.feedback) return;
     const ok = isCorrect(ex, a);
+    setTyped(ex.kind === "type" && a.kind === "type" ? gradeTyped(ex.entry.wo, a.text) : null);
     if (sound) playTone(ok ? "correct" : "wrong");
+    if (vibrate) void haptic(ok ? "correct" : "wrong");
     if (!ok && session.mode === "lesson") update((p) => spendDrop(p, Date.now()));
     setSession(answerSession(session, ok));
   };
@@ -84,6 +103,7 @@ export function LessonPlayer(props: Props) {
     if (!session) return;
     stopAudio();
     setPending(null);
+    setTyped(null);
     setSession(nextSession(session));
   };
 
@@ -92,8 +112,10 @@ export function LessonPlayer(props: Props) {
     if (!session || session.status !== "complete" || saved.current) return;
     saved.current = true;
     if (sound) playTone("complete");
+    if (vibrate) void haptic("complete");
     const result = {
       mode: session.mode,
+      level: session.level,
       ...(props.mode === "lesson" ? { lessonId: props.lessonId } : {}),
       xp: xpFor(session),
       accuracy: accuracy(session),
@@ -103,7 +125,7 @@ export function LessonPlayer(props: Props) {
     const applied = applySession(progress, result, Date.now());
     update(() => applied.progress);
     setOutcome(applied);
-  }, [session, sound, update, props, progress]);
+  }, [session, sound, vibrate, update, props, progress]);
 
   // Enter = check / continue (Escape closes the quit dialog natively).
   // Re-subscribed each render so the handler always sees the latest state.
@@ -155,7 +177,14 @@ export function LessonPlayer(props: Props) {
         </div>
         <div className="anim-pop flex flex-1 flex-col justify-center">
           <p className="mb-1 text-sm font-bold tracking-widest text-clay uppercase">{t("lesson.tipTitle")}</p>
-          <h1 className="mb-4 font-display text-4xl font-extrabold text-night">{title}</h1>
+          <h1 className="mb-2 font-display text-4xl font-extrabold text-night">{title}</h1>
+          {props.mode === "lesson" ? (
+            <p className="mb-4 flex items-center gap-2 font-bold text-dusk">
+              <IconRings size={22} />
+              {t("path.level", { n: level, total: MAX_LEVEL })}
+              {level > 1 ? <span className="font-normal text-muted">· {t("lesson.levelHint")}</span> : null}
+            </p>
+          ) : null}
           <div className="flex gap-3 rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]">
             <IconInfo className="mt-0.5 shrink-0 text-sea" />
             <p className="text-lg leading-relaxed">{tip}</p>
@@ -204,10 +233,19 @@ export function LessonPlayer(props: Props) {
     const pct = Math.round(accuracy(session) * 100);
     return (
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
+        <Confetti />
         <div className="anim-pop flex flex-1 flex-col items-center pt-10 text-center">
-          <h1 className="mb-6 font-display text-4xl font-extrabold text-night">
+          <h1 className="mb-1 font-display text-4xl font-extrabold text-night">
             {session.mode === "review" ? t("lesson.reviewComplete") : t("lesson.complete")}
           </h1>
+          {session.mode === "lesson" ? (
+            <p className="mb-5 flex items-center gap-1.5 font-bold text-dusk">
+              <IconRings size={20} />
+              {t("result.levelDone", { n: session.level })}
+            </p>
+          ) : (
+            <div className="mb-5" />
+          )}
           <div className="mb-6 grid w-full grid-cols-3 gap-3">
             <Stat icon={<IconSpark className="text-dusk" />} label={t("result.xp")} value={`+${xpFor(session)}`} />
             <Stat icon={<span className="font-display font-extrabold text-sea">%</span>} label={t("result.accuracy")} value={`${pct}%`} />
@@ -217,6 +255,14 @@ export function LessonPlayer(props: Props) {
               value={String(currentStreak(outcome.progress, now))}
             />
           </div>
+
+          {outcome.streakExtended ? (
+            <Banner icon={<IconSun size={26} />}>
+              {t("result.streakUp", { n: currentStreak(outcome.progress, now) })}
+            </Banner>
+          ) : null}
+          {outcome.shieldUsed ? <Banner icon={<IconShield size={26} />}>{t("shield.used")}</Banner> : null}
+          {outcome.shieldEarned ? <Banner icon={<IconShield size={26} />}>{t("shield.earned")}</Banner> : null}
 
           {outcome.newAchievements.map((id) => {
             const def = ACHIEVEMENTS.find((a) => a.id === id)!;
@@ -318,6 +364,14 @@ export function LessonPlayer(props: Props) {
               <p className={`font-display text-2xl font-extrabold ${feedback.correct ? "text-sea" : "text-berry"}`}>
                 {feedback.correct ? t("ex.correct") : t("ex.incorrect")}
               </p>
+              {feedback.correct && typed && typed !== "exact" ? (
+                <p className="mt-1 text-ink">
+                  <span className="font-bold">{t(typed === "accents" ? "ex.accents" : "ex.typo")}</span>{" "}
+                  <span lang="wo" className="font-display font-extrabold">
+                    {ex.kind === "type" ? ex.entry.wo : ""}
+                  </span>
+                </p>
+              ) : null}
               {!feedback.correct && !isMatch ? (
                 <p className="mt-1 text-ink">
                   <span className="font-bold">{t("ex.answer")}</span>{" "}
@@ -351,6 +405,15 @@ export function LessonPlayer(props: Props) {
         </div>
       </Dialog>
     </main>
+  );
+}
+
+function Banner({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className="mb-3 flex w-full items-center gap-3 rounded-2xl bg-night p-3 text-left text-sand">
+      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-sun">{icon}</span>
+      <p className="font-display font-extrabold">{children}</p>
+    </div>
   );
 }
 

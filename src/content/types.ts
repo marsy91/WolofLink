@@ -50,7 +50,11 @@ export type ExerciseSpec =
   /** Match Wolof to meanings. */
   | { type: "match"; entries: string[] }
   /** Wolof sentence with one tile blanked -> pick the missing word. */
-  | { type: "fill_blank"; entry: string; blank: number; options: string[] };
+  | { type: "fill_blank"; entry: string; blank: number; options: string[] }
+  /** Meaning shown -> type the Wolof. */
+  | { type: "type_wolof"; entry: string }
+  /** Hear Wolof -> type what was said. */
+  | { type: "listen_type"; entry: string };
 
 export type ExerciseType = ExerciseSpec["type"];
 
@@ -64,6 +68,28 @@ export interface Lesson {
   exercises: ExerciseSpec[];
 }
 
+/** One line of a short dialogue. */
+export interface StoryLine {
+  speaker: string;
+  wo: string;
+  tr: Translations;
+}
+
+/** Comprehension question; `answer` indexes `options`. */
+export interface StoryQuestion {
+  prompt: Translations;
+  options: Translations[];
+  answer: number;
+}
+
+/** A short original dialogue that reuses a unit's vocabulary. */
+export interface Story {
+  id: string;
+  title: Translations;
+  lines: StoryLine[];
+  questions: StoryQuestion[];
+}
+
 export interface Unit {
   id: string;
   title: Translations;
@@ -72,6 +98,8 @@ export interface Unit {
   /** Accent colour token for the unit banner. */
   tone: "sun" | "clay" | "sea" | "dusk";
   lessons: Lesson[];
+  /** Unlocks once every lesson in the unit is done. */
+  story?: Story;
 }
 
 export interface Course {
