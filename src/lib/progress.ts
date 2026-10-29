@@ -4,6 +4,7 @@
  * so the storage backend can change (localStorage today, cloud sync later)
  * without touching game rules. Covered by progress.test.ts.
  */
+import { allLessons } from "@/content/course";
 import type { UiLang } from "@/content/types";
 
 export const GOALS = { casual: 10, regular: 20, serious: 30, intense: 50 } as const;
@@ -155,7 +156,7 @@ export interface SessionResult {
 
 export interface AchievementDef {
   id: string;
-  glyph: "path" | "wave" | "count" | "bowl" | "drop" | "sun" | "sprout" | "loop";
+  glyph: "path" | "wave" | "count" | "bowl" | "drop" | "sun" | "sprout" | "loop" | "compass" | "chat";
   test: (p: Progress, r: SessionResult | null, now: number) => boolean;
 }
 
@@ -168,6 +169,8 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: "sunrise", glyph: "sun", test: (p, _r, now) => currentStreak(p, now) >= 3 },
   { id: "sprout", glyph: "sprout", test: (p) => p.xpTotal >= 100 },
   { id: "second", glyph: "loop", test: (p) => p.reviews >= 1 },
+  { id: "road", glyph: "compass", test: (p) => Object.keys(p.lessons).length >= 8 },
+  { id: "teraanga", glyph: "chat", test: (p) => allLessons.every((l) => p.lessons[l.id]) },
 ];
 
 export interface ApplyOutcome {

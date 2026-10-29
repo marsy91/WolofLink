@@ -1,0 +1,158 @@
+import type { Unit } from "../types";
+import { entry, tx } from "./helpers";
+
+export const entries = [
+  // places-1
+  entry("l.ker", "kër", ["house, home", "maison", "casa", "Haus", "casa"], { pic: "🏠" }),
+  entry("l.lekool", "lekool", ["school", "école", "escuela", "Schule", "scuola"], { pic: "🏫" }),
+  entry("l.loppitaan", "loppitaan", ["hospital", "hôpital", "hospital", "Krankenhaus", "ospedale"], { pic: "🏥" }),
+  entry("l.tali", "tali", ["road", "route", "carretera", "Straße", "strada"], { pic: "🛣️" }),
+  entry("l.garaas", "garaas", [
+    "bus station",
+    "gare routière",
+    "estación de autobuses",
+    "Busbahnhof",
+    "stazione degli autobus",
+  ], { pic: "🚌" }),
+  entry("l.bitig", "bitig", ["shop", "boutique", "tienda", "Laden", "negozio"], { pic: "🏪" }),
+  entry("l.geej", "géej", ["sea", "mer", "mar", "Meer", "mare"], { pic: "🌊" }),
+  entry("l.dekk", "dëkk", ["town, village", "ville, village", "pueblo, ciudad", "Stadt, Dorf", "città, villaggio"], {
+    pic: "🏘️",
+    note: [
+      "As a verb, dëkk means “to live (somewhere)”.",
+      "Comme verbe, dëkk veut dire « habiter ».",
+      "Como verbo, dëkk significa «vivir (en un sitio)».",
+      "Als Verb heißt dëkk „wohnen“.",
+      "Come verbo, dëkk significa «abitare».",
+    ],
+  }),
+  entry("l.fangay", "Fan ngay dem?", ["Where are you going?", "Où vas-tu ?", "¿Adónde vas?", "Wohin gehst du?", "Dove vai?"]),
+  entry("l.demmarse", "Maa ngi dem marse", [
+    "I'm going to the market",
+    "Je vais au marché",
+    "Voy al mercado",
+    "Ich gehe zum Markt",
+    "Vado al mercato",
+  ]),
+
+  // places-2
+  entry("l.ana", "Ana marse bi?", [
+    "Where is the market?",
+    "Où est le marché ?",
+    "¿Dónde está el mercado?",
+    "Wo ist der Markt?",
+    "Dov'è il mercato?",
+  ], {
+    note: [
+      "Bi works like “the” after the noun.",
+      "Bi joue le rôle de « le / la », placé après le nom.",
+      "Bi funciona como «el / la», detrás del sustantivo.",
+      "Bi funktioniert wie „der / die / das“, hinter dem Nomen.",
+      "Bi fa da «il / la», dopo il nome.",
+    ],
+  }),
+  entry("l.fii", "fii", ["here", "ici", "aquí", "hier", "qui"]),
+  entry("l.fale", "fale", ["there", "là-bas", "allí", "dort", "lì"]),
+  entry("l.cammoon", "càmmooñ", ["left", "gauche", "izquierda", "links", "sinistra"], { pic: "⬅️" }),
+  entry("l.ndeyjoor", "ndeyjoor", ["right", "droite", "derecha", "rechts", "destra"], { pic: "➡️" }),
+  entry("l.jubal", "Jubal", ["Go straight on", "Va tout droit", "Sigue recto", "Geh geradeaus", "Vai dritto"], { pic: "⬆️" }),
+  entry("l.sore", "Dafa sore", ["It's far", "C'est loin", "Está lejos", "Es ist weit", "È lontano"]),
+  entry("l.jege", "Dafa jege", ["It's near", "C'est près", "Está cerca", "Es ist nah", "È vicino"]),
+  entry("l.taxawal", "Taxawal fii", ["Stop here", "Arrête-toi ici", "Para aquí", "Halt hier an", "Fermati qui"], {
+    note: [
+      "Handy in a taxi or a car rapide.",
+      "Pratique en taxi ou en car rapide.",
+      "Útil en un taxi o un car rapide.",
+      "Praktisch im Taxi oder im Car rapide.",
+      "Utile in taxi o sul car rapide.",
+    ],
+  }),
+];
+
+export const unit: Unit = {
+  id: "u6",
+  glyph: "compass",
+  tone: "sea",
+  title: tx([
+    "Places and directions",
+    "Lieux et directions",
+    "Lugares y direcciones",
+    "Orte und Wegbeschreibungen",
+    "Luoghi e indicazioni",
+  ]),
+  lessons: [
+    {
+      id: "places-1",
+      title: tx(["Around town", "En ville", "Por la ciudad", "In der Stadt", "In città"]),
+      tip: tx([
+        "Places often need no word for “to”: Maa ngi dem marse, “I'm going (to the) market”.",
+        "Souvent, pas besoin de mot pour « à » : Maa ngi dem marse, « je vais (au) marché ».",
+        "A menudo no hace falta la palabra «a»: Maa ngi dem marse, «voy (al) mercado».",
+        "Oft braucht man kein Wort für „zu“: Maa ngi dem marse, „ich gehe (zum) Markt“.",
+        "Spesso non serve una parola per «a»: Maa ngi dem marse, «vado (al) mercato».",
+      ]),
+      entries: [
+        "l.ker",
+        "l.lekool",
+        "l.loppitaan",
+        "l.tali",
+        "l.garaas",
+        "l.bitig",
+        "l.geej",
+        "l.dekk",
+        "l.fangay",
+        "l.demmarse",
+      ],
+      exercises: [
+        { type: "pick_picture", entry: "l.ker" },
+        { type: "pick_picture", entry: "l.lekool" },
+        { type: "pick_picture", entry: "l.loppitaan" },
+        { type: "pick_picture", entry: "l.geej" },
+        { type: "match", entries: ["l.tali", "l.garaas", "l.bitig", "l.dekk"] },
+        { type: "listen", entry: "l.ker" },
+        { type: "pick_meaning", entry: "l.fangay" },
+        { type: "pick_meaning", entry: "l.demmarse" },
+        { type: "build", entry: "l.fangay", distractors: ["jóge", "la"] },
+        { type: "fill_blank", entry: "l.demmarse", blank: 3, options: ["marse", "kër", "géej"] },
+        { type: "pick_wolof", entry: "l.bitig" },
+        { type: "speak", entry: "l.fangay" },
+      ],
+    },
+    {
+      id: "places-2",
+      title: tx(["Directions", "Itinéraires", "Indicaciones", "Wegbeschreibungen", "Indicazioni"]),
+      tip: tx([
+        "Ana…? asks where something is: Ana marse bi? Dafa sore means it's far, dafa jege it's near.",
+        "Ana… ? demande où se trouve quelque chose : Ana marse bi? Dafa sore, c'est loin ; dafa jege, c'est près.",
+        "Ana…? pregunta dónde está algo: Ana marse bi? Dafa sore, está lejos; dafa jege, está cerca.",
+        "Ana …? fragt, wo etwas ist: Ana marse bi? Dafa sore heißt weit, dafa jege nah.",
+        "Ana…? chiede dove si trova qualcosa: Ana marse bi? Dafa sore, è lontano; dafa jege, è vicino.",
+      ]),
+      entries: [
+        "l.ana",
+        "l.fii",
+        "l.fale",
+        "l.cammoon",
+        "l.ndeyjoor",
+        "l.jubal",
+        "l.sore",
+        "l.jege",
+        "l.taxawal",
+      ],
+      exercises: [
+        { type: "pick_meaning", entry: "l.ana" },
+        { type: "pick_picture", entry: "l.cammoon" },
+        { type: "pick_picture", entry: "l.ndeyjoor" },
+        { type: "pick_meaning", entry: "l.fii" },
+        { type: "match", entries: ["l.fii", "l.fale", "l.sore", "l.jege"] },
+        { type: "listen", entry: "l.jubal" },
+        { type: "pick_meaning", entry: "l.taxawal" },
+        { type: "build", entry: "l.ana", distractors: ["kër", "fii"] },
+        { type: "fill_blank", entry: "l.sore", blank: 1, options: ["sore", "jege", "seer"] },
+        { type: "pick_wolof", entry: "l.jubal" },
+        { type: "fill_blank", entry: "l.taxawal", blank: 1, options: ["fii", "fale", "bi"] },
+        { type: "speak", entry: "l.ana" },
+      ],
+    },
+  ],
+};

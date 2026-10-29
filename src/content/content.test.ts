@@ -8,11 +8,31 @@ import { it as itDict } from "@/i18n/it";
 import { buildLesson, normalize, seeded, tokensOf } from "@/lib/engine";
 import { ACHIEVEMENTS } from "@/lib/progress";
 import { allLessons, course } from "./course";
+import { duplicateIds } from "./entries";
 import { UI_LANGS } from "./types";
 
 describe("course content", () => {
-  it("has the three demo lessons", () => {
-    expect(allLessons.map((l) => l.id)).toEqual(["greetings-1", "numbers-1", "food-1"]);
+  it("gives every unit at least two lessons and keeps ids unique", () => {
+    expect(course.units).toHaveLength(8);
+    for (const unit of course.units) expect(unit.lessons.length, unit.id).toBeGreaterThanOrEqual(2);
+    expect(new Set(allLessons.map((l) => l.id)).size).toBe(allLessons.length);
+    expect(duplicateIds).toEqual([]);
+  });
+
+  it("uses every entry in at least one lesson", () => {
+    const used = new Set(allLessons.flatMap((l) => l.entries));
+    expect(Object.keys(course.entries).filter((id) => !used.has(id))).toEqual([]);
+  });
+
+  it.each(UI_LANGS)("match exercises have distinct sides in %s", (lang) => {
+    for (const lesson of allLessons)
+      for (const spec of lesson.exercises) {
+        if (spec.type !== "match") continue;
+        const items = spec.entries.map((id) => course.entries[id]!);
+        const meanings = items.map((e) => normalize(e.tr[lang] ?? e.tr.en));
+        expect(new Set(meanings).size, `${lesson.id} ${lang}`).toBe(items.length);
+        expect(new Set(items.map((e) => normalize(e.wo))).size).toBe(items.length);
+      }
   });
 
   it.each(allLessons.map((l) => [l.id, l] as const))("%s has 8–12 exercises that reference real entries", (_id, lesson) => {

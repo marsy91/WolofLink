@@ -159,6 +159,10 @@ export const en = {
   "ach.sprout.desc": "Earn 100 XP",
   "ach.second.name": "Second Look",
   "ach.second.desc": "Finish a review session",
+  "ach.road.name": "Long Road",
+  "ach.road.desc": "Finish 8 lessons",
+  "ach.teraanga.name": "Full Teraanga",
+  "ach.teraanga.desc": "Complete every lesson in the course",
 };
 
 export type UiKey = keyof typeof en;

@@ -165,4 +165,8 @@ export const de: Dictionary = {
   "ach.sprout.desc": "Sammle 100 XP",
   "ach.second.name": "Zweiter Blick",
   "ach.second.desc": "Schließe eine Wiederholung ab",
+  "ach.road.name": "Langer Weg",
+  "ach.road.desc": "Schließe 8 Lektionen ab",
+  "ach.teraanga.name": "Volle Teraanga",
+  "ach.teraanga.desc": "Schließe alle Lektionen des Kurses ab",
 };

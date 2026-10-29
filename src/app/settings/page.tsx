@@ -8,7 +8,7 @@ import { LANG_NAMES } from "@/i18n";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-const VERSION = "0.1.1";
+const VERSION = "0.2.0";
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (

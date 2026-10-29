@@ -243,4 +243,6 @@ export const BADGE_GLYPHS = {
   sun: IconSun,
   sprout: GlyphSprout,
   loop: IconLoop,
+  compass: GlyphCompass,
+  chat: GlyphChat,
 } as const;

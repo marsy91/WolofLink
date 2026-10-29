@@ -13,7 +13,7 @@ woloflink/
 │   ├── app/                 Routes (static export): welcome, learn, lesson/[id], review,
 │   │                        practice, league, profile, settings
 │   ├── components/          LessonPlayer, exercise views, UI kit, icons, logo
-│   ├── content/             Course model (types.ts), vocabulary (entries.ts), units/lessons (course.ts)
+│   ├── content/             Course model (types.ts); one file per unit in units/ (vocabulary + lessons)
 │   ├── i18n/                UI strings: en (source of truth), fr, es, de, it
 │   └── lib/
 │       ├── engine.ts        Builds exercises from specs, checks answers (pure, tested)
@@ -97,8 +97,16 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
 
 - **Onboarding.** Target language (Wolof, preselected), then interface language, daily goal
   (10/20/30/50 XP) and an optional name. This creates a local *guest* profile.
-- **Path.** Units in order, with lesson cards that unlock one after another. Units 4–8 are
-  shown as "coming soon".
+- **Path.** 8 units with 2 lessons each (16 lessons, about 190 words and phrases). Lesson
+  cards unlock one after another:
+  1. Greetings · Introductions
+  2. Numbers 1–10 · Bigger numbers and prices
+  3. Food and drink · At the market
+  4. Family · Friends and family
+  5. Everyday verbs · Past, future and feelings
+  6. Around town · Directions
+  7. Days of the week · Telling time
+  8. Getting by · Teraanga: guests and meals
 - **Lessons.** 12 exercises each: Wolof→meaning, meaning→Wolof, picture choice, listening,
   tap-the-words, fill in the blank, matching pairs, and speaking (self-checked). A missed
   exercise is queued again at the end of the lesson. The results screen lists the mistakes.
@@ -109,8 +117,9 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
 - **Spaced repetition** uses Leitner boxes with 0/1/2/4/8/16-day intervals. A miss goes back
   to box 0 and is due again straight away. The Practice tab reviews due cards first, then
   recent mistakes.
-- **Achievements** are 8 original badges (First Steps, Teranga Greeter, Counting to Fukk,
-  Ceebu Chef, Clear Water, Three Sunrises, Baobab Sprout, Second Look).
+- **Achievements** are 10 original badges (First Steps, Teranga Greeter, Counting to Fukk,
+  Ceebu Chef, Clear Water, Three Sunrises, Baobab Sprout, Second Look, Long Road,
+  Full Teraanga).
 - **League** is a clearly labelled demo with sample learners until accounts exist.
 - **Accessibility:** colour pairs meet WCAG AA, the body font is Atkinson Hyperlegible, and
   every control works from the keyboard. Number keys pick answers and Enter checks or
@@ -119,26 +128,31 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
 
 ## Add or extend lessons
 
-1. Add vocabulary to `src/content/entries.ts`:
+Each unit lives in `src/content/units/uN-name.ts` and exports its `entries` and its `unit`.
+
+1. Add vocabulary to the unit's `entries`. Translations go in the order English, French,
+   Spanish, German, Italian:
    ```ts
-   { id: "p.yaay", wo: "yaay", pic: "👩", tr: { en: "mother", fr: "mère", es: "madre", de: "Mutter", it: "madre" } }
+   entry("p.yaay", "yaay", ["mother", "mère", "madre", "Mutter", "madre"], { pic: "👩‍🍼" })
    ```
-   `tokens` overrides how a phrase splits into tiles, and `note` adds a tip shown after
-   answering.
-2. Add a lesson to a unit in `src/content/course.ts`. Give it a unit `glyph` and `tone`, the
-   `entries` it teaches (used for wrong options), and 8–12 `exercises`:
+   `tokens` overrides how a phrase splits into tiles, and `note` (same five-language order)
+   adds a tip shown after answering.
+2. Add a lesson to the unit's `lessons`: a unique `id`, a `title` and `tip`, the `entries` it
+   teaches (used for wrong options), and 8–12 `exercises`:
    ```ts
    { type: "pick_meaning", entry: "p.yaay" }
    { type: "build", entry: "p.phrase", distractors: ["xale", "baay"] }
    { type: "fill_blank", entry: "p.phrase", blank: 1, options: ["yaay", "baay", "xale"] }
    { type: "match", entries: ["p.yaay", "p.baay", "p.xale", "p.mag"] }
    ```
-3. Run `npm test`. `content.test.ts` fails if a lesson points at a missing entry, a blank
-   isn't among its options, a lesson has fewer than 8 or more than 12 exercises, or a
+   A new unit is a new file, added to `unitModules` in `src/content/entries.ts`.
+3. Run `npm test`. `content.test.ts` fails if a lesson points at a missing entry, an entry
+   id is duplicated or never used, a blank isn't among its options, a matching exercise has
+   two identical sides, a lesson has fewer than 8 or more than 12 exercises, or a
    translation is missing. New lessons are prerendered automatically by
    `generateStaticParams`.
 
-Have a native Wolof speaker review new content before release. The demo phrases use
+Have a native Wolof speaker review all content before release. The phrases use
 standard CLAD spelling and common Dakar usage, but regional variation is real.
 
 ## Add or change translations
