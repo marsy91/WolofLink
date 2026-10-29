@@ -23,9 +23,10 @@ const full = (rx = 0) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1
   <clipPath id="c"><rect width="120" height="120" rx="${rx}"/></clipPath>
   <g clip-path="url(#c)"><rect width="120" height="120" fill="${NIGHT}"/><g transform="translate(0 6)">${sun}${bubbles}</g></g></svg>`;
 
-// Android adaptive icons: the launcher crops to the inner ~61%, so the
-// foreground is scaled down around the centre of the artwork (60, 54).
-const SCALE = 0.66;
+// Android adaptive icons: @capacitor/assets already insets the foreground
+// layer to the visible 72dp area, so the artwork only needs a margin for the
+// launcher's mask (circle, squircle…). Scaled around its centre (60, 54).
+const SCALE = 0.86;
 const fg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
   <g transform="translate(60 60) scale(${SCALE}) translate(-60 -54)">${sun}${bubbles}</g></svg>`;
 const bg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
