@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/*
+ * WolofLink palette — warm dusk-and-clay tones. All text/background pairs
+ * used for body copy and buttons meet WCAG AA (4.5:1) or better.
+ */
+@theme {
+  --color-night: #1d2550;
+  --color-night-2: #2c3672;
+  --color-sand: #fbf3e6;
+  --color-sand-2: #f3e5cf;
+  --color-sand-3: #e6d3b5;
+  --color-ink: #1b1a24;
+  --color-muted: #5b5568;
+  --color-clay: #b9481f;
+  --color-clay-2: #93391a;
+  --color-sun: #f2a93b;
+  --color-sun-soft: #fde9c4;
+  --color-sea: #0f6e72;
+  --color-sea-soft: #e3f3f1;
+  --color-berry: #b3261e;
+  --color-berry-soft: #fbe9e6;
+  --color-dusk: #7a3b69;
+  --color-dusk-soft: #f3e4ee;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+}
+
+html,
+body {
+  background: var(--color-sand);
+  color: var(--color-ink);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* Safe areas: Capacitor injects --safe-area-inset-*, browsers provide env(). */
+.safe-top {
+  padding-top: max(var(--safe-area-inset-top, env(safe-area-inset-top, 0px)), 0px);
+}
+.safe-bottom {
+  padding-bottom: max(var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)), 0px);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-sun);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* Woven-band ornament used on unit banners (original geometric pattern). */
+.weave {
+  background-image:
+    linear-gradient(135deg, rgb(255 255 255 / 0.14) 25%, transparent 25%),
+    linear-gradient(225deg, rgb(255 255 255 / 0.14) 25%, transparent 25%);
+  background-size: 18px 18px;
+  background-position: 0 0, 9px 0;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.92); opacity: 0; }
+  60% { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes shake {
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+.anim-pop { animation: pop 260ms ease-out both; }
+.anim-slide-up { animation: slide-up 220ms ease-out both; }
+.anim-shake { animation: shake 320ms ease-in-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-pop, .anim-slide-up, .anim-shake { animation: none; }
+  * { transition-duration: 0ms !important; }
+}
