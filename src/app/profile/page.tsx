@@ -5,11 +5,13 @@ import Link from "next/link";
 import { BADGE_GLYPHS, IconLock, IconProfile, IconRosette, IconShield, IconSliders } from "@/components/icons";
 import { TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
+import { useAccount } from "@/lib/account";
 import { ACHIEVEMENTS, currentStreak, MAX_SHIELDS } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
 export default function Profile() {
   const { progress, lang, t } = useStore();
+  const account = useAccount();
   const now = useNow();
   const profile = progress.profile;
   const since = profile ? new Date(profile.createdAt).toLocaleDateString(lang, { dateStyle: "medium" }) : "";
@@ -95,10 +97,24 @@ export default function Profile() {
         })}
       </ul>
 
-      <section className="rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]">
-        <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("profile.account")}</h2>
-        <p className="text-sm text-muted">{t("profile.accountSoon")}</p>
-      </section>
+      {account.available ? (
+        <Link
+          href="/account/"
+          className="block rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)] active:translate-y-[2px] active:shadow-none"
+        >
+          <h2 className="mb-1 font-display text-lg font-extrabold text-night">
+            {account.user ? t("acct.title") : t("profile.account")}
+          </h2>
+          <p className="text-sm text-muted">
+            {account.user ? t("acct.signedIn", { email: account.user.email ?? "" }) : t("acct.why")}
+          </p>
+        </Link>
+      ) : (
+        <section className="rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]">
+          <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("profile.account")}</h2>
+          <p className="text-sm text-muted">{t("profile.accountSoon")}</p>
+        </section>
+      )}
     </TabScreen>
   );
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
-const UPDATED = "30 October 2026";
+const UPDATED = "30 October 2026 (accounts and sync)";
 
 /**
  * Public privacy policy (also needed as a URL for Google Play and the App
@@ -21,8 +21,9 @@ export default function Privacy() {
       <p className="mb-6 text-sm text-muted">Last updated: {UPDATED}</p>
 
       <Section title="Summary">
-        WolofLink does not collect, sell or share your personal data. There are no accounts, no advertising and no
-        analytics. Your learning progress stays on your device.
+        WolofLink works without an account, and then your progress stays only on your device. If you choose to create an
+        account, we store your email address and your learning progress so you can continue on other devices. We never
+        sell or share your data, and there is no advertising and no analytics.
       </Section>
 
       <Section title="What is stored, and where">
@@ -32,8 +33,20 @@ export default function Privacy() {
           <li>An optional first name you type during setup, shown only to you.</li>
         </ul>
         <p className="mt-2">
-          This information is saved only in the app&apos;s private storage on your device. It is never sent to us or to
-          anyone else.
+          Without an account, this information is saved only in the app&apos;s private storage on your device.
+        </p>
+      </Section>
+
+      <Section title="Optional account and cloud sync">
+        <p>If you create an account, we process:</p>
+        <ul className="mt-2 list-disc space-y-1 pl-5">
+          <li>your email address, to send you sign-in codes and identify your account;</li>
+          <li>a copy of the progress and settings listed above, so they sync between your devices.</li>
+        </ul>
+        <p className="mt-2">
+          This data is stored by our hosting provider, Supabase, encrypted in transit (HTTPS) and at rest, and each
+          account can only read its own data. We use it only to run the app. You can delete your account and its cloud
+          data at any time in the app (Profile → Account → Delete account); deletion is immediate and permanent.
         </p>
       </Section>
 
@@ -45,7 +58,7 @@ export default function Privacy() {
           </li>
           <li>
             <strong>Notifications:</strong> if you turn on the daily reminder, the app schedules a notification on your
-            device. Nothing is sent to a server.
+            device. Nothing about it is sent to a server.
           </li>
           <li>
             <strong>Vibration:</strong> used for answer feedback; you can turn it off in Settings.
@@ -55,8 +68,8 @@ export default function Privacy() {
       </Section>
 
       <Section title="Deleting your data">
-        Use Settings → Reset all progress, or uninstall the app. Either removes everything WolofLink stored on your
-        device.
+        On your device: Settings → Reset all progress, or uninstall the app. In the cloud: Profile → Account → Delete
+        account, which permanently removes your account, email address and synced progress.
       </Section>
 
       <Section title="Children">
@@ -64,9 +77,13 @@ export default function Privacy() {
         including children.
       </Section>
 
+      <Section title="Your rights">
+        Depending on where you live (for example under the GDPR), you can ask to access, correct, export or delete your
+        data. Most of this you can do yourself in the app; for anything else, contact us.
+      </Section>
+
       <Section title="Changes">
-        If we add features such as accounts or cloud sync, we will update this policy before they are released and
-        explain what data they use.
+        If we change what data the app uses, we will update this policy before the change is released.
       </Section>
 
       <Section title="Contact">

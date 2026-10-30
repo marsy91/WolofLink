@@ -16,3 +16,11 @@ ios/App/Pods
 ios/App/App/capacitor.config.json
 *.keystore
 *.jks
+
+# Local environment (Supabase project settings)
+.env
+.env.local
+.env.*.local
+# Supabase CLI state
+supabase/.temp
+supabase/.branches

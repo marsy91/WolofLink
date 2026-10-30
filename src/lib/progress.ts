@@ -39,6 +39,8 @@ export interface SrsCard {
 
 export interface Progress {
   version: 1;
+  /** Last local change (ms). Decides which copy wins for fields that can't be merged. */
+  updatedAt: number;
   profile: Profile | null;
   xpTotal: number;
   /** XP per local calendar day, keyed YYYY-MM-DD. */
@@ -64,6 +66,7 @@ export interface Progress {
 export function emptyProgress(now = Date.now()): Progress {
   return {
     version: 1,
+    updatedAt: 0,
     profile: null,
     xpTotal: 0,
     xpByDay: {},

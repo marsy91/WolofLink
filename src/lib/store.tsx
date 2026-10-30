@@ -14,7 +14,10 @@ interface Store {
   lang: UiLang;
   /** Set when the last write failed, so screens can warn the learner. */
   saveError: boolean;
+  /** Apply a local change; stamps `updatedAt` so sync knows this copy is newer. */
   update: (fn: (p: Progress) => Progress) => void;
+  /** Replace progress wholesale without re-stamping it (used after a cloud merge). */
+  replace: (p: Progress) => void;
   reset: () => void;
   t: (key: UiKey, vars?: Record<string, string | number>) => string;
   /** Interface language used before a profile exists (onboarding). */
@@ -45,7 +48,11 @@ export function StoreProvider({ children, repo = localRepo }: { children: ReactN
     if (ready) setSaveError(!repo.save(progress));
   }, [ready, progress, repo]);
 
-  const update = useCallback((fn: (p: Progress) => Progress) => setProgress((p) => fn(p)), []);
+  const update = useCallback(
+    (fn: (p: Progress) => Progress) => setProgress((p) => ({ ...fn(p), updatedAt: Date.now() })),
+    [],
+  );
+  const replace = useCallback((p: Progress) => setProgress(p), []);
   const reset = useCallback(() => {
     repo.clear();
     setProgress(emptyProgress());
@@ -64,11 +71,12 @@ export function StoreProvider({ children, repo = localRepo }: { children: ReactN
       lang,
       saveError,
       update,
+      replace,
       reset,
       setDraftLang,
       t: (key, vars) => translateKey(lang, key, vars),
     }),
-    [ready, progress, lang, saveError, update, reset],
+    [ready, progress, lang, saveError, update, replace, reset],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

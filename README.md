@@ -208,17 +208,57 @@ standard CLAD spelling and common Dakar usage, but regional variation is real.
   capture will need the `RECORD_AUDIO` permission on Android and `NSMicrophoneUsageDescription`
   on iOS.
 
-## Accounts, sync and notifications later
+## Accounts and cloud sync (Supabase)
 
-- **Auth and cloud sync:** implement `ProgressRepo` (`load`/`save`/`clear`) against
-  Supabase or Firebase, and pass it to `<StoreProvider repo={…}>`. `Profile.guest` is where
-  linking a guest to a cloud account happens. All game rules are pure functions in
-  `progress.ts`, so the server can reuse them.
-- **Push reminders:** add `@capacitor/local-notifications` (works offline) or
-  `@capacitor/push-notifications` with FCM/APNs. Streak and daily-goal data are already in
-  `progress.ts`.
+Accounts are optional. The app works fully offline, and if a build has no Supabase
+settings, account features are hidden.
+
+**How it works**
+- **Sign-in:** the learner types an email and receives a 6-digit code. There are no
+  passwords and no deep links, so it works the same in the browser and the native apps
+  (`src/app/account/page.tsx`).
+- **Sync:** `src/lib/account.tsx` syncs on sign-in, when the app returns to the
+  foreground, and 3 seconds after any local change. Offline changes sync on the next
+  successful round.
+- **Merging:** `src/lib/merge.ts` combines the two copies field by field, so progress
+  from two devices is never lost:
+  - Lessons, dialogues, XP per day, review cards and badges are combined.
+  - Profile, settings, drops and the recent-mistakes list come from the most recently
+    changed copy.
+  - Tests are in `merge.test.ts` and `sync.test.ts`.
+- **Backend boundary:** `src/lib/cloud.ts` is the only file that talks to Supabase, so
+  the backend can be swapped.
+- **Leaving:** signing out keeps progress on the device. *Delete account* removes the
+  account and the cloud copy through the `delete-account` Edge Function. *Reset all
+  progress* in Settings signs out first, so the cloud copy isn't merged straight back.
+
+**One-time setup**
+1. Create a project at [supabase.com](https://supabase.com). Pick an EU region if most
+   learners are in Europe (GDPR).
+2. Database: run `supabase/migrations/20261030000000_progress.sql`, either in the
+   dashboard's SQL editor or with `supabase db push`. It creates the `progress` table with
+   row-level security.
+3. Authentication → Sign In / Providers → Email: keep it enabled, and set the OTP length
+   to **6**.
+4. Authentication → Emails → **Magic Link** template: replace the link with the code,
+   e.g. `<h2>Your WolofLink code</h2><p>{{ .Token }}</p>`. Without `{{ .Token }}`,
+   learners receive a link instead of a code.
+5. Authentication → Emails → SMTP: set up a custom SMTP provider (Resend, Postmark,
+   Brevo…). Supabase's built-in mailer is limited to a few emails per hour and is only for
+   testing.
+6. Deploy account deletion: `supabase functions deploy delete-account`. It uses the
+   service-role key that Supabase injects on the server.
+7. Copy `.env.example` to `.env.local`, then fill in the project URL and the anon /
+   publishable key (Project Settings → API).
+8. Rebuild: `npm run build && npx cap sync`. The values are baked into the build.
+
+## Notifications and paid version
+
+- **Push reminders:** daily reminders already use local notifications. Server-sent push
+  (FCM/APNs) would need `@capacitor/push-notifications`.
 - **Paid version:** keep free content as it is, and gate extra units behind an entitlement
   check in `isUnlocked`, for example with RevenueCat or Google Play Billing / StoreKit.
+  Verify purchases on the server.
 
 ## Brand
 

@@ -8,11 +8,12 @@ import { Button, Dialog, TabScreen } from "@/components/ui";
 import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_NAMES } from "@/i18n";
 import { IconBell } from "@/components/icons";
+import { useAccount } from "@/lib/account";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-const VERSION = "0.3.1";
+const VERSION = "0.4.0";
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -33,6 +34,7 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
 
 export default function Settings() {
   const { progress, update, reset, t } = useStore();
+  const account = useAccount();
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
   const [reminderState, setReminderState] = useState<ReminderResult | null>(null);
@@ -160,7 +162,9 @@ export default function Settings() {
           <Button
             block
             variant="wrong"
-            onClick={() => {
+            onClick={async () => {
+              // Reset this device only: sign out first so the cloud copy isn't merged straight back.
+              if (account.user) await account.signOut();
               reset();
               router.replace("/welcome/");
             }}

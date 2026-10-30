@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IconArrowLeft, IconCheck } from "@/components/icons";
@@ -8,6 +9,7 @@ import { LogoMark, Wordmark } from "@/components/Logo";
 import { Button, Loading, ProgressBar } from "@/components/ui";
 import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_FLAGS, LANG_NAMES } from "@/i18n";
+import { useAccount } from "@/lib/account";
 import { GOALS, type GoalId } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
@@ -46,6 +48,7 @@ function OptionCard({
 
 export default function Welcome() {
   const { ready, progress, lang, setDraftLang, update, t } = useStore();
+  const account = useAccount();
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [goal, setGoal] = useState<GoalId>("regular");
@@ -91,6 +94,11 @@ export default function Welcome() {
           <Button block onClick={() => setStep(1)}>
             {t("onb.start")}
           </Button>
+          {account.available ? (
+            <Link href="/account/" className="mt-4 block text-center font-bold text-sun underline underline-offset-4">
+              {t("acct.haveAccount")}
+            </Link>
+          ) : null}
         </div>
       </main>
     );

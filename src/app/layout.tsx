@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
+import { AccountProvider } from "@/lib/account";
 import { StoreProvider } from "@/lib/store";
 import "./globals.css";
 
@@ -25,7 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-dvh antialiased">
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <AccountProvider>{children}</AccountProvider>
+        </StoreProvider>
       </body>
     </html>
   );
