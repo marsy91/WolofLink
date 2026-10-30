@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Resources looked up by name at runtime, so resource shrinking must keep them.
+     ic_stat_woloflink is the notification icon named in capacitor.config.ts. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_stat_woloflink,@drawable/splash,@mipmap/ic_launcher*" />

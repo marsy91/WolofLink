@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
  * Thin wrappers over native capabilities that degrade gracefully on the web:
  * haptic feedback and the daily practice reminder.

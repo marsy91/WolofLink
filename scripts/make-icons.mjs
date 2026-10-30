@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 // Renders the original WolofLink mark (see src/components/Logo.tsx) into the
 // source PNGs that `@capacitor/assets` turns into Android/iOS icons and
 // splash screens, plus web/PWA icons.  Run with `npm run icons`.

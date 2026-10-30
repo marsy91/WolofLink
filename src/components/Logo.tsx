@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
  * WolofLink mark: two linked speech bubbles under a small sun, on deep indigo.
  * The same geometry is rendered to PNG app icons by scripts/make-icons.mjs.

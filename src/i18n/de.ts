@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Dictionary } from "./en";
 
 export const de: Dictionary = {
@@ -35,7 +36,7 @@ export const de: Dictionary = {
 
   "nav.learn": "Lernen",
   "nav.practice": "Üben",
-  "nav.league": "Liga",
+  "nav.league": "Kreis",
   "nav.profile": "Profil",
   "nav.settings": "Einstellungen",
 
@@ -117,8 +118,8 @@ export const de: Dictionary = {
   "practice.refill": "Eine abgeschlossene Wiederholung füllt einen Tropfen auf.",
   "practice.learned": "{n} Wörter und Sätze gelernt",
 
-  "league.title": "Liga",
-  "league.demo": "Demo-Liga: Das sind Beispiel-Lernende. Echte Ligen kommen mit den Konten.",
+  "league.title": "Kreis",
+  "league.demo": "Demo-Kreis: Das sind Beispiel-Lernende. Echte Kreise kommen mit den Konten.",
   "league.week": "Diese Woche",
   "league.you": "Du",
 
@@ -145,6 +146,7 @@ export const de: Dictionary = {
   "settings.about": "Über",
   "settings.aboutBody": "WolofLink ist eine unabhängige Lern-App. Alle Kursinhalte und Grafiken sind eigene Werke.",
   "settings.version": "Version {v}",
+  "settings.privacy": "Datenschutzerklärung",
 
   "error.storage":
     "Der Fortschritt konnte auf diesem Gerät nicht gespeichert werden. Prüfe, ob der Speicher blockiert ist.",
@@ -194,17 +196,17 @@ export const de: Dictionary = {
   "remind.nTitle": "Zeit für Wolof!",
   "remind.nBody": "Ein paar Minuten heute halten deine Serie am Leben.",
   "settings.haptics": "Vibration",
-  "story.label": "Geschichte",
-  "story.start": "Lesen",
-  "story.locked": "Schließe die Lektionen dieser Einheit ab, um die Geschichte freizuschalten.",
+  "story.label": "Dialog",
+  "story.start": "Zuhören",
+  "story.locked": "Schließe die Lektionen dieser Einheit ab, um den Dialog freizuschalten.",
   "story.translate": "Übersetzungen zeigen",
   "story.tapToHear": "Tippe auf eine Zeile, um sie erneut zu hören.",
   "story.toQuestions": "Fragen beantworten",
   "story.question": "Frage {n} von {total}",
   "story.score": "{n} von {total} richtig",
-  "story.done": "Geschichte geschafft!",
+  "story.done": "Dialog geschafft!",
   "ach.ring.name": "Dritter Ring",
   "ach.ring.desc": "Erreiche Stufe 3 in einer Lektion",
-  "ach.reader.name": "Erzähler",
-  "ach.reader.desc": "Schließe eine Geschichte ab",
+  "ach.reader.name": "Offenes Ohr",
+  "ach.reader.desc": "Schließe einen Dialog ab",
 };

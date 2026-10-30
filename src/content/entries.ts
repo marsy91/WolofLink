@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Entry } from "./types";
 import * as u1 from "./units/u1-greetings";
 import * as u2 from "./units/u2-numbers";

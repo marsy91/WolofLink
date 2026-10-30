@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Entry, StoryLine, StoryQuestion, Translations } from "../types";
 
 /** Translations in fixed order: English, French, Spanish, German, Italian. */

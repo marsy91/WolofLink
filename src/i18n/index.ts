@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Translations, UiLang } from "@/content/types";
 import { de } from "./de";
 import { en, type Dictionary, type UiKey } from "./en";

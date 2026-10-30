@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /** Integrity checks so new lessons and translations can't silently break. */
 import { describe, expect, it } from "vitest";
 import { en } from "@/i18n/en";

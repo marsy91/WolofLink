@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import { describe, expect, it } from "vitest";
 import { course, findLesson } from "@/content/course";
 import { buildExercise, buildLesson, correctAnswerText, gradeTyped, isCorrect, normalize, seeded, tokensOf } from "./engine";

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
  * Lesson engine: turns authored exercise specs into concrete, shuffled
  * exercises for one interface language, and checks answers.

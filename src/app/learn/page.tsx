@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
 import Link from "next/link";
@@ -134,7 +135,7 @@ export default function Learn() {
                             </span>
                             {storyOpen ? (
                               <Link
-                                href={`/story/${unit.story.id}/`}
+                                href={`/dialogue/${unit.story.id}/`}
                                 className="flex items-center gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 shadow-[0_3px_0_var(--color-sand-3)] transition active:translate-y-[2px] active:shadow-none"
                               >
                                 <IconBook size={28} className="shrink-0 text-dusk" />

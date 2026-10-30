@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /** English UI strings. Every other dictionary must provide the same keys. */
 export const en = {
   "app.tagline": "Learn Wolof, one small step at a time",
@@ -33,7 +34,7 @@ export const en = {
 
   "nav.learn": "Learn",
   "nav.practice": "Practice",
-  "nav.league": "League",
+  "nav.league": "Circle",
   "nav.profile": "Profile",
   "nav.settings": "Settings",
 
@@ -113,8 +114,8 @@ export const en = {
   "practice.refill": "Finishing a review refills one drop.",
   "practice.learned": "{n} words and phrases learned",
 
-  "league.title": "League",
-  "league.demo": "Demo league: these are sample learners. Real leagues will arrive with accounts.",
+  "league.title": "Circle",
+  "league.demo": "Demo circle: these are sample learners. Real circles will arrive with accounts.",
   "league.week": "This week",
   "league.you": "You",
 
@@ -140,6 +141,7 @@ export const en = {
   "settings.about": "About",
   "settings.aboutBody": "WolofLink is an independent learning app. All course content and artwork are original.",
   "settings.version": "Version {v}",
+  "settings.privacy": "Privacy policy",
 
   "error.storage": "Progress couldn't be saved on this device. Check that storage isn't blocked.",
 
@@ -188,19 +190,19 @@ export const en = {
   "remind.nTitle": "Time for Wolof!",
   "remind.nBody": "A few minutes today keeps your streak alive.",
   "settings.haptics": "Vibration",
-  "story.label": "Story",
-  "story.start": "Read",
-  "story.locked": "Finish this unit's lessons to unlock the story.",
+  "story.label": "Dialogue",
+  "story.start": "Listen in",
+  "story.locked": "Finish this unit's lessons to unlock the dialogue.",
   "story.translate": "Show translations",
   "story.tapToHear": "Tap a line to hear it again.",
   "story.toQuestions": "Answer the questions",
   "story.question": "Question {n} of {total}",
   "story.score": "{n} of {total} answers right",
-  "story.done": "Story complete!",
+  "story.done": "Dialogue complete!",
   "ach.ring.name": "Third Ring",
   "ach.ring.desc": "Reach level 3 in a lesson",
-  "ach.reader.name": "Storyteller",
-  "ach.reader.desc": "Finish a story",
+  "ach.reader.name": "Keen Ear",
+  "ach.reader.desc": "Finish a dialogue",
 };
 
 export type UiKey = keyof typeof en;

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
  * Lesson session state machine. Missed exercises are re-queued once at the end
  * so the learner sees them again before finishing ("review mistakes").

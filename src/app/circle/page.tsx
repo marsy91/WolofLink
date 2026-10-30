@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
 import { IconInfo, IconPodium } from "@/components/icons";
@@ -6,7 +7,7 @@ import { dayKey } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
 /**
- * Placeholder league. The rivals are clearly-labelled sample learners with
+ * Placeholder learner circle (weekly XP ranking). The rivals are clearly-labelled sample learners with
  * fixed weekly XP; a real league needs accounts and a backend.
  */
 const SAMPLE = [
@@ -24,7 +25,7 @@ function weekXp(byDay: Record<string, number>, now: number): number {
   return total;
 }
 
-export default function League() {
+export default function Circle() {
   const { progress, t } = useStore();
   const now = useNow();
   const me = { name: progress.profile?.name || t("league.you"), xp: weekXp(progress.xpByDay, now), me: true };

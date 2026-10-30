@@ -1,5 +1,8 @@
 # WolofLink
 
+> **Proprietary — all rights reserved.** See [LICENSE](LICENSE), [SECURITY.md](SECURITY.md)
+> and the in-app privacy policy (`/privacy`, source in `src/app/privacy/page.tsx`).
+
 A mobile-first app for learning **Wolof** from English, French, Spanish, German or Italian.
 It's built with Next.js + TypeScript + Tailwind and wrapped with Capacitor, so one codebase
 produces the web app, the Android app (APK/AAB) and the iOS app.
@@ -56,6 +59,12 @@ phone with USB debugging on and run `adb install -r app-debug.apk`.
 
 To open it in Android Studio: `npx cap open android`.
 
+Release builds (`assembleRelease` / `bundleRelease`) are minified, obfuscated and
+resource-shrunk with R8. Capacitor ships keep rules for its plugins;
+`android/app/proguard-rules.pro` keeps the JavaScript bridge, and
+`res/raw/keep.xml` keeps resources looked up by name (the notification icon). After
+changing native plugins, check a release build on a real device before uploading.
+
 ### Publishing to Google Play
 
 1. Create an upload key once, and keep it safe and out of git:
@@ -73,8 +82,10 @@ To open it in Android Studio: `npx cap open android`.
 5. In the Play Console, create the app (package `app.woloflink.learn`), enrol in Play App
    Signing, then upload the AAB to the internal testing track first. You also need: a privacy
    policy URL, the Data safety form, a content rating, a 512×512 icon (`public/icon-512.png`),
-   a feature graphic and screenshots. The Data safety form is short: progress stays on the
-   device, nothing is collected or shared.
+   a feature graphic and screenshots. Ready-made answers for the Data safety form and
+   Apple's privacy label are in `docs/store/privacy-answers.md`. The privacy policy URL is
+   the `/privacy/` page of the deployed web build (any static host works: Netlify,
+   Vercel, Cloudflare Pages).
 
 ### Publishing to the App Store
 
@@ -115,10 +126,11 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
   recognition for recall, and level 3 makes you type. XP rises 5 per level. Typing
   forgives missing accents or one slip in a longer word, then shows the exact spelling. An
   accent bar adds à é ë ó ñ ŋ.
-- **Stories.** Units 1, 3, 6 and 8 end with an original dialogue (tap a
+- **Dialogues.** Units 1, 3, 6 and 8 end with an original dialogue (tap a
   line to hear it, translations optional), followed by comprehension questions. Stories
-  unlock when the unit's lessons are done. Add one by giving a unit a `story` (see the
-  `line()` and `question()` helpers).
+  unlock when the unit's lessons are done (route `/dialogue/<id>`). In code they are
+  still called `story` (the `Story` type and `unit.story`); add one with the `line()` and
+  `question()` helpers.
 - **Drops** are the lives. You have 5. Each wrong answer in a lesson spills one, and one
   comes back every 30 minutes. Reviews never cost drops and refill one when finished.
 - **Streak** is shown as a rising sun. Your first finished session of a day extends it;
@@ -135,8 +147,9 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
   recent mistakes.
 - **Achievements** are 12 original badges (First Steps, Teranga Greeter, Counting to Fukk,
   Ceebu Chef, Clear Water, Three Sunrises, Baobab Sprout, Second Look, Long Road,
-  Full Teraanga, Third Ring, Storyteller).
-- **League** is a clearly labelled demo with sample learners until accounts exist.
+  Full Teraanga, Third Ring, Keen Ear).
+- **Circle** (route `/circle`) is a clearly labelled demo weekly XP ranking with sample
+  learners until accounts exist.
 - **Accessibility:** colour pairs meet WCAG AA, the body font is Atkinson Hyperlegible, and
   every control works from the keyboard. Number keys pick answers and Enter checks or
   continues. There are ARIA roles and labels, the app follows reduced-motion settings, and

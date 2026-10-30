@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
  * Original WolofLink icon set: 24×24, round 2px strokes, `currentColor`.
  * Decorative by default; pass `title` to expose an accessible name.

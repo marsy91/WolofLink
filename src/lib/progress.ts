@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
  * Learner progress: profile, XP, streak, drops (lives), spaced repetition and
  * achievements. Everything here is a pure function of (progress, input, now),

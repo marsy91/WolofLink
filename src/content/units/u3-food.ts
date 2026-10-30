@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Unit } from "../types";
 import { entry, line, question, tx } from "./helpers";
 

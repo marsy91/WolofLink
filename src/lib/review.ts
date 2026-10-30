@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /** Builds a review session from spaced-repetition cards that are due. */
 import { allLessons, course } from "@/content/course";
 import type { ExerciseSpec, UiLang } from "@/content/types";

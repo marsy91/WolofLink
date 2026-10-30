@@ -1,5 +1,7 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button, Dialog, TabScreen } from "@/components/ui";
@@ -10,7 +12,7 @@ import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/nat
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-const VERSION = "0.3.0";
+const VERSION = "0.3.1";
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -139,7 +141,12 @@ export default function Settings() {
         <section className="rounded-2xl bg-white p-4">
           <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("settings.about")}</h2>
           <p className="text-sm text-muted">{t("settings.aboutBody")}</p>
-          <p className="mt-2 text-xs text-muted">{t("settings.version", { v: VERSION })}</p>
+          <p className="mt-2 text-xs text-muted">
+            {t("settings.version", { v: VERSION })} · © 2026 WolofLink ·{" "}
+            <Link href="/privacy/" className="font-bold text-clay underline">
+              {t("settings.privacy")}
+            </Link>
+          </p>
         </section>
 
         <Button block variant="wrong" onClick={() => setConfirm(true)}>

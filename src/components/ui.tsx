@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
 import Link from "next/link";
@@ -122,7 +123,7 @@ function StatusBar() {
 const TABS = [
   { href: "/learn/", key: "nav.learn", Icon: IconPath },
   { href: "/practice/", key: "nav.practice", Icon: IconLoop },
-  { href: "/league/", key: "nav.league", Icon: IconPodium },
+  { href: "/circle/", key: "nav.league", Icon: IconPodium },
   { href: "/profile/", key: "nav.profile", Icon: IconProfile },
 ] as const;
 

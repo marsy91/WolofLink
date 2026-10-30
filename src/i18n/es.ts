@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Dictionary } from "./en";
 
 export const es: Dictionary = {
@@ -34,7 +35,7 @@ export const es: Dictionary = {
 
   "nav.learn": "Aprender",
   "nav.practice": "Repasar",
-  "nav.league": "Liga",
+  "nav.league": "Círculo",
   "nav.profile": "Perfil",
   "nav.settings": "Ajustes",
 
@@ -115,8 +116,8 @@ export const es: Dictionary = {
   "practice.refill": "Terminar un repaso llena una gota.",
   "practice.learned": "{n} palabras y frases aprendidas",
 
-  "league.title": "Liga",
-  "league.demo": "Liga de prueba: son estudiantes de ejemplo. Las ligas reales llegarán con las cuentas.",
+  "league.title": "Círculo",
+  "league.demo": "Círculo de prueba: son estudiantes de ejemplo. Los círculos reales llegarán con las cuentas.",
   "league.week": "Esta semana",
   "league.you": "Tú",
 
@@ -144,6 +145,7 @@ export const es: Dictionary = {
   "settings.aboutBody":
     "WolofLink es una aplicación de aprendizaje independiente. Todo el contenido y las ilustraciones son originales.",
   "settings.version": "Versión {v}",
+  "settings.privacy": "Política de privacidad",
 
   "error.storage": "No se pudo guardar el progreso en este dispositivo. Comprueba que el almacenamiento no esté bloqueado.",
 
@@ -192,17 +194,17 @@ export const es: Dictionary = {
   "remind.nTitle": "¡Hora de wolof!",
   "remind.nBody": "Unos minutos hoy mantienen viva tu racha.",
   "settings.haptics": "Vibración",
-  "story.label": "Historia",
-  "story.start": "Leer",
-  "story.locked": "Termina las lecciones de esta unidad para desbloquear la historia.",
+  "story.label": "Diálogo",
+  "story.start": "Escuchar",
+  "story.locked": "Termina las lecciones de esta unidad para desbloquear el diálogo.",
   "story.translate": "Mostrar traducciones",
   "story.tapToHear": "Toca una frase para volver a oírla.",
   "story.toQuestions": "Responder las preguntas",
   "story.question": "Pregunta {n} de {total}",
   "story.score": "{n} de {total} respuestas correctas",
-  "story.done": "¡Historia completada!",
+  "story.done": "¡Diálogo completado!",
   "ach.ring.name": "Tercer anillo",
   "ach.ring.desc": "Llega al nivel 3 en una lección",
-  "ach.reader.name": "Cuentacuentos",
-  "ach.reader.desc": "Termina una historia",
+  "ach.reader.name": "Oído atento",
+  "ach.reader.desc": "Termina un diálogo",
 };

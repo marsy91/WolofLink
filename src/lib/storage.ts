@@ -1,3 +1,4 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
  * Persistence boundary. The app only talks to `ProgressRepo`, so a cloud
  * implementation (Supabase, Firebase…) can replace or wrap the local one
