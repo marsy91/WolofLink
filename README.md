@@ -248,8 +248,9 @@ settings, account features are hidden.
    testing.
 6. Deploy account deletion: `supabase functions deploy delete-account`. It uses the
    service-role key that Supabase injects on the server.
-7. Copy `.env.example` to `.env.local`, then fill in the project URL and the anon /
-   publishable key (Project Settings → API).
+7. Put the project URL and the anon / publishable key (Project Settings → API) in
+   `.env.production`, which is committed because both values are public. For local
+   overrides, copy `.env.example` to `.env.local`.
 8. Rebuild: `npm run build && npx cap sync`. The values are baked into the build.
 
 ## Notifications and paid version
