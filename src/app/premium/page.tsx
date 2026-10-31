@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IconCheck, IconClose, IconGem } from "@/components/icons";
-import { Button, Loading, useRequireProfile } from "@/components/ui";
+import { Button, Loading, RedirectTo, useRequireProfile } from "@/components/ui";
 import { course } from "@/content/course";
 import type { UiKey } from "@/i18n";
 import type { PlanKind } from "@/lib/billing";
+import { PREMIUM_ENABLED } from "@/lib/features";
 import { FREE_LESSON_COUNT, TOTAL_LESSON_COUNT } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
 import { useStore } from "@/lib/store";
@@ -21,7 +22,12 @@ const PLAN_LABEL: Record<PlanKind, UiKey> = {
 };
 const ORDER: PlanKind[] = ["annual", "monthly", "lifetime", "other"];
 
-export default function PremiumPage() {
+/** Premium is switched off in free builds (src/lib/features.ts): send old links to the path. */
+export default function PremiumRoute() {
+  return PREMIUM_ENABLED ? <PremiumPage /> : <RedirectTo href="/learn/" />;
+}
+
+function PremiumPage() {
   const allowed = useRequireProfile();
   const { t } = useStore();
   const p = usePremium();

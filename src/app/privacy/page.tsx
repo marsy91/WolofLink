@@ -1,15 +1,17 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ACCOUNTS_ENABLED, PREMIUM_ENABLED } from "@/lib/features";
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
-const UPDATED = "31 October 2026 (accounts, sync and purchases)";
+const UPDATED = "31 October 2026";
 
 /**
  * Public privacy policy (also needed as a URL for Google Play and the App
  * Store). Keep it in sync with SECURITY.md and docs/store/privacy-answers.md
- * whenever data handling changes, e.g. when accounts are added.
+ * whenever data handling changes. The account and purchase sections appear
+ * only in builds with those features switched on (src/lib/features.ts).
  */
 export default function Privacy() {
   return (
@@ -21,9 +23,18 @@ export default function Privacy() {
       <p className="mb-6 text-sm text-muted">Last updated: {UPDATED}</p>
 
       <Section title="Summary">
-        WolofLink works without an account, and then your progress stays only on your device. If you choose to create an
-        account, we store your email address and your learning progress so you can continue on other devices. We never
-        sell or share your data, and there is no advertising and no analytics.
+        {ACCOUNTS_ENABLED ? (
+          <>
+            WolofLink works without an account, and then your progress stays only on your device. If you choose to
+            create an account, we store your email address and your learning progress so you can continue on other
+            devices. We never sell or share your data, and there is no advertising and no analytics.
+          </>
+        ) : (
+          <>
+            WolofLink has no accounts: your progress stays only on your device. We do not collect, sell or share any
+            personal data, and there is no advertising and no analytics.
+          </>
+        )}
       </Section>
 
       <Section title="What is stored, and where">
@@ -33,29 +44,34 @@ export default function Privacy() {
           <li>An optional first name you type during setup, shown only to you.</li>
         </ul>
         <p className="mt-2">
-          Without an account, this information is saved only in the app&apos;s private storage on your device.
+          {ACCOUNTS_ENABLED ? "Without an account, this" : "This"} information is saved only in the app&apos;s private
+          storage on your device.
         </p>
       </Section>
 
-      <Section title="Optional account and cloud sync">
-        <p>If you create an account, we process:</p>
-        <ul className="mt-2 list-disc space-y-1 pl-5">
-          <li>your email address, to send you sign-in codes and identify your account;</li>
-          <li>a copy of the progress and settings listed above, so they sync between your devices.</li>
-        </ul>
-        <p className="mt-2">
-          This data is stored by our hosting provider, Supabase, encrypted in transit (HTTPS) and at rest, and each
-          account can only read its own data. We use it only to run the app. You can delete your account and its cloud
-          data at any time in the app (Profile → Account → Delete account); deletion is immediate and permanent.
-        </p>
-      </Section>
+      {ACCOUNTS_ENABLED ? (
+        <Section title="Optional account and cloud sync">
+          <p>If you create an account, we process:</p>
+          <ul className="mt-2 list-disc space-y-1 pl-5">
+            <li>your email address, to send you sign-in codes and identify your account;</li>
+            <li>a copy of the progress and settings listed above, so they sync between your devices.</li>
+          </ul>
+          <p className="mt-2">
+            This data is stored by our hosting provider, Supabase, encrypted in transit (HTTPS) and at rest, and each
+            account can only read its own data. We use it only to run the app. You can delete your account and its cloud
+            data at any time in the app (Profile → Account → Delete account); deletion is immediate and permanent.
+          </p>
+        </Section>
+      ) : null}
 
-      <Section title="Purchases (WolofLink Premium)">
-        Payments are handled entirely by Google Play or the Apple App Store; we never see your card details. To check
-        your subscription, the app uses RevenueCat, which receives an anonymous app user ID (or your account ID if you
-        are signed in) and your purchase history from the store. RevenueCat acts as our service provider and does not
-        sell this data.
-      </Section>
+      {PREMIUM_ENABLED ? (
+        <Section title="Purchases (WolofLink Premium)">
+          Payments are handled entirely by Google Play or the Apple App Store; we never see your card details. To check
+          your subscription, the app uses RevenueCat, which receives an anonymous app user ID (or your account ID if you
+          are signed in) and your purchase history from the store. RevenueCat acts as our service provider and does not
+          sell this data.
+        </Section>
+      ) : null}
 
       <Section title="Device features">
         <ul className="list-disc space-y-1 pl-5">
@@ -76,8 +92,10 @@ export default function Privacy() {
       </Section>
 
       <Section title="Deleting your data">
-        On your device: Settings → Reset all progress, or uninstall the app. In the cloud: Profile → Account → Delete
-        account, which permanently removes your account, email address and synced progress.
+        On your device: Settings → Reset all progress, or uninstall the app.
+        {ACCOUNTS_ENABLED
+          ? " In the cloud: Profile → Account → Delete account, which permanently removes your account, email address and synced progress."
+          : null}
       </Section>
 
       <Section title="Children">

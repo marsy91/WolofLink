@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { CIRCLE_ENABLED } from "@/lib/features";
 import { currentStreak, dailyGoal, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 import { GlyphChat, IconDrop, IconLoop, IconPath, IconPodium, IconProfile, IconSpark, IconSun } from "./icons";
@@ -61,6 +62,15 @@ export function useRequireProfile() {
     if (ready && !progress.profile) router.replace("/welcome/");
   }, [ready, progress.profile, router]);
   return ready && !!progress.profile;
+}
+
+/** Client-side redirect for screens a build switches off (static export has no server redirects). */
+export function RedirectTo({ href }: { href: string }) {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace(href);
+  }, [href, router]);
+  return <Loading />;
 }
 
 export function Loading() {
@@ -124,7 +134,8 @@ const TABS = [
   { href: "/learn/", key: "nav.learn", Icon: IconPath },
   { href: "/practice/", key: "nav.practice", Icon: IconLoop },
   { href: "/phrases/", key: "nav.phrases", Icon: GlyphChat },
-  { href: "/circle/", key: "nav.league", Icon: IconPodium },
+  // The Circle is a demo ranking with sample learners; off unless NEXT_PUBLIC_CIRCLE=on.
+  ...(CIRCLE_ENABLED ? [{ href: "/circle/", key: "nav.league", Icon: IconPodium } as const] : []),
   { href: "/profile/", key: "nav.profile", Icon: IconProfile },
 ] as const;
 

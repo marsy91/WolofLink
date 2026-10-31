@@ -6,6 +6,7 @@ import { BADGE_GLYPHS, IconGem, IconLock, IconProfile, IconRosette, IconShield, 
 import { TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
+import { PREMIUM_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { ACHIEVEMENTS, currentStreak, MAX_SHIELDS } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
@@ -50,16 +51,18 @@ export default function Profile() {
         ))}
       </dl>
 
-      <Link
-        href="/premium/"
-        className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 active:translate-y-[2px]"
-      >
-        <IconGem size={28} className="shrink-0 text-dusk" />
-        <span className="flex-1">
-          <span className="block font-display font-extrabold text-night">{t("premium.title")}</span>
-          <span className="text-sm text-muted">{premium ? t("premium.thanks") : t("premium.subtitle")}</span>
-        </span>
-      </Link>
+      {PREMIUM_ENABLED ? (
+        <Link
+          href="/premium/"
+          className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 active:translate-y-[2px]"
+        >
+          <IconGem size={28} className="shrink-0 text-dusk" />
+          <span className="flex-1">
+            <span className="block font-display font-extrabold text-night">{t("premium.title")}</span>
+            <span className="text-sm text-muted">{premium ? t("premium.thanks") : t("premium.subtitle")}</span>
+          </span>
+        </Link>
+      ) : null}
 
       <section className="mb-6 flex gap-3 rounded-2xl bg-night p-4 text-sand" aria-labelledby="shield-h">
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-sun">

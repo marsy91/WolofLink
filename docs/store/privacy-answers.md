@@ -1,10 +1,44 @@
-# Store privacy answers (WolofLink 0.5.x, with optional accounts and Premium)
+# Store privacy answers
 
-Keep these in sync with `src/app/privacy/page.tsx` and `SECURITY.md`.
-If a build ships **without** Supabase configured (no `.env.local`), accounts are
-hidden and the 0.3.x answers apply instead: "No data collected".
+Keep these in sync with `src/app/privacy/page.tsx`, `SECURITY.md` and the build
+switches in `.env.production` (README, "Launch configuration").
 
-## Google Play — Data safety form
+## WolofLink 0.6 launch build (Premium, accounts and Circle switched off)
+
+This build has no accounts, no purchases, no ads, no analytics and no network
+requests for user data: everything stays on the device.
+
+### Google Play — Data safety form
+
+- **Does your app collect or share any of the required user data types?** No.
+- **Is all of the user data collected by your app encrypted in transit?** Not
+  applicable (no data is collected).
+- **Do you provide a way for users to request that their data is deleted?** Not
+  applicable; learners can wipe their progress in the app (Settings → Reset all
+  progress) or by uninstalling.
+
+Other declarations:
+- **Ads:** No.
+- **App access:** All functionality is available without special access (no login).
+- **Target audience:** 13+ is the simplest choice (the app is suitable for all
+  ages, but choosing under-13 audiences triggers the Families policy review).
+- **Content rating:** answer "No" to violence, sexual content, profanity, drugs,
+  gambling and user interaction; an education app normally gets PEGI 3 / Everyone.
+- **Privacy policy URL:** required even with no data collected; host the
+  `/privacy/` page (see README, "Publishing to Google Play").
+
+### Apple App Store — App Privacy
+
+"Data Not Collected".
+
+---
+
+## Builds with accounts and/or Premium switched on
+
+Use these answers instead once `NEXT_PUBLIC_ACCOUNTS` or `NEXT_PUBLIC_PREMIUM`
+is turned on.
+
+### Google Play — Data safety form
 
 **Does your app collect or share any of the required user data types?** Yes.
 
@@ -27,7 +61,7 @@ hidden and the 0.3.x answers apply instead: "No data collected".
 Other declarations: no ads; all features work without login (App access); the
 target-audience and content-rating answers are unchanged.
 
-## Apple App Store — App Privacy
+### Apple App Store — App Privacy
 
 **Data Linked to You** (not used for tracking):
 - Contact Info → Email Address — App Functionality

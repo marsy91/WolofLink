@@ -10,6 +10,7 @@
  */
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Progress } from "./progress";
+import { ACCOUNTS_ENABLED } from "./features";
 
 export interface CloudUser {
   id: string;
@@ -48,6 +49,7 @@ export interface CloudBackend {
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export function cloudConfig(): { url: string; anonKey: string } | null {
+  if (!ACCOUNTS_ENABLED) return null;
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   return url && anonKey ? { url, anonKey } : null;

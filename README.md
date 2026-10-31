@@ -65,6 +65,22 @@ resource-shrunk with R8. Capacitor ships keep rules for its plugins;
 `res/raw/keep.xml` keeps resources looked up by name (the notification icon). After
 changing native plugins, check a release build on a real device before uploading.
 
+### Launch configuration
+
+Three build switches in `.env.production` (read by `src/lib/features.ts`, fixed when the
+app is built) decide what a store build contains. The 0.6 launch build ships everything
+free:
+
+| Switch | Launch value | What it does |
+| --- | --- | --- |
+| `NEXT_PUBLIC_PREMIUM` | `off` | `off`: every unit and dialogue is free, the Premium screen and links are hidden and the store SDK never loads. `on`: units 4–12 need Premium (set up RevenueCat and the store products first; see "Premium" below). |
+| `NEXT_PUBLIC_ACCOUNTS` | `off` | Hides the optional account and cloud sync even though the Supabase settings are present. Turn it back on once the sign-in emails show the 6-digit code (Supabase → Authentication → Emails: put `{{ .Token }}` in the *Magic Link* and *Confirm signup* templates). |
+| `NEXT_PUBLIC_CIRCLE` | `off` | The Circle tab is a demo ranking with sample learners; keep it off in store builds. |
+
+The privacy policy page shows its account and purchase sections only when those features
+are on, so it always matches the build. Update the Data safety answers
+(`docs/store/privacy-answers.md`) whenever you change a switch.
+
 ### Publishing to Google Play
 
 1. Create an upload key once, and keep it safe and out of git:
@@ -276,6 +292,9 @@ settings, account features are hidden.
 - **Push reminders:** daily reminders already use local notifications. Server-sent push
   (FCM/APNs) would need `@capacitor/push-notifications`.
 ## Premium (in-app purchases)
+
+> **Switched off in the 0.6 launch build** (`NEXT_PUBLIC_PREMIUM=off`): every unit is free.
+> Everything below applies once you set it to `on`.
 
 **What it gives:** units 1–3 (9 lessons and their dialogue) are free. **Premium** unlocks
 every unit and dialogue, plus unlimited drops.

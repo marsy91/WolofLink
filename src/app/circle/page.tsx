@@ -2,7 +2,8 @@
 "use client";
 
 import { IconInfo, IconPodium } from "@/components/icons";
-import { TabScreen } from "@/components/ui";
+import { RedirectTo, TabScreen } from "@/components/ui";
+import { CIRCLE_ENABLED } from "@/lib/features";
 import { dayKey } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
@@ -25,7 +26,12 @@ function weekXp(byDay: Record<string, number>, now: number): number {
   return total;
 }
 
-export default function Circle() {
+/** The Circle is a demo; hidden unless NEXT_PUBLIC_CIRCLE=on (src/lib/features.ts). */
+export default function CircleRoute() {
+  return CIRCLE_ENABLED ? <Circle /> : <RedirectTo href="/learn/" />;
+}
+
+function Circle() {
   const { progress, t } = useStore();
   const now = useNow();
   const me = { name: progress.profile?.name || t("league.you"), xp: weekXp(progress.xpByDay, now), me: true };

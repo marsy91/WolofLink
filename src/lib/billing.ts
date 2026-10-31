@@ -10,6 +10,7 @@
  */
 import { Capacitor } from "@capacitor/core";
 import { ENTITLEMENT } from "./premium";
+import { PREMIUM_ENABLED } from "./features";
 
 export type PlanKind = "monthly" | "annual" | "lifetime" | "other";
 
@@ -45,7 +46,8 @@ let backend: BillingBackend | null | undefined;
 /** The billing backend, or null where purchases aren't available (web, or no key). */
 export function getBilling(): BillingBackend | null {
   if (backend !== undefined) return backend;
-  const key = Capacitor.isNativePlatform() ? sdkKey() : undefined;
+  // Premium switched off: everything is free, so the store SDK is never loaded.
+  const key = PREMIUM_ENABLED && Capacitor.isNativePlatform() ? sdkKey() : undefined;
   backend = key ? revenueCatBackend(key) : null;
   return backend;
 }
