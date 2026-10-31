@@ -12,7 +12,7 @@ segs/. At the end, lines are assembled (sentences joined by a short pause)
 into lines/<id>.wav and report.json lists the scores.
 
 usage: python generate.py LINES_JSON OUT_DIR [--batch 16] [--rounds 1,3,6]
-       [--desc-tok t5|adia] [--ids a,b] [--limit n] [--accept 0.25] [--asr-bf16]
+       [--desc-tok adia|t5] [--ids a,b] [--limit n] [--accept 0.25]
 """
 import argparse
 import json
@@ -106,13 +106,16 @@ def main() -> None:
     ap.add_argument("out")
     ap.add_argument("--batch", type=int, default=16)
     ap.add_argument("--rounds", default="1,3,6")
-    ap.add_argument("--desc-tok", default="t5")
+    # Adia's own example tokenises the voice description with the prompt tokenizer; it sounds clearer.
+    ap.add_argument("--desc-tok", default="adia")
     ap.add_argument("--ids", default="")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--accept", type=float, default=0.25)
     ap.add_argument("--threads", type=int, default=4)
-    ap.add_argument("--asr-bf16", action="store_true")
+    ap.add_argument("--asr-fp32", action="store_true", help="run the checker in fp32 (slower)")
     ap.add_argument("--temperature", type=float, default=0.8)
+    ap.add_argument("--asr-window", type=float, default=10.0,
+                    help="seconds of audio the checker looks at (Whisper's default is 30; 10 is ~4x faster)")
     args = ap.parse_args()
     torch.set_num_threads(args.threads)
 
@@ -148,7 +151,17 @@ def main() -> None:
     dtok = AutoTokenizer.from_pretrained("google/flan-t5-large") if args.desc_tok == "t5" else ptok
     proc = WhisperProcessor.from_pretrained("M9and2M/whisper-small-wolof")
     asr = WhisperForConditionalGeneration.from_pretrained(
-        "M9and2M/whisper-small-wolof", torch_dtype=torch.bfloat16 if args.asr_bf16 else torch.float32).eval()
+        "M9and2M/whisper-small-wolof", torch_dtype=torch.float32 if args.asr_fp32 else torch.bfloat16).eval()
+    # Every sentence is far shorter than Whisper's 30 s window, so let the encoder look at a shorter one
+    # (the same trick as whisper.cpp's audio_ctx): keep the first positional embeddings only.
+    asr_frames = int(args.asr_window * 100)
+    if asr_frames < 3000:
+        enc = asr.model.encoder
+        positions = asr_frames // 2
+        embed = torch.nn.Embedding(positions, enc.embed_positions.embedding_dim, dtype=enc.embed_positions.weight.dtype)
+        embed.weight.data = enc.embed_positions.weight.data[:positions].clone()
+        enc.embed_positions = embed
+        enc.config.max_source_positions = positions
     print(f"loaded in {time.time() - t0:.0f}s; {len(lines)} lines, {len(segs)} sentences; "
           f"{sum(len(v) for v in tries.values())} takes already logged", flush=True)
 
@@ -169,7 +182,7 @@ def main() -> None:
     def transcribe(clips: list[np.ndarray]) -> list[str]:
         a16 = [resample_poly(c, 2, 3).astype(np.float32) if len(c) > 160 else np.zeros(1600, np.float32)
                for c in clips]
-        feats = proc(a16, sampling_rate=16000, return_tensors="pt").input_features.to(asr.dtype)
+        feats = proc(a16, sampling_rate=16000, return_tensors="pt").input_features.to(asr.dtype)[..., :asr_frames]
         with torch.inference_mode():
             ids = asr.generate(feats, max_new_tokens=48)
         return [t.strip() for t in proc.batch_decode(ids, skip_special_tokens=True)]
