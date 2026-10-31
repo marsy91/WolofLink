@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /** Every line a voice actor needs to record, in course order. Shared by the audio scripts. */
 import { course, storyLineId } from "../src/content/course";
+import { phrasebook } from "../src/content/phrasebook";
 
 export interface AudioLine {
   /** File name without extension; also the key in audio-manifest.json. */
@@ -52,5 +53,19 @@ export function audioLines(): AudioLine[] {
       });
     }
   });
+  for (const cat of phrasebook) {
+    for (const p of cat.phrases) {
+      lines.push({
+        id: p.id,
+        wolof: p.wo,
+        english: p.tr.en,
+        french: p.tr.fr ?? "",
+        kind: p.wo.trim().includes(" ") ? "phrase" : "word",
+        unit: "Phrasebook",
+        lesson: cat.title.en,
+        ...(p.note ? { note: p.note.en } : {}),
+      });
+    }
+  }
   return lines;
 }

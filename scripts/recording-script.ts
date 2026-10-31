@@ -10,7 +10,10 @@ import manifest from "../src/content/audio-manifest.json";
 import { audioLines } from "./audio-lines";
 
 const lines = audioLines();
-const done = manifest as Record<string, string>;
+// Only human recordings count as done; AI clips (audio/wo-ai/) are placeholders to replace.
+const done = Object.fromEntries(
+  Object.entries(manifest as Record<string, string>).filter(([, file]) => file.startsWith("audio/wo/")),
+);
 mkdirSync("docs/audio", { recursive: true });
 
 const csvCell = (v: string) => `"${v.replace(/"/g, '""')}"`;

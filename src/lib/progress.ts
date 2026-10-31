@@ -55,6 +55,8 @@ export interface Progress {
   achievements: Record<string, number>;
   reviews: number;
   stories: Record<string, { times: number; lastAt: number }>;
+  /** Phrasebook ids the learner starred, most recent first. */
+  savedPhrases: string[];
   settings: {
     sound: boolean;
     autoplay: boolean;
@@ -78,6 +80,7 @@ export function emptyProgress(now = Date.now()): Progress {
     achievements: {},
     reviews: 0,
     stories: {},
+    savedPhrases: [],
     settings: { sound: true, autoplay: true, haptics: true, reminder: { enabled: false, hour: 19, minute: 0 } },
   };
 }
@@ -290,6 +293,12 @@ export function applySession(p: Progress, r: SessionResult, now: number): ApplyO
   next = { ...next, achievements };
 
   return { progress: next, newAchievements, streakExtended, shieldUsed, shieldEarned };
+}
+
+/** Star or unstar a phrasebook entry. */
+export function toggleSavedPhrase(p: Progress, id: string): Progress {
+  const saved = p.savedPhrases.includes(id) ? p.savedPhrases.filter((x) => x !== id) : [id, ...p.savedPhrases];
+  return { ...p, savedPhrases: saved };
 }
 
 /** Level the next play of a lesson will use (1–3); replays after that stay at 3. */

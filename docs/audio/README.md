@@ -23,9 +23,10 @@ This folder holds everything for the native-speaker recordings.
    npm run build && npx cap sync
    ```
    The importer trims silence at both ends, evens out the volume and converts to small mono
-   MP3 files in `public/audio/wo/`. It warns about any file name it doesn't recognise. The
-   app plays a recording automatically wherever one exists, and keeps using the computer
-   voice everywhere else, so you can import in batches.
+   MP3 files in `public/audio/wo/`. It warns about any file name it doesn't recognise. Each
+   recording replaces the AI-generated clip of the same line (see
+   [ai-voice-report.md](ai-voice-report.md)), and the app keeps the AI voice everywhere
+   else, so you can import in batches. Start with the lines the report flags.
 
 Have the speaker also **check the Wolof text** as they read. Note anything that sounds
 unnatural or is spelled unusually, so the course can be corrected.

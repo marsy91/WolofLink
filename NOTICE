@@ -1,0 +1,20 @@
+WolofLink
+Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
+
+Third-party credits
+-------------------
+
+Wolof AI voice
+  The audio clips in public/audio/wo-ai/ were generated with Adia_TTS,
+  created by CONCREE: https://huggingface.co/CONCREE/Adia_TTS
+  Adia_TTS is licensed under the Apache License, Version 2.0:
+  http://www.apache.org/licenses/LICENSE-2.0
+  It is fine-tuned from parler-tts/parler-tts-mini-multilingual-v1.1
+  (Apache License 2.0). The model itself is not included in the app.
+
+Audio quality check (not included in the app)
+  The generated clips were checked with M9and2M/whisper-small-wolof
+  (MIT License): https://huggingface.co/M9and2M/whisper-small-wolof
+
+Open-source packages used by the app are listed in package.json; their
+licences are in node_modules/<package>/LICENSE.

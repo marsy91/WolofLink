@@ -12,6 +12,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import audioManifest from "./audio-manifest.json";
 import { allLessons, allStories, course, storyLineId } from "./course";
+import { allPhrases } from "./phrasebook";
 import { duplicateIds } from "./entries";
 import { UI_LANGS } from "./types";
 
@@ -107,11 +108,14 @@ describe("stories", () => {
 describe("audio manifest", () => {
   it("only points at known lines and files that exist", () => {
     const known = new Set([
+      ...allPhrases.map((p) => p.id),
       ...Object.keys(course.entries),
       ...allStories.flatMap(({ story }) => story.lines.map((_, i) => storyLineId(story.id, i))),
     ]);
     for (const [id, file] of Object.entries(audioManifest as Record<string, string>)) {
       expect(known.has(id), `unknown audio id ${id}`).toBe(true);
+      // Human recordings in audio/wo/, AI clips in audio/wo-ai/ (the app labels those).
+      expect(file, id).toMatch(/^audio\/wo(-ai)?\/[^/]+\.mp3$/);
       expect(existsSync(path.join("public", file)), `missing file public/${file}`).toBe(true);
     }
   });

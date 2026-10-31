@@ -3,8 +3,10 @@
  * Pronunciation audio.
  *
  * Order of preference:
- *  1. A recorded clip: `entry.audio`, or the id's file in
+ *  1. A clip: `entry.audio`, or the id's file in
  *     src/content/audio-manifest.json (written by `npm run audio:import`).
+ *     Human recordings live in audio/wo/; AI-generated clips (Adia TTS by
+ *     CONCREE, Apache-2.0) live in audio/wo-ai/ and are labelled as such.
  *  2. The device text-to-speech engine. No mainstream engine ships a Wolof
  *     voice, so we use French, whose spelling-to-sound rules are closest to
  *     Wolof's Latin orthography. The UI labels this as a computer voice.
@@ -16,7 +18,10 @@ import { Capacitor } from "@capacitor/core";
 import audioManifest from "@/content/audio-manifest.json";
 import type { Entry } from "@/content/types";
 
-export type AudioSource = "recording" | "tts" | "none";
+export type AudioSource = "recording" | "ai" | "tts" | "none";
+
+/** Folder of AI-generated clips, so the UI can label them. */
+export const AI_CLIP_DIR = "audio/wo-ai/";
 
 const TTS_LANG = "fr-FR";
 let currentClip: HTMLAudioElement | null = null;
@@ -28,8 +33,14 @@ export function clipFor(entry: Entry): string | undefined {
   return entry.audio ?? manifest[entry.id];
 }
 
+const clipSource = (clip: string): AudioSource => (clip.startsWith(AI_CLIP_DIR) ? "ai" : "recording");
+
+/** True when at least one line uses an AI clip (the About section then credits the voice). */
+export const hasAiClips = Object.values(manifest).some((clip) => clip.startsWith(AI_CLIP_DIR));
+
 export function audioSourceFor(entry: Entry): AudioSource {
-  if (clipFor(entry)) return "recording";
+  const clip = clipFor(entry);
+  if (clip) return clipSource(clip);
   if (Capacitor.isNativePlatform()) return "tts";
   if (typeof window !== "undefined" && "speechSynthesis" in window) return "tts";
   return "none";
@@ -43,7 +54,7 @@ export async function playEntry(entry: Entry, { slow = false } = {}): Promise<Au
       currentClip = new Audio(`/${clip}`);
       currentClip.playbackRate = slow ? 0.7 : 1;
       await currentClip.play();
-      return "recording";
+      return clipSource(clip);
     } catch {
       // Missing or blocked clip: fall through to TTS.
     }

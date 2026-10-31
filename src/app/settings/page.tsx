@@ -9,11 +9,12 @@ import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_NAMES } from "@/i18n";
 import { IconBell } from "@/components/icons";
 import { useAccount } from "@/lib/account";
+import { hasAiClips } from "@/lib/audio";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-const VERSION = "0.5.0";
+const VERSION = "0.6.0";
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -143,6 +144,7 @@ export default function Settings() {
         <section className="rounded-2xl bg-white p-4">
           <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("settings.about")}</h2>
           <p className="text-sm text-muted">{t("settings.aboutBody")}</p>
+          {hasAiClips ? <p className="mt-2 text-sm text-muted">{t("settings.voice")}</p> : null}
           <p className="mt-2 text-xs text-muted">
             {t("settings.version", { v: VERSION })} · © 2026 WolofLink ·{" "}
             <Link href="/privacy/" className="font-bold text-clay underline">

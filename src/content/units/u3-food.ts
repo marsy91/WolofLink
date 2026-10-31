@@ -80,7 +80,7 @@ export const entries = [
   ]),
 
   // food-3
-  entry("f.ndekki", "ndekki", ["breakfast", "petit-déjeuner", "desayuno", "Frühstück", "colazione"], { pic: "🍞" }),
+  entry("f.ndekki", "ndékki", ["breakfast", "petit-déjeuner", "desayuno", "Frühstück", "colazione"], { pic: "🍞" }),
   entry("f.an", "añ", ["lunch", "déjeuner", "almuerzo", "Mittagessen", "pranzo"], { pic: "☀️" }),
   entry("f.reer", "reer", ["dinner", "dîner", "cena", "Abendessen", "cena"], { pic: "🌃" }),
   entry("f.togg", "togg", ["to cook", "cuisiner", "cocinar", "kochen", "cucinare"], { pic: "🍳" }),
@@ -199,11 +199,11 @@ export const unit: Unit = {
       id: "food-3",
       title: tx(["Meals and cooking", "Repas et cuisine", "Comidas y cocina", "Mahlzeiten und Kochen", "Pasti e cucina"]),
       tip: tx([
-        "The three meals are ndekki, añ and reer. Lunch (añ) is usually the big shared meal of the day.",
-        "Les trois repas sont ndekki, añ et reer. Le déjeuner (añ) est en général le grand repas partagé.",
-        "Las tres comidas son ndekki, añ y reer. El almuerzo (añ) suele ser la gran comida compartida.",
-        "Die drei Mahlzeiten heißen ndekki, añ und reer. Das Mittagessen (añ) ist meist die große gemeinsame Mahlzeit.",
-        "I tre pasti sono ndekki, añ e reer. Il pranzo (añ) è di solito il grande pasto condiviso.",
+        "The three meals are ndékki, añ and reer. Lunch (añ) is usually the big shared meal of the day.",
+        "Les trois repas sont ndékki, añ et reer. Le déjeuner (añ) est en général le grand repas partagé.",
+        "Las tres comidas son ndékki, añ y reer. El almuerzo (añ) suele ser la gran comida compartida.",
+        "Die drei Mahlzeiten heißen ndékki, añ und reer. Das Mittagessen (añ) ist meist die große gemeinsame Mahlzeit.",
+        "I tre pasti sono ndékki, añ e reer. Il pranzo (añ) è di solito il grande pasto condiviso.",
       ]),
       entries: ["f.ndekki", "f.an", "f.reer", "f.togg", "f.ginaar", "f.gerte", "f.yassa", "f.lantogg", "f.toggceeb"],
       exercises: [

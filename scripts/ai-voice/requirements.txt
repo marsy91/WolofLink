@@ -1,0 +1,7 @@
+# Install torch/torchaudio first (CPU wheels: --index-url https://download.pytorch.org/whl/cpu).
+parler_tts==0.2.3
+transformers==4.46.1
+sentencepiece==0.2.2
+soundfile==0.14.0
+scipy==1.17.1
+numpy==2.4.6

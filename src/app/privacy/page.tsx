@@ -60,8 +60,9 @@ export default function Privacy() {
       <Section title="Device features">
         <ul className="list-disc space-y-1 pl-5">
           <li>
-            <strong>Audio:</strong> Wolof words are read aloud by your device&apos;s text-to-speech service. That service is
-            provided by your phone or browser maker and is covered by their privacy policy.
+            <strong>Audio:</strong> the Wolof audio clips are stored inside the app and play without a connection. If a
+            line has no clip, it is read aloud by your device&apos;s text-to-speech service, which is provided by your
+            phone or browser maker and covered by their privacy policy.
           </li>
           <li>
             <strong>Notifications:</strong> if you turn on the daily reminder, the app schedules a notification on your

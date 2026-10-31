@@ -24,7 +24,7 @@ export const entries = [
   }),
   entry("c.deggnaa", "Dégg naa", ["I understand", "Je comprends", "Entiendo", "Ich verstehe", "Capisco"]),
   entry("c.mennaa", "Mën naa", ["I can", "Je peux", "Puedo", "Ich kann", "Posso"]),
-  entry("c.waxal", "Waxal ndank", ["Speak slowly", "Parle lentement", "Habla despacio", "Sprich langsam", "Parla piano"]),
+  entry("c.waxal", "Waxal ndànk", ["Speak slowly", "Parle lentement", "Habla despacio", "Sprich langsam", "Parla piano"]),
   entry("c.maangidem", "Maa ngi dem", ["I'm leaving", "Je m'en vais", "Me voy", "Ich gehe jetzt", "Me ne vado"]),
 
   // conversation-2
@@ -133,7 +133,7 @@ export const unit: Unit = {
         { type: "listen", entry: "c.lii" },
         { type: "build", entry: "c.lii", distractors: ["nga", "ma"] },
         { type: "pick_wolof", entry: "c.waxal" },
-        { type: "fill_blank", entry: "c.waxal", blank: 1, options: ["ndank", "fii", "tuuti"] },
+        { type: "fill_blank", entry: "c.waxal", blank: 1, options: ["ndànk", "fii", "tuuti"] },
         { type: "pick_meaning", entry: "c.maangidem" },
         { type: "pick_wolof", entry: "c.dimbali" },
         { type: "build", entry: "c.dimbali", distractors: ["la", "lan"] },

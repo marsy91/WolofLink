@@ -69,7 +69,10 @@ export function AudioButtons({ entry, autoplay, big }: { entry: Entry; autoplay?
 
 function TtsNote({ entry }: { entry: Entry }) {
   const { t } = useStore();
-  return audioSourceFor(entry) === "tts" ? <p className="mt-2 text-xs text-muted">{t("ex.ttsRobot")}</p> : null;
+  const source = audioSourceFor(entry);
+  if (source === "tts") return <p className="mt-2 text-xs text-muted">{t("ex.ttsRobot")}</p>;
+  if (source === "ai") return <p className="mt-2 text-xs text-muted">{t("ex.aiVoice")}</p>;
+  return null;
 }
 
 function WolofText({ children, className = "" }: { children: string; className?: string }) {

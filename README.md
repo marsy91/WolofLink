@@ -199,19 +199,27 @@ standard CLAD spelling and common Dakar usage, but regional variation is real.
 
 ## Audio and speech
 
-- **Now:** no mainstream text-to-speech engine has a Wolof voice, so `audio.ts` reads Wolof
-  with a French voice, the closest spelling-to-sound match. The UI labels this as a
-  computer voice. On Android/iOS it uses the native TTS engine
-  (`@capacitor-community/text-to-speech`), because the Android WebView has no Web Speech API.
-- **Native recordings:** see [docs/audio/README.md](docs/audio/README.md).
+- **AI voice (now):** every word, phrase, dialogue line and phrasebook entry has a clip made
+  with [Adia TTS](https://huggingface.co/CONCREE/Adia_TTS) by **CONCREE** (Apache 2.0),
+  credited in Settings → About and in [NOTICE](NOTICE). The clips are in
+  `public/audio/wo-ai/` and the app labels them "AI-generated voice". How they were made,
+  their automatic quality check and the lines a native speaker should check first are in
+  [docs/audio/ai-voice-report.md](docs/audio/ai-voice-report.md); the generator is in
+  [scripts/ai-voice/](scripts/ai-voice/).
+- **Native recordings (preferred):** see [docs/audio/README.md](docs/audio/README.md).
   - `npm run audio:script` writes the voice actor's script, with every word, phrase and
     dialogue line and its file name: `docs/audio/recording-script.csv` / `.md`, currently
-    311 lines.
+    505 lines. Only human recordings get a ✓.
   - `npm run audio:import -- <folder>` trims, normalises and converts the files (ffmpeg),
     copies them to `public/audio/wo/` and records them in
-    `src/content/audio-manifest.json`.
-  - Recordings take priority automatically, line by line, so you can import in batches.
-    Slow playback uses `playbackRate`. A test checks that every manifest entry has a file.
+    `src/content/audio-manifest.json`. A human recording replaces the AI clip of that line,
+    so you can import in batches. (`-- <folder> --ai` imports AI clips instead; it never
+    replaces a human recording.)
+  - Slow playback uses `playbackRate`. A test checks that every manifest entry has a file.
+- **Fallback:** a line with no clip is read by the device's text-to-speech with a French
+  voice, the closest spelling-to-sound match, labelled as a computer voice. On Android/iOS
+  this uses the native TTS engine (`@capacitor-community/text-to-speech`), because the
+  Android WebView has no Web Speech API.
 - **Speaking:** exercises are self-checked today. To score pronunciation, implement
   `SpeechChecker` in `src/lib/speech.ts` (for example with a hosted Wolof ASR model) and
   return it from `getSpeechChecker()`. The speak view already calls that interface. Native

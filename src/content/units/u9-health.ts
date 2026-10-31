@@ -26,7 +26,7 @@ export const entries = [
       "Sama … dafay metti: “my … hurts”. Swap in any body part.",
       "Sama … dafay metti : « j'ai mal à … ». Remplacez par n'importe quelle partie du corps.",
       "Sama … dafay metti: «me duele …». Cambia la parte del cuerpo.",
-      "Sama … dafay metti: „mein … tut weh“. Setze ein beliebiges Körperteil ein.",
+      "Sama … dafay metti: „mein … tut weh“. Setze einen beliebigen Körperteil ein.",
       "Sama … dafay metti: «mi fa male …». Cambia la parte del corpo.",
     ],
   }),
@@ -48,7 +48,15 @@ export const entries = [
       "Garab significa anche «albero»: i rimedi tradizionali venivano dalle piante.",
     ],
   }),
-  entry("h.wooal", "Wooal doktoor!", ["Call a doctor!", "Appelle un médecin !", "¡Llama a un médico!", "Ruf einen Arzt!", "Chiama un medico!"]),
+  entry("h.wooal", "Wool doktoor!", ["Call a doctor!", "Appelle un médecin !", "¡Llama a un médico!", "Ruf einen Arzt!", "Chiama un medico!"], {
+    note: [
+      "woo (to call) + -l: verbs ending in a vowel add just -l to give an order.",
+      "woo (appeler) + -l : les verbes finissant par une voyelle prennent seulement -l à l'impératif.",
+      "woo (llamar) + -l: los verbos que acaban en vocal solo añaden -l en el imperativo.",
+      "woo (rufen) + -l: Verben auf Vokal bekommen im Imperativ nur -l.",
+      "woo (chiamare) + -l: i verbi che finiscono in vocale aggiungono solo -l all'imperativo.",
+    ],
+  }),
   entry("h.amnggarab", "Am nga garab?", [
     "Do you have medicine?",
     "As-tu des médicaments ?",

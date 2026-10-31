@@ -47,6 +47,8 @@ export function mergeProgress(local: Progress, remote: Progress): Progress {
     })),
     srs: mergeRecord(local.srs, remote.srs, laterCard),
     recentMistakes: newer.recentMistakes,
+    // A list the learner curates by hand: the most recently changed copy wins, so un-starring sticks.
+    savedPhrases: newer.savedPhrases,
     // Keep the earliest unlock time of each badge.
     achievements: mergeRecord(local.achievements, remote.achievements, Math.min),
     reviews: Math.max(local.reviews, remote.reviews),

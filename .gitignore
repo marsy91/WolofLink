@@ -27,3 +27,6 @@ supabase/.branches
 
 # Raw voice recordings waiting to be imported (npm run audio:import)
 audio-in/
+# AI voice generator working folder (scripts/ai-voice)
+ai-voice-work/
+__pycache__/

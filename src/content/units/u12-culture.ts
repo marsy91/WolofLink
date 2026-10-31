@@ -14,7 +14,7 @@ export const entries = [
       "La festa più grande dell'anno in Senegal, celebrata in famiglia.",
     ],
   }),
-  entry("x.korite", "Koorite", ["Eid al-Fitr", "Korité (Aïd el-Fitr)", "Korité (Eid al-Fitr)", "Korité (Fastenbrechen)", "Korité (Eid al-Fitr)"], {
+  entry("x.korite", "Korite", ["Eid al-Fitr", "Korité (Aïd el-Fitr)", "Korité (Eid al-Fitr)", "Korité (Fastenbrechen)", "Korité (Eid al-Fitr)"], {
     pic: "🎉",
   }),
   entry("x.ngente", "ngénte", ["naming ceremony", "baptême", "ceremonia del nombre", "Namensfeier", "cerimonia del nome"], {
@@ -27,7 +27,7 @@ export const entries = [
       "Una festa una settimana dopo la nascita, quando si annuncia il nome.",
     ],
   }),
-  entry("x.sey", "sëy", ["marriage", "mariage", "matrimonio", "Ehe, Heirat", "matrimonio"], { pic: "💍" }),
+  entry("x.sey", "séy", ["marriage", "mariage", "matrimonio", "Ehe, Heirat", "matrimonio"], { pic: "💍" }),
   entry("x.dewenati", "Dewenati!", [
     "Many happy returns!",
     "Bonne fête, à l'année prochaine !",
@@ -43,7 +43,7 @@ export const entries = [
       "Si dice durante le feste: «che possiamo vedere il prossimo anno».",
     ],
   }),
-  entry("x.baalmaaq", "Baal ma sama àq", [
+  entry("x.baalmaaq", "Baal ma àq", [
     "Forgive me my wrongs",
     "Pardonne-moi mes torts",
     "Perdóname mis faltas",
@@ -77,7 +77,7 @@ export const entries = [
   entry("x.woy", "woy", ["song, to sing", "chanson, chanter", "canción, cantar", "Lied, singen", "canzone, cantare"], { pic: "🎤" }),
   entry("x.fecc", "fecc", ["to dance", "danser", "bailar", "tanzen", "ballare"], { pic: "💃" }),
   entry("x.beggfecc", "Dama bëgg fecc", ["I want to dance", "Je veux danser", "Quiero bailar", "Ich möchte tanzen", "Voglio ballare"]),
-  entry("x.ndank", "Ndank ndank mooy japp golo ci ñaay", [
+  entry("x.ndank", "Ndànk-ndànk mooy jàpp golo ci ñaay", [
     "Slowly, slowly catches the monkey in the forest",
     "Doucement, doucement, on attrape le singe dans la forêt",
     "Poco a poco se atrapa al mono en el bosque",
@@ -119,11 +119,11 @@ export const unit: Unit = {
       id: "culture-1",
       title: tx(["Celebrations", "Les fêtes", "Las fiestas", "Feste", "Le feste"]),
       tip: tx([
-        "At festivals people visit each other, say Dewenati! and ask forgiveness: Baal ma sama àq. The usual reply is Baal naa la.",
-        "Pendant les fêtes, on se rend visite, on dit Dewenati ! et on demande pardon : Baal ma sama àq. On répond Baal naa la.",
-        "En las fiestas la gente se visita, dice ¡Dewenati! y pide perdón: Baal ma sama àq. Se responde Baal naa la.",
-        "An Festtagen besucht man sich, sagt Dewenati! und bittet um Vergebung: Baal ma sama àq. Man antwortet Baal naa la.",
-        "Durante le feste ci si visita, si dice Dewenati! e si chiede perdono: Baal ma sama àq. Si risponde Baal naa la.",
+        "At festivals people visit each other, say Dewenati! and ask forgiveness: Baal ma àq. The usual reply is Baal naa la.",
+        "Pendant les fêtes, on se rend visite, on dit Dewenati ! et on demande pardon : Baal ma àq. On répond Baal naa la.",
+        "En las fiestas la gente se visita, dice ¡Dewenati! y pide perdón: Baal ma àq. Se responde Baal naa la.",
+        "An Festtagen besucht man sich, sagt Dewenati! und bittet um Vergebung: Baal ma àq. Man antwortet Baal naa la.",
+        "Durante le feste ci si visita, si dice Dewenati! e si chiede perdono: Baal ma àq. Si risponde Baal naa la.",
       ]),
       entries: ["x.tabaski", "x.korite", "x.ngente", "x.sey", "x.dewenati", "x.baalmaaq", "x.baalnaala"],
       exercises: [
@@ -134,7 +134,7 @@ export const unit: Unit = {
         { type: "pick_meaning", entry: "x.dewenati" },
         { type: "listen", entry: "x.dewenati" },
         { type: "pick_meaning", entry: "x.baalmaaq" },
-        { type: "build", entry: "x.baalmaaq", distractors: ["naa", "la"] },
+        { type: "build", entry: "x.baalmaaq", distractors: ["naa", "sama"] },
         { type: "pick_wolof", entry: "x.baalnaala" },
         { type: "match", entries: ["x.tabaski", "x.ngente", "x.sey", "x.baalnaala"] },
         { type: "type_wolof", entry: "x.sey" },

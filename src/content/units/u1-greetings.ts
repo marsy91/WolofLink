@@ -108,7 +108,7 @@ export const entries = [
       "wax (parlare) + -aat (di nuovo) + -al (fallo).",
     ],
   }),
-  entry("g.ndank", "Ndank ndank", ["Slowly", "Doucement", "Despacio", "Langsam", "Piano piano"]),
+  entry("g.ndank", "Ndànk-ndànk", ["Slowly", "Doucement", "Despacio", "Langsam", "Piano piano"]),
 
   // greetings-3
   entry("g.fanaane", "Naka nga fanaane?", [

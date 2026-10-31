@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { currentStreak, dailyGoal, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
-import { IconDrop, IconLoop, IconPath, IconPodium, IconProfile, IconSpark, IconSun } from "./icons";
+import { GlyphChat, IconDrop, IconLoop, IconPath, IconPodium, IconProfile, IconSpark, IconSun } from "./icons";
 
 type Variant = "primary" | "secondary" | "ghost" | "correct" | "wrong";
 
@@ -123,6 +123,7 @@ function StatusBar() {
 const TABS = [
   { href: "/learn/", key: "nav.learn", Icon: IconPath },
   { href: "/practice/", key: "nav.practice", Icon: IconLoop },
+  { href: "/phrases/", key: "nav.phrases", Icon: GlyphChat },
   { href: "/circle/", key: "nav.league", Icon: IconPodium },
   { href: "/profile/", key: "nav.profile", Icon: IconProfile },
 ] as const;

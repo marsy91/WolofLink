@@ -29,7 +29,7 @@ export const entries = [
   // work-2
   entry("w.ndongo", "ndongo", ["student, pupil", "élève, étudiant(e)", "alumno/a", "Schüler(in)", "studente"], { pic: "🎒" }),
   entry("w.teere", "téere", ["book", "livre", "libro", "Buch", "libro"], { pic: "📕" }),
-  entry("w.kaayit", "kaayit", ["paper", "papier", "papel", "Papier", "carta"], { pic: "📄" }),
+  entry("w.kaayit", "kayit", ["paper", "papier", "papel", "Papier", "carta"], { pic: "📄" }),
   entry("w.bind", "bind", ["to write", "écrire", "escribir", "schreiben", "scrivere"], { pic: "✍️" }),
   entry("w.laaj", "laaj", ["to ask", "demander", "preguntar", "fragen", "chiedere"], { pic: "❓" }),
   entry("w.maangibind", "Maa ngi bind", ["I'm writing", "J'écris", "Estoy escribiendo", "Ich schreibe gerade", "Sto scrivendo"]),
