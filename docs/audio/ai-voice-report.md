@@ -18,9 +18,9 @@ placeholder until native speakers record the course; a human recording imported 
 
 ## Results
 
-- **581 lines**, 3614 takes in total.
-- **482 lines passed** the automatic check; median error rate 20%.
-- **99 lines are flagged** below: the best take still did not match the text
+- **598 lines**, 3721 takes in total.
+- **497 lines passed** the automatic check; median error rate 20%.
+- **101 lines are flagged** below: the best take still did not match the text
   well, or its length looked wrong. They may be fine (the checker itself often misspells
   short words), but have a native speaker listen to these first.
 
@@ -202,3 +202,10 @@ still listen to every line before the app is promoted as having native audio.
 |---|---|---|---|
 | `s.fo.mp3` | **fo** | וiin | 100% |
 | `s.saxaar.mp3` | **saxaar** | sóq sóor | 80% |
+
+### 17. Culture and etiquette
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `e.koor.mp3` | **koor** | kem | 67% |
+| `e.ndogu.mp3` | **ndogu** | dëgg | 60% |
