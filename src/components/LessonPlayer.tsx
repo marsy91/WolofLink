@@ -14,6 +14,7 @@ import {
   isCorrect,
   MAX_LEVEL,
   seeded,
+  shuffle,
   type Answer,
   type Exercise,
   type TypedGrade,
@@ -49,7 +50,8 @@ import { Confetti } from "./Confetti";
 import { BADGE_GLYPHS, IconClose, IconDrop, IconGem, IconInfo, IconRings, IconShield, IconSpark, IconSun } from "./icons";
 import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 
-type Props = { mode: "lesson"; lessonId: string } | { mode: "review" };
+/** A lesson, a review of due cards, or a drill of a fixed list (e.g. the Survival 100). */
+type Props = { mode: "lesson"; lessonId: string } | { mode: "review"; drill?: readonly string[] };
 
 export function LessonPlayer(props: Props) {
   const allowed = useRequireProfile();
@@ -81,8 +83,12 @@ export function LessonPlayer(props: Props) {
       if (!found) return;
       exercises = buildLesson(found.lesson, { course, lang, rng }, level);
     } else {
-      const due = dueEntries(progress, now, 10);
-      exercises = buildReview(due.length ? due : progress.recentMistakes.slice(0, 10), lang, rng);
+      if (props.drill) {
+        exercises = buildReview(shuffle(props.drill, rng).slice(0, 12), lang, rng);
+      } else {
+        const due = dueEntries(progress, now, 10);
+        exercises = buildReview(due.length ? due : progress.recentMistakes.slice(0, 10), lang, rng);
+      }
     }
     if (exercises.length === 0) return exit();
     // Premium learners never run out of drops.

@@ -1,10 +1,17 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IconSnail, IconSpeaker } from "@/components/icons";
 import { TabScreen } from "@/components/ui";
-import { dictionary, dictionaryById, dictionarySections, sectionOfEntry, type DictionarySection } from "@/content/dictionary";
+import {
+  dictionary,
+  dictionaryById,
+  dictionarySections,
+  sectionOfEntry,
+  survivalSection,
+  type DictionarySection,
+} from "@/content/dictionary";
 import type { Entry } from "@/content/types";
 import { translate } from "@/i18n";
 import { audioSourceFor, playEntry } from "@/lib/audio";
@@ -19,6 +26,12 @@ export default function Phrases() {
   const { progress, lang, update, t } = useStore();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
+  // The Practice tab links here with ?show=survival (read after mount: the page is pre-rendered).
+  useEffect(() => {
+    // One-time read of the link after hydration, so the pre-rendered page and the first render match.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (new URLSearchParams(window.location.search).get("show") === "survival") setFilter("survival");
+  }, []);
   const [open, setOpen] = useState<string | null>(null);
   const saved = progress.savedPhrases;
   // Every entry uses the same kind of audio, so one label covers the page.
@@ -27,6 +40,7 @@ export default function Phrases() {
   const sections = useMemo<DictionarySection[]>(() => {
     if (filter === "all") return dictionarySections;
     if (filter === "course") return dictionarySections.filter((s) => s.kind === "course");
+    if (filter === "survival") return [survivalSection];
     return dictionarySections.filter((s) => s.id === filter);
   }, [filter]);
   const pool = useMemo<Entry[]>(() => {
@@ -138,6 +152,7 @@ export default function Phrases() {
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1" role="toolbar" aria-label={t("phrases.title")}>
         {chip("all", t("phrases.all"))}
         {chip("saved", `${t("phrases.saved")} (${saved.length})`, "★")}
+        {chip("survival", translate(survivalSection.title, lang), "🆘")}
         {chip("course", t("dict.course"), "📚")}
         {dictionarySections.filter((c) => c.kind === "phrasebook").map((c) => chip(c.id, translate(c.title, lang), c.emoji))}
       </div>

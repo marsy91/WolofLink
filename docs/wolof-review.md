@@ -80,6 +80,15 @@ confirmed were left out (green, football).
 Native check, please: *bulo*, *làmb*, *Kan moo ñëw?*, *Lu tax nga ñëwul?*,
 *Dama bëgg jël saxaar*, *Yoon wi dafa gudd*, *Summil sa dàll*.
 
+## Unit 17 and Survival Wolof (added in 0.9.0)
+
+Culture and etiquette: 18 entries. All words are in the reference except
+*ndogu* (meal that breaks the fast; "ndogou" in Senegalese press) and *julli*
+(to pray; Boston University glossary). Left out because unconfirmed:
+*Bismillaay*, *jàkka* (mosque), *Su Yàlla sobee* (God willing).
+Native check, please: *Mu ngi fi*, *Ndax danga woor?*, *Jërëjëf, suur naa*,
+and the etiquette tips (greeting, handshakes, Ramadan, the shared bowl).
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:

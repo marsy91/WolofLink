@@ -87,3 +87,20 @@ describe("dictionary", async () => {
     expect(rankedSearch(dictionary, "", "en")).toHaveLength(dictionary.length);
   });
 });
+
+describe("survival list", async () => {
+  const { SURVIVAL_IDS } = await import("@/content/survival");
+  const { course } = await import("@/content/course");
+  const { dictionaryById, sectionOfEntry, survivalSection } = await import("@/content/dictionary");
+
+  it("has 100 unique course entries, all saveable and labelled", () => {
+    expect(SURVIVAL_IDS).toHaveLength(100);
+    expect(new Set(SURVIVAL_IDS).size).toBe(100);
+    for (const id of SURVIVAL_IDS) {
+      expect(course.entries[id], id).toBeDefined();
+      expect(dictionaryById.has(id), id).toBe(true);
+      expect(sectionOfEntry.get(id)?.kind, id).toBe("course");
+    }
+    expect(survivalSection.entries).toHaveLength(100);
+  });
+});

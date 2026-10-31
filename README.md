@@ -124,7 +124,7 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
 
 - **Onboarding.** Target language (Wolof, preselected), then interface language, daily goal
   (10/20/30/50 XP) and an optional name. This creates a local *guest* profile.
-- **Path.** 16 units, 44 lessons, 362 words and phrases, plus 4 dialogues. Lesson cards
+- **Path.** 17 units, 47 lessons, 380 words and phrases, plus 4 dialogues. Lesson cards
   unlock one after another. All free in the launch build; with Premium on, units 1–3 are
   free and the rest need Premium.
   1. Greetings · Introductions · Small talk
@@ -175,6 +175,18 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
   every control works from the keyboard. Number keys pick answers and Enter checks or
   continues. There are ARIA roles and labels, the app follows reduced-motion settings, and
   safe-area insets are respected on notched phones.
+
+## For organisations (NGOs, embassies, field staff)
+
+- **Survival Wolof** (`src/content/survival.ts`): the 100 course words and phrases to
+  know first, in 8 themes. A Dictionary filter (🆘) and a Practice-tab drill (`/survival`,
+  12 random items per session, no drops spent).
+- **Culture and etiquette** (unit 17): greeting the right way, Ramadan and prayer, being a
+  good guest.
+- **Pocket phrasebook**: the Survival 100 with a pronunciation key and etiquette notes,
+  two A4 pages per language. `npx tsx scripts/print/pocket-phrasebook.ts` writes
+  `docs/print/pocket-phrasebook-<lang>.html`; open one and print or "Save as PDF".
+  Ready-made PDFs are in `docs/print/`.
 
 ## Add or extend lessons
 
