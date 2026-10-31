@@ -71,7 +71,6 @@ function TtsNote({ entry }: { entry: Entry }) {
   const { t } = useStore();
   const source = audioSourceFor(entry);
   if (source === "tts") return <p className="mt-2 text-xs text-muted">{t("ex.ttsRobot")}</p>;
-  if (source === "ai") return <p className="mt-2 text-xs text-muted">{t("ex.aiVoice")}</p>;
   return null;
 }
 

@@ -88,7 +88,6 @@ export const fr: Dictionary = {
   "ex.speakSaid": "Je l'ai dit",
   "ex.speakCant": "Je ne peux pas parler",
   "ex.ttsRobot": "Voix de synthèse : des enregistrements de locuteurs natifs sont prévus.",
-  "ex.aiVoice": "Voix générée par IA",
   "ex.ttsUnavailable": "L'audio n'est pas encore disponible sur cet appareil. Lisez le wolof à la place.",
   "ex.matchDone": "Toutes les paires sont associées",
   "ex.wolof": "Wolof",
@@ -149,7 +148,7 @@ export const fr: Dictionary = {
   "settings.about": "À propos",
   "settings.aboutBody":
     "WolofLink est une application d'apprentissage indépendante. Tout le contenu et les illustrations sont originaux.",
-  "settings.voice": "L'audio wolof est une voix générée par IA, créée avec Adia TTS de CONCREE (licence Apache 2.0). Elle peut mal prononcer certains mots.",
+  "settings.voice": "Voix wolof : Adia, de CONCREE (licence Apache 2.0).",
   "settings.version": "Version {v}",
   "settings.privacy": "Politique de confidentialité",
   "phrases.title": "Guide de conversation",

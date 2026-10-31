@@ -219,7 +219,7 @@ standard CLAD spelling and common Dakar usage, but regional variation is real.
 - **AI voice (now):** every word, phrase, dialogue line and phrasebook entry has a clip made
   with [Adia TTS](https://huggingface.co/CONCREE/Adia_TTS) by **CONCREE** (Apache 2.0),
   credited in Settings → About and in [NOTICE](NOTICE). The clips are in
-  `public/audio/wo-ai/` and the app labels them "AI-generated voice". How they were made,
+  `public/audio/wo-ai/`; the app doesn't label them in lessons. How they were made,
   their automatic quality check and the lines a native speaker should check first are in
   [docs/audio/ai-voice-report.md](docs/audio/ai-voice-report.md); the generator is in
   [scripts/ai-voice/](scripts/ai-voice/).

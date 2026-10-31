@@ -106,7 +106,6 @@ export default function Phrases() {
     <TabScreen title={t("phrases.title")}>
       <p className="mb-3 text-muted">
         {t("phrases.intro")}
-        {voice === "ai" ? <span className="mt-1 block text-xs">{t("ex.aiVoice")}</span> : null}
         {voice === "tts" ? <span className="mt-1 block text-xs">{t("ex.ttsRobot")}</span> : null}
       </p>
       <label className="mb-3 block">

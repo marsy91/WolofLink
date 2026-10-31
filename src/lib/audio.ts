@@ -6,7 +6,7 @@
  *  1. A clip: `entry.audio`, or the id's file in
  *     src/content/audio-manifest.json (written by `npm run audio:import`).
  *     Human recordings live in audio/wo/; AI-generated clips (Adia TTS by
- *     CONCREE, Apache-2.0) live in audio/wo-ai/ and are labelled as such.
+ *     CONCREE, Apache-2.0) live in audio/wo-ai/, so recordings can replace them.
  *  2. The device text-to-speech engine. No mainstream engine ships a Wolof
  *     voice, so we use French, whose spelling-to-sound rules are closest to
  *     Wolof's Latin orthography. The UI labels this as a computer voice.
@@ -20,7 +20,7 @@ import type { Entry } from "@/content/types";
 
 export type AudioSource = "recording" | "ai" | "tts" | "none";
 
-/** Folder of AI-generated clips, so the UI can label them. */
+/** Folder of AI-generated clips (human recordings in audio/wo/ take their place). */
 export const AI_CLIP_DIR = "audio/wo-ai/";
 
 const TTS_LANG = "fr-FR";
