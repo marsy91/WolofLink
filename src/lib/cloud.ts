@@ -22,7 +22,30 @@ export interface RemoteProgress {
   updatedAt: string;
 }
 
-export type CloudErrorKind = "invalid_email" | "invalid_code" | "rate_limited" | "network" | "unknown";
+export type CloudErrorKind =
+  | "invalid_email"
+  | "invalid_code"
+  | "rate_limited"
+  | "network"
+  | "unknown"
+  /** Team code doesn't exist. */
+  | "unknown_code"
+  /** Organisation suspended by the owner. */
+  | "org_suspended"
+  /** Organisation has no free seats. */
+  | "org_full"
+  /** The server refused: not signed in, or not allowed (e.g. not the owner). */
+  | "forbidden"
+  | "not_found";
+
+/** One organisation the signed-in learner belongs to. */
+export interface Membership {
+  orgId: string;
+  orgName: string;
+  role: "member" | "admin";
+  displayName: string;
+  joinedAt: string;
+}
 
 export class CloudError extends Error {
   constructor(
@@ -44,6 +67,10 @@ export interface CloudBackend {
   push(progress: Progress): Promise<void>;
   /** Permanently deletes the account and its cloud data (server-side function). */
   deleteAccount(): Promise<void>;
+  /** Calls a database function (supabase/migrations); the server checks permissions. */
+  rpc<T = unknown>(fn: string, args?: Record<string, unknown>): Promise<T>;
+  myOrganisations(): Promise<Membership[]>;
+  leaveOrganisation(orgId: string): Promise<void>;
 }
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -59,7 +86,12 @@ function toError(e: unknown): CloudError {
   if (e instanceof CloudError) return e;
   const err = e as { status?: number; code?: string; message?: string; name?: string } | null;
   const message = err?.message ?? String(e);
-  if (err?.status === 429 || /rate limit|too many/i.test(message)) return new CloudError("rate_limited", message);
+  if (err?.status === 429 || /rate limit|too many requests/i.test(message)) return new CloudError("rate_limited", message);
+  // Postgres error codes raised by the organisation and owner functions.
+  if (err?.code === "P0002") return new CloudError(/unknown code/i.test(message) ? "unknown_code" : "not_found", message);
+  if (err?.code === "55000") return new CloudError("org_suspended", message);
+  if (err?.code === "54000") return new CloudError("org_full", message);
+  if (err?.code === "42501") return new CloudError("forbidden", message);
   if (err?.code === "otp_expired" || /expired|invalid.*(otp|token)|token.*invalid/i.test(message))
     return new CloudError("invalid_code", message);
   if (/email.*invalid|invalid.*email/i.test(message)) return new CloudError("invalid_email", message);
@@ -143,6 +175,53 @@ function supabaseBackend(url: string, anonKey: string): CloudBackend {
         const id = session.session?.user.id;
         if (!id) throw new CloudError("unknown", "not signed in");
         const { error } = await c.from("progress").upsert({ user_id: id, data: progress });
+        if (error) throw error;
+      } catch (e) {
+        throw toError(e);
+      }
+    },
+    async rpc<T>(fn: string, args?: Record<string, unknown>) {
+      try {
+        const { data, error } = await (await sb()).rpc(fn, args ?? {});
+        if (error) throw error;
+        return data as T;
+      } catch (e) {
+        throw toError(e);
+      }
+    },
+    async myOrganisations() {
+      try {
+        const c = await sb();
+        const { data: session } = await c.auth.getSession();
+        const uid = session.session?.user.id;
+        if (!uid) return [];
+        const { data, error } = await c
+          .from("memberships")
+          .select("org_id, role, display_name, joined_at, organisations(name)")
+          .eq("user_id", uid);
+        if (error) throw error;
+        type Row = { org_id: string; role: string; display_name: string; joined_at: string; organisations: { name: string } | { name: string }[] | null };
+        return ((data ?? []) as Row[]).map((r) => {
+          const org = Array.isArray(r.organisations) ? r.organisations[0] : r.organisations;
+          return {
+            orgId: r.org_id,
+            orgName: org?.name ?? "",
+            role: r.role === "admin" ? "admin" : "member",
+            displayName: r.display_name,
+            joinedAt: r.joined_at,
+          } satisfies Membership;
+        });
+      } catch (e) {
+        throw toError(e);
+      }
+    },
+    async leaveOrganisation(orgId) {
+      try {
+        const c = await sb();
+        const { data: session } = await c.auth.getSession();
+        const uid = session.session?.user.id;
+        if (!uid) throw new CloudError("forbidden", "not signed in");
+        const { error } = await c.from("memberships").delete().eq("org_id", orgId).eq("user_id", uid);
         if (error) throw error;
       } catch (e) {
         throw toError(e);

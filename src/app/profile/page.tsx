@@ -6,6 +6,7 @@ import { BADGE_GLYPHS, IconGem, IconLock, IconProfile, IconRosette, IconShield, 
 import { TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
+import { useIsOwner } from "@/lib/owner";
 import { PREMIUM_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { ACHIEVEMENTS, currentStreak, MAX_SHIELDS } from "@/lib/progress";
@@ -14,6 +15,7 @@ import { useNow, useStore } from "@/lib/store";
 export default function Profile() {
   const { progress, lang, t } = useStore();
   const account = useAccount();
+  const isOwner = useIsOwner();
   const { premium } = usePremium();
   const now = useNow();
   const profile = progress.profile;
@@ -112,6 +114,16 @@ export default function Profile() {
           );
         })}
       </ul>
+
+      {isOwner ? (
+        <Link
+          href="/owner/"
+          className="mb-4 block rounded-3xl border-2 border-clay bg-white p-5 active:translate-y-[2px]"
+        >
+          <h2 className="mb-1 font-display text-lg font-extrabold text-clay">Owner console</h2>
+          <p className="text-sm text-muted">Organisations, people, licences and the change log.</p>
+        </Link>
+      ) : null}
 
       {account.available ? (
         <Link

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { IconArrowLeft, IconLoop, IconProfile } from "@/components/icons";
+import { OrgSection } from "@/components/OrgSection";
 import { Button, Dialog, Loading } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
@@ -18,6 +19,11 @@ const ERRORS: Record<CloudErrorKind, UiKey> = {
   rate_limited: "acct.errRate",
   network: "acct.errNetwork",
   unknown: "acct.errNetwork",
+  unknown_code: "org.errCode",
+  org_suspended: "org.errSuspended",
+  org_full: "org.errFull",
+  forbidden: "org.errForbidden",
+  not_found: "org.errCode",
 };
 
 export default function AccountPage() {
@@ -148,6 +154,7 @@ export default function AccountPage() {
           <Button block variant="secondary" disabled={account.status === "syncing"} onClick={() => void account.syncNow()}>
             <IconLoop size={20} /> {t("acct.syncNow")}
           </Button>
+          <OrgSection defaultName={progress.profile?.name ?? ""} />
           <div>
             <Button block variant="secondary" onClick={() => void signOut()}>
               {t("acct.signOut")}

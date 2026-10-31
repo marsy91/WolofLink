@@ -14,6 +14,9 @@ function fakeCloud(initial: Progress | null) {
     verifyCode: async () => ({ id: "u1", email: "a@b.co" }),
     signOut: async () => {},
     deleteAccount: async () => {},
+    rpc: async () => undefined as never,
+    myOrganisations: async () => [],
+    leaveOrganisation: async () => {},
     pull: async () => stored,
     push: async (p) => {
       pushes++;

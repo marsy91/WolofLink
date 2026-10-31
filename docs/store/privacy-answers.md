@@ -54,6 +54,10 @@ is turned on.
   to a page that explains the in-app option and offers a contact address.
 - **Data shared with third parties:** None. Supabase is a service provider
   (processor), which Play does not count as sharing.
+- **Organisations:** when a learner joins one with a team code, its admins see the
+  chosen name and a progress summary (XP, lessons, streak, last active). This is
+  sharing with other users the learner chose, not with third parties; the learner
+  can leave at any time.
 - **Account creation:** "Users can create an account" → method: email with
   one-time code. **Account deletion** is available in the app (required by Play
   since accounts exist).

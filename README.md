@@ -188,6 +188,22 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
   `docs/print/pocket-phrasebook-<lang>.html`; open one and print or "Save as PDF".
   Ready-made PDFs are in `docs/print/`.
 
+## Organisations and the owner console
+
+- **Team codes** (`supabase/migrations/*_organisations.sql`): an organisation has an
+  8-character code. A signed-in learner joins in Profile → Account → *Your organisation*,
+  chooses the name the organisation sees and agrees to share a progress summary (XP,
+  lessons, streak, last active; never the email). They can leave at any time.
+- **Owner console** (`/owner`, `src/app/owner/page.tsx`): shown in Profile only to the
+  owner account listed in `private.owners` (racine.mars@protonmail.com). Overview,
+  organisations (create, edit plan/seats/paid-until/status, new code, members, roles,
+  delete), people (search, suspend/reactivate, delete), billing overview and a change log.
+  Every owner function checks the caller on the server and records the action
+  (`supabase/migrations/*_owner_console.sql`). To add or change the owner:
+  `insert into private.owners (email) values ('…');` in the Supabase SQL editor.
+- **Tests:** `supabase/tests/*.sql` are self-cancelling (they roll back); paste one into the
+  SQL editor and expect "… PASSED (rolled back)".
+
 ## Add or extend lessons
 
 Each unit lives in `src/content/units/uN-name.ts` and exports its `entries` and its `unit`.

@@ -64,6 +64,16 @@ export default function Privacy() {
         </Section>
       ) : null}
 
+      {ACCOUNTS_ENABLED ? (
+        <Section title="Organisations (team codes)">
+          If you join an organisation (for example your NGO, school or employer) with a team code, its administrators
+          can see the name you chose, your XP, the number of lessons completed, your streak and when you last practised.
+          They never see your email address or anything else. You can leave an organisation at any time in Profile →
+          Account, and they stop seeing your progress straight away. The WolofLink owner can manage organisations and
+          accounts to run the service, for example to remove abuse.
+        </Section>
+      ) : null}
+
       {PREMIUM_ENABLED ? (
         <Section title="Purchases (WolofLink Premium)">
           Payments are handled entirely by Google Play or the Apple App Store; we never see your card details. To check
