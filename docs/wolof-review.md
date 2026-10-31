@@ -66,6 +66,20 @@ source confirmed them. Add them back only after a native speaker approves:
 | kaani (chili) | – | Everyday food word, not in the Bible. |
 | Dewenati | – | Spelling varies (déwénati, deweneti, dewenaty); *Dewenati* is the form used by Seneweb and Senegal7. |
 
+## Units 13–16 (added in 0.7.0)
+
+Colours and clothes, Animals and nature, Asking questions, Free time and
+travel: 76 new entries. Every word was checked against the reference list,
+and the word for "the" each noun takes (jant bi, xar mi, picc mi, dex gi,
+mbubb mi, ngelaw li, yoon wi) was taken from how the reference text uses it.
+Three words are not in the reference: *bulo* (blue, from French; listed in
+Gambian and Senegalese learner material), *feebaroon* (past of *feebar*) and
+*mënuma* (the course's spelling of "I can't"). Words that could not be
+confirmed were left out (green, football).
+
+Native check, please: *bulo*, *làmb*, *Kan moo ñëw?*, *Lu tax nga ñëwul?*,
+*Dama bëgg jël saxaar*, *Yoon wi dafa gudd*, *Summil sa dàll*.
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:

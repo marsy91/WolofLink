@@ -73,7 +73,7 @@ free:
 
 | Switch | Launch value | What it does |
 | --- | --- | --- |
-| `NEXT_PUBLIC_PREMIUM` | `off` | `off`: every unit and dialogue is free, the Premium screen and links are hidden and the store SDK never loads. `on`: units 4–12 need Premium (set up RevenueCat and the store products first; see "Premium" below). |
+| `NEXT_PUBLIC_PREMIUM` | `off` | `off`: every unit and dialogue is free, the Premium screen and links are hidden and the store SDK never loads. `on`: units 4 and up need Premium (set up RevenueCat and the store products first; see "Premium" below). |
 | `NEXT_PUBLIC_ACCOUNTS` | `off` | Hides the optional account and cloud sync even though the Supabase settings are present. Turn it back on once the sign-in emails show the 6-digit code (Supabase → Authentication → Emails: put `{{ .Token }}` in the *Magic Link* and *Confirm signup* templates). |
 | `NEXT_PUBLIC_CIRCLE` | `off` | The Circle tab is a demo ranking with sample learners; keep it off in store builds. |
 
@@ -124,8 +124,9 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
 
 - **Onboarding.** Target language (Wolof, preselected), then interface language, daily goal
   (10/20/30/50 XP) and an optional name. This creates a local *guest* profile.
-- **Path.** 12 units, 32 lessons, 286 words and phrases, plus 4 dialogues. Lesson cards
-  unlock one after another. Units 1–3 are free; units 4–12 need Premium.
+- **Path.** 16 units, 44 lessons, 362 words and phrases, plus 4 dialogues. Lesson cards
+  unlock one after another. All free in the launch build; with Premium on, units 1–3 are
+  free and the rest need Premium.
   1. Greetings · Introductions · Small talk
   2. Numbers 1–10 · Bigger numbers and prices · Thousands and money
   3. Food and drink · At the market · Meals and cooking

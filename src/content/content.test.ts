@@ -18,7 +18,7 @@ import { UI_LANGS } from "./types";
 
 describe("course content", () => {
   it("gives every unit at least two lessons and keeps ids unique", () => {
-    expect(course.units).toHaveLength(12);
+    expect(course.units).toHaveLength(16);
     for (const unit of course.units) expect(unit.lessons.length, unit.id).toBeGreaterThanOrEqual(2);
     // Units 1–8 have three lessons each.
     for (const unit of course.units.slice(0, 8)) expect(unit.lessons.length, unit.id).toBe(3);

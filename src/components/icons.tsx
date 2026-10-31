@@ -305,6 +305,34 @@ export const GlyphDrum = (p: IconProps) => (
   </Svg>
 );
 
+/** Colours and clothes: a boubou (wide robe) with a neckline. */
+export const GlyphRobe = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M9 3.5h6l6 4.5-2.5 3.5L16 10v10.5H8V10l-2.5 1.5L3 8Z" />
+    <path d="M9 3.5c.4 1.7 1.4 2.6 3 2.6s2.6-.9 3-2.6M12 9.5v4" />
+  </Svg>
+);
+/** Animals and nature: a bird on a branch. */
+export const GlyphBird = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 17.5h16M8 17.5c-2.5-1-4-3.4-4-6.5 3 0 5 .8 6.3 2.3C11 9.5 13.2 7 16.5 7l3 1.5-2.5 1c0 4.4-3 7.5-7 8" />
+    <circle cx="16.3" cy="8.8" r=".4" />
+  </Svg>
+);
+/** Asking questions: a speech bubble with a question mark. */
+export const GlyphQuestion = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 3.5a8.5 8 0 0 0-7.4 12L3.5 20.5l5-1.3A8.5 8 0 1 0 12 3.5Z" />
+    <path d="M9.8 9.6a2.3 2.3 0 1 1 3.2 2.1c-.6.3-1 .8-1 1.5v.4M12 16.3v.1" />
+  </Svg>
+);
+/** Free time and travel: a runner. */
+export const GlyphRun = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="14.5" cy="4.5" r="1.8" />
+    <path d="m6 10 3.5-2.5 4 .5 2 3.5 3.5 1M13.5 8l-2 5 3.5 2.5-1 5.5M11.5 13l-2.5 3.5-4.5.5" />
+  </Svg>
+);
 export const UNIT_GLYPHS = {
   wave: GlyphWave,
   family: GlyphFamily,
@@ -318,6 +346,10 @@ export const UNIT_GLYPHS = {
   briefcase: GlyphBriefcase,
   home: GlyphHome,
   drum: GlyphDrum,
+  robe: GlyphRobe,
+  bird: GlyphBird,
+  question: GlyphQuestion,
+  run: GlyphRun,
 } as const;
 
 export const BADGE_GLYPHS = {

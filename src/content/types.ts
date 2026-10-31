@@ -107,7 +107,11 @@ export interface Unit {
     | "heart"
     | "briefcase"
     | "home"
-    | "drum";
+    | "drum"
+    | "robe"
+    | "bird"
+    | "question"
+    | "run";
   /** Accent colour token for the unit banner. */
   tone: "sun" | "clay" | "sea" | "dusk";
   lessons: Lesson[];

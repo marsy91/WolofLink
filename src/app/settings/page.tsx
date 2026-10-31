@@ -14,7 +14,7 @@ import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/nat
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-const VERSION = "0.6.0";
+const VERSION = "0.7.0";
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
