@@ -212,7 +212,9 @@ export function buildExercise(spec: ExerciseSpec, index: number, opts: BuildOpti
       const entry = entryOf(course, spec.entry);
       const isPicture = spec.type === "pick_picture";
       const labelFn = spec.type === "pick_meaning" || isPicture ? meaning : wolof;
-      const others = distractors(course, entry, pool, 3, labelFn, rng, (e) => !isPicture || !!e.pic);
+      // Never offer a wrong option that means the same as the answer (e.g. two words for "tomorrow").
+      const sameMeaning = (e: Entry) => normalize(meaning(e)) === normalize(meaning(entry));
+      const others = distractors(course, entry, pool, 3, labelFn, rng, (e) => (!isPicture || !!e.pic) && !sameMeaning(e));
       const choices = shuffle([entry, ...others], rng).map<Choice>((e) => ({
         id: e.id,
         label: labelFn(e),

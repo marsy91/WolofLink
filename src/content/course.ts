@@ -25,3 +25,8 @@ export const allStories = course.units.flatMap((u) => (u.story ? [{ unit: u, sto
 export function findStory(id: string) {
   return allStories.find((s) => s.story.id === id) ?? null;
 }
+
+/** Story lines are addressed as `<story id>.<line number>`, e.g. `story-taxi.3`; also their audio file name. */
+export function storyLineId(storyId: string, index: number): string {
+  return `${storyId}.${index + 1}`;
+}

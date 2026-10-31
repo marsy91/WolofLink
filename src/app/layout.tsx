@@ -2,6 +2,7 @@
 import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import { AccountProvider } from "@/lib/account";
+import { PremiumProvider } from "@/lib/premium-context";
 import { StoreProvider } from "@/lib/store";
 import "./globals.css";
 
@@ -27,7 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-dvh antialiased">
         <StoreProvider>
-          <AccountProvider>{children}</AccountProvider>
+          <AccountProvider>
+            <PremiumProvider>{children}</PremiumProvider>
+          </AccountProvider>
         </StoreProvider>
       </body>
     </html>

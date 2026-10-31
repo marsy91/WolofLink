@@ -181,6 +181,14 @@ export const IconBook = (p: IconProps) => (
   </Svg>
 );
 
+/** Premium: a faceted gem. */
+export const IconGem = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M6.5 4h11L21 9l-9 11L3 9Z" />
+    <path d="M3 9h18M9.5 4 8 9l4 11 4-11-1.5-5" />
+  </Svg>
+);
+
 /** Streak shield: a shield with a small sun. */
 export const IconShield = (p: IconProps) => (
   <Svg {...p}>
@@ -264,6 +272,39 @@ export const GlyphSprout = (p: IconProps) => (
   </Svg>
 );
 
+/** Health: a heart with a pulse line. */
+export const GlyphHeart = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z" />
+    <path d="M7 12h2.5l1.2-2.2 2 4.2 1.3-2h3" />
+  </Svg>
+);
+
+/** Work: a briefcase. */
+export const GlyphBriefcase = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3" y="7.5" width="18" height="12" rx="2.5" />
+    <path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3 13h18M11 13v2h2v-2" />
+  </Svg>
+);
+
+/** Home: a house with a door. */
+export const GlyphHome = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5" />
+    <path d="M10 20v-5.5h4V20" />
+  </Svg>
+);
+
+/** Culture: a sabar-style drum. */
+export const GlyphDrum = (p: IconProps) => (
+  <Svg {...p}>
+    <ellipse cx="12" cy="6.5" rx="6" ry="2.5" />
+    <path d="M6 6.5 8 20h8l2-13.5M8.6 10.5l6.8 4M15.4 10.5l-6.8 4" />
+    <path d="M17 3 21 1.5" />
+  </Svg>
+);
+
 export const UNIT_GLYPHS = {
   wave: GlyphWave,
   family: GlyphFamily,
@@ -273,6 +314,10 @@ export const UNIT_GLYPHS = {
   compass: GlyphCompass,
   clock: GlyphClock,
   chat: GlyphChat,
+  heart: GlyphHeart,
+  briefcase: GlyphBriefcase,
+  home: GlyphHome,
+  drum: GlyphDrum,
 } as const;
 
 export const BADGE_GLYPHS = {

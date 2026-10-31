@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
-const UPDATED = "30 October 2026 (accounts and sync)";
+const UPDATED = "31 October 2026 (accounts, sync and purchases)";
 
 /**
  * Public privacy policy (also needed as a URL for Google Play and the App
@@ -48,6 +48,13 @@ export default function Privacy() {
           account can only read its own data. We use it only to run the app. You can delete your account and its cloud
           data at any time in the app (Profile → Account → Delete account); deletion is immediate and permanent.
         </p>
+      </Section>
+
+      <Section title="Purchases (WolofLink Premium)">
+        Payments are handled entirely by Google Play or the Apple App Store; we never see your card details. To check
+        your subscription, the app uses RevenueCat, which receives an anonymous app user ID (or your account ID if you
+        are signed in) and your purchase history from the store. RevenueCat acts as our service provider and does not
+        sell this data.
       </Section>
 
       <Section title="Device features">

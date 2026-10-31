@@ -93,6 +93,37 @@ export const entries = [
   }),
   entry("p.jabar", "jabar", ["wife", "épouse", "esposa", "Ehefrau", "moglie"]),
   entry("p.jekker", "jëkkër", ["husband", "mari", "marido", "Ehemann", "marito"]),
+
+  // family-3
+  entry("p.rafet", "rafet", ["beautiful", "beau, belle", "bonito", "schön", "bello"]),
+  entry("p.ndaw", "ndaw", ["young, small", "jeune, petit", "joven, pequeño", "jung, klein", "giovane, piccolo"]),
+  entry("p.njool", "njool", ["tall", "grand (de taille)", "alto", "groß", "alto"]),
+  entry("p.gatt", "gàtt", ["short", "petit (de taille)", "bajo", "klein (von Gestalt)", "basso"]),
+  entry("p.baax", "baax", ["good, kind", "bon, gentil", "bueno, amable", "gut, freundlich", "buono, gentile"]),
+  entry("p.dafabaax", "Dafa baax", [
+    "He/She is kind",
+    "Il/Elle est gentil(le)",
+    "Es amable",
+    "Er/Sie ist freundlich",
+    "È gentile",
+  ]),
+  entry("p.dafanjool", "Dafa njool", ["He/She is tall", "Il/Elle est grand(e)", "Es alto/a", "Er/Sie ist groß", "È alto/a"]),
+  entry("p.xaritbubaax", "xarit bu baax", ["a good friend", "un(e) bon(ne) ami(e)", "un buen amigo", "ein guter Freund", "un buon amico"], {
+    note: [
+      "bu links a noun to a describing word: xarit bu baax, “a friend who is good”.",
+      "bu relie un nom à un adjectif : xarit bu baax, « un ami qui est bon ».",
+      "bu une un sustantivo con una cualidad: xarit bu baax, «un amigo que es bueno».",
+      "bu verbindet ein Nomen mit einer Eigenschaft: xarit bu baax, „ein Freund, der gut ist“.",
+      "bu collega un nome a una qualità: xarit bu baax, «un amico che è buono».",
+    ],
+  }),
+  entry("p.yaaybaax", "Sama yaay dafa baax", [
+    "My mother is kind",
+    "Ma mère est gentille",
+    "Mi madre es amable",
+    "Meine Mutter ist freundlich",
+    "Mia madre è gentile",
+  ]),
 ];
 
 export const unit: Unit = {
@@ -172,6 +203,32 @@ export const unit: Unit = {
         { type: "fill_blank", entry: "p.moodu", blank: 2, options: ["tudd", "dëkk", "fi"] },
         { type: "pick_wolof", entry: "p.amnga" },
         { type: "speak", entry: "p.ana" },
+      ],
+    },
+    {
+      id: "family-3",
+      title: tx(["Describing people", "Décrire les gens", "Describir a la gente", "Menschen beschreiben", "Descrivere le persone"]),
+      tip: tx([
+        "Describing words work like verbs: Dafa baax, “he/she is kind”. No word for “is” is needed.",
+        "Les qualités se conjuguent comme des verbes : Dafa baax, « il/elle est gentil(le) ». Pas besoin de « être ».",
+        "Las cualidades funcionan como verbos: Dafa baax, «es amable». No hace falta «ser».",
+        "Eigenschaften funktionieren wie Verben: Dafa baax, „er/sie ist freundlich“. Ein Wort für „ist“ braucht man nicht.",
+        "Le qualità funzionano come verbi: Dafa baax, «è gentile». Non serve una parola per «è».",
+      ]),
+      entries: ["p.rafet", "p.ndaw", "p.njool", "p.gatt", "p.baax", "p.dafabaax", "p.dafanjool", "p.xaritbubaax", "p.yaaybaax"],
+      exercises: [
+        { type: "pick_meaning", entry: "p.baax" },
+        { type: "pick_meaning", entry: "p.rafet" },
+        { type: "match", entries: ["p.njool", "p.gatt", "p.ndaw", "p.rafet"] },
+        { type: "pick_meaning", entry: "p.dafabaax" },
+        { type: "listen", entry: "p.dafanjool" },
+        { type: "pick_meaning", entry: "p.xaritbubaax" },
+        { type: "build", entry: "p.yaaybaax", distractors: ["baay", "njool"] },
+        { type: "fill_blank", entry: "p.dafanjool", blank: 1, options: ["njool", "gàtt", "baax"] },
+        { type: "pick_wolof", entry: "p.dafabaax" },
+        { type: "type_wolof", entry: "p.baax" },
+        { type: "pick_wolof", entry: "p.xaritbubaax" },
+        { type: "speak", entry: "p.yaaybaax" },
       ],
     },
   ],

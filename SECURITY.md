@@ -28,6 +28,12 @@ Do not open a public issue. Include steps to reproduce and the app version
   `WAKE_LOCK` (the optional daily reminder). The restricted
   `SCHEDULE_EXACT_ALARM` permission is explicitly removed.
 - Release builds are minified, obfuscated and resource-shrunk (R8).
+- **Premium:** purchases are made through Google Play / the App Store and validated
+  server-side by RevenueCat; the app only ships RevenueCat's *public* SDK key. Premium
+  status is cached on the device so it works offline. Lesson content ships inside the app,
+  so client-side gating only stops casual access; anything worth protecting more strongly
+  (e.g. future downloadable packs) must be served from a server that checks the
+  entitlement.
 
 ## Rules for contributors
 

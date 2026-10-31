@@ -1,4 +1,4 @@
-# Store privacy answers (WolofLink 0.4.x, with optional accounts)
+# Store privacy answers (WolofLink 0.5.x, with optional accounts and Premium)
 
 Keep these in sync with `src/app/privacy/page.tsx` and `SECURITY.md`.
 If a build ships **without** Supabase configured (no `.env.local`), accounts are
@@ -12,6 +12,7 @@ hidden and the 0.3.x answers apply instead: "No data collected".
 |---|---|---|---|---|
 | Personal info → **Email address** | Yes | No | Optional (only if the user creates an account) | Account management |
 | App activity → **Other user-generated content / in-app actions** (learning progress, settings) | Yes | No | Optional (only with an account) | App functionality |
+| Financial info → **Purchase history** | Yes | No | Optional (only if the user buys Premium) | App functionality (checking the subscription, via RevenueCat) |
 
 - **Encrypted in transit:** Yes (HTTPS to Supabase).
 - **Users can request deletion:** Yes, in the app (Profile → Account → Delete
@@ -31,6 +32,7 @@ target-audience and content-rating answers are unchanged.
 **Data Linked to You** (not used for tracking):
 - Contact Info → Email Address — App Functionality
 - User Content → Other User Content (learning progress) — App Functionality
+- Purchases → Purchase History — App Functionality (only with Premium)
 
 No tracking, so no App Tracking Transparency prompt. Apple requires in-app
 account deletion when sign-up exists — implemented (Profile → Account).

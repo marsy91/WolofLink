@@ -108,16 +108,20 @@ run `npm run icons`. That regenerates every Android/iOS icon and splash, plus th
 
 - **Onboarding.** Target language (Wolof, preselected), then interface language, daily goal
   (10/20/30/50 XP) and an optional name. This creates a local *guest* profile.
-- **Path.** 8 units with 2 lessons each (16 lessons, 163 words and phrases). Lesson
-  cards unlock one after another:
-  1. Greetings · Introductions
-  2. Numbers 1–10 · Bigger numbers and prices
-  3. Food and drink · At the market
-  4. Family · Friends and family
-  5. Everyday verbs · Past, future and feelings
-  6. Around town · Directions
-  7. Days of the week · Telling time
-  8. Getting by · Teraanga: guests and meals
+- **Path.** 12 units, 32 lessons, 286 words and phrases, plus 4 dialogues. Lesson cards
+  unlock one after another. Units 1–3 are free; units 4–12 need Premium.
+  1. Greetings · Introductions · Small talk
+  2. Numbers 1–10 · Bigger numbers and prices · Thousands and money
+  3. Food and drink · At the market · Meals and cooking
+  4. Family · Friends and family · Describing people
+  5. Everyday verbs · Past, future and feelings · Questions and requests
+  6. Around town · Directions · Getting around
+  7. Days of the week · Telling time · Plans and seasons
+  8. Getting by · Teraanga: guests and meals · Feelings and opinions
+  9. The body · At the doctor
+  10. Jobs · At school
+  11. Around the house · Daily routine
+  12. Celebrations · Music and proverbs
 - **Lessons.** 12 exercises each, from 10 types: Wolof→meaning, meaning→Wolof, picture
   choice, listening, tap-the-words, fill in the blank, matching pairs, speaking
   (self-checked), typing the Wolof, and typing what you hear. A missed exercise is queued
@@ -199,9 +203,15 @@ standard CLAD spelling and common Dakar usage, but regional variation is real.
   with a French voice, the closest spelling-to-sound match. The UI labels this as a
   computer voice. On Android/iOS it uses the native TTS engine
   (`@capacitor-community/text-to-speech`), because the Android WebView has no Web Speech API.
-- **Next:** record native speakers. Save files as `public/audio/wo/<entry-id>.mp3` (mono,
-  44.1 kHz, about 64 kbps) and add `audio: "audio/wo/<entry-id>.mp3"` to each entry. Recorded
-  clips take priority automatically, and slow playback uses `playbackRate`.
+- **Native recordings:** see [docs/audio/README.md](docs/audio/README.md).
+  - `npm run audio:script` writes the voice actor's script, with every word, phrase and
+    dialogue line and its file name: `docs/audio/recording-script.csv` / `.md`, currently
+    311 lines.
+  - `npm run audio:import -- <folder>` trims, normalises and converts the files (ffmpeg),
+    copies them to `public/audio/wo/` and records them in
+    `src/content/audio-manifest.json`.
+  - Recordings take priority automatically, line by line, so you can import in batches.
+    Slow playback uses `playbackRate`. A test checks that every manifest entry has a file.
 - **Speaking:** exercises are self-checked today. To score pronunciation, implement
   `SpeechChecker` in `src/lib/speech.ts` (for example with a hosted Wolof ASR model) and
   return it from `getSpeechChecker()`. The speak view already calls that interface. Native
@@ -257,9 +267,42 @@ settings, account features are hidden.
 
 - **Push reminders:** daily reminders already use local notifications. Server-sent push
   (FCM/APNs) would need `@capacitor/push-notifications`.
-- **Paid version:** keep free content as it is, and gate extra units behind an entitlement
-  check in `isUnlocked`, for example with RevenueCat or Google Play Billing / StoreKit.
-  Verify purchases on the server.
+## Premium (in-app purchases)
+
+**What it gives:** units 1–3 (9 lessons and their dialogue) are free. **Premium** unlocks
+every unit and dialogue, plus unlimited drops.
+- **Gating rules:** `src/lib/premium.ts`, tested in `premium.test.ts`.
+- **Screens:** the upgrade screen is `/premium`, and the terms page `/terms` is required by
+  the stores for subscriptions.
+
+**How it works:** purchases go through **RevenueCat** (`src/lib/billing.ts`).
+- RevenueCat wraps Google Play Billing and StoreKit, validates receipts on its servers, and
+  tracks a `premium` entitlement.
+- When a learner is signed in, purchases are linked to their account id, so Premium follows
+  them to other devices. **Restore purchases** is on the upgrade screen.
+- Until a key is configured, the upgrade screen says Premium isn't available yet. On the
+  web it's always unavailable.
+
+**One-time setup**
+1. **Google Play Console** (once the app is uploaded to a testing track): create a
+   subscription `woloflink_premium` with monthly and yearly base plans. Optionally add a
+   one-time product `woloflink_premium_lifetime`. Do the same in App Store Connect later.
+2. **RevenueCat** (free tier):
+   - Create a project and add the Android app (package `app.woloflink.learn`) with its Play
+     service-account credentials.
+   - Create an entitlement with the id **`premium`** and attach the products.
+   - Create a **current offering** with Monthly, Annual and (optionally) Lifetime packages.
+3. Put the public SDK keys in `.env.production`:
+   `NEXT_PUBLIC_REVENUECAT_ANDROID_KEY` (and `_IOS_KEY` later). These keys are meant to
+   ship inside apps; never add RevenueCat secret keys.
+4. Rebuild, upload to the internal testing track, and buy with a **license-tester** account
+   (no real charge).
+
+**Suggested prices:** $4.99/month, $29.99/year, $59 lifetime, with lower local prices for
+Senegal and The Gambia (the Play Console can set prices per country).
+
+**Testing builds:** `NEXT_PUBLIC_FREE_UNITS=12 npm run build` makes every unit free in a
+local build, so automated tests can play all lessons. Never set it for store builds.
 
 ## Brand
 

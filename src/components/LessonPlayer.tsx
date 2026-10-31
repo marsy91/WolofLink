@@ -19,6 +19,8 @@ import {
   type TypedGrade,
 } from "@/lib/engine";
 import { haptic } from "@/lib/native";
+import { canOpenLesson } from "@/lib/premium";
+import { usePremium } from "@/lib/premium-context";
 import {
   ACHIEVEMENTS,
   applySession,
@@ -44,7 +46,7 @@ import {
 import { useNow, useStore } from "@/lib/store";
 import { ExerciseView } from "./exercises";
 import { Confetti } from "./Confetti";
-import { BADGE_GLYPHS, IconClose, IconDrop, IconInfo, IconRings, IconShield, IconSpark, IconSun } from "./icons";
+import { BADGE_GLYPHS, IconClose, IconDrop, IconGem, IconInfo, IconRings, IconShield, IconSpark, IconSun } from "./icons";
 import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 
 type Props = { mode: "lesson"; lessonId: string } | { mode: "review" };
@@ -56,6 +58,7 @@ export function LessonPlayer(props: Props) {
   const now = useNow();
 
   const found = props.mode === "lesson" ? findLesson(props.lessonId) : null;
+  const { premium } = usePremium();
   const [session, setSession] = useState<SessionState | null>(null);
   const [pending, setPending] = useState<Answer | null>(null);
   const [outcome, setOutcome] = useState<ApplyOutcome | null>(null);
@@ -82,7 +85,8 @@ export function LessonPlayer(props: Props) {
       exercises = buildReview(due.length ? due : progress.recentMistakes.slice(0, 10), lang, rng);
     }
     if (exercises.length === 0) return exit();
-    const drops = refreshDrops(progress, now).drops.count;
+    // Premium learners never run out of drops.
+    const drops = premium ? Number.POSITIVE_INFINITY : refreshDrops(progress, now).drops.count;
     setSession(startSession(exercises, drops, props.mode, level));
   };
 
@@ -96,7 +100,7 @@ export function LessonPlayer(props: Props) {
     setTyped(ex.kind === "type" && a.kind === "type" ? gradeTyped(ex.entry.wo, a.text) : null);
     if (sound) playTone(ok ? "correct" : "wrong");
     if (vibrate) void haptic(ok ? "correct" : "wrong");
-    if (!ok && session.mode === "lesson") update((p) => spendDrop(p, Date.now()));
+    if (!ok && session.mode === "lesson" && !premium) update((p) => spendDrop(p, Date.now()));
     setSession(answerSession(session, ok));
   };
 
@@ -159,11 +163,25 @@ export function LessonPlayer(props: Props) {
     );
   }
 
+  // Premium lessons opened directly (e.g. an old link) go to the upgrade screen.
+  if (props.mode === "lesson" && !canOpenLesson(props.lessonId, premium)) {
+    return (
+      <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 px-6 text-center">
+        <IconGem size={48} className="text-dusk" />
+        <p className="text-lg">{t("premium.lessonLocked")}</p>
+        <Button onClick={() => router.replace("/premium/")}>{t("premium.see")}</Button>
+        <Button variant="ghost" onClick={exit}>
+          {t("fail.home")}
+        </Button>
+      </main>
+    );
+  }
+
   /* ── Intro ── */
   if (!session) {
     const title = found ? translate(found.lesson.title, lang) : t("practice.title");
     const tip = found?.lesson.tip ? translate(found.lesson.tip, lang) : t("practice.body");
-    const outOfDrops = props.mode === "lesson" && refreshDrops(progress, now).drops.count <= 0;
+    const outOfDrops = props.mode === "lesson" && !premium && refreshDrops(progress, now).drops.count <= 0;
     return (
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
         <div className="py-3">
@@ -335,7 +353,7 @@ export function LessonPlayer(props: Props) {
         {session.mode === "lesson" ? (
           <span className="flex items-center gap-1 font-display font-extrabold text-sea" aria-label={t("stats.drops", { n: session.drops })}>
             <IconDrop size={22} filled />
-            {session.drops}
+            {Number.isFinite(session.drops) ? session.drops : "∞"}
           </span>
         ) : null}
       </div>

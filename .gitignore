@@ -24,3 +24,6 @@ ios/App/App/capacitor.config.json
 # Supabase CLI state
 supabase/.temp
 supabase/.branches
+
+# Raw voice recordings waiting to be imported (npm run audio:import)
+audio-in/

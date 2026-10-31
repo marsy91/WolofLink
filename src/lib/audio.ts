@@ -3,7 +3,8 @@
  * Pronunciation audio.
  *
  * Order of preference:
- *  1. A recorded clip (`entry.audio`, served from /public) — the long-term plan.
+ *  1. A recorded clip: `entry.audio`, or the id's file in
+ *     src/content/audio-manifest.json (written by `npm run audio:import`).
  *  2. The device text-to-speech engine. No mainstream engine ships a Wolof
  *     voice, so we use French, whose spelling-to-sound rules are closest to
  *     Wolof's Latin orthography. The UI labels this as a computer voice.
@@ -12,6 +13,7 @@
  * does not implement the Web Speech API.
  */
 import { Capacitor } from "@capacitor/core";
+import audioManifest from "@/content/audio-manifest.json";
 import type { Entry } from "@/content/types";
 
 export type AudioSource = "recording" | "tts" | "none";
@@ -19,8 +21,15 @@ export type AudioSource = "recording" | "tts" | "none";
 const TTS_LANG = "fr-FR";
 let currentClip: HTMLAudioElement | null = null;
 
+const manifest = audioManifest as Record<string, string>;
+
+/** Path under /public of the recorded clip for an entry, if one exists. */
+export function clipFor(entry: Entry): string | undefined {
+  return entry.audio ?? manifest[entry.id];
+}
+
 export function audioSourceFor(entry: Entry): AudioSource {
-  if (entry.audio) return "recording";
+  if (clipFor(entry)) return "recording";
   if (Capacitor.isNativePlatform()) return "tts";
   if (typeof window !== "undefined" && "speechSynthesis" in window) return "tts";
   return "none";
@@ -28,9 +37,10 @@ export function audioSourceFor(entry: Entry): AudioSource {
 
 export async function playEntry(entry: Entry, { slow = false } = {}): Promise<AudioSource> {
   stopAudio();
-  if (entry.audio) {
+  const clip = clipFor(entry);
+  if (clip) {
     try {
-      currentClip = new Audio(`/${entry.audio}`);
+      currentClip = new Audio(`/${clip}`);
       currentClip.playbackRate = slow ? 0.7 : 1;
       await currentClip.play();
       return "recording";

@@ -82,6 +82,15 @@ export const entries = [
       "Spesso scritto «teranga»: l'ideale senegalese dell'accoglienza.",
     ],
   }),
+
+  // conversation-3
+  entry("c.begnaa", "Bég naa", ["I'm happy", "Je suis content(e)", "Estoy contento/a", "Ich freue mich", "Sono contento/a"]),
+  entry("c.tiis", "Dama tiis", ["I'm sad", "Je suis triste", "Estoy triste", "Ich bin traurig", "Sono triste"]),
+  entry("c.feebar", "Dama feebar", ["I'm ill", "Je suis malade", "Estoy enfermo/a", "Ich bin krank", "Sono malato/a"]),
+  entry("c.beggnaako", "Bëgg naa ko", ["I like it", "Ça me plaît", "Me gusta", "Es gefällt mir", "Mi piace"]),
+  entry("c.beggumako", "Bëgguma ko", ["I don't like it", "Ça ne me plaît pas", "No me gusta", "Es gefällt mir nicht", "Non mi piace"]),
+  entry("c.bon", "Dafa bon", ["It's bad", "C'est mauvais", "Está mal", "Das ist schlecht", "È brutto"]),
+  entry("c.deggla", "Dëgg la", ["It's true", "C'est vrai", "Es verdad", "Das stimmt", "È vero"]),
 ];
 
 export const unit: Unit = {
@@ -172,6 +181,32 @@ export const unit: Unit = {
         { type: "pick_wolof", entry: "c.nookobokk" },
         { type: "pick_meaning", entry: "c.teraanga" },
         { type: "speak", entry: "c.dalal" },
+      ],
+    },
+    {
+      id: "conversation-3",
+      title: tx(["Feelings and opinions", "Sentiments et avis", "Sentimientos y opiniones", "Gefühle und Meinungen", "Sentimenti e opinioni"]),
+      tip: tx([
+        "Dama… describes how you feel right now: Dama tiis, “I'm sad”. Bëgg naa ko / Bëgguma ko is “I like it / I don't”.",
+        "Dama… décrit ce que vous ressentez : Dama tiis, « je suis triste ». Bëgg naa ko / Bëgguma ko : « ça me plaît / non ».",
+        "Dama… describe cómo te sientes: Dama tiis, «estoy triste». Bëgg naa ko / Bëgguma ko: «me gusta / no me gusta».",
+        "Dama … beschreibt, wie du dich fühlst: Dama tiis, „ich bin traurig“. Bëgg naa ko / Bëgguma ko: „gefällt mir / nicht“.",
+        "Dama… descrive come ti senti: Dama tiis, «sono triste». Bëgg naa ko / Bëgguma ko: «mi piace / non mi piace».",
+      ]),
+      entries: ["c.begnaa", "c.tiis", "c.feebar", "c.beggnaako", "c.beggumako", "c.bon", "c.deggla"],
+      exercises: [
+        { type: "pick_meaning", entry: "c.begnaa" },
+        { type: "pick_meaning", entry: "c.tiis" },
+        { type: "pick_meaning", entry: "c.feebar" },
+        { type: "match", entries: ["c.begnaa", "c.tiis", "c.feebar", "c.deggla"] },
+        { type: "listen", entry: "c.beggnaako" },
+        { type: "pick_meaning", entry: "c.beggumako" },
+        { type: "pick_wolof", entry: "c.bon" },
+        { type: "fill_blank", entry: "c.tiis", blank: 1, options: ["tiis", "feebar", "sonn"] },
+        { type: "pick_wolof", entry: "c.beggnaako" },
+        { type: "type_wolof", entry: "c.deggla" },
+        { type: "pick_meaning", entry: "c.bon" },
+        { type: "speak", entry: "c.begnaa" },
       ],
     },
   ],

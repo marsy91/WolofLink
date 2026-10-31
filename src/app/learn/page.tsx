@@ -2,12 +2,14 @@
 "use client";
 
 import Link from "next/link";
-import { IconBook, IconCheck, IconLock, UNIT_GLYPHS } from "@/components/icons";
+import { IconBook, IconCheck, IconGem, IconLock, UNIT_GLYPHS } from "@/components/icons";
 import { MAX_LEVEL } from "@/lib/engine";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import { allLessons, course } from "@/content/course";
 import type { Unit } from "@/content/types";
 import { translate } from "@/i18n";
+import { canOpenLesson, canOpenStory, isPremiumUnit } from "@/lib/premium";
+import { usePremium } from "@/lib/premium-context";
 import { dailyGoal, isUnlocked, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
@@ -22,6 +24,7 @@ const order = allLessons.map((l) => l.id);
 
 export default function Learn() {
   const { progress, lang, t } = useStore();
+  const { premium } = usePremium();
   const now = useNow();
   const today = xpToday(progress, now);
   const goal = dailyGoal(progress);
@@ -58,6 +61,11 @@ export default function Learn() {
                   <h2 className="font-display text-xl leading-tight font-extrabold">{translate(unit.title, lang)}</h2>
                   {planned ? <p className="text-sm font-bold">{t("path.comingSoon")}</p> : null}
                 </div>
+                {isPremiumUnit(ui) && !premium ? (
+                  <span className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-extrabold text-dusk">
+                    <IconGem size={14} /> {t("premium.badge")}
+                  </span>
+                ) : null}
               </div>
 
               {!planned && (
@@ -68,6 +76,7 @@ export default function Learn() {
                     const done = !!record;
                     const levels = Math.min(MAX_LEVEL, record?.times ?? 0);
                     const mastered = levels >= MAX_LEVEL;
+                    const paywalled = !canOpenLesson(lesson.id, premium);
                     return (
                       <li key={lesson.id} className="relative">
                         <span
@@ -80,7 +89,7 @@ export default function Learn() {
                         </span>
                         {unlocked ? (
                           <Link
-                            href={`/lesson/${lesson.id}/`}
+                            href={paywalled ? "/premium/" : `/lesson/${lesson.id}/`}
                             className="flex items-center gap-3 rounded-2xl border-2 border-sand-3 bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)] transition active:translate-y-[2px] active:shadow-none"
                           >
                             <div className="flex-1">
@@ -99,11 +108,27 @@ export default function Learn() {
                               </span>
                             </div>
                             <span
-                              className={`rounded-xl px-3 py-2 font-display text-sm font-extrabold ${
-                                mastered ? "bg-sea-soft text-sea" : done ? "bg-dusk text-white" : "bg-clay text-white"
+                              className={`flex items-center gap-1 rounded-xl px-3 py-2 font-display text-sm font-extrabold ${
+                                paywalled
+                                  ? "bg-sun-soft text-dusk"
+                                  : mastered
+                                    ? "bg-sea-soft text-sea"
+                                    : done
+                                      ? "bg-dusk text-white"
+                                      : "bg-clay text-white"
                               }`}
                             >
-                              {mastered ? t("path.again") : done ? t("path.levelUp", { n: levels + 1 }) : t("path.start")}
+                              {paywalled ? (
+                                <>
+                                  <IconGem size={14} /> {t("premium.badge")}
+                                </>
+                              ) : mastered ? (
+                                t("path.again")
+                              ) : done ? (
+                                t("path.levelUp", { n: levels + 1 })
+                              ) : (
+                                t("path.start")
+                              )}
                             </span>
                           </Link>
                         ) : (
@@ -123,6 +148,7 @@ export default function Learn() {
                       {(() => {
                         const storyOpen = unit.lessons.every((l) => progress.lessons[l.id]);
                         const read = !!progress.stories[unit.story.id];
+                        const storyPaywalled = !canOpenStory(unit.story.id, premium);
                         return (
                           <>
                             <span
@@ -135,7 +161,7 @@ export default function Learn() {
                             </span>
                             {storyOpen ? (
                               <Link
-                                href={`/dialogue/${unit.story.id}/`}
+                                href={storyPaywalled ? "/premium/" : `/dialogue/${unit.story.id}/`}
                                 className="flex items-center gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 shadow-[0_3px_0_var(--color-sand-3)] transition active:translate-y-[2px] active:shadow-none"
                               >
                                 <IconBook size={28} className="shrink-0 text-dusk" />
@@ -144,7 +170,7 @@ export default function Learn() {
                                   <h3 className="font-display text-lg font-extrabold text-night">{translate(unit.story.title, lang)}</h3>
                                 </div>
                                 <span className="rounded-xl bg-dusk px-3 py-2 font-display text-sm font-extrabold text-white">
-                                  {read ? t("path.again") : t("story.start")}
+                                  {storyPaywalled ? t("premium.badge") : read ? t("path.again") : t("story.start")}
                                 </span>
                               </Link>
                             ) : (

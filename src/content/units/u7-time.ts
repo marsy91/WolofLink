@@ -61,6 +61,50 @@ export const entries = [
   }),
   entry("t.at", "at", ["year", "année", "año", "Jahr", "anno"]),
   entry("t.kanam", "Ba ci kanam", ["See you later", "À plus tard", "Hasta luego", "Bis später", "A dopo"]),
+
+  // time-3
+  entry("t.berkidemb", "bërki-démb", [
+    "the day before yesterday",
+    "avant-hier",
+    "anteayer",
+    "vorgestern",
+    "l'altro ieri",
+  ]),
+  entry("t.gannaaw", "gannaaw-ëllëg", [
+    "the day after tomorrow",
+    "après-demain",
+    "pasado mañana",
+    "übermorgen",
+    "dopodomani",
+  ]),
+  entry("t.kan", "Kañ?", ["When?", "Quand ?", "¿Cuándo?", "Wann?", "Quando?"]),
+  entry("t.kannganew", "Kañ ngay ñëw?", [
+    "When are you coming?",
+    "Quand viens-tu ?",
+    "¿Cuándo vienes?",
+    "Wann kommst du?",
+    "Quando vieni?",
+  ]),
+  entry("t.subalaaynew", "Suba laay ñëw", [
+    "I'm coming tomorrow",
+    "Je viens demain",
+    "Vengo mañana",
+    "Ich komme morgen",
+    "Vengo domani",
+  ], {
+    note: [
+      "laay puts the focus on the time: “it's tomorrow that I'm coming”.",
+      "laay met l'accent sur le moment : « c'est demain que je viens ».",
+      "laay pone el foco en el momento: «es mañana cuando vengo».",
+      "laay betont den Zeitpunkt: „morgen ist es, dass ich komme“.",
+      "laay mette l'accento sul momento: «è domani che vengo».",
+    ],
+  }),
+  entry("t.noor", "noor", ["dry season", "saison sèche", "estación seca", "Trockenzeit", "stagione secca"], { pic: "🏜️" }),
+  entry("t.nawet", "nawet", ["rainy season", "saison des pluies", "estación de lluvias", "Regenzeit", "stagione delle piogge"], {
+    pic: "🌧️",
+  }),
+  entry("t.taw", "taw", ["rain", "pluie", "lluvia", "Regen", "pioggia"], { pic: "☔" }),
 ];
 
 export const unit: Unit = {
@@ -142,6 +186,32 @@ export const unit: Unit = {
         { type: "pick_wolof", entry: "t.kanam" },
         { type: "pick_wolof", entry: "t.ayubes" },
         { type: "speak", entry: "t.waxtu" },
+      ],
+    },
+    {
+      id: "time-3",
+      title: tx(["Plans and seasons", "Projets et saisons", "Planes y estaciones", "Pläne und Jahreszeiten", "Programmi e stagioni"]),
+      tip: tx([
+        "Senegal has two main seasons: noor, the long dry season, and nawet, the rainy season from about July to October.",
+        "Le Sénégal a deux saisons principales : noor, la longue saison sèche, et nawet, la saison des pluies, de juillet à octobre environ.",
+        "Senegal tiene dos estaciones principales: noor, la larga estación seca, y nawet, la de lluvias, de julio a octubre más o menos.",
+        "Der Senegal hat zwei Hauptjahreszeiten: noor, die lange Trockenzeit, und nawet, die Regenzeit von etwa Juli bis Oktober.",
+        "Il Senegal ha due stagioni principali: noor, la lunga stagione secca, e nawet, quella delle piogge, da luglio a ottobre circa.",
+      ]),
+      entries: ["t.berkidemb", "t.gannaaw", "t.kan", "t.kannganew", "t.subalaaynew", "t.noor", "t.nawet", "t.taw"],
+      exercises: [
+        { type: "pick_meaning", entry: "t.kan" },
+        { type: "pick_meaning", entry: "t.kannganew" },
+        { type: "pick_meaning", entry: "t.subalaaynew" },
+        { type: "match", entries: ["t.berkidemb", "t.gannaaw", "t.kan", "t.taw"] },
+        { type: "pick_picture", entry: "t.noor" },
+        { type: "pick_picture", entry: "t.nawet" },
+        { type: "listen", entry: "t.taw" },
+        { type: "build", entry: "t.kannganew", distractors: ["suba", "naa"] },
+        { type: "fill_blank", entry: "t.subalaaynew", blank: 0, options: ["Suba", "Démb", "Tey"] },
+        { type: "pick_wolof", entry: "t.gannaaw" },
+        { type: "type_wolof", entry: "t.kan" },
+        { type: "speak", entry: "t.subalaaynew" },
       ],
     },
   ],

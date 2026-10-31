@@ -4,21 +4,21 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { findStory } from "@/content/course";
-import type { Entry, StoryLine } from "@/content/types";
+import { findStory, storyLineId as lineId } from "@/content/course";
 import { translate, type UiKey } from "@/i18n";
 import { playEntry, playTone, stopAudio } from "@/lib/audio";
 import { seeded, shuffle } from "@/lib/engine";
 import { haptic } from "@/lib/native";
+import { canOpenStory } from "@/lib/premium";
+import { usePremium } from "@/lib/premium-context";
 import { ACHIEVEMENTS, applySession, type ApplyOutcome } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 import { Confetti } from "./Confetti";
-import { BADGE_GLYPHS, IconBook, IconClose, IconSpark, IconSpeaker } from "./icons";
+import { BADGE_GLYPHS, IconBook, IconClose, IconGem, IconSpark, IconSpeaker } from "./icons";
 import { Button, Loading, ProgressBar, useRequireProfile } from "./ui";
 
 export const STORY_XP = 10;
 
-const asEntry = (l: StoryLine, i: number): Entry => ({ id: `story-line-${i}`, wo: l.wo, tr: l.tr });
 
 function hash(text: string): number {
   let h = 0;
@@ -31,6 +31,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
   const { progress, lang, update, t } = useStore();
   const router = useRouter();
   const found = findStory(storyId);
+  const { premium } = usePremium();
 
   const [shown, setShown] = useState(1);
   const [showTr, setShowTr] = useState(false);
@@ -59,7 +60,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
     if (!story || phase !== "read" || !autoplay) return;
     const i = shown - 1;
     const l = story.lines[i];
-    if (l) void playEntry(asEntry(l, i));
+    if (l) void playEntry({ id: lineId(story.id, i), wo: l.wo, tr: l.tr });
     endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [shown, story, phase, autoplay]);
 
@@ -116,6 +117,16 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
       <ProgressBar value={value} label={translate(story.title, lang)} />
     </div>
   );
+
+  if (!canOpenStory(story.id, premium)) {
+    return (
+      <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 px-6 text-center">
+        <IconGem size={48} className="text-dusk" />
+        <p className="text-lg">{t("premium.lessonLocked")}</p>
+        <Button onClick={() => router.replace("/premium/")}>{t("premium.see")}</Button>
+      </main>
+    );
+  }
 
   if (!unlocked) {
     return (
@@ -275,7 +286,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
                 </span>
                 <button
                   type="button"
-                  onClick={() => void playEntry(asEntry(l, i))}
+                  onClick={() => void playEntry({ id: lineId(story.id, i), wo: l.wo, tr: l.tr })}
                   className={`max-w-[80%] rounded-3xl border-2 border-sand-3 bg-white px-4 py-3 text-left shadow-[0_3px_0_var(--color-sand-3)] ${
                     right ? "rounded-br-md" : "rounded-bl-md"
                   }`}

@@ -69,6 +69,42 @@ export const entries = [
     "Ich bin zwanzig Jahre alt",
     "Ho vent'anni",
   ]),
+
+  // numbers-3
+  entry("n.junni", "junni", ["one thousand", "mille", "mil", "tausend", "mille"], { pic: "1000" }),
+  entry("n.2000", "ñaari junni", ["two thousand", "deux mille", "dos mil", "zweitausend", "duemila"], { pic: "2000" }),
+  entry("n.xaalis", "xaalis", ["money", "argent", "dinero", "Geld", "soldi"], { pic: "💰" }),
+  entry("n.derem", "dërëm", ["5-franc unit", "unité de 5 francs", "unidad de 5 francos", "5-Franc-Einheit", "unità da 5 franchi"], {
+    note: [
+      "Prices are often counted in dërëm, units of 5 CFA francs: 20 dërëm = 100 francs.",
+      "On compte souvent les prix en dërëm, unités de 5 francs CFA : 20 dërëm = 100 francs.",
+      "Los precios se cuentan a menudo en dërëm, unidades de 5 francos CFA: 20 dërëm = 100 francos.",
+      "Preise werden oft in dërëm gezählt, Einheiten zu 5 CFA-Franc: 20 dërëm = 100 Franc.",
+      "I prezzi si contano spesso in dërëm, unità da 5 franchi CFA: 20 dërëm = 100 franchi.",
+    ],
+  }),
+  entry("n.100f", "ñaar-fukki dërëm", [
+    "100 francs (20 dërëm)",
+    "100 francs (20 dërëm)",
+    "100 francos (20 dërëm)",
+    "100 Franc (20 dërëm)",
+    "100 franchi (20 dërëm)",
+  ]),
+  entry("n.amuma", "Amuma xaalis", [
+    "I don't have money",
+    "Je n'ai pas d'argent",
+    "No tengo dinero",
+    "Ich habe kein Geld",
+    "Non ho soldi",
+  ]),
+  entry("n.joxma", "Jox ma", ["Give me", "Donne-moi", "Dame", "Gib mir", "Dammi"]),
+  entry("n.joxmanen", "Jox ma ñaari nen", [
+    "Give me two eggs",
+    "Donne-moi deux œufs",
+    "Dame dos huevos",
+    "Gib mir zwei Eier",
+    "Dammi due uova",
+  ]),
 ];
 
 export const unit: Unit = {
@@ -133,6 +169,32 @@ export const unit: Unit = {
         { type: "pick_meaning", entry: "n.age" },
         { type: "build", entry: "n.age20", distractors: ["nga", "la"] },
         { type: "speak", entry: "n.price" },
+      ],
+    },
+    {
+      id: "numbers-3",
+      title: tx(["Thousands and money", "Milliers et argent", "Miles y dinero", "Tausender und Geld", "Migliaia e soldi"]),
+      tip: tx([
+        "Junni is a thousand. In markets, prices are often said in dërëm (5 francs), so “ñaar-fukki dërëm” means 100 francs.",
+        "Junni veut dire mille. Au marché, les prix se disent souvent en dërëm (5 francs) : « ñaar-fukki dërëm » = 100 francs.",
+        "Junni es mil. En el mercado los precios se dicen a menudo en dërëm (5 francos): «ñaar-fukki dërëm» = 100 francos.",
+        "Junni heißt tausend. Auf dem Markt nennt man Preise oft in dërëm (5 Franc): „ñaar-fukki dërëm“ = 100 Franc.",
+        "Junni significa mille. Al mercato i prezzi si dicono spesso in dërëm (5 franchi): «ñaar-fukki dërëm» = 100 franchi.",
+      ]),
+      entries: ["n.junni", "n.2000", "n.xaalis", "n.derem", "n.100f", "n.amuma", "n.joxma", "n.joxmanen"],
+      exercises: [
+        { type: "pick_picture", entry: "n.junni" },
+        { type: "pick_picture", entry: "n.xaalis" },
+        { type: "pick_meaning", entry: "n.derem" },
+        { type: "pick_picture", entry: "n.2000" },
+        { type: "pick_meaning", entry: "n.100f" },
+        { type: "listen", entry: "n.xaalis" },
+        { type: "pick_meaning", entry: "n.amuma" },
+        { type: "build", entry: "n.joxmanen", distractors: ["benn", "naa"] },
+        { type: "match", entries: ["n.junni", "n.xaalis", "n.joxma", "n.amuma"] },
+        { type: "fill_blank", entry: "n.amuma", blank: 1, options: ["xaalis", "ndox", "nen"] },
+        { type: "type_wolof", entry: "n.joxma" },
+        { type: "speak", entry: "n.joxmanen" },
       ],
     },
   ],

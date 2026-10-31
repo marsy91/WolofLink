@@ -78,6 +78,38 @@ export const entries = [
     "Ich möchte Brot kaufen",
     "Voglio comprare del pane",
   ]),
+
+  // food-3
+  entry("f.ndekki", "ndekki", ["breakfast", "petit-déjeuner", "desayuno", "Frühstück", "colazione"], { pic: "🍞" }),
+  entry("f.an", "añ", ["lunch", "déjeuner", "almuerzo", "Mittagessen", "pranzo"], { pic: "☀️" }),
+  entry("f.reer", "reer", ["dinner", "dîner", "cena", "Abendessen", "cena"], { pic: "🌃" }),
+  entry("f.togg", "togg", ["to cook", "cuisiner", "cocinar", "kochen", "cucinare"], { pic: "🍳" }),
+  entry("f.ginaar", "ginaar", ["chicken", "poulet", "pollo", "Huhn", "pollo"], { pic: "🍗" }),
+  entry("f.gerte", "gerte", ["peanuts", "arachides", "cacahuetes", "Erdnüsse", "arachidi"], { pic: "🥜" }),
+  entry("f.yassa", "yassa ginaar", ["chicken yassa", "yassa au poulet", "yassa de pollo", "Hähnchen-Yassa", "yassa di pollo"], {
+    pic: "🍲",
+    note: [
+      "Chicken simmered with onions and lemon, a classic Senegalese dish.",
+      "Poulet mijoté aux oignons et au citron, un classique sénégalais.",
+      "Pollo guisado con cebolla y limón, un clásico senegalés.",
+      "Huhn, geschmort mit Zwiebeln und Zitrone, ein senegalesischer Klassiker.",
+      "Pollo stufato con cipolle e limone, un classico senegalese.",
+    ],
+  }),
+  entry("f.lantogg", "Lan ngay togg?", [
+    "What are you cooking?",
+    "Qu'est-ce que tu cuisines ?",
+    "¿Qué estás cocinando?",
+    "Was kochst du?",
+    "Cosa stai cucinando?",
+  ]),
+  entry("f.toggceeb", "Maa ngi togg ceebu jën", [
+    "I'm cooking rice with fish",
+    "Je cuisine du riz au poisson",
+    "Estoy cocinando arroz con pescado",
+    "Ich koche Reis mit Fisch",
+    "Sto cucinando riso con pesce",
+  ]),
 ];
 
 export const unit: Unit = {
@@ -161,6 +193,32 @@ export const unit: Unit = {
         { type: "fill_blank", entry: "f.wanni", blank: 2, options: ["tuuti", "rekk", "seer"] },
         { type: "pick_wolof", entry: "f.seer" },
         { type: "speak", entry: "f.wanni" },
+      ],
+    },
+    {
+      id: "food-3",
+      title: tx(["Meals and cooking", "Repas et cuisine", "Comidas y cocina", "Mahlzeiten und Kochen", "Pasti e cucina"]),
+      tip: tx([
+        "The three meals are ndekki, añ and reer. Lunch (añ) is usually the big shared meal of the day.",
+        "Les trois repas sont ndekki, añ et reer. Le déjeuner (añ) est en général le grand repas partagé.",
+        "Las tres comidas son ndekki, añ y reer. El almuerzo (añ) suele ser la gran comida compartida.",
+        "Die drei Mahlzeiten heißen ndekki, añ und reer. Das Mittagessen (añ) ist meist die große gemeinsame Mahlzeit.",
+        "I tre pasti sono ndekki, añ e reer. Il pranzo (añ) è di solito il grande pasto condiviso.",
+      ]),
+      entries: ["f.ndekki", "f.an", "f.reer", "f.togg", "f.ginaar", "f.gerte", "f.yassa", "f.lantogg", "f.toggceeb"],
+      exercises: [
+        { type: "pick_picture", entry: "f.ndekki" },
+        { type: "pick_picture", entry: "f.an" },
+        { type: "pick_picture", entry: "f.reer" },
+        { type: "pick_picture", entry: "f.ginaar" },
+        { type: "pick_meaning", entry: "f.yassa" },
+        { type: "listen", entry: "f.gerte" },
+        { type: "match", entries: ["f.ndekki", "f.an", "f.reer", "f.togg"] },
+        { type: "pick_meaning", entry: "f.lantogg" },
+        { type: "build", entry: "f.toggceeb", distractors: ["lekk", "nga"] },
+        { type: "fill_blank", entry: "f.toggceeb", blank: 2, options: ["togg", "lekk", "naan"] },
+        { type: "type_wolof", entry: "f.gerte" },
+        { type: "speak", entry: "f.lantogg" },
       ],
     },
   ],

@@ -109,6 +109,56 @@ export const entries = [
     ],
   }),
   entry("g.ndank", "Ndank ndank", ["Slowly", "Doucement", "Despacio", "Langsam", "Piano piano"]),
+
+  // greetings-3
+  entry("g.fanaane", "Naka nga fanaane?", [
+    "Did you sleep well?",
+    "Tu as bien dormi ?",
+    "¿Dormiste bien?",
+    "Hast du gut geschlafen?",
+    "Hai dormito bene?",
+  ], {
+    note: [
+      "A morning greeting; literally “how did you spend the night?”",
+      "Salutation du matin ; littéralement « comment as-tu passé la nuit ? »",
+      "Saludo de la mañana; literalmente «¿cómo pasaste la noche?»",
+      "Ein Morgengruß; wörtlich „wie hast du die Nacht verbracht?“",
+      "Saluto del mattino; letteralmente «come hai passato la notte?»",
+    ],
+  }),
+  entry("g.yendoo", "Naka nga yendoo?", [
+    "How was your day?",
+    "Comment s'est passée ta journée ?",
+    "¿Qué tal tu día?",
+    "Wie war dein Tag?",
+    "Com'è andata la giornata?",
+  ]),
+  entry("g.lubees", "Lu bees?", ["What's new?", "Quoi de neuf ?", "¿Qué hay de nuevo?", "Was gibt's Neues?", "Che c'è di nuovo?"]),
+  entry("g.dara", "Dara", ["Nothing", "Rien", "Nada", "Nichts", "Niente"]),
+  entry("g.yownag", "Yow nag?", ["And you?", "Et toi ?", "¿Y tú?", "Und du?", "E tu?"]),
+  entry("g.manitam", "Man itam", ["Me too", "Moi aussi", "Yo también", "Ich auch", "Anch'io"]),
+  entry("g.sant", "Naka nga sant?", [
+    "What's your family name?",
+    "Quel est ton nom de famille ?",
+    "¿Cuál es tu apellido?",
+    "Wie ist dein Familienname?",
+    "Qual è il tuo cognome?",
+  ]),
+  entry("g.joob", "Joob laa sant", [
+    "My family name is Diop",
+    "Mon nom de famille est Diop",
+    "Mi apellido es Diop",
+    "Mein Familienname ist Diop",
+    "Il mio cognome è Diop",
+  ], {
+    note: [
+      "Family names have Wolof spellings: Joob (Diop), Njaay (Ndiaye), Faal (Fall).",
+      "Les noms de famille ont une graphie wolof : Joob (Diop), Njaay (Ndiaye), Faal (Fall).",
+      "Los apellidos tienen grafía wolof: Joob (Diop), Njaay (Ndiaye), Faal (Fall).",
+      "Familiennamen haben eine Wolof-Schreibung: Joob (Diop), Njaay (Ndiaye), Faal (Fall).",
+      "I cognomi hanno una grafia wolof: Joob (Diop), Njaay (Ndiaye), Faal (Fall).",
+    ],
+  }),
 ];
 
 export const unit: Unit = {
@@ -195,6 +245,32 @@ export const unit: Unit = {
         { type: "pick_wolof", entry: "g.deggguma" },
         { type: "build", entry: "g.dakar", distractors: ["nga", "jóge"] },
         { type: "speak", entry: "g.waxaatal" },
+      ],
+    },
+    {
+      id: "greetings-3",
+      title: tx(["Small talk", "Petite conversation", "Charla", "Smalltalk", "Due chiacchiere"]),
+      tip: tx([
+        "Greetings often continue with a few friendly questions. Nag means “and…?”: Yow nag? “And you?”",
+        "Les salutations continuent souvent par quelques questions. Nag veut dire « et… ? » : Yow nag? « Et toi ? »",
+        "Los saludos suelen seguir con algunas preguntas. Nag significa «¿y…?»: Yow nag? «¿Y tú?»",
+        "Auf den Gruß folgen oft ein paar Fragen. Nag heißt „und …?“: Yow nag? „Und du?“",
+        "Ai saluti seguono spesso alcune domande. Nag significa «e…?»: Yow nag? «E tu?»",
+      ]),
+      entries: ["g.fanaane", "g.yendoo", "g.lubees", "g.dara", "g.yownag", "g.manitam", "g.sant", "g.joob"],
+      exercises: [
+        { type: "pick_meaning", entry: "g.fanaane" },
+        { type: "pick_meaning", entry: "g.yendoo" },
+        { type: "pick_meaning", entry: "g.lubees" },
+        { type: "match", entries: ["g.dara", "g.yownag", "g.manitam", "g.lubees"] },
+        { type: "listen", entry: "g.yownag" },
+        { type: "pick_meaning", entry: "g.sant" },
+        { type: "build", entry: "g.joob", distractors: ["tudd", "nga"] },
+        { type: "fill_blank", entry: "g.sant", blank: 2, options: ["sant", "tudd", "def"] },
+        { type: "pick_wolof", entry: "g.manitam" },
+        { type: "pick_wolof", entry: "g.fanaane" },
+        { type: "type_wolof", entry: "g.dara" },
+        { type: "speak", entry: "g.yendoo" },
       ],
     },
   ],

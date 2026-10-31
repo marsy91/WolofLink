@@ -8,14 +8,19 @@ import { fr } from "@/i18n/fr";
 import { it as itDict } from "@/i18n/it";
 import { buildLesson, normalize, seeded, tokensOf } from "@/lib/engine";
 import { ACHIEVEMENTS } from "@/lib/progress";
-import { allLessons, allStories, course } from "./course";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import audioManifest from "./audio-manifest.json";
+import { allLessons, allStories, course, storyLineId } from "./course";
 import { duplicateIds } from "./entries";
 import { UI_LANGS } from "./types";
 
 describe("course content", () => {
   it("gives every unit at least two lessons and keeps ids unique", () => {
-    expect(course.units).toHaveLength(8);
+    expect(course.units).toHaveLength(12);
     for (const unit of course.units) expect(unit.lessons.length, unit.id).toBeGreaterThanOrEqual(2);
+    // Units 1–8 have three lessons each.
+    for (const unit of course.units.slice(0, 8)) expect(unit.lessons.length, unit.id).toBe(3);
     expect(new Set(allLessons.map((l) => l.id)).size).toBe(allLessons.length);
     expect(duplicateIds).toEqual([]);
   });
@@ -53,10 +58,10 @@ describe("course content", () => {
     }
   });
 
-  it("covers every exercise type across the demo lessons", () => {
+  it("covers every authored exercise type across the lessons", () => {
     const types = new Set(allLessons.flatMap((l) => l.exercises.map((e) => e.type)));
     expect([...types].sort()).toEqual(
-      ["build", "fill_blank", "listen", "match", "pick_meaning", "pick_picture", "pick_wolof", "speak"].sort(),
+      ["build", "fill_blank", "listen", "match", "pick_meaning", "pick_picture", "pick_wolof", "speak", "type_wolof"].sort(),
     );
   });
 
@@ -96,6 +101,19 @@ describe("stories", () => {
       }
     }
     expect(new Set(allStories.map((s) => s.story.id)).size).toBe(allStories.length);
+  });
+});
+
+describe("audio manifest", () => {
+  it("only points at known lines and files that exist", () => {
+    const known = new Set([
+      ...Object.keys(course.entries),
+      ...allStories.flatMap(({ story }) => story.lines.map((_, i) => storyLineId(story.id, i))),
+    ]);
+    for (const [id, file] of Object.entries(audioManifest as Record<string, string>)) {
+      expect(known.has(id), `unknown audio id ${id}`).toBe(true);
+      expect(existsSync(path.join("public", file)), `missing file public/${file}`).toBe(true);
+    }
   });
 });
 

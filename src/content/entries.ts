@@ -8,16 +8,21 @@ import * as u5 from "./units/u5-verbs";
 import * as u6 from "./units/u6-places";
 import * as u7 from "./units/u7-time";
 import * as u8 from "./units/u8-conversation";
+import * as u9 from "./units/u9-health";
+import * as u10 from "./units/u10-work";
+import * as u11 from "./units/u11-home";
+import * as u12 from "./units/u12-culture";
 
 /**
  * Every Wolof word and phrase (CLAD orthography), gathered from the unit
  * files in ./units. Ids are namespaced by unit: g greetings, n numbers,
- * f food, p people, v verbs, l places, t time, c conversation.
+ * f food, p people, v verbs, l places, t time, c conversation, h health,
+ * w work, k home (kër), x culture.
  *
  * Recorded audio does not exist yet; when it does, add `audio:
  * "audio/wo/<id>.mp3"` to an entry and drop the file in public/audio/wo/.
  */
-export const unitModules = [u1, u2, u3, u4, u5, u6, u7, u8];
+export const unitModules = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12];
 
 const list: Entry[] = unitModules.flatMap((m) => m.entries);
 

@@ -95,7 +95,19 @@ export interface Unit {
   id: string;
   title: Translations;
   /** One of the original unit glyph keys in components/icons. */
-  glyph: "wave" | "family" | "count" | "bowl" | "spark" | "compass" | "clock" | "chat";
+  glyph:
+    | "wave"
+    | "family"
+    | "count"
+    | "bowl"
+    | "spark"
+    | "compass"
+    | "clock"
+    | "chat"
+    | "heart"
+    | "briefcase"
+    | "home"
+    | "drum";
   /** Accent colour token for the unit banner. */
   tone: "sun" | "clay" | "sea" | "dusk";
   lessons: Lesson[];

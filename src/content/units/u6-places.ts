@@ -68,6 +68,40 @@ export const entries = [
       "Utile in taxi o sul car rapide.",
     ],
   }),
+
+  // places-3
+  entry("l.oto", "oto", ["car", "voiture", "coche", "Auto", "auto"], { pic: "🚗" }),
+  entry("l.taksi", "taksi", ["taxi", "taxi", "taxi", "Taxi", "taxi"], { pic: "🚕" }),
+  entry("l.kaar", "kaar", ["minibus", "car (minibus)", "microbús", "Minibus", "pulmino"], {
+    pic: "🚐",
+    note: [
+      "The colourful “car rapide” minibuses of Dakar are a classic way to travel.",
+      "Les « cars rapides » colorés de Dakar sont un moyen de transport emblématique.",
+      "Los coloridos «cars rapides» de Dakar son un transporte emblemático.",
+      "Die bunten „Cars rapides“ in Dakar sind ein typisches Verkehrsmittel.",
+      "I colorati «car rapide» di Dakar sono un mezzo di trasporto tipico.",
+    ],
+  }),
+  entry("l.welo", "welo", ["bicycle", "vélo", "bicicleta", "Fahrrad", "bicicletta"], { pic: "🚲" }),
+  entry("l.gaal", "gaal", ["boat, pirogue", "pirogue", "piragua", "Boot, Piroge", "piroga"], { pic: "🛶" }),
+  entry("l.roppalaan", "roppalaan", ["airplane", "avion", "avión", "Flugzeug", "aereo"], { pic: "✈️" }),
+  entry("l.ndakaaru", "Ndakaaru", ["Dakar", "Dakar", "Dakar", "Dakar", "Dakar"], {
+    pic: "🏙️",
+    note: [
+      "The Wolof name of Dakar.",
+      "Le nom wolof de Dakar.",
+      "El nombre wolof de Dakar.",
+      "Der Wolof-Name von Dakar.",
+      "Il nome wolof di Dakar.",
+    ],
+  }),
+  entry("l.demndakaaru", "Dama bëgg dem Ndakaaru", [
+    "I want to go to Dakar",
+    "Je veux aller à Dakar",
+    "Quiero ir a Dakar",
+    "Ich möchte nach Dakar",
+    "Voglio andare a Dakar",
+  ]),
 ];
 
 export const unit: Unit = {
@@ -153,6 +187,32 @@ export const unit: Unit = {
         { type: "pick_wolof", entry: "l.jubal" },
         { type: "fill_blank", entry: "l.taxawal", blank: 1, options: ["fii", "fale", "bi"] },
         { type: "speak", entry: "l.ana" },
+      ],
+    },
+    {
+      id: "places-3",
+      title: tx(["Getting around", "Se déplacer", "Desplazarse", "Unterwegs", "Spostarsi"]),
+      tip: tx([
+        "Many transport words come from French, spelled the Wolof way: oto (auto), taksi, welo (vélo).",
+        "Beaucoup de mots de transport viennent du français, écrits à la wolof : oto (auto), taksi, welo (vélo).",
+        "Muchas palabras de transporte vienen del francés, escritas al modo wolof: oto (auto), taksi, welo (vélo).",
+        "Viele Verkehrswörter stammen aus dem Französischen, auf Wolof geschrieben: oto (auto), taksi, welo (vélo).",
+        "Molte parole dei trasporti vengono dal francese, scritte alla wolof: oto (auto), taksi, welo (vélo).",
+      ]),
+      entries: ["l.oto", "l.taksi", "l.kaar", "l.welo", "l.gaal", "l.roppalaan", "l.ndakaaru", "l.demndakaaru"],
+      exercises: [
+        { type: "pick_picture", entry: "l.oto" },
+        { type: "pick_picture", entry: "l.taksi" },
+        { type: "pick_picture", entry: "l.kaar" },
+        { type: "pick_picture", entry: "l.gaal" },
+        { type: "match", entries: ["l.welo", "l.roppalaan", "l.oto", "l.gaal"] },
+        { type: "listen", entry: "l.roppalaan" },
+        { type: "pick_meaning", entry: "l.ndakaaru" },
+        { type: "pick_meaning", entry: "l.demndakaaru" },
+        { type: "build", entry: "l.demndakaaru", distractors: ["marse", "nga"] },
+        { type: "fill_blank", entry: "l.demndakaaru", blank: 2, options: ["dem", "lekk", "jënd"] },
+        { type: "type_wolof", entry: "l.taksi" },
+        { type: "speak", entry: "l.demndakaaru" },
       ],
     },
   ],
