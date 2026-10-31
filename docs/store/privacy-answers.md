@@ -3,7 +3,7 @@
 Keep these in sync with `src/app/privacy/page.tsx`, `SECURITY.md` and the build
 switches in `.env.production` (README, "Launch configuration").
 
-## WolofLink 0.6 launch build (Premium, accounts and Circle switched off)
+## Builds with accounts off (0.6–0.9: Premium, accounts and Circle switched off)
 
 This build has no accounts, no purchases, no ads, no analytics and no network
 requests for user data: everything stays on the device.
@@ -33,10 +33,10 @@ Other declarations:
 
 ---
 
-## Builds with accounts and/or Premium switched on
+## Builds with accounts on (0.10 and later) and/or Premium on
 
-Use these answers instead once `NEXT_PUBLIC_ACCOUNTS` or `NEXT_PUBLIC_PREMIUM`
-is turned on.
+Use these answers for 0.10 and later (accounts on). Leave out the purchase row while
+`NEXT_PUBLIC_PREMIUM` is off.
 
 ### Google Play — Data safety form
 

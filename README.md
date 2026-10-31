@@ -74,7 +74,7 @@ free:
 | Switch | Launch value | What it does |
 | --- | --- | --- |
 | `NEXT_PUBLIC_PREMIUM` | `off` | `off`: every unit and dialogue is free, the Premium screen and links are hidden and the store SDK never loads. `on`: units 4 and up need Premium (set up RevenueCat and the store products first; see "Premium" below). |
-| `NEXT_PUBLIC_ACCOUNTS` | `off` | Hides the optional account and cloud sync even though the Supabase settings are present. Turn it back on once the sign-in emails show the 6-digit code (Supabase → Authentication → Emails: put `{{ .Token }}` in the *Magic Link* and *Confirm signup* templates). |
+| `NEXT_PUBLIC_ACCOUNTS` | `on` (since 0.10) | Optional account, cloud sync, team codes and the owner console. Needs the Supabase *Magic Link* and *Confirm signup* email templates to contain `{{ .Token }}` (the app asks for the 6-digit code). `off` hides them. |
 | `NEXT_PUBLIC_CIRCLE` | `off` | The Circle tab is a demo ranking with sample learners; keep it off in store builds. |
 
 The privacy policy page shows its account and purchase sections only when those features
