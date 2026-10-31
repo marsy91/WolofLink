@@ -16,8 +16,8 @@ const VARIANTS: Record<Variant, string> = {
   secondary:
     "bg-white text-night border-2 border-sand-3 shadow-[0_4px_0_var(--color-sand-3)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-sand-3)]",
   ghost: "bg-transparent text-night underline-offset-4 hover:underline",
-  correct: "bg-sea text-white shadow-[0_4px_0_#0a4c4f] active:translate-y-[3px] active:shadow-[0_1px_0_#0a4c4f]",
-  wrong: "bg-berry text-white shadow-[0_4px_0_#7c1a14] active:translate-y-[3px] active:shadow-[0_1px_0_#7c1a14]",
+  correct: "bg-sea text-white shadow-[0_4px_0_var(--color-sea-2)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-sea-2)]",
+  wrong: "bg-berry text-white shadow-[0_4px_0_var(--color-berry-2)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-berry-2)]",
 };
 
 export function Button({

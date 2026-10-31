@@ -36,7 +36,7 @@ export default function Practice() {
         {canReview ? (
           <Link
             href="/review/"
-            className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-sun font-display font-extrabold text-night shadow-[0_4px_0_#b77a1c] active:translate-y-[3px] active:shadow-none"
+            className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-sun font-display font-extrabold text-night shadow-[0_4px_0_var(--color-sun-2)] active:translate-y-[3px] active:shadow-none"
           >
             {t("practice.start")}
           </Link>

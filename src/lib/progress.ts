@@ -62,6 +62,8 @@ export interface Progress {
     autoplay: boolean;
     haptics: boolean;
     reminder: { enabled: boolean; hour: number; minute: number };
+    /** Colour theme: the classic WolofLink palette or the colours of the Senegalese flag. */
+    theme?: "classic" | "senegal";
   };
 }
 

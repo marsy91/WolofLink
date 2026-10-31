@@ -14,7 +14,7 @@ import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/nat
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-const VERSION = "0.10.0";
+const VERSION = "0.11.0";
 
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
@@ -108,6 +108,37 @@ export default function Settings() {
           <Toggle label={t("settings.audio")} checked={progress.settings.autoplay} onChange={(v) => setSettings({ autoplay: v })} />
           <Toggle label={t("settings.haptics")} checked={progress.settings.haptics} onChange={(v) => setSettings({ haptics: v })} />
         </div>
+
+        <fieldset className="rounded-2xl border-2 border-sand-3 bg-white px-4 py-3">
+          <legend className="px-1 font-display text-lg font-extrabold text-night">{t("settings.theme")}</legend>
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            {(
+              [
+                ["classic", t("theme.classic"), ["#1d2550", "#b9481f", "#f2a93b"]],
+                ["senegal", t("theme.senegal"), ["#00853f", "#fdef42", "#e31b23"]],
+              ] as const
+            ).map(([id, label, colours]) => {
+              const on = (progress.settings.theme ?? "classic") === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  role="radio"
+                  aria-checked={on}
+                  onClick={() => setSettings({ theme: id })}
+                  className={`rounded-2xl border-2 p-3 text-left font-bold ${on ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
+                >
+                  <span className="mb-2 flex h-6 overflow-hidden rounded-lg" aria-hidden>
+                    {colours.map((c) => (
+                      <span key={c} className="flex-1" style={{ background: c }} />
+                    ))}
+                  </span>
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </fieldset>
 
         <section className="rounded-2xl border-2 border-sand-3 bg-white px-4 py-2" aria-labelledby="remind-h">
           <h2 id="remind-h" className="flex items-center gap-2 pt-2 font-display text-lg font-extrabold text-night">

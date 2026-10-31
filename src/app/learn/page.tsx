@@ -14,7 +14,7 @@ import { dailyGoal, isUnlocked, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
 const TONES: Record<Unit["tone"], string> = {
-  sun: "bg-[#94600f] text-white",
+  sun: "bg-sun-deep text-white",
   clay: "bg-clay text-white",
   sea: "bg-sea text-white",
   dusk: "bg-dusk text-white",

@@ -49,7 +49,7 @@ export function AudioButtons({ entry, autoplay, big }: { entry: Entry; autoplay?
         type="button"
         onClick={() => void playEntry(entry)}
         aria-label={t("ex.play")}
-        className={`grid place-items-center rounded-2xl bg-night text-sun shadow-[0_4px_0_#0d1230] active:translate-y-[3px] active:shadow-none ${
+        className={`grid place-items-center rounded-2xl bg-night text-sun shadow-[0_4px_0_var(--color-night-3)] active:translate-y-[3px] active:shadow-none ${
           big ? "h-24 w-24" : "h-12 w-12"
         }`}
       >

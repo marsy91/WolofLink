@@ -4,7 +4,8 @@
 import { useMemo } from "react";
 import { seeded } from "@/lib/engine";
 
-const COLORS = ["#f2a93b", "#b9481f", "#0f6e72", "#7a3b69", "#1d2550"];
+// Theme colours (they follow Settings → Theme).
+const COLORS = ["var(--color-sun)", "var(--color-clay)", "var(--color-sea)", "var(--color-dusk)", "var(--color-night)"];
 
 /** A one-shot burst of small diamonds and dots in the app palette (CSS only). */
 export function Confetti({ pieces = 36 }: { pieces?: number }) {
