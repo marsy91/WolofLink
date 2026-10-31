@@ -60,3 +60,30 @@ describe("phrase search", () => {
     expect(p.savedPhrases).toEqual(["pb.basics.deedeet"]);
   });
 });
+
+describe("dictionary", async () => {
+  const { dictionary, dictionaryById, dictionarySections } = await import("@/content/dictionary");
+  const { course } = await import("@/content/course");
+  const { rankedSearch } = await import("./phrase-search");
+
+  it("covers the phrasebook and every course word once", () => {
+    expect(dictionary.length).toBeGreaterThanOrEqual(400);
+    expect(new Set(dictionary.map((e) => e.id)).size).toBe(dictionary.length);
+    // Only the phrasebook repeats a phrase on purpose (e.g. under Shopping and Feelings); search shows it once.
+    const hits = rankedSearch(dictionary, "god", "en");
+    expect(new Set(hits.map((e) => fold(e.wo))).size).toBe(hits.length);
+    // Every course entry is findable, either itself or through a phrasebook entry with the same Wolof.
+    const words = new Set(dictionary.map((e) => fold(e.wo)));
+    for (const e of Object.values(course.entries)) expect(words.has(fold(e.wo)), e.id).toBe(true);
+    expect(dictionarySections.filter((s) => s.kind === "course").length).toBe(course.units.length);
+    expect(dictionaryById.get("a.xaj")?.wo).toBe("xaj");
+  });
+
+  it("ranks exact matches first", () => {
+    expect(rankedSearch(dictionary, "dog", "en")[0]?.wo).toBe("xaj");
+    expect(rankedSearch(dictionary, "chien", "fr")[0]?.wo).toBe("xaj");
+    expect(rankedSearch(dictionary, "wear", "en")[0]?.wo).toBe("sol");
+    expect(rankedSearch(dictionary, "jerejef", "en")[0]?.wo).toBe("Jërëjëf");
+    expect(rankedSearch(dictionary, "", "en")).toHaveLength(dictionary.length);
+  });
+});

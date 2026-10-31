@@ -4,15 +4,16 @@
 import { useMemo, useState } from "react";
 import { IconSnail, IconSpeaker } from "@/components/icons";
 import { TabScreen } from "@/components/ui";
-import { allPhrases, phrasebook, phraseById } from "@/content/phrasebook";
+import { dictionary, dictionaryById, dictionarySections, sectionOfEntry, type DictionarySection } from "@/content/dictionary";
 import type { Entry } from "@/content/types";
 import { translate } from "@/i18n";
 import { audioSourceFor, playEntry } from "@/lib/audio";
-import { searchPhrases } from "@/lib/phrase-search";
+import { rankedSearch } from "@/lib/phrase-search";
 import { toggleSavedPhrase } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
-type Filter = "all" | "saved" | string;
+/** "all", "saved", "course" (every course word) or a phrasebook section id. */
+type Filter = "all" | "saved" | "course" | string;
 
 export default function Phrases() {
   const { progress, lang, update, t } = useStore();
@@ -20,17 +21,27 @@ export default function Phrases() {
   const [filter, setFilter] = useState<Filter>("all");
   const [open, setOpen] = useState<string | null>(null);
   const saved = progress.savedPhrases;
-  // Every phrase uses the same kind of audio, so one label covers the page.
-  const voice = audioSourceFor(allPhrases[0]!);
+  // Every entry uses the same kind of audio, so one label covers the page.
+  const voice = audioSourceFor(dictionary[0]!);
 
+  const sections = useMemo<DictionarySection[]>(() => {
+    if (filter === "all") return dictionarySections;
+    if (filter === "course") return dictionarySections.filter((s) => s.kind === "course");
+    return dictionarySections.filter((s) => s.id === filter);
+  }, [filter]);
   const pool = useMemo<Entry[]>(() => {
-    if (filter === "saved") return saved.map((id) => phraseById.get(id)).filter((e): e is Entry => !!e);
-    if (filter === "all") return allPhrases;
-    return phrasebook.find((c) => c.id === filter)?.phrases ?? [];
-  }, [filter, saved]);
-  const results = useMemo(() => searchPhrases(pool, query, lang), [pool, query, lang]);
-  // Group by category only when browsing everything without a search.
-  const grouped = filter === "all" && !query.trim();
+    if (filter === "saved") return saved.map((id) => dictionaryById.get(id)).filter((e): e is Entry => !!e);
+    return sections.flatMap((s) => s.entries);
+  }, [filter, saved, sections]);
+  const results = useMemo(() => rankedSearch(pool, query, lang), [pool, query, lang]);
+  const searching = !!query.trim();
+  const sectionLabel = (id: string) => {
+    const sec = sectionOfEntry.get(id);
+    if (!sec) return "";
+    return sec.kind === "course" ? t("dict.unit", { n: sec.emoji, title: translate(sec.title, lang) }) : `${sec.emoji} ${translate(sec.title, lang)}`;
+  };
+  // Group into sections when browsing (not searching, not the saved list).
+  const grouped = !searching && filter !== "saved";
 
   const chip = (id: Filter, label: string, emoji?: string) => (
     <button
@@ -66,6 +77,9 @@ export default function Phrases() {
               {e.wo}
             </span>
             <span className="block text-muted">{translate(e.tr, lang)}</span>
+            {searching || filter === "saved" ? (
+              <span className="mt-0.5 block text-xs text-muted/80">{sectionLabel(e.id)}</span>
+            ) : null}
             {expanded && e.note ? <span className="mt-1 block text-sm text-sea">{translate(e.note, lang)}</span> : null}
           </button>
           <div className="flex shrink-0 flex-col items-center gap-1">
@@ -124,7 +138,8 @@ export default function Phrases() {
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1" role="toolbar" aria-label={t("phrases.title")}>
         {chip("all", t("phrases.all"))}
         {chip("saved", `${t("phrases.saved")} (${saved.length})`, "★")}
-        {phrasebook.map((c) => chip(c.id, translate(c.title, lang), c.emoji))}
+        {chip("course", t("dict.course"), "📚")}
+        {dictionarySections.filter((c) => c.kind === "phrasebook").map((c) => chip(c.id, translate(c.title, lang), c.emoji))}
       </div>
 
       <p className="mb-2 text-sm font-bold text-muted" aria-live="polite">
@@ -137,12 +152,17 @@ export default function Phrases() {
         </p>
       ) : grouped ? (
         <div className="space-y-6">
-          {phrasebook.map((c) => (
+          {sections.map((c) => (
             <section key={c.id} aria-labelledby={`pb-${c.id}`}>
               <h2 id={`pb-${c.id}`} className="mb-2 flex items-center gap-2 font-display text-lg font-extrabold text-night">
-                <span aria-hidden>{c.emoji}</span> {translate(c.title, lang)}
+                {c.kind === "course" ? (
+                  <span className="grid h-7 min-w-7 place-items-center rounded-lg bg-sand-2 px-1 text-sm">{c.emoji}</span>
+                ) : (
+                  <span aria-hidden>{c.emoji}</span>
+                )}{" "}
+                {c.kind === "course" ? t("dict.unit", { n: c.emoji, title: translate(c.title, lang) }) : translate(c.title, lang)}
               </h2>
-              <ul className="space-y-2">{c.phrases.map(row)}</ul>
+              <ul className="space-y-2">{c.entries.map(row)}</ul>
             </section>
           ))}
         </div>
