@@ -18,9 +18,9 @@ placeholder until native speakers record the course; a human recording imported 
 
 ## Results
 
-- **505 lines**, 3148 takes in total.
-- **421 lines passed** the automatic check; median error rate 20%.
-- **84 lines are flagged** below: the best take still did not match the text
+- **581 lines**, 3614 takes in total.
+- **482 lines passed** the automatic check; median error rate 20%.
+- **99 lines are flagged** below: the best take still did not match the text
   well, or its length looked wrong. They may be fine (the checker itself often misspells
   short words), but have a native speaker listen to these first.
 
@@ -167,3 +167,38 @@ still listen to every line before the app is promoted as having native audio.
 | `pb.feelings.du-degg.mp3` | **Du dëgg** | du tëgë | 40% |
 | `pb.feelings.ndank-ndank.mp3` | **Ndànk-ndànk** | danq danq | 40% |
 | `pb.home.sama-mag.mp3` | **Sama mag** | sa muummecc | 43% |
+
+### 13. Colours and clothes
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `r.xonq.mp3` | **xonq** | xéen | 50% |
+| `r.bulo.mp3` | **bulo** | bu yaay | 75% |
+| `r.dafaxonq.mp3` | **Dafa xonq** | do  fo xin | 50% |
+| `r.mbubb.mp3` | **mbubb** | mou | 50% |
+| `r.sol.mp3` | **sol** | suum | 67% |
+
+### 14. Animals and nature
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `a.xaj.mp3` | **xaj** | xew | 67% |
+| `a.nag.mp3` | **nag** | nëtt | 67% |
+| `a.xar.mp3` | **xar** | xob | 67% |
+| `a.picc.mp3` | **picc** | pën | 67% |
+| `a.gaynde.mp3` | **gaynde** | jënde | 50% |
+| `a.biddiiw.mp3` | **biddiiw** | Biddi yu | 40% |
+| `a.suuf.mp3` | **suuf** | sunu | 67% |
+
+### 15. Asking questions
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `q.lutax.mp3` | **Lu tax?** | mu tox | 40% |
+
+### 16. Free time and travel
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `s.fo.mp3` | **fo** | וiin | 100% |
+| `s.saxaar.mp3` | **saxaar** | sóq sóor | 80% |
