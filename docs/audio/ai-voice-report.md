@@ -18,9 +18,9 @@ placeholder until native speakers record the course; a human recording imported 
 
 ## Results
 
-- **598 lines**, 3721 takes in total.
-- **497 lines passed** the automatic check; median error rate 20%.
-- **101 lines are flagged** below: the best take still did not match the text
+- **629 lines**, 3875 takes in total.
+- **525 lines passed** the automatic check; median error rate 20%.
+- **104 lines are flagged** below: the best take still did not match the text
   well, or its length looked wrong. They may be fine (the checker itself often misspells
   short words), but have a native speaker listen to these first.
 
@@ -209,3 +209,16 @@ still listen to every line before the app is promoted as having native audio.
 |---|---|---|---|
 | `e.koor.mp3` | **koor** | kem | 67% |
 | `e.ndogu.mp3` | **ndogu** | dëgg | 60% |
+
+### 18. Senegalese food
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `d.lax.mp3` | **lax** | mox | 67% |
+| `d.dugub.mp3` | **dugub** | tuj | 80% |
+
+### 19. Feelings
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `m.bulragal.mp3` | **Bul ragal** | buntu raataal | 50% |

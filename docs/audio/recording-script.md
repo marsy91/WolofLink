@@ -1,6 +1,6 @@
 # WolofLink recording script
 
-598 recordings (0 done). Read [README.md](README.md) first.
+629 recordings (0 done). Read [README.md](README.md) first.
 
 Save each recording with the exact **file** name shown. Read the Wolof only; the translations are there so you know the meaning.
 
@@ -697,268 +697,335 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | 403 | `e.neexnalool.mp3` | **Ceeb bi neex na lool** | The rice is really good / Le riz est vraiment bon |  |
 | 404 | `e.jerejefsuur.mp3` | **Jërëjëf, suur naa** | Thank you, I'm full / Merci, je suis rassasié |  |
 
+## 18. Senegalese food
+
+### Dishes
+
+| # | File | Wolof | Meaning | ✓ |
+|---|---|---|---|---|
+| 405 | `d.maafe.mp3` | **maafe** | mafé (peanut stew) / mafé (sauce arachide) |  |
+| 406 | `d.dibi.mp3` | **dibi** | grilled meat / viande grillée |  |
+| 407 | `d.lax.mp3` | **lax** | millet porridge / bouillie de mil |  |
+| 408 | `d.soow.mp3` | **soow** | curdled milk / lait caillé |  |
+| 409 | `d.meew.mp3` | **meew** | milk / lait |  |
+| 410 | `d.dugub.mp3` | **dugub** | millet / mil |  |
+
+### At the table
+
+| # | File | Wolof | Meaning | ✓ |
+|---|---|---|---|---|
+| 411 | `d.lannga.mp3` | **Lan nga bëgg lekk?** | What would you like to eat? / Qu'est-ce que tu veux manger ? |  |
+| 412 | `d.beggmaafe.mp3` | **Bëgg naa maafe** | I'd like mafé / J'aimerais du mafé |  |
+| 413 | `d.ammeew.mp3` | **Ndax am nga meew?** | Do you have milk? / Tu as du lait ? |  |
+| 414 | `d.laxaksoow.mp3` | **Lax ak soow** | Millet porridge with curdled milk / Bouillie de mil au lait caillé |  |
+| 415 | `d.ceebjen.mp3` | **Bëgg naa ceebu jën ak dibi** | I like rice with fish and grilled meat / J'aime le riz au poisson et la viande grillée |  |
+
+## 19. Feelings
+
+### How I feel
+
+| # | File | Wolof | Meaning | ✓ |
+|---|---|---|---|---|
+| 416 | `m.mer.mp3` | **Dama mer** | I'm angry / Je suis fâché |  |
+| 417 | `m.ragal.mp3` | **Dama ragal** | I'm scared / J'ai peur |  |
+| 418 | `m.yeemu.mp3` | **Dama yéemu** | I'm surprised / Je suis étonné |  |
+| 419 | `m.rus.mp3` | **Dama rus** | I'm embarrassed / J'ai honte, je suis gêné |  |
+| 420 | `m.jaaxle.mp3` | **Dama jaaxle** | I'm worried / Je suis inquiet |  |
+
+### Comforting someone
+
+| # | File | Wolof | Meaning | ✓ |
+|---|---|---|---|---|
+| 421 | `m.lulada.mp3` | **Lu la dal?** | What happened to you? / Qu'est-ce qui t'arrive ? |  |
+| 422 | `m.amuldara.mp3` | **Amul dara** | It's nothing / Never mind / Ce n'est rien |  |
+| 423 | `m.bulragal.mp3` | **Bul ragal** | Don't be afraid / N'aie pas peur |  |
+| 424 | `m.bulmer.mp3` | **Bul mer** | Don't be angry / Ne te fâche pas |  |
+| 425 | `m.mungibeg.mp3` | **Mu ngi bég** | He / she is happy / Il / elle est content |  |
+
+## 20. Big numbers and prices
+
+### Hundreds and thousands
+
+| # | File | Wolof | Meaning | ✓ |
+|---|---|---|---|---|
+| 426 | `b.200.mp3` | **ñaari téeméer** | two hundred / deux cents |  |
+| 427 | `b.300.mp3` | **ñetti téeméer** | three hundred / trois cents |  |
+| 428 | `b.500.mp3` | **juróomi téeméer** | five hundred / cinq cents |  |
+| 429 | `b.10000.mp3` | **fukki junni** | ten thousand / dix mille |  |
+| 430 | `b.million.mp3` | **benn milyoŋ** | one million / un million |  |
+
+### Paying and bargaining
+
+| # | File | Wolof | Meaning | ✓ |
+|---|---|---|---|---|
+| 431 | `b.its500.mp3` | **Juróomi téeméer la** | It's five hundred / C'est cinq cents |  |
+| 432 | `b.its2000.mp3` | **Ñaari junni la** | It's two thousand / C'est deux mille |  |
+| 433 | `b.yomb.mp3` | **Dafa yomb** | It's cheap / C'est bon marché |  |
+| 434 | `b.seerlool.mp3` | **Dafa seer lool** | It's very expensive / C'est très cher |  |
+| 435 | `b.wanni.mp3` | **Mën nga ko wàññi?** | Can you lower the price? / Tu peux baisser le prix ? |  |
+
 ## Phrasebook
 
 ### Essentials
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 405 | `pb.basics.waaw.mp3` | **Waaw** | Yes / Oui |  |
-| 406 | `pb.basics.deedeet.mp3` | **Déedéet** | No / Non |  |
-| 407 | `pb.basics.jerejef.mp3` | **Jërëjëf** | Thank you / Merci |  |
-| 408 | `pb.basics.noo-ko-bokk.mp3` | **Ñoo ko bokk** | You're welcome / De rien |  |
-| 409 | `pb.basics.su-la-neexee.mp3` | **Su la neexee** | Please / S'il te plaît |  |
-| 410 | `pb.basics.baal-ma.mp3` | **Baal ma** | Sorry / Excuse me / Pardon / Excusez-moi |  |
-| 411 | `pb.basics.amul-solo.mp3` | **Amul solo** | No problem / Pas de problème |  |
-| 412 | `pb.basics.degg-naa.mp3` | **Dégg naa** | I understand / Je comprends |  |
-| 413 | `pb.basics.degguma.mp3` | **Dégguma** | I don't understand / Je ne comprends pas |  |
-| 414 | `pb.basics.xam-naa.mp3` | **Xam naa** | I know / Je sais |  |
-| 415 | `pb.basics.xamuma.mp3` | **Xamuma** | I don't know / Je ne sais pas |  |
-| 416 | `pb.basics.waxaatal-su-la-neexee.mp3` | **Waxaatal, su la neexee** | Say it again, please / Répète, s'il te plaît |  |
-| 417 | `pb.basics.waxal-ndank.mp3` | **Waxal ndànk** | Speak slowly / Parle lentement |  |
-| 418 | `pb.basics.degg-nga-angale.mp3` | **Dégg nga angale?** | Do you speak English? / Tu parles anglais ? |  |
-| 419 | `pb.basics.degg-nga-faranse.mp3` | **Dégg nga farañse?** | Do you speak French? / Tu parles français ? |  |
-| 420 | `pb.basics.menuma-wax-wolof-bu-baax.mp3` | **Mënuma wax wolof bu baax** | I can't speak Wolof well / Je ne parle pas bien wolof |  |
-| 421 | `pb.basics.tuuti-rekk.mp3` | **Tuuti rekk** | Just a little / Juste un peu |  |
-| 422 | `pb.basics.naka-lanuy-waxe-lii-ci-wolof.mp3` | **Naka lañuy waxe lii ci wolof?** | How do you say this in Wolof? / Comment dit-on ça en wolof ? |  |
-| 423 | `pb.basics.lan-la-loolu-tekki.mp3` | **Lan la loolu tekki?** | What does that mean? / Qu'est-ce que ça veut dire ? |  |
-| 424 | `pb.basics.men-nga-ko-bind.mp3` | **Mën nga ko bind?** | Can you write it down? / Tu peux l'écrire ? |  |
-| 425 | `pb.basics.degg-la.mp3` | **Dëgg la** | That's true / C'est vrai |  |
-| 426 | `pb.basics.waaw-waaw.mp3` | **Waaw, waaw** | Yes, of course / Oui, bien sûr |  |
+| 436 | `pb.basics.waaw.mp3` | **Waaw** | Yes / Oui |  |
+| 437 | `pb.basics.deedeet.mp3` | **Déedéet** | No / Non |  |
+| 438 | `pb.basics.jerejef.mp3` | **Jërëjëf** | Thank you / Merci |  |
+| 439 | `pb.basics.noo-ko-bokk.mp3` | **Ñoo ko bokk** | You're welcome / De rien |  |
+| 440 | `pb.basics.su-la-neexee.mp3` | **Su la neexee** | Please / S'il te plaît |  |
+| 441 | `pb.basics.baal-ma.mp3` | **Baal ma** | Sorry / Excuse me / Pardon / Excusez-moi |  |
+| 442 | `pb.basics.amul-solo.mp3` | **Amul solo** | No problem / Pas de problème |  |
+| 443 | `pb.basics.degg-naa.mp3` | **Dégg naa** | I understand / Je comprends |  |
+| 444 | `pb.basics.degguma.mp3` | **Dégguma** | I don't understand / Je ne comprends pas |  |
+| 445 | `pb.basics.xam-naa.mp3` | **Xam naa** | I know / Je sais |  |
+| 446 | `pb.basics.xamuma.mp3` | **Xamuma** | I don't know / Je ne sais pas |  |
+| 447 | `pb.basics.waxaatal-su-la-neexee.mp3` | **Waxaatal, su la neexee** | Say it again, please / Répète, s'il te plaît |  |
+| 448 | `pb.basics.waxal-ndank.mp3` | **Waxal ndànk** | Speak slowly / Parle lentement |  |
+| 449 | `pb.basics.degg-nga-angale.mp3` | **Dégg nga angale?** | Do you speak English? / Tu parles anglais ? |  |
+| 450 | `pb.basics.degg-nga-faranse.mp3` | **Dégg nga farañse?** | Do you speak French? / Tu parles français ? |  |
+| 451 | `pb.basics.menuma-wax-wolof-bu-baax.mp3` | **Mënuma wax wolof bu baax** | I can't speak Wolof well / Je ne parle pas bien wolof |  |
+| 452 | `pb.basics.tuuti-rekk.mp3` | **Tuuti rekk** | Just a little / Juste un peu |  |
+| 453 | `pb.basics.naka-lanuy-waxe-lii-ci-wolof.mp3` | **Naka lañuy waxe lii ci wolof?** | How do you say this in Wolof? / Comment dit-on ça en wolof ? |  |
+| 454 | `pb.basics.lan-la-loolu-tekki.mp3` | **Lan la loolu tekki?** | What does that mean? / Qu'est-ce que ça veut dire ? |  |
+| 455 | `pb.basics.men-nga-ko-bind.mp3` | **Mën nga ko bind?** | Can you write it down? / Tu peux l'écrire ? |  |
+| 456 | `pb.basics.degg-la.mp3` | **Dëgg la** | That's true / C'est vrai |  |
+| 457 | `pb.basics.waaw-waaw.mp3` | **Waaw, waaw** | Yes, of course / Oui, bien sûr |  |
 
 ### Greetings and goodbyes
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 427 | `pb.greet.salaam-aleekum.mp3` | **Salaam aleekum** | Hello / Bonjour |  |
-| 428 | `pb.greet.maalekum-salaam.mp3` | **Maalekum salaam** | Hello (in reply) / Bonjour (en réponse) |  |
-| 429 | `pb.greet.na-nga-def.mp3` | **Na nga def?** | How are you? / Comment vas-tu ? |  |
-| 430 | `pb.greet.maa-ngi-fi-rekk.mp3` | **Maa ngi fi rekk** | I'm fine / Je vais bien |  |
-| 431 | `pb.greet.yow-nag.mp3` | **Yow nag?** | And you? / Et toi ? |  |
-| 432 | `pb.greet.jamm-nga-am.mp3` | **Jàmm nga am?** | Are you at peace? / Es-tu en paix ? |  |
-| 433 | `pb.greet.jamm-rekk.mp3` | **Jàmm rekk** | Peace only (all is well) / La paix seulement (tout va bien) |  |
-| 434 | `pb.greet.alxamdulilaay.mp3` | **Alxamdulilaay** | Thank God (all is well) / Dieu merci (tout va bien) |  |
-| 435 | `pb.greet.naka-nga-fanaane.mp3` | **Naka nga fanaane?** | Good morning (did you sleep well?) / Bonjour (tu as bien dormi ?) |  |
-| 436 | `pb.greet.naka-nga-yendoo.mp3` | **Naka nga yendoo?** | Good evening (how was your day?) / Bonsoir (ta journée s'est bien passée ?) |  |
-| 437 | `pb.greet.naka-waa-ker-ga.mp3` | **Naka waa kër ga?** | How is your family? / Comment va ta famille ? |  |
-| 438 | `pb.greet.nu-ngi-fa.mp3` | **Ñu ngi fa** | They're fine / Ils vont bien |  |
-| 439 | `pb.greet.naka-liggeey-bi.mp3` | **Naka liggéey bi?** | How's work? / Comment va le travail ? |  |
-| 440 | `pb.greet.lu-bees.mp3` | **Lu bees?** | What's new? / Quoi de neuf ? |  |
-| 441 | `pb.greet.dara.mp3` | **Dara** | Nothing / Rien |  |
-| 442 | `pb.greet.nuyul-ma-waa-ker-ga.mp3` | **Nuyul ma waa kër ga** | Say hello to your family for me / Salue ta famille pour moi |  |
-| 443 | `pb.greet.maa-ngi-dem.mp3` | **Maa ngi dem** | I'm leaving / Je m'en vais |  |
-| 444 | `pb.greet.ba-beneen-yoon.mp3` | **Ba beneen yoon** | See you next time / À la prochaine |  |
-| 445 | `pb.greet.ba-ci-kanam.mp3` | **Ba ci kanam** | See you later / À plus tard |  |
-| 446 | `pb.greet.ba-suba.mp3` | **Ba suba** | See you tomorrow / À demain |  |
-| 447 | `pb.greet.fanaanal-ak-jamm.mp3` | **Fanaanal ak jàmm** | Good night / Bonne nuit |  |
-| 448 | `pb.greet.dalal-ak-jamm.mp3` | **Dalal ak jàmm** | Welcome / Bienvenue |  |
+| 458 | `pb.greet.salaam-aleekum.mp3` | **Salaam aleekum** | Hello / Bonjour |  |
+| 459 | `pb.greet.maalekum-salaam.mp3` | **Maalekum salaam** | Hello (in reply) / Bonjour (en réponse) |  |
+| 460 | `pb.greet.na-nga-def.mp3` | **Na nga def?** | How are you? / Comment vas-tu ? |  |
+| 461 | `pb.greet.maa-ngi-fi-rekk.mp3` | **Maa ngi fi rekk** | I'm fine / Je vais bien |  |
+| 462 | `pb.greet.yow-nag.mp3` | **Yow nag?** | And you? / Et toi ? |  |
+| 463 | `pb.greet.jamm-nga-am.mp3` | **Jàmm nga am?** | Are you at peace? / Es-tu en paix ? |  |
+| 464 | `pb.greet.jamm-rekk.mp3` | **Jàmm rekk** | Peace only (all is well) / La paix seulement (tout va bien) |  |
+| 465 | `pb.greet.alxamdulilaay.mp3` | **Alxamdulilaay** | Thank God (all is well) / Dieu merci (tout va bien) |  |
+| 466 | `pb.greet.naka-nga-fanaane.mp3` | **Naka nga fanaane?** | Good morning (did you sleep well?) / Bonjour (tu as bien dormi ?) |  |
+| 467 | `pb.greet.naka-nga-yendoo.mp3` | **Naka nga yendoo?** | Good evening (how was your day?) / Bonsoir (ta journée s'est bien passée ?) |  |
+| 468 | `pb.greet.naka-waa-ker-ga.mp3` | **Naka waa kër ga?** | How is your family? / Comment va ta famille ? |  |
+| 469 | `pb.greet.nu-ngi-fa.mp3` | **Ñu ngi fa** | They're fine / Ils vont bien |  |
+| 470 | `pb.greet.naka-liggeey-bi.mp3` | **Naka liggéey bi?** | How's work? / Comment va le travail ? |  |
+| 471 | `pb.greet.lu-bees.mp3` | **Lu bees?** | What's new? / Quoi de neuf ? |  |
+| 472 | `pb.greet.dara.mp3` | **Dara** | Nothing / Rien |  |
+| 473 | `pb.greet.nuyul-ma-waa-ker-ga.mp3` | **Nuyul ma waa kër ga** | Say hello to your family for me / Salue ta famille pour moi |  |
+| 474 | `pb.greet.maa-ngi-dem.mp3` | **Maa ngi dem** | I'm leaving / Je m'en vais |  |
+| 475 | `pb.greet.ba-beneen-yoon.mp3` | **Ba beneen yoon** | See you next time / À la prochaine |  |
+| 476 | `pb.greet.ba-ci-kanam.mp3` | **Ba ci kanam** | See you later / À plus tard |  |
+| 477 | `pb.greet.ba-suba.mp3` | **Ba suba** | See you tomorrow / À demain |  |
+| 478 | `pb.greet.fanaanal-ak-jamm.mp3` | **Fanaanal ak jàmm** | Good night / Bonne nuit |  |
+| 479 | `pb.greet.dalal-ak-jamm.mp3` | **Dalal ak jàmm** | Welcome / Bienvenue |  |
 
 ### Meeting people
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 449 | `pb.people.naka-nga-tudd.mp3` | **Naka nga tudd?** | What's your name? / Comment t'appelles-tu ? |  |
-| 450 | `pb.people.maa-ngi-tudd-awa.mp3` | **Maa ngi tudd Awa** | My name is Awa / Je m'appelle Awa |  |
-| 451 | `pb.people.awa-laa-tudd.mp3` | **Awa laa tudd** | My name is Awa (it's Awa I'm called) / Je m'appelle Awa (c'est Awa) |  |
-| 452 | `pb.people.naka-nga-sant.mp3` | **Naka nga sant?** | What's your family name? / Quel est ton nom de famille ? |  |
-| 453 | `pb.people.joob-laa-sant.mp3` | **Joob laa sant** | My family name is Diop / Mon nom de famille est Diop |  |
-| 454 | `pb.people.fan-nga-joge.mp3` | **Fan nga jóge?** | Where are you from? / D'où viens-tu ? |  |
-| 455 | `pb.people.senegaal-laa-joge.mp3` | **Senegaal laa jóge** | I'm from Senegal / Je viens du Sénégal |  |
-| 456 | `pb.people.fan-nga-dekk.mp3` | **Fan nga dëkk?** | Where do you live? / Où habites-tu ? |  |
-| 457 | `pb.people.ndakaaru-laa-dekk.mp3` | **Ndakaaru laa dëkk** | I live in Dakar / J'habite à Dakar |  |
-| 458 | `pb.people.naata-at-nga-am.mp3` | **Ñaata at nga am?** | How old are you? / Quel âge as-tu ? |  |
-| 459 | `pb.people.am-naa-fanweer-at.mp3` | **Am naa fanweer at** | I'm thirty years old / J'ai trente ans |  |
-| 460 | `pb.people.lan-ngay-liggeey.mp3` | **Lan ngay liggéey?** | What do you do for work? / Quel est ton métier ? |  |
-| 461 | `pb.people.ndongo-laa.mp3` | **Ndongo laa** | I'm a student / Je suis étudiant(e) |  |
-| 462 | `pb.people.am-nga-jabar.mp3` | **Am nga jabar?** | Are you married? (asking a man) / Tu es marié ? (question à un homme) |  |
-| 463 | `pb.people.am-nga-jekker.mp3` | **Am nga jëkkër?** | Are you married? (asking a woman) / Tu es mariée ? (question à une femme) |  |
-| 464 | `pb.people.am-nga-doom.mp3` | **Am nga doom?** | Do you have children? / As-tu des enfants ? |  |
-| 465 | `pb.people.am-naa-naari-doom.mp3` | **Am naa ñaari doom** | I have two children / J'ai deux enfants |  |
-| 466 | `pb.people.kii-sama-xarit-la.mp3` | **Kii sama xarit la** | This is my friend / Voici mon ami(e) |  |
-| 467 | `pb.people.maa-ngi-jang-wolof.mp3` | **Maa ngi jàng wolof** | I'm learning Wolof / J'apprends le wolof |  |
+| 480 | `pb.people.naka-nga-tudd.mp3` | **Naka nga tudd?** | What's your name? / Comment t'appelles-tu ? |  |
+| 481 | `pb.people.maa-ngi-tudd-awa.mp3` | **Maa ngi tudd Awa** | My name is Awa / Je m'appelle Awa |  |
+| 482 | `pb.people.awa-laa-tudd.mp3` | **Awa laa tudd** | My name is Awa (it's Awa I'm called) / Je m'appelle Awa (c'est Awa) |  |
+| 483 | `pb.people.naka-nga-sant.mp3` | **Naka nga sant?** | What's your family name? / Quel est ton nom de famille ? |  |
+| 484 | `pb.people.joob-laa-sant.mp3` | **Joob laa sant** | My family name is Diop / Mon nom de famille est Diop |  |
+| 485 | `pb.people.fan-nga-joge.mp3` | **Fan nga jóge?** | Where are you from? / D'où viens-tu ? |  |
+| 486 | `pb.people.senegaal-laa-joge.mp3` | **Senegaal laa jóge** | I'm from Senegal / Je viens du Sénégal |  |
+| 487 | `pb.people.fan-nga-dekk.mp3` | **Fan nga dëkk?** | Where do you live? / Où habites-tu ? |  |
+| 488 | `pb.people.ndakaaru-laa-dekk.mp3` | **Ndakaaru laa dëkk** | I live in Dakar / J'habite à Dakar |  |
+| 489 | `pb.people.naata-at-nga-am.mp3` | **Ñaata at nga am?** | How old are you? / Quel âge as-tu ? |  |
+| 490 | `pb.people.am-naa-fanweer-at.mp3` | **Am naa fanweer at** | I'm thirty years old / J'ai trente ans |  |
+| 491 | `pb.people.lan-ngay-liggeey.mp3` | **Lan ngay liggéey?** | What do you do for work? / Quel est ton métier ? |  |
+| 492 | `pb.people.ndongo-laa.mp3` | **Ndongo laa** | I'm a student / Je suis étudiant(e) |  |
+| 493 | `pb.people.am-nga-jabar.mp3` | **Am nga jabar?** | Are you married? (asking a man) / Tu es marié ? (question à un homme) |  |
+| 494 | `pb.people.am-nga-jekker.mp3` | **Am nga jëkkër?** | Are you married? (asking a woman) / Tu es mariée ? (question à une femme) |  |
+| 495 | `pb.people.am-nga-doom.mp3` | **Am nga doom?** | Do you have children? / As-tu des enfants ? |  |
+| 496 | `pb.people.am-naa-naari-doom.mp3` | **Am naa ñaari doom** | I have two children / J'ai deux enfants |  |
+| 497 | `pb.people.kii-sama-xarit-la.mp3` | **Kii sama xarit la** | This is my friend / Voici mon ami(e) |  |
+| 498 | `pb.people.maa-ngi-jang-wolof.mp3` | **Maa ngi jàng wolof** | I'm learning Wolof / J'apprends le wolof |  |
 
 ### Courtesy and hospitality
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 468 | `pb.courtesy.toogal.mp3` | **Toogal** | Sit down / Assieds-toi |  |
-| 469 | `pb.courtesy.kaay-lekk.mp3` | **Kaay lekk!** | Come and eat! / Viens manger ! |  |
-| 470 | `pb.courtesy.bismilaay.mp3` | **Bismilaay** | Please, help yourself / Je t'en prie, sers-toi |  |
-| 471 | `pb.courtesy.suur-naa-jerejef.mp3` | **Suur naa, jërëjëf** | I'm full, thank you / J'ai assez mangé, merci |  |
-| 472 | `pb.courtesy.neex-na-lool.mp3` | **Neex na lool** | It's really delicious / C'est vraiment délicieux |  |
-| 473 | `pb.courtesy.su-yalla-soobee.mp3` | **Su Yàlla soobee** | God willing / Si Dieu le veut |  |
-| 474 | `pb.courtesy.amiin.mp3` | **Amiin** | Amen / Amen |  |
-| 475 | `pb.courtesy.xaaral-tuuti.mp3` | **Xaaral tuuti** | Wait a moment / Attends un peu |  |
-| 476 | `pb.courtesy.newal-fii.mp3` | **Ñëwal fii** | Come here / Viens ici |  |
-| 477 | `pb.courtesy.agsil-ak-jamm.mp3` | **Agsil ak jàmm** | Welcome (on arrival) / Bienvenue (à l'arrivée) |  |
+| 499 | `pb.courtesy.toogal.mp3` | **Toogal** | Sit down / Assieds-toi |  |
+| 500 | `pb.courtesy.kaay-lekk.mp3` | **Kaay lekk!** | Come and eat! / Viens manger ! |  |
+| 501 | `pb.courtesy.bismilaay.mp3` | **Bismilaay** | Please, help yourself / Je t'en prie, sers-toi |  |
+| 502 | `pb.courtesy.suur-naa-jerejef.mp3` | **Suur naa, jërëjëf** | I'm full, thank you / J'ai assez mangé, merci |  |
+| 503 | `pb.courtesy.neex-na-lool.mp3` | **Neex na lool** | It's really delicious / C'est vraiment délicieux |  |
+| 504 | `pb.courtesy.su-yalla-soobee.mp3` | **Su Yàlla soobee** | God willing / Si Dieu le veut |  |
+| 505 | `pb.courtesy.amiin.mp3` | **Amiin** | Amen / Amen |  |
+| 506 | `pb.courtesy.xaaral-tuuti.mp3` | **Xaaral tuuti** | Wait a moment / Attends un peu |  |
+| 507 | `pb.courtesy.newal-fii.mp3` | **Ñëwal fii** | Come here / Viens ici |  |
+| 508 | `pb.courtesy.agsil-ak-jamm.mp3` | **Agsil ak jàmm** | Welcome (on arrival) / Bienvenue (à l'arrivée) |  |
 
 ### Directions
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 478 | `pb.directions.ana-marse-bi.mp3` | **Ana marse bi?** | Where is the market? / Où est le marché ? |  |
-| 479 | `pb.directions.ana-wanag-wi.mp3` | **Ana wanag wi?** | Where is the toilet? / Où sont les toilettes ? |  |
-| 480 | `pb.directions.ana-loppitaan-bi.mp3` | **Ana loppitaan bi?** | Where is the hospital? / Où est l'hôpital ? |  |
-| 481 | `pb.directions.ana-farmasi-bi.mp3` | **Ana farmasi bi?** | Where is the pharmacy? / Où est la pharmacie ? |  |
-| 482 | `pb.directions.ana-garaas-bi.mp3` | **Ana garaas bi?** | Where is the bus station? / Où est la gare routière ? |  |
-| 483 | `pb.directions.fan-la-otel-bi-nekk.mp3` | **Fan la otel bi nekk?** | Where is the hotel? / Où se trouve l'hôtel ? |  |
-| 484 | `pb.directions.won-ma-yoon-wi.mp3` | **Won ma yoon wi** | Show me the way / Montre-moi le chemin |  |
-| 485 | `pb.directions.dama-reer.mp3` | **Dama réer** | I'm lost / Je suis perdu(e) |  |
-| 486 | `pb.directions.dafa-sore.mp3` | **Dafa sore?** | Is it far? / C'est loin ? |  |
-| 487 | `pb.directions.dafa-jege.mp3` | **Dafa jege** | It's near / C'est près |  |
-| 488 | `pb.directions.jubal.mp3` | **Jubal** | Go straight on / Va tout droit |  |
-| 489 | `pb.directions.jaddal-sa-cammon.mp3` | **Jàddal sa càmmoñ** | Turn left / Tourne à gauche |  |
-| 490 | `pb.directions.jaddal-sa-ndeyjoor.mp3` | **Jàddal sa ndeyjoor** | Turn right / Tourne à droite |  |
-| 491 | `pb.directions.fii.mp3` | **Fii** | Here / Ici |  |
-| 492 | `pb.directions.fale.mp3` | **Fale** | Over there / Là-bas |  |
+| 509 | `pb.directions.ana-marse-bi.mp3` | **Ana marse bi?** | Where is the market? / Où est le marché ? |  |
+| 510 | `pb.directions.ana-wanag-wi.mp3` | **Ana wanag wi?** | Where is the toilet? / Où sont les toilettes ? |  |
+| 511 | `pb.directions.ana-loppitaan-bi.mp3` | **Ana loppitaan bi?** | Where is the hospital? / Où est l'hôpital ? |  |
+| 512 | `pb.directions.ana-farmasi-bi.mp3` | **Ana farmasi bi?** | Where is the pharmacy? / Où est la pharmacie ? |  |
+| 513 | `pb.directions.ana-garaas-bi.mp3` | **Ana garaas bi?** | Where is the bus station? / Où est la gare routière ? |  |
+| 514 | `pb.directions.fan-la-otel-bi-nekk.mp3` | **Fan la otel bi nekk?** | Where is the hotel? / Où se trouve l'hôtel ? |  |
+| 515 | `pb.directions.won-ma-yoon-wi.mp3` | **Won ma yoon wi** | Show me the way / Montre-moi le chemin |  |
+| 516 | `pb.directions.dama-reer.mp3` | **Dama réer** | I'm lost / Je suis perdu(e) |  |
+| 517 | `pb.directions.dafa-sore.mp3` | **Dafa sore?** | Is it far? / C'est loin ? |  |
+| 518 | `pb.directions.dafa-jege.mp3` | **Dafa jege** | It's near / C'est près |  |
+| 519 | `pb.directions.jubal.mp3` | **Jubal** | Go straight on / Va tout droit |  |
+| 520 | `pb.directions.jaddal-sa-cammon.mp3` | **Jàddal sa càmmoñ** | Turn left / Tourne à gauche |  |
+| 521 | `pb.directions.jaddal-sa-ndeyjoor.mp3` | **Jàddal sa ndeyjoor** | Turn right / Tourne à droite |  |
+| 522 | `pb.directions.fii.mp3` | **Fii** | Here / Ici |  |
+| 523 | `pb.directions.fale.mp3` | **Fale** | Over there / Là-bas |  |
 
 ### Taxi and transport
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 493 | `pb.transport.taksi.mp3` | **Taksi!** | Taxi! / Taxi ! |  |
-| 494 | `pb.transport.naata-la-ba-ndakaaru.mp3` | **Ñaata la ba Ndakaaru?** | How much is it to Dakar? / C'est combien jusqu'à Dakar ? |  |
-| 495 | `pb.transport.yobbu-ma-marse-bi.mp3` | **Yóbbu ma marse bi** | Take me to the market / Emmène-moi au marché |  |
-| 496 | `pb.transport.yobbu-ma-ayeropoor-bi.mp3` | **Yóbbu ma ayeropoor bi** | Take me to the airport / Emmène-moi à l'aéroport |  |
-| 497 | `pb.transport.fan-lay-dem.mp3` | **Fan lay dem?** | Where is it going? / Où va-t-il ? |  |
-| 498 | `pb.transport.dama-begg-wacc-fii.mp3` | **Dama bëgg wàcc fii** | I want to get off here / Je veux descendre ici |  |
-| 499 | `pb.transport.taxawal-fii.mp3` | **Taxawal fii** | Stop here / Arrête-toi ici |  |
-| 500 | `pb.transport.ndank-su-la-neexee.mp3` | **Ndànk, su la neexee** | Slowly, please / Doucement, s'il te plaît |  |
-| 501 | `pb.transport.gaawal.mp3` | **Gaawal!** | Hurry up! / Dépêche-toi ! |  |
-| 502 | `pb.transport.ban-kaar-moo-dem-ndakaaru.mp3` | **Ban kaar moo dem Ndakaaru?** | Which bus goes to Dakar? / Quel car va à Dakar ? |  |
-| 503 | `pb.transport.dama-begg-dem-ndakaaru.mp3` | **Dama bëgg dem Ndakaaru** | I want to go to Dakar / Je veux aller à Dakar |  |
+| 524 | `pb.transport.taksi.mp3` | **Taksi!** | Taxi! / Taxi ! |  |
+| 525 | `pb.transport.naata-la-ba-ndakaaru.mp3` | **Ñaata la ba Ndakaaru?** | How much is it to Dakar? / C'est combien jusqu'à Dakar ? |  |
+| 526 | `pb.transport.yobbu-ma-marse-bi.mp3` | **Yóbbu ma marse bi** | Take me to the market / Emmène-moi au marché |  |
+| 527 | `pb.transport.yobbu-ma-ayeropoor-bi.mp3` | **Yóbbu ma ayeropoor bi** | Take me to the airport / Emmène-moi à l'aéroport |  |
+| 528 | `pb.transport.fan-lay-dem.mp3` | **Fan lay dem?** | Where is it going? / Où va-t-il ? |  |
+| 529 | `pb.transport.dama-begg-wacc-fii.mp3` | **Dama bëgg wàcc fii** | I want to get off here / Je veux descendre ici |  |
+| 530 | `pb.transport.taxawal-fii.mp3` | **Taxawal fii** | Stop here / Arrête-toi ici |  |
+| 531 | `pb.transport.ndank-su-la-neexee.mp3` | **Ndànk, su la neexee** | Slowly, please / Doucement, s'il te plaît |  |
+| 532 | `pb.transport.gaawal.mp3` | **Gaawal!** | Hurry up! / Dépêche-toi ! |  |
+| 533 | `pb.transport.ban-kaar-moo-dem-ndakaaru.mp3` | **Ban kaar moo dem Ndakaaru?** | Which bus goes to Dakar? / Quel car va à Dakar ? |  |
+| 534 | `pb.transport.dama-begg-dem-ndakaaru.mp3` | **Dama bëgg dem Ndakaaru** | I want to go to Dakar / Je veux aller à Dakar |  |
 
 ### Shopping and bargaining
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 504 | `pb.shopping.naata-la.mp3` | **Ñaata la?** | How much is it? / C'est combien ? |  |
-| 505 | `pb.shopping.lii-naata-la.mp3` | **Lii, ñaata la?** | How much is this? / Combien coûte ceci ? |  |
-| 506 | `pb.shopping.dafa-seer.mp3` | **Dafa seer!** | It's expensive! / C'est cher ! |  |
-| 507 | `pb.shopping.wanni-ko-tuuti.mp3` | **Wàññi ko tuuti** | Lower the price a little / Baisse un peu le prix |  |
-| 508 | `pb.shopping.dama-begg-jend-lii.mp3` | **Dama bëgg jënd lii** | I want to buy this / Je veux acheter ceci |  |
-| 509 | `pb.shopping.dinaa-ko-jend.mp3` | **Dinaa ko jënd** | I'll buy it / Je vais l'acheter |  |
-| 510 | `pb.shopping.begguma-ko.mp3` | **Bëgguma ko** | I don't want it / Je n'en veux pas |  |
-| 511 | `pb.shopping.am-nga-weccit.mp3` | **Am nga weccit?** | Do you have change? / Tu as la monnaie ? |  |
-| 512 | `pb.shopping.am-nga-mbuus.mp3` | **Am nga mbuus?** | Do you have a bag? / Tu as un sac ? |  |
-| 513 | `pb.shopping.amul.mp3` | **Amul** | There isn't any / Il n'y en a pas |  |
-| 514 | `pb.shopping.jox-ma-benn.mp3` | **Jox ma benn** | Give me one / Donne-m'en un |  |
-| 515 | `pb.shopping.jox-ma-naar.mp3` | **Jox ma ñaar** | Give me two / Donne-m'en deux |  |
-| 516 | `pb.shopping.baax-na.mp3` | **Baax na** | It's good / OK / C'est bon / D'accord |  |
+| 535 | `pb.shopping.naata-la.mp3` | **Ñaata la?** | How much is it? / C'est combien ? |  |
+| 536 | `pb.shopping.lii-naata-la.mp3` | **Lii, ñaata la?** | How much is this? / Combien coûte ceci ? |  |
+| 537 | `pb.shopping.dafa-seer.mp3` | **Dafa seer!** | It's expensive! / C'est cher ! |  |
+| 538 | `pb.shopping.wanni-ko-tuuti.mp3` | **Wàññi ko tuuti** | Lower the price a little / Baisse un peu le prix |  |
+| 539 | `pb.shopping.dama-begg-jend-lii.mp3` | **Dama bëgg jënd lii** | I want to buy this / Je veux acheter ceci |  |
+| 540 | `pb.shopping.dinaa-ko-jend.mp3` | **Dinaa ko jënd** | I'll buy it / Je vais l'acheter |  |
+| 541 | `pb.shopping.begguma-ko.mp3` | **Bëgguma ko** | I don't want it / Je n'en veux pas |  |
+| 542 | `pb.shopping.am-nga-weccit.mp3` | **Am nga weccit?** | Do you have change? / Tu as la monnaie ? |  |
+| 543 | `pb.shopping.am-nga-mbuus.mp3` | **Am nga mbuus?** | Do you have a bag? / Tu as un sac ? |  |
+| 544 | `pb.shopping.amul.mp3` | **Amul** | There isn't any / Il n'y en a pas |  |
+| 545 | `pb.shopping.jox-ma-benn.mp3` | **Jox ma benn** | Give me one / Donne-m'en un |  |
+| 546 | `pb.shopping.jox-ma-naar.mp3` | **Jox ma ñaar** | Give me two / Donne-m'en deux |  |
+| 547 | `pb.shopping.baax-na.mp3` | **Baax na** | It's good / OK / C'est bon / D'accord |  |
 
 ### Food and drink
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 517 | `pb.food.dama-xiif.mp3` | **Dama xiif** | I'm hungry / J'ai faim |  |
-| 518 | `pb.food.dama-mar.mp3` | **Dama mar** | I'm thirsty / J'ai soif |  |
-| 519 | `pb.food.jox-ma-ndox-su-la-neexee.mp3` | **Jox ma ndox, su la neexee** | Give me some water, please / Donne-moi de l'eau, s'il te plaît |  |
-| 520 | `pb.food.dama-begg-ndox-mu-sedd.mp3` | **Dama bëgg ndox mu sedd** | I'd like cold water / Je voudrais de l'eau fraîche |  |
-| 521 | `pb.food.dama-begg-kafe.mp3` | **Dama bëgg kafe** | I'd like a coffee / Je voudrais un café |  |
-| 522 | `pb.food.lan-ngeen-am.mp3` | **Lan ngeen am?** | What do you have? / Qu'est-ce que vous avez ? |  |
-| 523 | `pb.food.duma-lekk-yapp.mp3` | **Duma lekk yàpp** | I don't eat meat / Je ne mange pas de viande |  |
-| 524 | `pb.food.duma-lekk-jen.mp3` | **Duma lekk jën** | I don't eat fish / Je ne mange pas de poisson |  |
-| 525 | `pb.food.bul-def-kaani.mp3` | **Bul def kaani** | No chilli, please / Sans piment, s'il te plaît |  |
-| 526 | `pb.food.neex-na.mp3` | **Neex na!** | It's delicious! / C'est délicieux ! |  |
-| 527 | `pb.food.suur-naa.mp3` | **Suur naa** | I'm full / J'ai assez mangé |  |
-| 528 | `pb.food.ceebu-jen.mp3` | **Ceebu jën** | Rice with fish / Riz au poisson |  |
-| 529 | `pb.food.yassa-ginaar.mp3` | **Yassa ginaar** | Chicken yassa / Yassa au poulet |  |
-| 530 | `pb.food.attaaya.mp3` | **Àttaaya** | Tea (Senegalese green tea) / Thé (thé vert sénégalais) |  |
-| 531 | `pb.food.ndekki.mp3` | **Ndékki** | Breakfast / Petit-déjeuner |  |
-| 532 | `pb.food.an.mp3` | **Añ** | Lunch / Déjeuner |  |
-| 533 | `pb.food.reer.mp3` | **Reer** | Dinner / Dîner |  |
+| 548 | `pb.food.dama-xiif.mp3` | **Dama xiif** | I'm hungry / J'ai faim |  |
+| 549 | `pb.food.dama-mar.mp3` | **Dama mar** | I'm thirsty / J'ai soif |  |
+| 550 | `pb.food.jox-ma-ndox-su-la-neexee.mp3` | **Jox ma ndox, su la neexee** | Give me some water, please / Donne-moi de l'eau, s'il te plaît |  |
+| 551 | `pb.food.dama-begg-ndox-mu-sedd.mp3` | **Dama bëgg ndox mu sedd** | I'd like cold water / Je voudrais de l'eau fraîche |  |
+| 552 | `pb.food.dama-begg-kafe.mp3` | **Dama bëgg kafe** | I'd like a coffee / Je voudrais un café |  |
+| 553 | `pb.food.lan-ngeen-am.mp3` | **Lan ngeen am?** | What do you have? / Qu'est-ce que vous avez ? |  |
+| 554 | `pb.food.duma-lekk-yapp.mp3` | **Duma lekk yàpp** | I don't eat meat / Je ne mange pas de viande |  |
+| 555 | `pb.food.duma-lekk-jen.mp3` | **Duma lekk jën** | I don't eat fish / Je ne mange pas de poisson |  |
+| 556 | `pb.food.bul-def-kaani.mp3` | **Bul def kaani** | No chilli, please / Sans piment, s'il te plaît |  |
+| 557 | `pb.food.neex-na.mp3` | **Neex na!** | It's delicious! / C'est délicieux ! |  |
+| 558 | `pb.food.suur-naa.mp3` | **Suur naa** | I'm full / J'ai assez mangé |  |
+| 559 | `pb.food.ceebu-jen.mp3` | **Ceebu jën** | Rice with fish / Riz au poisson |  |
+| 560 | `pb.food.yassa-ginaar.mp3` | **Yassa ginaar** | Chicken yassa / Yassa au poulet |  |
+| 561 | `pb.food.attaaya.mp3` | **Àttaaya** | Tea (Senegalese green tea) / Thé (thé vert sénégalais) |  |
+| 562 | `pb.food.ndekki.mp3` | **Ndékki** | Breakfast / Petit-déjeuner |  |
+| 563 | `pb.food.an.mp3` | **Añ** | Lunch / Déjeuner |  |
+| 564 | `pb.food.reer.mp3` | **Reer** | Dinner / Dîner |  |
 
 ### Numbers and money
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 534 | `pb.money.benn-naar-nett.mp3` | **Benn, ñaar, ñett** | One, two, three / Un, deux, trois |  |
-| 535 | `pb.money.neent-juroom-juroom-benn.mp3` | **Ñeent, juróom, juróom benn** | Four, five, six / Quatre, cinq, six |  |
-| 536 | `pb.money.juroom-naar-juroom-nett-juroom-neent-fukk.mp3` | **Juróom ñaar, juróom ñett, juróom ñeent, fukk** | Seven, eight, nine, ten / Sept, huit, neuf, dix |  |
-| 537 | `pb.money.teemeer.mp3` | **Téeméer** | One hundred / Cent |  |
-| 538 | `pb.money.junni.mp3` | **Junni** | One thousand / Mille |  |
-| 539 | `pb.money.amuma-xaalis.mp3` | **Amuma xaalis** | I don't have money / Je n'ai pas d'argent |  |
-| 540 | `pb.money.amuma-weccit.mp3` | **Amuma weccit** | I don't have change / Je n'ai pas de monnaie |  |
-| 541 | `pb.money.derem.mp3` | **Dërëm** | 5-franc unit / Unité de 5 francs |  |
+| 565 | `pb.money.benn-naar-nett.mp3` | **Benn, ñaar, ñett** | One, two, three / Un, deux, trois |  |
+| 566 | `pb.money.neent-juroom-juroom-benn.mp3` | **Ñeent, juróom, juróom benn** | Four, five, six / Quatre, cinq, six |  |
+| 567 | `pb.money.juroom-naar-juroom-nett-juroom-neent-fukk.mp3` | **Juróom ñaar, juróom ñett, juróom ñeent, fukk** | Seven, eight, nine, ten / Sept, huit, neuf, dix |  |
+| 568 | `pb.money.teemeer.mp3` | **Téeméer** | One hundred / Cent |  |
+| 569 | `pb.money.junni.mp3` | **Junni** | One thousand / Mille |  |
+| 570 | `pb.money.amuma-xaalis.mp3` | **Amuma xaalis** | I don't have money / Je n'ai pas d'argent |  |
+| 571 | `pb.money.amuma-weccit.mp3` | **Amuma weccit** | I don't have change / Je n'ai pas de monnaie |  |
+| 572 | `pb.money.derem.mp3` | **Dërëm** | 5-franc unit / Unité de 5 francs |  |
 
 ### Time and plans
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 542 | `pb.time.ban-waxtu-moo-jot.mp3` | **Ban waxtu moo jot?** | What time is it? / Quelle heure est-il ? |  |
-| 543 | `pb.time.leegi.mp3` | **Léegi** | Now / Maintenant |  |
-| 544 | `pb.time.tey.mp3` | **Tey** | Today / Aujourd'hui |  |
-| 545 | `pb.time.suba.mp3` | **Suba** | Tomorrow / Demain |  |
-| 546 | `pb.time.demb.mp3` | **Démb** | Yesterday / Hier |  |
-| 547 | `pb.time.ci-suba-si.mp3` | **Ci suba si** | In the morning / Le matin |  |
-| 548 | `pb.time.ci-ngoon.mp3` | **Ci ngoon** | In the late afternoon / En fin d'après-midi |  |
-| 549 | `pb.time.ci-guddi.mp3` | **Ci guddi** | At night / La nuit |  |
-| 550 | `pb.time.kan-ngay-new.mp3` | **Kañ ngay ñëw?** | When are you coming? / Quand viens-tu ? |  |
-| 551 | `pb.time.suba-laay-new.mp3` | **Suba laay ñëw** | I'm coming tomorrow / Je viens demain |  |
-| 552 | `pb.time.dinaa-la-woo.mp3` | **Dinaa la woo** | I'll call you / Je t'appellerai |  |
-| 553 | `pb.time.woo-ma.mp3` | **Woo ma** | Call me / Appelle-moi |  |
-| 554 | `pb.time.alo-kan-la.mp3` | **Alo, kan la?** | Hello, who is it? (on the phone) / Allô, qui est-ce ? |  |
-| 555 | `pb.time.dafa-tang-tey.mp3` | **Dafa tàng tey** | It's hot today / Il fait chaud aujourd'hui |  |
-| 556 | `pb.time.dafa-sedd.mp3` | **Dafa sedd** | It's cold / Il fait froid |  |
+| 573 | `pb.time.ban-waxtu-moo-jot.mp3` | **Ban waxtu moo jot?** | What time is it? / Quelle heure est-il ? |  |
+| 574 | `pb.time.leegi.mp3` | **Léegi** | Now / Maintenant |  |
+| 575 | `pb.time.tey.mp3` | **Tey** | Today / Aujourd'hui |  |
+| 576 | `pb.time.suba.mp3` | **Suba** | Tomorrow / Demain |  |
+| 577 | `pb.time.demb.mp3` | **Démb** | Yesterday / Hier |  |
+| 578 | `pb.time.ci-suba-si.mp3` | **Ci suba si** | In the morning / Le matin |  |
+| 579 | `pb.time.ci-ngoon.mp3` | **Ci ngoon** | In the late afternoon / En fin d'après-midi |  |
+| 580 | `pb.time.ci-guddi.mp3` | **Ci guddi** | At night / La nuit |  |
+| 581 | `pb.time.kan-ngay-new.mp3` | **Kañ ngay ñëw?** | When are you coming? / Quand viens-tu ? |  |
+| 582 | `pb.time.suba-laay-new.mp3` | **Suba laay ñëw** | I'm coming tomorrow / Je viens demain |  |
+| 583 | `pb.time.dinaa-la-woo.mp3` | **Dinaa la woo** | I'll call you / Je t'appellerai |  |
+| 584 | `pb.time.woo-ma.mp3` | **Woo ma** | Call me / Appelle-moi |  |
+| 585 | `pb.time.alo-kan-la.mp3` | **Alo, kan la?** | Hello, who is it? (on the phone) / Allô, qui est-ce ? |  |
+| 586 | `pb.time.dafa-tang-tey.mp3` | **Dafa tàng tey** | It's hot today / Il fait chaud aujourd'hui |  |
+| 587 | `pb.time.dafa-sedd.mp3` | **Dafa sedd** | It's cold / Il fait froid |  |
 
 ### Health and emergencies
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 557 | `pb.health.dimbali-ma.mp3` | **Dimbali ma!** | Help me! / Aide-moi ! |  |
-| 558 | `pb.health.wool-doktoor.mp3` | **Wool doktoor!** | Call a doctor! / Appelle un médecin ! |  |
-| 559 | `pb.health.wool-polis.mp3` | **Wool polis!** | Call the police! / Appelle la police ! |  |
-| 560 | `pb.health.moytul.mp3` | **Moytul!** | Watch out! / Attention ! |  |
-| 561 | `pb.health.sacc.mp3` | **Sàcc!** | Thief! / Au voleur ! |  |
-| 562 | `pb.health.bayyi-ma.mp3` | **Bàyyi ma!** | Leave me alone! / Laisse-moi tranquille ! |  |
-| 563 | `pb.health.dama-feebar.mp3` | **Dama feebar** | I'm ill / Je suis malade |  |
-| 564 | `pb.health.sama-bopp-dafay-metti.mp3` | **Sama bopp dafay metti** | I have a headache / J'ai mal à la tête |  |
-| 565 | `pb.health.sama-biir-dafay-metti.mp3` | **Sama biir dafay metti** | I have a stomach ache / J'ai mal au ventre |  |
-| 566 | `pb.health.dama-begg-doktoor.mp3` | **Dama bëgg doktoor** | I need a doctor / J'ai besoin d'un médecin |  |
-| 567 | `pb.health.am-nga-garab.mp3` | **Am nga garab?** | Do you have medicine? / As-tu des médicaments ? |  |
-| 568 | `pb.health.dama-sonn.mp3` | **Dama sonn** | I'm tired / Je suis fatigué(e) |  |
-| 569 | `pb.health.wer-naa.mp3` | **Wér naa** | I'm well (healthy) / Je vais bien (en forme) |  |
+| 588 | `pb.health.dimbali-ma.mp3` | **Dimbali ma!** | Help me! / Aide-moi ! |  |
+| 589 | `pb.health.wool-doktoor.mp3` | **Wool doktoor!** | Call a doctor! / Appelle un médecin ! |  |
+| 590 | `pb.health.wool-polis.mp3` | **Wool polis!** | Call the police! / Appelle la police ! |  |
+| 591 | `pb.health.moytul.mp3` | **Moytul!** | Watch out! / Attention ! |  |
+| 592 | `pb.health.sacc.mp3` | **Sàcc!** | Thief! / Au voleur ! |  |
+| 593 | `pb.health.bayyi-ma.mp3` | **Bàyyi ma!** | Leave me alone! / Laisse-moi tranquille ! |  |
+| 594 | `pb.health.dama-feebar.mp3` | **Dama feebar** | I'm ill / Je suis malade |  |
+| 595 | `pb.health.sama-bopp-dafay-metti.mp3` | **Sama bopp dafay metti** | I have a headache / J'ai mal à la tête |  |
+| 596 | `pb.health.sama-biir-dafay-metti.mp3` | **Sama biir dafay metti** | I have a stomach ache / J'ai mal au ventre |  |
+| 597 | `pb.health.dama-begg-doktoor.mp3` | **Dama bëgg doktoor** | I need a doctor / J'ai besoin d'un médecin |  |
+| 598 | `pb.health.am-nga-garab.mp3` | **Am nga garab?** | Do you have medicine? / As-tu des médicaments ? |  |
+| 599 | `pb.health.dama-sonn.mp3` | **Dama sonn** | I'm tired / Je suis fatigué(e) |  |
+| 600 | `pb.health.wer-naa.mp3` | **Wér naa** | I'm well (healthy) / Je vais bien (en forme) |  |
 
 ### Feelings and opinions
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 570 | `pb.feelings.beg-naa.mp3` | **Bég naa** | I'm happy / Je suis content(e) |  |
-| 571 | `pb.feelings.dama-tiis.mp3` | **Dama tiis** | I'm sad / Je suis triste |  |
-| 572 | `pb.feelings.dama-mer.mp3` | **Dama mer** | I'm angry / Je suis fâché(e) |  |
-| 573 | `pb.feelings.dama-ragal.mp3` | **Dama ragal** | I'm scared / J'ai peur |  |
-| 574 | `pb.feelings.begg-naa-ko.mp3` | **Bëgg naa ko** | I like it / Ça me plaît |  |
-| 575 | `pb.feelings.begguma-ko.mp3` | **Bëgguma ko** | I don't like it / Ça ne me plaît pas |  |
-| 576 | `pb.feelings.sopp-naa-la.mp3` | **Sopp naa la** | I love you / Je t'aime |  |
-| 577 | `pb.feelings.rafet-na.mp3` | **Rafet na** | It's beautiful / C'est beau |  |
-| 578 | `pb.feelings.dafa-bon.mp3` | **Dafa bon** | It's bad / C'est mauvais |  |
-| 579 | `pb.feelings.du-degg.mp3` | **Du dëgg** | It's not true / Ce n'est pas vrai |  |
-| 580 | `pb.feelings.ndank-ndank.mp3` | **Ndànk-ndànk** | Little by little / Petit à petit |  |
+| 601 | `pb.feelings.beg-naa.mp3` | **Bég naa** | I'm happy / Je suis content(e) |  |
+| 602 | `pb.feelings.dama-tiis.mp3` | **Dama tiis** | I'm sad / Je suis triste |  |
+| 603 | `pb.feelings.dama-mer.mp3` | **Dama mer** | I'm angry / Je suis fâché(e) |  |
+| 604 | `pb.feelings.dama-ragal.mp3` | **Dama ragal** | I'm scared / J'ai peur |  |
+| 605 | `pb.feelings.begg-naa-ko.mp3` | **Bëgg naa ko** | I like it / Ça me plaît |  |
+| 606 | `pb.feelings.begguma-ko.mp3` | **Bëgguma ko** | I don't like it / Ça ne me plaît pas |  |
+| 607 | `pb.feelings.sopp-naa-la.mp3` | **Sopp naa la** | I love you / Je t'aime |  |
+| 608 | `pb.feelings.rafet-na.mp3` | **Rafet na** | It's beautiful / C'est beau |  |
+| 609 | `pb.feelings.dafa-bon.mp3` | **Dafa bon** | It's bad / C'est mauvais |  |
+| 610 | `pb.feelings.du-degg.mp3` | **Du dëgg** | It's not true / Ce n'est pas vrai |  |
+| 611 | `pb.feelings.ndank-ndank.mp3` | **Ndànk-ndànk** | Little by little / Petit à petit |  |
 
 ### Home and family
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 581 | `pb.home.sama-yaay.mp3` | **Sama yaay** | My mother / Ma mère |  |
-| 582 | `pb.home.sama-baay.mp3` | **Sama baay** | My father / Mon père |  |
-| 583 | `pb.home.sama-mag.mp3` | **Sama mag** | My older brother / sister / Mon grand frère / ma grande sœur |  |
-| 584 | `pb.home.sama-rakk.mp3` | **Sama rakk** | My younger brother / sister / Mon petit frère / ma petite sœur |  |
-| 585 | `pb.home.sama-doom.mp3` | **Sama doom** | My child / Mon enfant |  |
-| 586 | `pb.home.sama-ker.mp3` | **Sama kër** | My home / Ma maison |  |
-| 587 | `pb.home.newal-sama-ker.mp3` | **Ñëwal sama kër** | Come to my home / Viens chez moi |  |
-| 588 | `pb.home.dama-yewwu.mp3` | **Dama yewwu** | I wake up / Je me réveille |  |
-| 589 | `pb.home.dama-begg-nelaw.mp3` | **Dama bëgg nelaw** | I want to sleep / Je veux dormir |  |
-| 590 | `pb.home.maa-ngi-dem-liggeey.mp3` | **Maa ngi dem liggéey** | I'm going to work / Je vais au travail |  |
+| 612 | `pb.home.sama-yaay.mp3` | **Sama yaay** | My mother / Ma mère |  |
+| 613 | `pb.home.sama-baay.mp3` | **Sama baay** | My father / Mon père |  |
+| 614 | `pb.home.sama-mag.mp3` | **Sama mag** | My older brother / sister / Mon grand frère / ma grande sœur |  |
+| 615 | `pb.home.sama-rakk.mp3` | **Sama rakk** | My younger brother / sister / Mon petit frère / ma petite sœur |  |
+| 616 | `pb.home.sama-doom.mp3` | **Sama doom** | My child / Mon enfant |  |
+| 617 | `pb.home.sama-ker.mp3` | **Sama kër** | My home / Ma maison |  |
+| 618 | `pb.home.newal-sama-ker.mp3` | **Ñëwal sama kër** | Come to my home / Viens chez moi |  |
+| 619 | `pb.home.dama-yewwu.mp3` | **Dama yewwu** | I wake up / Je me réveille |  |
+| 620 | `pb.home.dama-begg-nelaw.mp3` | **Dama bëgg nelaw** | I want to sleep / Je veux dormir |  |
+| 621 | `pb.home.maa-ngi-dem-liggeey.mp3` | **Maa ngi dem liggéey** | I'm going to work / Je vais au travail |  |
 
 ### Celebrations and faith
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 591 | `pb.faith.dewenati.mp3` | **Dewenati!** | Happy holiday! (Korité, Tabaski) / Bonne fête ! (Korité, Tabaski) |  |
-| 592 | `pb.faith.baal-ma-aq.mp3` | **Baal ma àq** | Forgive me my wrongs / Pardonne-moi mes torts |  |
-| 593 | `pb.faith.baal-naa-la.mp3` | **Baal naa la** | I forgive you / Je te pardonne |  |
-| 594 | `pb.faith.tabaski.mp3` | **Tabaski** | Tabaski (Eid al-Adha) / Tabaski (Aïd el-Kébir) |  |
-| 595 | `pb.faith.korite.mp3` | **Korite** | Korité (Eid al-Fitr) / Korité (Aïd el-Fitr) |  |
-| 596 | `pb.faith.ngente.mp3` | **Ngénte** | Naming ceremony / Baptême |  |
-| 597 | `pb.faith.alxamdulilaay.mp3` | **Alxamdulilaay** | Praise be to God / Louange à Dieu |  |
-| 598 | `pb.faith.nit-nit-ay-garabam.mp3` | **Nit, nit ay garabam** | People are each other's remedy / L'homme est le remède de l'homme |  |
+| 622 | `pb.faith.dewenati.mp3` | **Dewenati!** | Happy holiday! (Korité, Tabaski) / Bonne fête ! (Korité, Tabaski) |  |
+| 623 | `pb.faith.baal-ma-aq.mp3` | **Baal ma àq** | Forgive me my wrongs / Pardonne-moi mes torts |  |
+| 624 | `pb.faith.baal-naa-la.mp3` | **Baal naa la** | I forgive you / Je te pardonne |  |
+| 625 | `pb.faith.tabaski.mp3` | **Tabaski** | Tabaski (Eid al-Adha) / Tabaski (Aïd el-Kébir) |  |
+| 626 | `pb.faith.korite.mp3` | **Korite** | Korité (Eid al-Fitr) / Korité (Aïd el-Fitr) |  |
+| 627 | `pb.faith.ngente.mp3` | **Ngénte** | Naming ceremony / Baptême |  |
+| 628 | `pb.faith.alxamdulilaay.mp3` | **Alxamdulilaay** | Praise be to God / Louange à Dieu |  |
+| 629 | `pb.faith.nit-nit-ay-garabam.mp3` | **Nit, nit ay garabam** | People are each other's remedy / L'homme est le remède de l'homme |  |
