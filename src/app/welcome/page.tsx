@@ -79,7 +79,7 @@ export default function Welcome() {
 
   if (step === 0) {
     return (
-      <main className="safe-top safe-bottom flex min-h-dvh flex-col bg-night text-sand">
+      <main className="splash safe-top safe-bottom flex min-h-dvh flex-col bg-night text-sand">
         <div className="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center gap-6 px-6 text-center">
           <LogoMark size={120} className="anim-pop" />
           <h1 className="font-display text-4xl font-extrabold">

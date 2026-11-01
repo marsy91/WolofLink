@@ -68,6 +68,8 @@ export interface Progress {
     holidayReminders?: boolean;
     /** Seasonal themes for holidays and special events (on unless switched off). */
     seasonal?: boolean;
+    /** Light or dark appearance; "system" follows the phone. */
+    mode?: "system" | "light" | "dark";
   };
 }
 

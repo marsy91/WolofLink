@@ -138,6 +138,26 @@ export default function Settings() {
               );
             })}
           </div>
+          <div className="pt-3" role="radiogroup" aria-label={t("settings.mode")}>
+            <p className="mb-1 font-bold">{t("settings.mode")}</p>
+            <div className="grid grid-cols-3 gap-2">
+              {(["system", "light", "dark"] as const).map((m) => {
+                const on = (progress.settings.mode ?? "system") === m;
+                return (
+                  <button
+                    key={m}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    onClick={() => setSettings({ mode: m })}
+                    className={`rounded-xl border-2 px-2 py-2 text-sm font-bold ${on ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
+                  >
+                    {t(`mode.${m}`)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           <Toggle
             label={t("settings.seasonal")}
             checked={progress.settings.seasonal !== false}

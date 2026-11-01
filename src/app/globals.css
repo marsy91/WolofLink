@@ -157,3 +157,56 @@ body {
 .season-flag { background: linear-gradient(135deg, #00853f, #0b4a2b); color: #fff; }
 .season-sport { background: linear-gradient(135deg, #0b4a2b, #00853f 60%, #c8102e); color: #fff; }
 .season-nature { background: linear-gradient(135deg, #2f7d32, #4c9a50); color: #fff; }
+
+/* Dark mode (Settings → Appearance, or the phone's setting). Neutrals turn dark; the
+   "night" colour flips to a light ink, so headings stay readable and the dark cards
+   (bg-night + text-sand) become light cards with dark text. Brand colours are a
+   little lighter so text in them keeps enough contrast on dark surfaces. */
+:root[data-mode="dark"] {
+  color-scheme: dark;
+  --color-sand: #121527;
+  --color-sand-2: #1d2140;
+  --color-sand-3: #30365a;
+  --color-ink: #ecebf4;
+  --color-muted: #aaa8c2;
+  --color-night: #e8e6f6;
+  --color-night-2: #c9c6ea;
+  --color-night-3: #f5f4fb;
+  --color-clay: #d4643a;
+  --color-clay-2: #a84c28;
+  --color-sea: #2a9da0;
+  --color-sea-2: #1d7c7f;
+  --color-berry: #e0554b;
+  --color-berry-2: #b33a31;
+  --color-dusk: #b46aa3;
+  --color-sun-soft: #3b3018;
+  --color-sea-soft: #12343a;
+  --color-berry-soft: #3d1d1f;
+  --color-dusk-soft: #33213a;
+}
+:root[data-mode="dark"][data-theme="senegal"],
+:root[data-mode="dark"][data-season="flag"] {
+  --color-night: #e3f1e8;
+  --color-night-2: #c2e3cf;
+  --color-night-3: #f2f9f4;
+  --color-clay: #1f9d55;
+  --color-clay-2: #157a40;
+  --color-sea: #2fae67;
+  --color-sea-2: #208a4f;
+  --color-berry: #ef4b5f;
+  --color-dusk: #e2545b;
+  --color-sun-soft: #37361a;
+  --color-sea-soft: #12301f;
+}
+:root[data-mode="dark"] .bg-white { background-color: #1a1e38; }
+:root[data-mode="dark"] .bg-white\/50 { background-color: rgb(26 30 56 / 0.5); }
+:root[data-mode="dark"] .text-white { color: #ffffff; }
+/* Dark text where the background stays bright in both modes. */
+:root[data-mode="dark"] .bg-sun.text-night,
+:root[data-mode="dark"] .bg-white\/90.text-night { color: #1d2550; }
+/* Icons on the (now light) night tiles. */
+:root[data-mode="dark"] .bg-night.text-sun { color: #94600f; }
+:root[data-mode="dark"] .weave { filter: brightness(0.92); }
+/* The welcome splash stays dark navy in both modes. */
+:root[data-mode="dark"] .splash { --color-night: #1d2550; --color-sand: #fbf3e6; }
+:root[data-mode="dark"][data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }
