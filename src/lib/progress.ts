@@ -64,6 +64,8 @@ export interface Progress {
     reminder: { enabled: boolean; hour: number; minute: number };
     /** Colour theme: the classic WolofLink palette or the colours of the Senegalese flag. */
     theme?: "classic" | "senegal";
+    /** Notify the evening before holidays and important dates (Holidays screen). */
+    holidayReminders?: boolean;
   };
 }
 

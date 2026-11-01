@@ -32,6 +32,8 @@ export default function AccountPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  // Supabase sends 6 digits by default; 8 if the project setting is changed.
+  const codeOk = code.length >= 6 && code.length <= 8;
   const [step, setStep] = useState<"email" | "code">("email");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<UiKey | null>(null);
@@ -203,16 +205,16 @@ export default function AccountPage() {
               inputMode="numeric"
               autoComplete="one-time-code"
               pattern="[0-9]*"
-              maxLength={6}
+              maxLength={8}
               value={code}
               disabled={busy}
               onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
-              onKeyDown={(e) => e.key === "Enter" && code.length === 6 && void verify()}
+              onKeyDown={(e) => e.key === "Enter" && codeOk && void verify()}
               className={`${field} text-center font-display text-3xl tracking-[0.4em]`}
               autoFocus
             />
           </label>
-          <Button block disabled={busy || code.length !== 6} onClick={() => void verify()}>
+          <Button block disabled={busy || !codeOk} onClick={() => void verify()}>
             {t("acct.verify")}
           </Button>
           <div className="flex justify-between gap-3">

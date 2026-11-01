@@ -5,8 +5,10 @@ import Link from "next/link";
 import { IconDrop, IconLoop } from "@/components/icons";
 import { TabScreen } from "@/components/ui";
 import { course } from "@/content/course";
+import { upcoming } from "@/content/calendar";
 import { SURVIVAL_IDS, SURVIVAL_TITLE } from "@/content/survival";
 import { translate } from "@/i18n";
+import { useDateOverrides } from "@/lib/holidays";
 import { dueEntries, MAX_DROPS, minutesToNextDrop, refreshDrops } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
@@ -20,6 +22,8 @@ export default function Practice() {
   const fresh = refreshDrops(progress, now);
   const mins = minutesToNextDrop(fresh, now);
   const learned = Object.keys(progress.srs).length;
+  const overrides = useDateOverrides();
+  const nextHoliday = upcoming(new Date(now), overrides)[0];
 
   return (
     <TabScreen title={t("practice.title")}>
@@ -63,6 +67,31 @@ export default function Practice() {
             {t("survival.list")}
           </Link>
         </div>
+      </section>
+
+      <section className="mb-5 rounded-3xl border-2 border-sea/30 bg-white p-5" aria-labelledby="cal-h">
+        <h2 id="cal-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
+          <span aria-hidden>📅</span> {t("cal.title")}
+        </h2>
+        {nextHoliday ? (
+          <p className="mb-1 font-bold text-sea">
+            {t("cal.next", { name: translate(nextHoliday.holiday.title, lang) })} ·{" "}
+            {nextHoliday.ongoing
+              ? t("cal.now")
+              : nextHoliday.daysAway === 0
+                ? t("cal.today")
+                : nextHoliday.daysAway === 1
+                  ? t("cal.tomorrow")
+                  : t("cal.inDays", { n: nextHoliday.daysAway })}
+          </p>
+        ) : null}
+        <p className="mb-4 text-sm text-muted">{t("cal.card")}</p>
+        <Link
+          href="/calendar/"
+          className="flex min-h-12 w-full items-center justify-center rounded-2xl border-2 border-sand-3 bg-white font-display font-extrabold text-night"
+        >
+          {t("cal.open")}
+        </Link>
       </section>
 
       <section className="mb-5 rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]" aria-labelledby="drops-h">

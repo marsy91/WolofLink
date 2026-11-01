@@ -12,15 +12,18 @@ import { IconArrowLeft } from "@/components/icons";
 import { Button, Dialog, Loading } from "@/components/ui";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
+import { HOLIDAYS, dateIn, type DateOverrides } from "@/content/calendar";
 import { PREMIUM_ENABLED } from "@/lib/features";
+import { loadOverrides } from "@/lib/holidays";
 import { owner, useIsOwner, type AuditRow, type MemberRow, type OrgRow, type Overview, type PersonRow } from "@/lib/owner";
 
-type Tab = "overview" | "orgs" | "people" | "billing" | "log";
+type Tab = "overview" | "orgs" | "people" | "billing" | "holidays" | "log";
 const TABS: [Tab, string][] = [
   ["overview", "Overview"],
   ["orgs", "Organisations"],
   ["people", "People"],
   ["billing", "Billing"],
+  ["holidays", "Holidays"],
   ["log", "Log"],
 ];
 
@@ -95,6 +98,7 @@ export default function OwnerPage() {
           {tab === "orgs" ? <OrgsTab say={say} /> : null}
           {tab === "people" ? <PeopleTab say={say} /> : null}
           {tab === "billing" ? <BillingTab say={say} /> : null}
+          {tab === "holidays" ? <HolidaysTab say={say} /> : null}
           {tab === "log" ? <LogTab say={say} /> : null}
         </>
       )}
@@ -518,6 +522,103 @@ function BillingTab({ say }: { say: Say }) {
         );
       })}
     </>
+  );
+}
+
+/* ── Holidays ──────────────────────────────────────────────────────────── */
+function HolidaysTab({ say }: { say: Say }) {
+  const [overrides, reload] = useLoad<DateOverrides>(() => loadOverrides({ force: true }), say);
+  const year = new Date().getFullYear();
+  const [shownYear, setShownYear] = useState(year);
+  if (!overrides) return <Loading />;
+  return (
+    <>
+      <Card>
+        <p className="text-sm text-muted">
+          Islamic dates are estimates until you confirm them (usually after the moon-sighting announcement a day or two
+          before). Fixed holidays and Easter dates are calculated automatically; change them only if the government moves
+          a holiday. Changes reach every app within a few hours, without an update.
+        </p>
+        <div className="mt-3 flex gap-2">
+          {[year, year + 1].map((y) => (
+            <button
+              key={y}
+              type="button"
+              aria-pressed={shownYear === y}
+              onClick={() => setShownYear(y)}
+              className={`rounded-full border-2 px-4 py-1.5 font-bold ${shownYear === y ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"}`}
+            >
+              {y}
+            </button>
+          ))}
+        </div>
+      </Card>
+      {HOLIDAYS.map((h) => (
+        <HolidayRow key={`${h.id}:${shownYear}`} id={h.id} year={shownYear} overrides={overrides} say={say} onSaved={reload} />
+      ))}
+    </>
+  );
+}
+
+function HolidayRow({ id, year, overrides, say, onSaved }: { id: string; year: number; overrides: DateOverrides; say: Say; onSaved: () => void }) {
+  const holiday = HOLIDAYS.find((h) => h.id === id)!;
+  const current = dateIn(holiday, year, overrides);
+  const online = overrides[`${id}:${year}`];
+  const [day, setDay] = useState(current?.date ?? "");
+  const [confirmed, setConfirmed] = useState(online?.confirmed ?? holiday.kind !== "lunar");
+  const [busy, setBusy] = useState(false);
+  const run = async (fn: () => Promise<void>, done: string) => {
+    setBusy(true);
+    try {
+      await fn();
+      say(done);
+      onSaved();
+    } catch (e) {
+      say(errText(e), false);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Card>
+      <p className="font-bold text-night">
+        {holiday.emoji} {holiday.title.en}
+      </p>
+      <p className="mb-2 text-sm text-muted">
+        {current ? `${current.date} · ${current.status}` : "No estimate for this year"}
+        {online ? " (set online)" : holiday.kind === "lunar" ? " (built-in estimate)" : " (calculated)"}
+      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <input
+          type="date"
+          aria-label={`${holiday.title.en} date`}
+          className={`${field} w-auto`}
+          value={day}
+          min={`${year}-01-01`}
+          max={`${year}-12-31`}
+          onChange={(e) => setDay(e.target.value)}
+        />
+        <label className="flex items-center gap-2 font-bold">
+          <input type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} /> Confirmed
+        </label>
+        <Button
+          disabled={busy || !day.startsWith(`${year}-`)}
+          onClick={() => void run(() => owner.setHolidayDate(id, year, day, confirmed), `${holiday.title.en} ${year}: saved.`)}
+        >
+          Save
+        </Button>
+        {online ? (
+          <button
+            type="button"
+            disabled={busy}
+            className="rounded-xl border-2 border-sand-3 px-3 py-2 font-bold text-clay"
+            onClick={() => void run(() => owner.clearHolidayDate(id, year), `${holiday.title.en} ${year}: back to the built-in date.`)}
+          >
+            Reset
+          </button>
+        ) : null}
+      </div>
+    </Card>
   );
 }
 

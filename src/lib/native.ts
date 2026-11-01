@@ -63,3 +63,41 @@ export async function syncReminder(opts: {
     return "unsupported";
   }
 }
+
+const HOLIDAY_BASE_ID = 2000;
+const HOLIDAY_MAX = 40;
+
+/**
+ * Schedules one notification at 18:00 the evening before each upcoming holiday
+ * (or cancels them all). Call again when dates change or the language changes.
+ */
+export async function syncHolidayReminders(opts: {
+  enabled: boolean;
+  items: { title: string; body: string; date: string }[];
+  now?: Date;
+}): Promise<ReminderResult> {
+  if (!remindersSupported()) return "unsupported";
+  try {
+    const { LocalNotifications } = await import("@capacitor/local-notifications");
+    await LocalNotifications.cancel({
+      notifications: Array.from({ length: HOLIDAY_MAX }, (_, i) => ({ id: HOLIDAY_BASE_ID + i })),
+    });
+    if (!opts.enabled) return "cancelled";
+    let perm = await LocalNotifications.checkPermissions();
+    if (perm.display !== "granted") perm = await LocalNotifications.requestPermissions();
+    if (perm.display !== "granted") return "denied";
+    const now = opts.now ?? new Date();
+    const notifications = opts.items
+      .map((item) => {
+        const [y, m, d] = item.date.split("-").map(Number);
+        return { ...item, at: new Date(y!, m! - 1, d! - 1, 18, 0) };
+      })
+      .filter((n) => n.at > now)
+      .slice(0, HOLIDAY_MAX)
+      .map((n, i) => ({ id: HOLIDAY_BASE_ID + i, title: n.title, body: n.body, schedule: { at: n.at, allowWhileIdle: true } }));
+    if (notifications.length) await LocalNotifications.schedule({ notifications });
+    return "scheduled";
+  } catch {
+    return "unsupported";
+  }
+}

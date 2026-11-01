@@ -97,6 +97,9 @@ export const owner = {
   setSuspended: (member: string, suspend: boolean) => call<void>("owner_set_suspended", { member, suspend }),
   deleteAccount: (member: string) => call<void>("owner_delete_account", { member }),
   audit: () => call<AuditRow[]>("owner_audit", { max_rows: 100 }),
+  setHolidayDate: (holiday: string, year: number, day: string, confirmed: boolean) =>
+    call<void>("owner_set_calendar_date", { holiday, yr: year, holiday_day: day, is_confirmed: confirmed }),
+  clearHolidayDate: (holiday: string, year: number) => call<void>("owner_clear_calendar_date", { holiday, yr: year }),
 };
 
 /** True once the server confirms the signed-in account is the owner. */
