@@ -17,18 +17,22 @@ import * as u14 from "./units/u14-nature";
 import * as u15 from "./units/u15-questions";
 import * as u16 from "./units/u16-leisure";
 import * as u17 from "./units/u17-etiquette";
+import * as u18 from "./units/u18-dishes";
+import * as u19 from "./units/u19-feelings";
+import * as u20 from "./units/u20-prices";
 
 /**
  * Every Wolof word and phrase (CLAD orthography), gathered from the unit
  * files in ./units. Ids are namespaced by unit: g greetings, n numbers,
  * f food, p people, v verbs, l places, t time, c conversation, h health,
  * w work, k home (kër), x culture, r colours and clothes,
- * a animals and nature, q questions, s free time and travel, e etiquette.
+ * a animals and nature, q questions, s free time and travel, e etiquette,
+ * d Senegalese food, m feelings (mood), b big numbers and prices.
  *
  * Recorded audio does not exist yet; when it does, add `audio:
  * "audio/wo/<id>.mp3"` to an entry and drop the file in public/audio/wo/.
  */
-export const unitModules = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17];
+export const unitModules = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20];
 
 const list: Entry[] = unitModules.flatMap((m) => m.entries);
 

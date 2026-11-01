@@ -89,6 +89,17 @@ Culture and etiquette: 18 entries. All words are in the reference except
 Native check, please: *Mu ngi fi*, *Ndax danga woor?*, *Jërëjëf, suur naa*,
 and the etiquette tips (greeting, handshakes, Ramadan, the shared bowl).
 
+## Units 18–20 (added in 0.12.0)
+
+Senegalese food, Feelings, Big numbers and prices: 31 entries. All words are
+in the reference text or already in the course, except the dish names *maafe*
+and *dibi* (Senegalese cuisine sources). *Bul ragal*, *Bul mer*, *Lu la dal?*,
+*Amul dara*, *ñaari téeméer*, *juróomi téeméer*, *fukki junni*, *benn milyoŋ*
+and *ñaari junni* appear as such in the reference. Left out (unconfirmed
+spelling): *bisaab*, *cakri*, *fataya*.
+Native check, please: *Dama rus*, *Dama jaaxle*, *Mu ngi bég*, *Dafa yomb*,
+*Mën nga ko wàññi?*, and whether *lax ak soow* is the usual name.
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:
