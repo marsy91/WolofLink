@@ -44,6 +44,7 @@ WHAT'S INSIDE
 • Spaced-repetition review of the words you find hard
 • Holidays in Senegal: Tabaski, Korité, the Magal and more, with what to expect, the right greeting and an optional reminder
 • Spot a mistake? Report it from any word in one tap
+• Seasonal themes for Ramadan, Tabaski, Korité, Independence Day and more
 
 STAY MOTIVATED
 • Daily goal, streak and badges
@@ -82,6 +83,7 @@ AU PROGRAMME
 • Révisions espacées des mots qui vous résistent
 • Fêtes au Sénégal : Tabaski, Korité, Magal et d'autres, avec ce qui vous attend, la bonne formule et un rappel facultatif
 • Une erreur ? Signalez-la depuis n'importe quel mot, en un geste
+• Thèmes de saison pour le Ramadan, la Tabaski, la Korité, la fête de l'Indépendance et plus
 
 RESTEZ MOTIVÉ
 • Objectif quotidien, série et badges
@@ -120,6 +122,7 @@ QUÉ INCLUYE
 • Repaso espaciado de las palabras que más te cuestan
 • Fiestas en Senegal: Tabaski, Korité, el Magal y más, con qué esperar, el saludo adecuado y un recordatorio opcional
 • ¿Ves un error? Infórmalo desde cualquier palabra con un toque
+• Temas de temporada para el Ramadán, la Tabaski, la Korité, el Día de la Independencia y más
 
 MANTÉN LA MOTIVACIÓN
 • Meta diaria, racha e insignias
@@ -158,6 +161,7 @@ DAS ERWARTET DICH
 • Wiederholung schwieriger Wörter in sinnvollen Abständen
 • Feiertage im Senegal: Tabaski, Korité, der Magal und mehr, mit dem, was dich erwartet, dem passenden Gruß und optionaler Erinnerung
 • Fehler entdeckt? Melde ihn mit einem Tipp bei jedem Wort
+• Saisonale Designs zu Ramadan, Tabaski, Korité, Unabhängigkeitstag und mehr
 
 MOTIVIERT BLEIBEN
 • Tagesziel, Serie und Abzeichen
@@ -196,6 +200,7 @@ COSA TROVI
 • Ripasso a intervalli delle parole più difficili
 • Feste in Senegal: Tabaski, Korité, il Magal e altre, con cosa aspettarsi, il saluto giusto e un promemoria facoltativo
 • Hai trovato un errore? Segnalalo da qualsiasi parola con un tocco
+• Temi stagionali per Ramadan, Tabaski, Korité, Festa dell'Indipendenza e altro
 
 RESTA MOTIVATO
 • Obiettivo giornaliero, serie e badge
