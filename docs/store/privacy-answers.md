@@ -24,8 +24,8 @@ Other declarations:
   ages, but choosing under-13 audiences triggers the Families policy review).
 - **Content rating:** answer "No" to violence, sexual content, profanity, drugs,
   gambling and user interaction; an education app normally gets PEGI 3 / Everyone.
-- **Privacy policy URL:** required even with no data collected; host the
-  `/privacy/` page (see README, "Publishing to Google Play").
+- **Privacy policy URL:** https://woloflink.lovable.app/privacy (later
+  https://woloflink.com/privacy once the domain is connected).
 
 ### Apple App Store — App Privacy
 
@@ -50,8 +50,8 @@ Use these answers for 0.10 and later (accounts on). Leave out the purchase row w
 
 - **Encrypted in transit:** Yes (HTTPS to Supabase).
 - **Users can request deletion:** Yes, in the app (Profile → Account → Delete
-  account). Google also requires a **web link** for deletion requests: point it
-  to a page that explains the in-app option and offers a contact address.
+  account). Web link for deletion requests:
+  https://woloflink.lovable.app/delete-account
 - **Data shared with third parties:** None. Supabase is a service provider
   (processor), which Play does not count as sharing.
 - **Organisations:** when a learner joins one with a team code, its admins see the
