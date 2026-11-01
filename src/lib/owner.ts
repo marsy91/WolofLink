@@ -87,6 +87,15 @@ export interface GrantRow {
   note: string | null;
 }
 
+export interface SeasonRow {
+  id: string;
+  look: string;
+  starts_on: string;
+  ends_on: string;
+  title: Record<string, string>;
+  message: Record<string, string> | null;
+}
+
 export interface AuditRow {
   at: string;
   action: string;
@@ -138,6 +147,17 @@ export const owner = {
       grant_premium_until: premiumUntil,
       grant_note: note,
     }),
+  seasons: () => call<SeasonRow[]>("owner_seasons"),
+  saveSeason: (s: Omit<SeasonRow, "id"> & { id: string | null }) =>
+    call<string>("owner_save_season", {
+      event: s.id,
+      event_look: s.look,
+      event_start: s.starts_on,
+      event_end: s.ends_on,
+      event_title: s.title,
+      event_message: s.message,
+    }),
+  deleteSeason: (id: string) => call<void>("owner_delete_season", { event: id }),
   setHolidayDate: (holiday: string, year: number, day: string, confirmed: boolean) =>
     call<void>("owner_set_calendar_date", { holiday, yr: year, holiday_day: day, is_confirmed: confirmed }),
   clearHolidayDate: (holiday: string, year: number) => call<void>("owner_clear_calendar_date", { holiday, yr: year }),

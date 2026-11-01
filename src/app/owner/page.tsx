@@ -27,10 +27,12 @@ import {
   type Overview,
   type PersonRow,
   type ReportRow,
+  type SeasonRow,
 } from "@/lib/owner";
+import { LOOKS, LOOK_EMOJI, activeSeason } from "@/content/seasons";
 import { renewalLabel, renewalsDue } from "@/lib/renewals";
 
-type Tab = "overview" | "orgs" | "people" | "billing" | "reports" | "words" | "holidays" | "log";
+type Tab = "overview" | "orgs" | "people" | "billing" | "reports" | "words" | "holidays" | "themes" | "log";
 const TABS: [Tab, string][] = [
   ["overview", "Overview"],
   ["orgs", "Organisations"],
@@ -39,6 +41,7 @@ const TABS: [Tab, string][] = [
   ["reports", "Reports"],
   ["words", "Missed words"],
   ["holidays", "Holidays"],
+  ["themes", "Themes"],
   ["log", "Log"],
 ];
 
@@ -116,6 +119,7 @@ export default function OwnerPage() {
           {tab === "reports" ? <ReportsTab say={say} /> : null}
           {tab === "words" ? <WordsTab say={say} /> : null}
           {tab === "holidays" ? <HolidaysTab say={say} /> : null}
+          {tab === "themes" ? <ThemesTab say={say} /> : null}
           {tab === "log" ? <LogTab say={say} /> : null}
         </>
       )}
@@ -784,6 +788,161 @@ function WordsTab({ say }: { say: Say }) {
           ))}
         </ol>
       ) : null}
+    </>
+  );
+}
+
+/* ── Themes ────────────────────────────────────────────────────────────── */
+const LANGS = ["en", "fr", "es", "de", "it"] as const;
+const LANG_LABEL: Record<(typeof LANGS)[number], string> = { en: "English", fr: "French", es: "Spanish", de: "German", it: "Italian" };
+const todayIso = () => new Date().toISOString().slice(0, 10);
+const blankSeason = (): Omit<SeasonRow, "id"> & { id: string | null } => ({
+  id: null,
+  look: "festive",
+  starts_on: todayIso(),
+  ends_on: todayIso(),
+  title: { en: "" },
+  message: null,
+});
+
+function ThemesTab({ say }: { say: Say }) {
+  const [rows, reload] = useLoad<SeasonRow[]>(owner.seasons, say);
+  const [edit, setEdit] = useState<(Omit<SeasonRow, "id"> & { id: string | null }) | null>(null);
+  const [busy, setBusy] = useState(false);
+  const holidayNow = activeSeason(new Date());
+
+  const save = async () => {
+    if (!edit) return;
+    const clean = (o: Record<string, string> | null) => {
+      const out = Object.fromEntries(Object.entries(o ?? {}).map(([k, v]) => [k, v.trim()]).filter(([, v]) => v));
+      return Object.keys(out).length ? out : null;
+    };
+    const title = clean(edit.title);
+    if (!title?.en) return say("An English title is needed (the other languages fall back to it).", false);
+    if (edit.ends_on < edit.starts_on) return say("The end date is before the start date.", false);
+    setBusy(true);
+    try {
+      await owner.saveSeason({ ...edit, title, message: clean(edit.message) });
+      say("Theme saved. Apps pick it up within a few hours.");
+      setEdit(null);
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const remove = async (id: string) => {
+    try {
+      await owner.deleteSeason(id);
+      say("Theme deleted.");
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
+
+  return (
+    <>
+      <Card>
+        <p className="text-sm text-muted">
+          Holiday themes (Ramadan, Korité, Tabaski, Independence Day, Tamxarit, the Magal, Gamou, New Year, Christmas)
+          switch on by themselves from the holiday dates. Add your own here for other events: they show a banner on the
+          Learn screen and a coloured stripe, and take priority over holiday themes. Learners can turn themes off in
+          Settings.
+        </p>
+        <p className="mt-2 text-sm font-bold text-night">
+          Built-in theme today: {holidayNow ? `${holidayNow.title.en} (${holidayNow.look})` : "none"}
+        </p>
+        {!edit ? (
+          <Button className="mt-3" onClick={() => setEdit(blankSeason())}>
+            New theme
+          </Button>
+        ) : null}
+      </Card>
+
+      {edit ? (
+        <Card>
+          <h2 className="mb-2 font-display text-lg font-extrabold text-night">{edit.id ? "Edit theme" : "New theme"}</h2>
+          <p className="mb-1 text-sm font-bold">Look</p>
+          <div className="mb-3 flex flex-wrap gap-2">
+            {LOOKS.map((l) => (
+              <button
+                key={l}
+                type="button"
+                aria-pressed={edit.look === l}
+                onClick={() => setEdit({ ...edit, look: l })}
+                className={`season-${l} rounded-xl px-3 py-2 text-sm font-bold ${edit.look === l ? "ring-4 ring-sun" : ""}`}
+              >
+                {LOOK_EMOJI[l]} {l}
+              </button>
+            ))}
+          </div>
+          <div className="mb-3 flex flex-wrap gap-3">
+            <label className="text-sm font-bold">
+              From
+              <input type="date" className={`${field} mt-1`} value={edit.starts_on} onChange={(e) => setEdit({ ...edit, starts_on: e.target.value })} />
+            </label>
+            <label className="text-sm font-bold">
+              To (inclusive)
+              <input type="date" className={`${field} mt-1`} value={edit.ends_on} onChange={(e) => setEdit({ ...edit, ends_on: e.target.value })} />
+            </label>
+          </div>
+          {LANGS.map((l) => (
+            <div key={l} className="mb-2 grid gap-1 sm:grid-cols-2 sm:gap-2">
+              <input
+                className={field}
+                maxLength={60}
+                placeholder={`Title (${LANG_LABEL[l]})${l === "en" ? ", required" : ""}`}
+                value={edit.title[l] ?? ""}
+                onChange={(e) => setEdit({ ...edit, title: { ...edit.title, [l]: e.target.value } })}
+              />
+              <input
+                className={field}
+                maxLength={140}
+                placeholder={`Message (${LANG_LABEL[l]}), optional`}
+                value={edit.message?.[l] ?? ""}
+                onChange={(e) => setEdit({ ...edit, message: { ...(edit.message ?? {}), [l]: e.target.value } })}
+              />
+            </div>
+          ))}
+          <p className="mb-3 text-xs text-muted">
+            Don&apos;t use protected event names or logos (for example Olympic names, rings or mascots). Wolof in a
+            message should be checked by your reviewer first.
+          </p>
+          <div className="flex gap-2">
+            <Button disabled={busy} onClick={() => void save()}>
+              Save theme
+            </Button>
+            <Button variant="ghost" onClick={() => setEdit(null)}>
+              Cancel
+            </Button>
+          </div>
+        </Card>
+      ) : null}
+
+      {!rows ? <Loading /> : rows.length === 0 ? <p className="text-muted">No themes of your own yet.</p> : null}
+      {rows?.map((r) => (
+        <Card key={r.id}>
+          <div className={`season-${r.look} mb-2 rounded-xl p-3`}>
+            <p className="font-display font-extrabold">
+              {LOOK_EMOJI[r.look as keyof typeof LOOK_EMOJI] ?? ""} {r.title.en}
+            </p>
+            {r.message?.en ? <p className="text-sm">{r.message.en}</p> : null}
+          </div>
+          <p className="text-sm text-muted">
+            {r.starts_on} → {r.ends_on} · {r.look} · languages: {Object.keys(r.title).join(", ")}
+          </p>
+          <div className="mt-2 flex gap-2">
+            <Button variant="secondary" onClick={() => setEdit({ ...r })}>
+              Edit
+            </Button>
+            <Button variant="wrong" onClick={() => void remove(r.id)}>
+              Delete
+            </Button>
+          </div>
+        </Card>
+      ))}
     </>
   );
 }

@@ -72,7 +72,7 @@ export const HOLIDAYS: Holiday[] = [
       "Der Fastenmonat beginnt. Kein Feiertag, aber der Alltag wird ruhiger: Viele fasten von der Morgendämmerung bis Sonnenuntergang, und Büros schließen oft früher. Iss und trink tagsüber nicht in der Öffentlichkeit.",
       "Inizia il mese del digiuno. Non è festivo, ma la vita rallenta: molti digiunano dall'alba al tramonto e gli uffici chiudono spesso prima. Evita di mangiare o bere in pubblico durante il giorno.",
     ]),
-    words: ["e.koor", "e.woor", "e.ndogu"],
+    words: ["e.koor", "e.ndogu", "e.woor"],
   },
   {
     id: "korite",
@@ -88,7 +88,7 @@ export const HOLIDAYS: Holiday[] = [
       "Das Ende des Ramadan. Familien tragen neue Kleidung, gehen zum Gebet und besuchen dann Verwandte und Nachbarn, um ein frohes Fest zu wünschen und um Vergebung zu bitten.",
       "La fine del Ramadan. Le famiglie indossano abiti nuovi, vanno alla preghiera e poi visitano parenti e vicini per fare gli auguri e chiedere perdono.",
     ]),
-    words: ["x.korite", "x.dewenati", "x.baalmaaq", "x.baalnaala"],
+    words: ["x.dewenati", "x.baalmaaq", "x.baalnaala", "x.korite"],
   },
   {
     id: "independence",
@@ -184,7 +184,7 @@ export const HOLIDAYS: Holiday[] = [
       "Das größte Fest des Jahres. Familien schlachten einen Hammel und teilen das Fleisch. Viele fahren in ihren Heimatort, daher sind Busse und Straßen in den Tagen davor überfüllt, und viele Geschäfte schließen für mehrere Tage.",
       "La festa più grande dell'anno. Le famiglie sacrificano un montone e ne condividono la carne. Molti tornano al paese d'origine: nei giorni prima autobus e strade sono pieni, e molti negozi chiudono per diversi giorni.",
     ]),
-    words: ["x.tabaski", "a.xar", "x.dewenati", "x.baalmaaq"],
+    words: ["x.dewenati", "x.baalmaaq", "x.tabaski", "a.xar"],
   },
   {
     id: "tamxarit",

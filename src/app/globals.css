@@ -110,7 +110,8 @@ body {
 
 /* Senegal flag theme (Settings → Theme): green, yellow and red, with a flag stripe.
    Text colours use deeper shades of the flag green and red to stay readable (WCAG AA). */
-:root[data-theme="senegal"] {
+:root[data-theme="senegal"],
+:root[data-season="flag"] {
   --color-night: #0b4a2b;
   --color-night-2: #12663c;
   --color-sand: #fbfaef;
@@ -132,7 +133,8 @@ body {
   --color-dusk: #a3161c;
   --color-dusk-soft: #fbe5e6;
 }
-:root[data-theme="senegal"] body::before {
+:root[data-theme="senegal"] body::before,
+:root[data-season] body::before {
   content: "";
   position: fixed;
   inset: 0 0 auto 0;
@@ -141,3 +143,17 @@ body {
   z-index: 60;
   pointer-events: none;
 }
+
+/* Seasonal themes (src/content/seasons.ts): a top stripe and the Learn banner.
+   Only the "flag" season changes the palette (same colours as the Senegal theme). */
+:root[data-season="ramadan"] body::before { background: linear-gradient(90deg, #1d2550, #c9a227, #1d2550); }
+:root[data-season="festive"] body::before { background: repeating-linear-gradient(90deg, #f2a93b 0 18px, #b9481f 18px 36px, #0f6e72 36px 54px); }
+:root[data-season="faith"] body::before { background: linear-gradient(90deg, #0a4c4f, #e9d8a6, #0a4c4f); }
+:root[data-season="sport"] body::before { background: repeating-linear-gradient(90deg, #00853f 0 24px, #fdef42 24px 48px, #e31b23 48px 72px); }
+:root[data-season="nature"] body::before { background: linear-gradient(90deg, #2f7d32, #a5d6a7, #2f7d32); }
+.season-ramadan { background: linear-gradient(135deg, #141b3d, #2c3672); color: #fbf3e6; }
+.season-festive { background: linear-gradient(135deg, #b9481f, #f2a93b); color: #fff; }
+.season-faith { background: linear-gradient(135deg, #0a4c4f, #0f6e72); color: #fbf3e6; }
+.season-flag { background: linear-gradient(135deg, #00853f, #0b4a2b); color: #fff; }
+.season-sport { background: linear-gradient(135deg, #0b4a2b, #00853f 60%, #c8102e); color: #fff; }
+.season-nature { background: linear-gradient(135deg, #2f7d32, #4c9a50); color: #fff; }

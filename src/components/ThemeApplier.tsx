@@ -2,14 +2,21 @@
 "use client";
 
 import { useEffect } from "react";
+import { useSeason } from "@/lib/seasons";
 import { useStore } from "@/lib/store";
 
 const BAR = { classic: "#1d2550", senegal: "#0b4a2b" } as const;
 
-/** Applies the chosen colour theme (Settings → Theme) to the whole app. */
+/** Applies the chosen colour theme (Settings → Theme) and any seasonal theme to the whole app. */
 export function ThemeApplier() {
   const { progress } = useStore();
   const theme = progress.settings.theme ?? "classic";
+  const look = useSeason()?.look;
+  useEffect(() => {
+    const root = document.documentElement;
+    if (look) root.dataset.season = look;
+    else delete root.dataset.season;
+  }, [look]);
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "senegal") root.dataset.theme = "senegal";

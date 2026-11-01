@@ -138,6 +138,11 @@ export default function Settings() {
               );
             })}
           </div>
+          <Toggle
+            label={t("settings.seasonal")}
+            checked={progress.settings.seasonal !== false}
+            onChange={(v) => setSettings({ seasonal: v })}
+          />
         </fieldset>
 
         <section className="rounded-2xl border-2 border-sand-3 bg-white px-4 py-2" aria-labelledby="remind-h">

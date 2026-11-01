@@ -66,6 +66,8 @@ export interface Progress {
     theme?: "classic" | "senegal";
     /** Notify the evening before holidays and important dates (Holidays screen). */
     holidayReminders?: boolean;
+    /** Seasonal themes for holidays and special events (on unless switched off). */
+    seasonal?: boolean;
   };
 }
 

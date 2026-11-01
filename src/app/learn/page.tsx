@@ -9,6 +9,7 @@ import { allLessons, course } from "@/content/course";
 import type { Unit } from "@/content/types";
 import { translate } from "@/i18n";
 import { canOpenLesson, canOpenStory, isPremiumUnit } from "@/lib/premium";
+import { SeasonBanner } from "@/components/SeasonBanner";
 import { usePremium } from "@/lib/premium-context";
 import { dailyGoal, isUnlocked, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
@@ -32,6 +33,7 @@ export default function Learn() {
 
   return (
     <TabScreen>
+      <SeasonBanner />
       <section className="mb-6 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
         <p className="mb-1 font-display text-xl font-extrabold text-night">
           {name ? `Salaam aleekum, ${name}!` : "Salaam aleekum!"}
