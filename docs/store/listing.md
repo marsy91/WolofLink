@@ -12,9 +12,9 @@ checked by `scripts/check-listing.py`.
 **Other fields**
 - App category: Education. Tags: Language learning, Education.
 - Contact email: support@woloflink.com
-- Website: https://woloflink.lovable.app (later https://woloflink.com)
-- Privacy policy: https://woloflink.lovable.app/privacy
-- Account deletion URL (Data safety): https://woloflink.lovable.app/delete-account
+- Website: https://woloflink.com
+- Privacy policy: https://woloflink.com/privacy
+- Account deletion URL (Data safety): https://woloflink.com/delete-account
 - Contains ads: No. In-app purchases: No.
 
 Don't call the audio "native speakers" (it's a synthetic voice), and never
