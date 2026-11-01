@@ -7,7 +7,7 @@ checked by `scripts/check-listing.py`.
 **Assets** (this folder):
 - App icon 512×512: `public/icon-512.png`
 - Feature graphic 1024×500: `feature-graphic.png` (source: `feature-graphic.html`)
-- Phone screenshots 1080×1920: `screenshots/01-welcome.png` … `07-senegal-theme.png`
+- Phone screenshots 1080×1920: `screenshots/01-welcome.png` … `08-holidays.png`
 
 **Other fields**
 - App category: Education. Tags: Language learning, Education.
@@ -42,6 +42,8 @@ WHAT'S INSIDE
 • Survival Wolof: the 100 words and phrases to know first, with a quick practice mode
 • Culture and etiquette: greeting the right way, Ramadan and prayer, being a good guest
 • Spaced-repetition review of the words you find hard
+• Holidays in Senegal: Tabaski, Korité, the Magal and more, with what to expect, the right greeting and an optional reminder
+• Spot a mistake? Report it from any word in one tap
 
 STAY MOTIVATED
 • Daily goal, streak and badges
@@ -78,6 +80,8 @@ AU PROGRAMME
 • Wolof de survie : les 100 mots et phrases à connaître en premier, avec un mode d'entraînement rapide
 • Culture et savoir-vivre : bien saluer, Ramadan et prière, être un bon invité
 • Révisions espacées des mots qui vous résistent
+• Fêtes au Sénégal : Tabaski, Korité, Magal et d'autres, avec ce qui vous attend, la bonne formule et un rappel facultatif
+• Une erreur ? Signalez-la depuis n'importe quel mot, en un geste
 
 RESTEZ MOTIVÉ
 • Objectif quotidien, série et badges
@@ -114,6 +118,8 @@ QUÉ INCLUYE
 • Wolof de supervivencia: las 100 palabras y frases imprescindibles, con un modo de práctica rápida
 • Cultura y buenos modales: saludar como es debido, Ramadán y oración, ser un buen invitado
 • Repaso espaciado de las palabras que más te cuestan
+• Fiestas en Senegal: Tabaski, Korité, el Magal y más, con qué esperar, el saludo adecuado y un recordatorio opcional
+• ¿Ves un error? Infórmalo desde cualquier palabra con un toque
 
 MANTÉN LA MOTIVACIÓN
 • Meta diaria, racha e insignias
@@ -150,6 +156,8 @@ DAS ERWARTET DICH
 • Wolof zum Überleben: die 100 wichtigsten Wörter und Sätze, mit schnellem Übungsmodus
 • Kultur und Umgangsformen: richtig grüßen, Ramadan und Gebet, ein guter Gast sein
 • Wiederholung schwieriger Wörter in sinnvollen Abständen
+• Feiertage im Senegal: Tabaski, Korité, der Magal und mehr, mit dem, was dich erwartet, dem passenden Gruß und optionaler Erinnerung
+• Fehler entdeckt? Melde ihn mit einem Tipp bei jedem Wort
 
 MOTIVIERT BLEIBEN
 • Tagesziel, Serie und Abzeichen
@@ -186,6 +194,8 @@ COSA TROVI
 • Wolof di sopravvivenza: le 100 parole e frasi da sapere per prime, con una modalità di esercizio rapido
 • Cultura e buone maniere: salutare come si deve, Ramadan e preghiera, essere un buon ospite
 • Ripasso a intervalli delle parole più difficili
+• Feste in Senegal: Tabaski, Korité, il Magal e altre, con cosa aspettarsi, il saluto giusto e un promemoria facoltativo
+• Hai trovato un errore? Segnalalo da qualsiasi parola con un tocco
 
 RESTA MOTIVATO
 • Obiettivo giornaliero, serie e badge

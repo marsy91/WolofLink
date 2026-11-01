@@ -80,9 +80,9 @@ Adding analytics, crash reporting, purchases, ads, social features (public
 names, friends, leaderboards) or speech recognition that uploads audio changes
 these answers and the privacy policy.
 
-## Update for 1.1 (problem reports, holiday calendar)
+## Since 0.13.0 (problem reports, holiday calendar): include these at launch
 
-When the 1.1 build with "Report a problem" ships, update Data safety:
+0.13.0 is the launch build, so add these to Data safety along with the answers above:
 
 - **App activity → Other user-generated content: Collected.** Optional, not
   shared, purpose: App functionality. (The optional note in a problem report.)
