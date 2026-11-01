@@ -29,7 +29,7 @@ $$;
 
 create or replace function public.owner_seasons()
   returns table (id uuid, look text, starts_on date, ends_on date, title jsonb, message jsonb)
-  language plpgsql stable security definer set search_path = '' as $$
+  language plpgsql security definer set search_path = '' as $$
 begin
   perform private.require_owner('read seasons');
   return query

@@ -76,7 +76,7 @@ $$;
 
 create or replace function public.owner_grants()
   returns table (user_id uuid, email text, unlock_all boolean, premium boolean, premium_until timestamptz, note text)
-  language plpgsql stable security definer set search_path = '' as $$
+  language plpgsql security definer set search_path = '' as $$
 begin
   perform private.require_owner('read grants');
   return query
