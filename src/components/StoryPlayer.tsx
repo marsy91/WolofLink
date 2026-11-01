@@ -31,7 +31,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
   const { progress, lang, update, t } = useStore();
   const router = useRouter();
   const found = findStory(storyId);
-  const { premium } = usePremium();
+  const { premium, unlockAll } = usePremium();
 
   const [shown, setShown] = useState(1);
   const [showTr, setShowTr] = useState(false);
@@ -98,7 +98,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
     );
   }
 
-  const unlocked = found.unit.lessons.every((l) => progress.lessons[l.id]);
+  const unlocked = unlockAll || found.unit.lessons.every((l) => progress.lessons[l.id]);
   const exit = () => {
     stopAudio();
     router.replace("/learn/");

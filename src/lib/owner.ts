@@ -78,6 +78,15 @@ export interface MissedRow {
   miss_rate: number;
 }
 
+export interface GrantRow {
+  user_id: string;
+  email: string;
+  unlock_all: boolean;
+  premium: boolean;
+  premium_until: string | null;
+  note: string | null;
+}
+
 export interface AuditRow {
   at: string;
   action: string;
@@ -120,6 +129,15 @@ export const owner = {
   reports: (status: "open" | "all") => call<ReportRow[]>("owner_reports", { report_status: status, max_rows: 200 }),
   setReportStatus: (id: number, status: ReportRow["status"]) => call<void>("owner_set_report_status", { report: id, new_status: status }),
   missedWords: (minAttempts: number) => call<MissedRow[]>("owner_missed_words", { min_attempts: minAttempts, max_rows: 50 }),
+  grants: () => call<GrantRow[]>("owner_grants"),
+  setGrants: (member: string, unlockAll: boolean, premium: boolean, premiumUntil: string | null, note: string | null) =>
+    call<void>("owner_set_grants", {
+      member,
+      grant_unlock_all: unlockAll,
+      grant_premium: premium,
+      grant_premium_until: premiumUntil,
+      grant_note: note,
+    }),
   setHolidayDate: (holiday: string, year: number, day: string, confirmed: boolean) =>
     call<void>("owner_set_calendar_date", { holiday, yr: year, holiday_day: day, is_confirmed: confirmed }),
   clearHolidayDate: (holiday: string, year: number) => call<void>("owner_clear_calendar_date", { holiday, yr: year }),

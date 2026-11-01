@@ -188,6 +188,8 @@ export const en = {
   "report.sent": "Thank you! We'll check it.",
   "report.failed": "Couldn't send. Check your internet connection and try again.",
   "report.privacy": "We receive the word, your note and the app language. No name or email.",
+  "grant.unlockAll": "All lessons and dialogues are unlocked for your account.",
+  "grant.premium": "Premium is on for your account: unlimited drops.",
   "org.title": "Your organisation",
   "org.intro": "If your NGO, school, company or embassy gave you a team code, enter it here to share your progress with them.",
   "org.code": "Team code",

@@ -20,6 +20,7 @@ import {
   owner,
   useIsOwner,
   type AuditRow,
+  type GrantRow,
   type MemberRow,
   type MissedRow,
   type OrgRow,
@@ -437,10 +438,77 @@ function OrgCard({ org, open, onToggle, say, reload }: { org: OrgRow; open: bool
 }
 
 /* ── People ────────────────────────────────────────────────────────────── */
+/** Unlock-all and Premium for one account. */
+const PREMIUM_CHOICES: [string, string][] = [
+  ["none", "No Premium"],
+  ["1m", "Premium for 1 month"],
+  ["3m", "Premium for 3 months"],
+  ["1y", "Premium for 1 year"],
+  ["forever", "Premium, no end date"],
+];
+
+function premiumEnd(choice: string, from = new Date()): string | null {
+  const d = new Date(from);
+  if (choice === "1m") d.setMonth(d.getMonth() + 1);
+  else if (choice === "3m") d.setMonth(d.getMonth() + 3);
+  else if (choice === "1y") d.setFullYear(d.getFullYear() + 1);
+  else return null;
+  return d.toISOString();
+}
+
+function GrantEditor({ person, grant, say, onSaved }: { person: PersonRow; grant?: GrantRow; say: Say; onSaved: () => void }) {
+  const active = !!grant?.premium && (!grant.premium_until || new Date(grant.premium_until) > new Date());
+  const [unlockAll, setUnlockAll] = useState(grant?.unlock_all ?? false);
+  const [choice, setChoice] = useState(active ? "keep" : "none");
+  const [busy, setBusy] = useState(false);
+  const status = [
+    grant?.unlock_all ? "All units unlocked" : null,
+    active ? (grant!.premium_until ? `Premium until ${date(grant!.premium_until)}` : "Premium, no end date") : null,
+    grant?.premium && !active ? "Premium ended" : null,
+  ].filter(Boolean);
+  const save = async () => {
+    setBusy(true);
+    try {
+      const premium = choice === "keep" ? active : choice !== "none";
+      const until = choice === "keep" ? (grant?.premium_until ?? null) : premiumEnd(choice);
+      await owner.setGrants(person.user_id, unlockAll, premium, until, grant?.note ?? null);
+      say(`Access updated for ${person.email}. It applies next time they open the app.`);
+      onSaved();
+    } catch (e) {
+      say(errText(e), false);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="mt-2 rounded-xl bg-sand p-3">
+      <p className="mb-2 text-sm font-bold text-night">{status.length ? status.join(" · ") : "No extra access"}</p>
+      <label className="mb-2 flex items-center gap-2 text-sm font-bold">
+        <input type="checkbox" checked={unlockAll} onChange={(e) => setUnlockAll(e.target.checked)} /> Unlock all units
+      </label>
+      <div className="flex flex-wrap items-center gap-2">
+        <select aria-label="Premium" className={`${field} w-auto text-sm`} value={choice} onChange={(e) => setChoice(e.target.value)}>
+          {active ? <option value="keep">Keep current Premium</option> : null}
+          {PREMIUM_CHOICES.map(([v, label]) => (
+            <option key={v} value={v}>
+              {v === "none" && active ? "Remove Premium" : label}
+            </option>
+          ))}
+        </select>
+        <Button disabled={busy} onClick={() => void save()}>
+          Save access
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 function PeopleTab({ say }: { say: Say }) {
   const [search, setSearch] = useState("");
   const [rows, setRows] = useState<PersonRow[] | null>(null);
   const [remove, setRemove] = useState<PersonRow | null>(null);
+  const [grants, reloadGrants] = useLoad<GrantRow[]>(owner.grants, say);
+  const grantOf = (id: string) => grants?.find((g) => g.user_id === id);
 
   const find = useCallback(
     (q: string) => {
@@ -495,6 +563,11 @@ function PeopleTab({ say }: { say: Say }) {
           <p className="text-sm text-muted">
             {p.xp} XP · {p.lessons} lessons{p.organisations ? ` · ${p.organisations}` : ""}
           </p>
+          {p.is_owner ? (
+            <p className="mt-1 text-sm font-bold text-sea">All units unlocked · Premium (owner)</p>
+          ) : grants ? (
+            <GrantEditor person={p} grant={grantOf(p.user_id)} say={say} onSaved={reloadGrants} />
+          ) : null}
           {!p.is_owner ? (
             <div className="mt-2 flex flex-wrap gap-2">
               <Button

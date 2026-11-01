@@ -16,7 +16,7 @@ export default function Profile() {
   const { progress, lang, t } = useStore();
   const account = useAccount();
   const isOwner = useIsOwner();
-  const { premium } = usePremium();
+  const { premium, unlockAll } = usePremium();
   const now = useNow();
   const profile = progress.profile;
   const since = profile ? new Date(profile.createdAt).toLocaleDateString(lang, { dateStyle: "medium" }) : "";
@@ -52,6 +52,16 @@ export default function Profile() {
           </div>
         ))}
       </dl>
+
+      {!PREMIUM_ENABLED && (premium || unlockAll) ? (
+        <p className="mb-4 flex items-start gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 text-sm font-bold text-night">
+          <IconGem size={24} className="shrink-0 text-dusk" />
+          <span>
+            {unlockAll ? <span className="block">{t("grant.unlockAll")}</span> : null}
+            {premium ? <span className="block">{t("grant.premium")}</span> : null}
+          </span>
+        </p>
+      ) : null}
 
       {PREMIUM_ENABLED ? (
         <Link

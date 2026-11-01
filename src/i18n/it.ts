@@ -192,6 +192,8 @@ export const it: Dictionary = {
   "report.sent": "Grazie! Lo verificheremo.",
   "report.failed": "Invio non riuscito. Controlla la connessione e riprova.",
   "report.privacy": "Riceviamo la parola, la tua nota e la lingua dell'app. Nessun nome né email.",
+  "grant.unlockAll": "Tutte le lezioni e i dialoghi sono sbloccati per il tuo account.",
+  "grant.premium": "Premium è attivo per il tuo account: gocce illimitate.",
   "org.title": "La tua organizzazione",
   "org.intro": "Se la tua ONG, scuola, azienda o ambasciata ti ha dato un codice squadra, inseriscilo qui per condividere i tuoi progressi.",
   "org.code": "Codice squadra",

@@ -193,6 +193,8 @@ export const de: Dictionary = {
   "report.sent": "Danke! Wir sehen es uns an.",
   "report.failed": "Senden fehlgeschlagen. Prüfe deine Internetverbindung und versuche es erneut.",
   "report.privacy": "Wir erhalten das Wort, deine Notiz und die App-Sprache. Keinen Namen, keine E-Mail.",
+  "grant.unlockAll": "Alle Lektionen und Dialoge sind für dein Konto freigeschaltet.",
+  "grant.premium": "Premium ist für dein Konto aktiv: unbegrenzte Tropfen.",
   "org.title": "Deine Organisation",
   "org.intro": "Wenn deine NGO, Schule, Firma oder Botschaft dir einen Team-Code gegeben hat, gib ihn hier ein, um deinen Fortschritt mit ihr zu teilen.",
   "org.code": "Team-Code",

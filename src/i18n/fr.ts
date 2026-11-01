@@ -195,6 +195,8 @@ export const fr: Dictionary = {
   "report.sent": "Merci ! Nous allons vérifier.",
   "report.failed": "Envoi impossible. Vérifiez votre connexion et réessayez.",
   "report.privacy": "Nous recevons le mot, votre note et la langue de l'appli. Ni nom ni e-mail.",
+  "grant.unlockAll": "Toutes les leçons et tous les dialogues sont débloqués pour votre compte.",
+  "grant.premium": "Premium est activé pour votre compte : gouttes illimitées.",
   "org.title": "Votre organisation",
   "org.intro": "Si votre ONG, école, entreprise ou ambassade vous a donné un code d'équipe, saisissez-le ici pour partager votre progression avec elle.",
   "org.code": "Code d'équipe",

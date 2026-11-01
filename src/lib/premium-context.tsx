@@ -10,11 +10,15 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { useAccount } from "./account";
 import { getBilling, type Plan, type PurchaseResult } from "./billing";
+import { useGrants } from "./grants";
 
 interface Premium {
   /** False where purchases aren't possible (web build, or no store key configured). */
   available: boolean;
+  /** Store purchase, or Premium given by the owner (directly or through a paid organisation). */
   premium: boolean;
+  /** Every lesson and dialogue open without finishing earlier ones (owner, or given by the owner). */
+  unlockAll: boolean;
   plans: Plan[];
   loadingPlans: boolean;
   loadPlans: () => Promise<void>;
@@ -48,6 +52,7 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
   const [premium, setPremiumState] = useState(() => (typeof window === "undefined" || !billing ? false : readCache()));
   const [plans, setPlans] = useState<Plan[]>([]);
   const [loadingPlans, setLoadingPlans] = useState(false);
+  const grants = useGrants();
 
   const setPremium = useCallback((on: boolean) => {
     setPremiumState(on);
@@ -80,7 +85,8 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
   const value = useMemo<Premium>(
     () => ({
       available: !!billing,
-      premium,
+      premium: premium || grants.premium,
+      unlockAll: grants.unlockAll,
       plans,
       loadingPlans,
       async loadPlans() {
@@ -111,7 +117,7 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
         }
       },
     }),
-    [billing, premium, plans, loadingPlans, setPremium],
+    [billing, premium, grants.premium, grants.unlockAll, plans, loadingPlans, setPremium],
   );
 
   return <PremiumContext.Provider value={value}>{children}</PremiumContext.Provider>;

@@ -24,7 +24,7 @@ const order = allLessons.map((l) => l.id);
 
 export default function Learn() {
   const { progress, lang, t } = useStore();
-  const { premium } = usePremium();
+  const { premium, unlockAll } = usePremium();
   const now = useNow();
   const today = xpToday(progress, now);
   const goal = dailyGoal(progress);
@@ -72,7 +72,7 @@ export default function Learn() {
                 <ol className="relative ml-6 space-y-3 border-l-4 border-dashed border-sand-3 pl-6">
                   {unit.lessons.map((lesson) => {
                     const record = progress.lessons[lesson.id];
-                    const unlocked = isUnlocked(order, lesson.id, progress);
+                    const unlocked = unlockAll || isUnlocked(order, lesson.id, progress);
                     const done = !!record;
                     const levels = Math.min(MAX_LEVEL, record?.times ?? 0);
                     const mastered = levels >= MAX_LEVEL;
@@ -146,7 +146,7 @@ export default function Learn() {
                   {unit.story ? (
                     <li className="relative">
                       {(() => {
-                        const storyOpen = unit.lessons.every((l) => progress.lessons[l.id]);
+                        const storyOpen = unlockAll || unit.lessons.every((l) => progress.lessons[l.id]);
                         const read = !!progress.stories[unit.story.id];
                         const storyPaywalled = !canOpenStory(unit.story.id, premium);
                         return (
