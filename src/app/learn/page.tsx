@@ -10,6 +10,7 @@ import type { Unit } from "@/content/types";
 import { translate } from "@/i18n";
 import { canOpenLesson, canOpenStory, isPremiumUnit } from "@/lib/premium";
 import { SeasonBanner } from "@/components/SeasonBanner";
+import { WordOfTheDay } from "@/components/WordOfTheDay";
 import { usePremium } from "@/lib/premium-context";
 import { dailyGoal, isUnlocked, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
@@ -43,6 +44,8 @@ export default function Learn() {
         </p>
         <ProgressBar value={today / goal} label={t("goal.progress", { x: today, y: goal })} />
       </section>
+
+      <WordOfTheDay />
 
       <ol className="space-y-6">
         {course.units.map((unit, ui) => {

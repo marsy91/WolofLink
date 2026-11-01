@@ -3,7 +3,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { IconSnail, IconSpeaker } from "@/components/icons";
+import Link from "next/link";
 import { ReportProblem } from "@/components/ReportProblem";
+import { soundsIn } from "@/content/sounds";
 import { TabScreen } from "@/components/ui";
 import {
   dictionary,
@@ -127,6 +129,19 @@ export default function Phrases() {
             </button>
           </div>
         </div>
+        {expanded && soundsIn(e.wo).length ? (
+          <div className="mx-3 mb-2 rounded-xl bg-sand p-2 text-sm">
+            <span className="font-bold text-night">{t("sounds.howTo")}</span>
+            {soundsIn(e.wo).map((snd) => (
+              <Link key={snd.id} href={`/sounds/#sound-${snd.id}`} className="mt-0.5 block text-muted">
+                <span lang="wo" className="font-bold text-clay">
+                  {snd.label}
+                </span>{" "}
+                {translate(snd.how, lang)}
+              </Link>
+            ))}
+          </div>
+        ) : null}
         {expanded ? <ReportProblem entryId={e.id} className="mx-3 mb-3" /> : null}
       </li>
     );
