@@ -142,6 +142,17 @@ const TABS = [
 function BottomNav() {
   const { t } = useStore();
   const pathname = usePathname();
+  const router = useRouter();
+  // Load every tab's code while the phone is idle, so the first tap on a tab doesn't wait for it.
+  useEffect(() => {
+    const warm = () => TABS.forEach(({ href }) => router.prefetch(href));
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(warm, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(warm, 1500);
+    return () => window.clearTimeout(id);
+  }, [router]);
   return (
     <nav aria-label="Main" className="safe-bottom fixed inset-x-0 bottom-0 z-20 border-t-2 border-sand-3 bg-white">
       <ul className="mx-auto flex max-w-lg">
@@ -173,7 +184,7 @@ export function TabScreen({ children, title }: { children: ReactNode; title?: st
   if (!allowed) return <Loading />;
   return (
     <div className="mx-auto flex min-h-dvh max-w-lg flex-col">
-      <header className="safe-top sticky top-0 z-10 bg-sand/95 backdrop-blur">
+      <header className="safe-top sticky top-0 z-10 bg-sand">
         <StatusBar />
       </header>
       <SaveErrorBanner />

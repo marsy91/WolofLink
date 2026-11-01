@@ -1,7 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { IconSnail, IconSpeaker } from "@/components/icons";
 import Link from "next/link";
 import { ReportProblem } from "@/components/ReportProblem";
@@ -52,6 +52,12 @@ export default function Phrases() {
   }, [filter, saved, sections]);
   const results = useMemo(() => rankedSearch(pool, query, lang), [pool, query, lang]);
   const searching = !!query.trim();
+  // Draw the list in pages (24 rows, then 80 more as you scroll): drawing all ~490 rows at once is slow on budget phones.
+  const sig = `${filter}|${query}`;
+  const [paging, setPaging] = useState({ sig, limit: FIRST_PAGE });
+  const limit = paging.sig === sig ? paging.limit : FIRST_PAGE;
+  const total = grouped0(searching, filter) ? sections.reduce((n, c) => n + c.entries.length, 0) : results.length;
+  const more = () => setPaging({ sig, limit: limit + NEXT_PAGE });
   const sectionLabel = (id: string) => {
     const sec = sectionOfEntry.get(id);
     if (!sec) return "";
@@ -184,7 +190,7 @@ export default function Phrases() {
         </p>
       ) : grouped ? (
         <div className="space-y-6">
-          {sections.map((c) => (
+          {pageOfSections(sections, limit).map((c) => (
             <section key={c.id} aria-labelledby={`pb-${c.id}`}>
               <h2 id={`pb-${c.id}`} className="mb-2 flex items-center gap-2 font-display text-lg font-extrabold text-night">
                 {c.kind === "course" ? (
@@ -199,8 +205,45 @@ export default function Phrases() {
           ))}
         </div>
       ) : (
-        <ul className="space-y-2">{results.map(row)}</ul>
+        <ul className="space-y-2">{results.slice(0, limit).map(row)}</ul>
       )}
+      {results.length > 0 && limit < total ? <MoreOnScroll onMore={more} /> : null}
     </TabScreen>
   );
+}
+
+const FIRST_PAGE = 24;
+const NEXT_PAGE = 80;
+
+/** Same rule as `grouped` in the component (browsing, not searching or viewing saved phrases). */
+function grouped0(searching: boolean, filter: string): boolean {
+  return !searching && filter !== "saved";
+}
+
+/** The first `limit` rows across sections, keeping section headings. */
+function pageOfSections(sections: DictionarySection[], limit: number): DictionarySection[] {
+  const out: DictionarySection[] = [];
+  let left = limit;
+  for (const c of sections) {
+    if (left <= 0) break;
+    out.push(c.entries.length <= left ? c : { ...c, entries: c.entries.slice(0, left) });
+    left -= c.entries.length;
+  }
+  return out;
+}
+
+/** Calls `onMore` when the end of the list comes near the screen. */
+function MoreOnScroll({ onMore }: { onMore: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      onMore();
+      return;
+    }
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && onMore(), { rootMargin: "800px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [onMore]);
+  return <div ref={ref} aria-hidden className="h-8" />;
 }
