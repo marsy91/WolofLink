@@ -74,6 +74,16 @@ export default function Privacy() {
         </Section>
       ) : null}
 
+      {ACCOUNTS_ENABLED ? (
+        <Section title="Problem reports and statistics">
+          If you tap “Report a problem” on a word, we receive which word it was, the kind of problem, your optional note,
+          the app language and the app version. If you are signed in, the report is linked to your account so we can
+          limit abuse; it never includes your name or email. Reports are only read by the WolofLink owner to correct the
+          course. We also count, across all learners with an account, how often each word is answered right or wrong, so
+          we can find and fix difficult or mistaken content. Those totals never identify anyone.
+        </Section>
+      ) : null}
+
       {PREMIUM_ENABLED ? (
         <Section title="Purchases (WolofLink Premium)">
           Payments are handled entirely by Google Play or the Apple App Store; we never see your card details. To check

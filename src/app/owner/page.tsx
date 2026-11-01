@@ -15,14 +15,28 @@ import { CloudError } from "@/lib/cloud";
 import { HOLIDAYS, dateIn, type DateOverrides } from "@/content/calendar";
 import { PREMIUM_ENABLED } from "@/lib/features";
 import { loadOverrides } from "@/lib/holidays";
-import { owner, useIsOwner, type AuditRow, type MemberRow, type OrgRow, type Overview, type PersonRow } from "@/lib/owner";
+import { dictionaryById } from "@/content/dictionary";
+import {
+  owner,
+  useIsOwner,
+  type AuditRow,
+  type MemberRow,
+  type MissedRow,
+  type OrgRow,
+  type Overview,
+  type PersonRow,
+  type ReportRow,
+} from "@/lib/owner";
+import { renewalLabel, renewalsDue } from "@/lib/renewals";
 
-type Tab = "overview" | "orgs" | "people" | "billing" | "holidays" | "log";
+type Tab = "overview" | "orgs" | "people" | "billing" | "reports" | "words" | "holidays" | "log";
 const TABS: [Tab, string][] = [
   ["overview", "Overview"],
   ["orgs", "Organisations"],
   ["people", "People"],
   ["billing", "Billing"],
+  ["reports", "Reports"],
+  ["words", "Missed words"],
   ["holidays", "Holidays"],
   ["log", "Log"],
 ];
@@ -98,6 +112,8 @@ export default function OwnerPage() {
           {tab === "orgs" ? <OrgsTab say={say} /> : null}
           {tab === "people" ? <PeopleTab say={say} /> : null}
           {tab === "billing" ? <BillingTab say={say} /> : null}
+          {tab === "reports" ? <ReportsTab say={say} /> : null}
+          {tab === "words" ? <WordsTab say={say} /> : null}
           {tab === "holidays" ? <HolidaysTab say={say} /> : null}
           {tab === "log" ? <LogTab say={say} /> : null}
         </>
@@ -131,6 +147,39 @@ function Card({ children }: { children: ReactNode }) {
 }
 
 /* ── Overview ──────────────────────────────────────────────────────────── */
+function RenewalsCard({ say, showEmpty = false }: { say: Say; showEmpty?: boolean }) {
+  const [orgs] = useLoad<OrgRow[]>(owner.organisations, say);
+  if (!orgs) return null;
+  const due = renewalsDue(orgs, new Date());
+  if (!due.length && !showEmpty) return null;
+  return (
+    <Card>
+      <h2 className="mb-1 font-display text-lg font-extrabold text-night">Renewals due</h2>
+      {due.length === 0 ? (
+        <p className="text-sm text-muted">No paid plan or pilot ends in the next 30 days.</p>
+      ) : (
+        <>
+          <p className="mb-2 text-sm text-muted">Paid plans and pilots ending within 30 days. Email them about renewing, then update “paid until” in Organisations.</p>
+          <ul className="divide-y divide-sand-3">
+            {due.map(({ org, daysLeft }) => (
+              <li key={org.id} className="py-2">
+                <span className="font-bold text-night">{org.name}</span>{" "}
+                <span className={`text-sm font-bold ${daysLeft < 0 ? "text-berry" : daysLeft <= 7 ? "text-clay" : "text-muted"}`}>
+                  {org.plan} · {renewalLabel(daysLeft)} ({date(org.paid_until)})
+                </span>
+                <span className="block text-sm text-muted">
+                  {org.members}
+                  {org.seats ? ` / ${org.seats}` : ""} members{org.notes ? ` · ${org.notes}` : ""}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </Card>
+  );
+}
+
 function OverviewTab({ say }: { say: Say }) {
   const [o] = useLoad<Overview>(owner.overview, say);
   if (!o) return <Loading />;
@@ -143,17 +192,20 @@ function OverviewTab({ say }: { say: Say }) {
     ["Suspended accounts", o.suspended],
   ];
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {tiles.map(([label, n]) => (
-        <div key={label} className="rounded-2xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
-          <p className="font-display text-3xl font-extrabold text-night">{n}</p>
-          <p className="text-sm text-muted">{label}</p>
-        </div>
-      ))}
-      <p className="col-span-2 text-sm text-muted">
-        Learners without an account use the app offline and aren&apos;t counted here.
-      </p>
-    </div>
+    <>
+      <RenewalsCard say={say} />
+      <div className="grid grid-cols-2 gap-3">
+        {tiles.map(([label, n]) => (
+          <div key={label} className="rounded-2xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+            <p className="font-display text-3xl font-extrabold text-night">{n}</p>
+            <p className="text-sm text-muted">{label}</p>
+          </div>
+        ))}
+        <p className="col-span-2 text-sm text-muted">
+          Learners without an account use the app offline and aren&apos;t counted here.
+        </p>
+      </div>
+    </>
   );
 }
 
@@ -504,6 +556,7 @@ function BillingTab({ say }: { say: Say }) {
           </a>
         </div>
       </Card>
+      <RenewalsCard say={say} showEmpty />
       <h2 className="mb-2 font-display text-lg font-extrabold text-night">Organisation licences</h2>
       <p className="mb-3 text-sm text-muted">Change a plan, seats or paid-until date in the Organisations tab.</p>
       {!orgs ? <Loading /> : null}
@@ -521,6 +574,143 @@ function BillingTab({ say }: { say: Say }) {
           </Card>
         );
       })}
+    </>
+  );
+}
+
+/* ── Reports ───────────────────────────────────────────────────────────── */
+const PROBLEM_LABEL: Record<ReportRow["problem"], string> = {
+  spelling: "Wolof spelling or wording",
+  translation: "Translation",
+  audio: "Audio",
+  other: "Other",
+};
+
+function WordLine({ id }: { id: string }) {
+  const e = dictionaryById.get(id);
+  return e ? (
+    <span>
+      <span lang="wo" className="font-display font-extrabold text-night">
+        {e.wo}
+      </span>{" "}
+      <span className="text-muted">· {e.tr.en}</span> <span className="text-xs text-muted/70">({id})</span>
+    </span>
+  ) : (
+    <span className="font-bold text-night">{id}</span>
+  );
+}
+
+function ReportsTab({ say }: { say: Say }) {
+  const [show, setShow] = useState<"open" | "all">("open");
+  const [rows, reload] = useLoad<ReportRow[]>(() => owner.reports(show), say);
+  // Reload when the filter changes.
+  useEffect(() => reload(), [show, reload]);
+  const setStatus = async (r: ReportRow, status: ReportRow["status"]) => {
+    try {
+      await owner.setReportStatus(r.id, status);
+      say(status === "open" ? "Report reopened." : `Report marked ${status}.`);
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
+  return (
+    <>
+      <Card>
+        <p className="text-sm text-muted">
+          Learners send these from a lesson or the dictionary. Fix the word in the course (or ask your Wolof reviewer),
+          then mark the report fixed. Reports carry no name or email.
+        </p>
+        <div className="mt-3 flex gap-2">
+          {(["open", "all"] as const).map((v) => (
+            <button
+              key={v}
+              type="button"
+              aria-pressed={show === v}
+              onClick={() => setShow(v)}
+              className={`rounded-full border-2 px-4 py-1.5 font-bold ${show === v ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"}`}
+            >
+              {v === "open" ? "Open" : "All"}
+            </button>
+          ))}
+        </div>
+      </Card>
+      {!rows ? <Loading /> : null}
+      {rows?.length === 0 ? <p className="text-muted">{show === "open" ? "No open reports." : "No reports yet."}</p> : null}
+      {rows?.map((r) => (
+        <Card key={r.id}>
+          <WordLine id={r.entry_id} />
+          <p className="mt-1 text-sm font-bold text-clay">{PROBLEM_LABEL[r.problem] ?? r.problem}</p>
+          {r.comment ? <p className="mt-1 whitespace-pre-wrap text-night">“{r.comment}”</p> : null}
+          <p className="mt-1 text-xs text-muted">
+            {new Date(r.created_at).toLocaleString()} · {r.ui_lang ?? "?"} · app {r.app_version ?? "?"} ·{" "}
+            {r.from_account ? "signed-in learner" : "no account"} · {r.status}
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {r.status === "open" ? (
+              <>
+                <Button onClick={() => void setStatus(r, "fixed")}>Fixed</Button>
+                <Button variant="ghost" onClick={() => void setStatus(r, "dismissed")}>
+                  Dismiss
+                </Button>
+              </>
+            ) : (
+              <Button variant="ghost" onClick={() => void setStatus(r, "open")}>
+                Reopen
+              </Button>
+            )}
+          </div>
+        </Card>
+      ))}
+    </>
+  );
+}
+
+/* ── Missed words ──────────────────────────────────────────────────────── */
+function WordsTab({ say }: { say: Say }) {
+  const [minAttempts, setMinAttempts] = useState(10);
+  const [rows, reload] = useLoad<MissedRow[]>(() => owner.missedWords(minAttempts), say);
+  useEffect(() => reload(), [minAttempts, reload]);
+  return (
+    <>
+      <Card>
+        <p className="text-sm text-muted">
+          The words learners get wrong most often, from the progress of learners with an account. A word almost everyone
+          misses usually has a mistake, unclear audio or a confusing translation: check it first with your Wolof
+          reviewer. Only totals are shown, never individual learners.
+        </p>
+        <label className="mt-3 flex items-center gap-2 text-sm font-bold">
+          Only words answered at least
+          <select className={`${field} w-auto`} value={minAttempts} onChange={(e) => setMinAttempts(Number(e.target.value))}>
+            {[5, 10, 25, 50, 100].map((n) => (
+              <option key={n} value={n}>
+                {n}
+              </option>
+            ))}
+          </select>
+          times
+        </label>
+      </Card>
+      {!rows ? <Loading /> : null}
+      {rows?.length === 0 ? <p className="text-muted">Not enough answers yet. Try a lower minimum.</p> : null}
+      {rows?.length ? (
+        <ol className="space-y-2">
+          {rows.map((r, i) => (
+            <li key={r.entry_id} className="rounded-xl bg-white p-3">
+              <span className="mr-2 font-bold text-muted">{i + 1}.</span>
+              <WordLine id={r.entry_id} />
+              <span className="mt-1 block text-sm">
+                <span className={`font-bold ${r.miss_rate >= 0.5 ? "text-berry" : r.miss_rate >= 0.3 ? "text-clay" : "text-night"}`}>
+                  {Math.round(r.miss_rate * 100)}% wrong
+                </span>{" "}
+                <span className="text-muted">
+                  · {r.wrong_total} wrong / {r.right_total + r.wrong_total} answers · {r.learners} learner{r.learners === 1 ? "" : "s"}
+                </span>
+              </span>
+            </li>
+          ))}
+        </ol>
+      ) : null}
     </>
   );
 }

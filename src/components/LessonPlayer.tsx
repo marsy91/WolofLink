@@ -48,6 +48,7 @@ import { useNow, useStore } from "@/lib/store";
 import { ExerciseView } from "./exercises";
 import { Confetti } from "./Confetti";
 import { BADGE_GLYPHS, IconClose, IconDrop, IconGem, IconInfo, IconRings, IconShield, IconSpark, IconSun } from "./icons";
+import { ReportProblem } from "./ReportProblem";
 import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 
 /** A lesson, a review of due cards, or a drill of a fixed list (e.g. the Survival 100). */
@@ -406,6 +407,7 @@ export function LessonPlayer(props: Props) {
                 </p>
               ) : null}
               {"entry" in ex && ex.entry.note ? <p className="mt-1 text-sm text-muted">{translate(ex.entry.note, lang)}</p> : null}
+              {"entry" in ex ? <ReportProblem entryId={ex.entry.id} className="mt-1" /> : null}
               <Button block className="mt-3" variant={feedback.correct ? "correct" : "wrong"} onClick={advance} autoFocus>
                 {t("common.continue")}
               </Button>

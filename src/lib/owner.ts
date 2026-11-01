@@ -58,6 +58,26 @@ export interface PersonRow {
   is_owner: boolean;
 }
 
+export interface ReportRow {
+  id: number;
+  created_at: string;
+  entry_id: string;
+  problem: "spelling" | "translation" | "audio" | "other";
+  comment: string | null;
+  ui_lang: string | null;
+  app_version: string | null;
+  status: "open" | "fixed" | "dismissed";
+  from_account: boolean;
+}
+
+export interface MissedRow {
+  entry_id: string;
+  learners: number;
+  right_total: number;
+  wrong_total: number;
+  miss_rate: number;
+}
+
 export interface AuditRow {
   at: string;
   action: string;
@@ -97,6 +117,9 @@ export const owner = {
   setSuspended: (member: string, suspend: boolean) => call<void>("owner_set_suspended", { member, suspend }),
   deleteAccount: (member: string) => call<void>("owner_delete_account", { member }),
   audit: () => call<AuditRow[]>("owner_audit", { max_rows: 100 }),
+  reports: (status: "open" | "all") => call<ReportRow[]>("owner_reports", { report_status: status, max_rows: 200 }),
+  setReportStatus: (id: number, status: ReportRow["status"]) => call<void>("owner_set_report_status", { report: id, new_status: status }),
+  missedWords: (minAttempts: number) => call<MissedRow[]>("owner_missed_words", { min_attempts: minAttempts, max_rows: 50 }),
   setHolidayDate: (holiday: string, year: number, day: string, confirmed: boolean) =>
     call<void>("owner_set_calendar_date", { holiday, yr: year, holiday_day: day, is_confirmed: confirmed }),
   clearHolidayDate: (holiday: string, year: number) => call<void>("owner_clear_calendar_date", { holiday, yr: year }),

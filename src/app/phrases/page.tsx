@@ -3,6 +3,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { IconSnail, IconSpeaker } from "@/components/icons";
+import { ReportProblem } from "@/components/ReportProblem";
 import { TabScreen } from "@/components/ui";
 import {
   dictionary,
@@ -126,6 +127,7 @@ export default function Phrases() {
             </button>
           </div>
         </div>
+        {expanded ? <ReportProblem entryId={e.id} className="mx-3 mb-3" /> : null}
       </li>
     );
   };

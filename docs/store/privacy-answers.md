@@ -79,3 +79,17 @@ account deletion when sign-up exists — implemented (Profile → Account).
 Adding analytics, crash reporting, purchases, ads, social features (public
 names, friends, leaderboards) or speech recognition that uploads audio changes
 these answers and the privacy policy.
+
+## Update for 1.1 (problem reports, holiday calendar)
+
+When the 1.1 build with "Report a problem" ships, update Data safety:
+
+- **App activity → Other user-generated content: Collected.** Optional, not
+  shared, purpose: App functionality. (The optional note in a problem report.)
+- **App info and performance → Other app performance data: Collected.**
+  Optional, not shared, purpose: App functionality. (Which word was reported,
+  the kind of problem, app version and language.)
+- Reports can be sent without an account; they are linked to the account
+  when the learner is signed in, and deleted with it (the link is cleared).
+- The holiday calendar only downloads public dates; it sends nothing about
+  the learner.
