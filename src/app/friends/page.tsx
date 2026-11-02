@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Button, Dialog, Loading, TabScreen } from "@/components/ui";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
+import { duelState, duels, type DuelRow } from "@/lib/duels";
 import { formatCode, friends, normaliseCode, ranks, type BoardRow, type FriendCard } from "@/lib/friends";
 import { useStore } from "@/lib/store";
 
@@ -23,12 +24,17 @@ export default function FriendsPage() {
   const [nudged, setNudged] = useState<Set<string>>(new Set());
   const [removing, setRemoving] = useState<BoardRow | null>(null);
   const [busy, setBusy] = useState(false);
+  const [duelRows, setDuelRows] = useState<DuelRow[] | null>(null);
 
   const loadBoard = useCallback(() => {
     friends
       .board()
       .then(setBoard)
       .catch(() => setBoard([]));
+    duels
+      .list()
+      .then(setDuelRows)
+      .catch(() => setDuelRows([]));
   }, []);
 
   useEffect(() => {
@@ -206,6 +212,33 @@ export default function FriendsPage() {
         </p>
       ) : null}
 
+      {duelRows && duelRows.length ? (
+        <section className="mb-5">
+          <h2 className="mb-2 font-display text-xl font-extrabold text-night">⚔️ {t("duel.listTitle")}</h2>
+          <ul className="space-y-2">
+            {duelRows.slice(0, 8).map((d) => {
+              const st = duelState(d);
+              return (
+                <li key={d.id} className="flex items-center gap-3 rounded-2xl border-2 border-sand-3 bg-white p-3">
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate font-bold text-night">{d.other_name}</span>
+                    <span className="text-sm text-muted">
+                      {t(`duel.state.${st}`)}
+                      {st === "won" || st === "lost" || st === "draw" ? ` · ${d.my_score} – ${d.their_score}` : ""}
+                    </span>
+                  </span>
+                  {st === "your-turn" ? (
+                    <Link href={`/duel/?id=${encodeURIComponent(d.id)}`} className="rounded-xl bg-clay px-3 py-2 text-sm font-extrabold text-white">
+                      {t("duel.play")}
+                    </Link>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ) : null}
+
       <h2 className="mb-1 font-display text-xl font-extrabold text-night">{t("friends.weekTitle")}</h2>
       <p className="mb-3 text-sm text-muted">{t("friends.weekHint")}</p>
       {!board ? (
@@ -229,17 +262,26 @@ export default function FriendsPage() {
                 <span className="text-sm text-muted">
                   {t("friends.xp", { n: r.week_xp })}
                   {r.streak > 0 ? ` · 🔥 ${r.streak}` : ""}
+                  {r.trophies ? ` · 🏆 ${r.trophies}` : ""}
                 </span>
               </span>
               {!r.is_me ? (
                 <>
+                  <Link
+                    href={`/duel/?friend=${encodeURIComponent(r.user_id)}&name=${encodeURIComponent(r.display_name)}`}
+                    aria-label={t("duel.challenge", { name: r.display_name })}
+                    className="rounded-xl bg-night px-3 py-2 text-sm font-bold text-sand"
+                  >
+                    ⚔️
+                  </Link>
                   <button
                     type="button"
                     disabled={nudged.has(r.user_id)}
                     onClick={() => void nudge(r)}
+                    aria-label={t("friends.nudge")}
                     className="rounded-xl bg-sea-soft px-3 py-2 text-sm font-bold text-sea disabled:opacity-50"
                   >
-                    👋 {t("friends.nudge")}
+                    👋
                   </button>
                   <button
                     type="button"
