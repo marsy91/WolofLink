@@ -85,6 +85,16 @@ export default function Privacy() {
       ) : null}
 
       {ACCOUNTS_ENABLED ? (
+        <Section title="Friends">
+          If you use Friends, you choose a display name and get a friend code. People who enter your code (or whose code
+          you enter) become your friends and can see that name, your XP this week, your streak and when you last
+          practised, never your email. There is no public list or search, and no messaging; friends can only send a
+          “nudge” reminder, at most once a day. You can remove a friend at any time; deleting your account removes your
+          friends list and nudges.
+        </Section>
+      ) : null}
+
+      {ACCOUNTS_ENABLED ? (
         <Section title="Voice recordings (invited contributors only)">
           Native speakers we invite can record lines in their own voice. Their recordings are stored securely, checked
           automatically (a speech-recognition model transcribes each clip to make sure it matches the line and contains

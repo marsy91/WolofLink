@@ -106,3 +106,13 @@ screen for invited contributors. Add to Data safety:
   (support@woloflink.com).
 - The automatic check runs in the owner's GitHub Actions account; it reads the
   clip and writes the result back, and keeps nothing.
+
+## Since 0.18.0 (friends)
+
+- **Personal info → Name: Collected** (already declared for accounts). The
+  friend display name is shown only to people who exchanged codes with the
+  learner; optional; purpose: App functionality.
+- **App activity → Other actions** (weekly XP, streak, last practice shown to
+  friends): already collected for sync; now also shown to friends. Not shared
+  with third parties.
+- No public profiles, no search, no messaging between users (nudges only).

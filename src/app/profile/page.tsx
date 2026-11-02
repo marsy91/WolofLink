@@ -127,6 +127,16 @@ export default function Profile() {
         })}
       </ul>
 
+      <Link href="/friends/" className="mb-4 flex items-center gap-3 rounded-3xl border-2 border-sea/30 bg-white p-5 active:translate-y-[2px]">
+        <span aria-hidden className="text-3xl">
+          🏆
+        </span>
+        <span>
+          <span className="block font-display text-lg font-extrabold text-night">{t("friends.title")}</span>
+          <span className="text-sm text-muted">{t("friends.card")}</span>
+        </span>
+      </Link>
+
       {recorder.isRecorder ? (
         <Link href="/record/" className="mb-4 block rounded-3xl border-2 border-dusk/40 bg-white p-5 active:translate-y-[2px]">
           <h2 className="mb-1 font-display text-lg font-extrabold text-dusk">🎙️ {t("rec.title")}</h2>

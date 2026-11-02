@@ -1,0 +1,272 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
+"use client";
+
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { Button, Dialog, Loading, TabScreen } from "@/components/ui";
+import { useAccount } from "@/lib/account";
+import { CloudError } from "@/lib/cloud";
+import { formatCode, friends, normaliseCode, ranks, type BoardRow, type FriendCard } from "@/lib/friends";
+import { useStore } from "@/lib/store";
+
+const field = "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
+const MEDALS = ["🥇", "🥈", "🥉"];
+
+export default function FriendsPage() {
+  const { progress, t } = useStore();
+  const { user } = useAccount();
+  const [card, setCard] = useState<FriendCard | null | undefined>(undefined);
+  const [board, setBoard] = useState<BoardRow[] | null>(null);
+  const [name, setName] = useState(progress.profile?.name ?? "");
+  const [code, setCode] = useState("");
+  const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
+  const [nudged, setNudged] = useState<Set<string>>(new Set());
+  const [removing, setRemoving] = useState<BoardRow | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  const loadBoard = useCallback(() => {
+    friends
+      .board()
+      .then(setBoard)
+      .catch(() => setBoard([]));
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    let alive = true;
+    friends
+      .myCard()
+      .then((c) => {
+        if (!alive) return;
+        setCard(c);
+        if (c) loadBoard();
+      })
+      .catch(() => alive && setCard(null));
+    return () => {
+      alive = false;
+    };
+  }, [user, loadBoard]);
+
+  const fail = (e: unknown) => {
+    const kind = e instanceof CloudError ? e.kind : "unknown";
+    const msg = (e as Error)?.message ?? "";
+    const text =
+      kind === "unknown_code"
+        ? t("friends.unknownCode")
+        : /own code/.test(msg)
+          ? t("friends.ownCode")
+          : /already nudged/.test(msg)
+            ? t("friends.alreadyNudged")
+            : /another name/.test(msg)
+              ? t("friends.badName")
+              : kind === "network"
+                ? t("friends.offline")
+                : t("friends.error");
+    setMessage({ text, ok: false });
+  };
+
+  if (user === undefined) return <Loading />;
+  if (!user) {
+    return (
+      <TabScreen title={t("friends.title")}>
+        <p className="mb-4 rounded-2xl bg-white p-4 text-muted">{t("friends.needAccount")}</p>
+        <Link href="/account/" className="block text-center font-bold text-clay underline">
+          {t("friends.createAccount")}
+        </Link>
+      </TabScreen>
+    );
+  }
+  if (card === undefined) return <Loading />;
+
+  const saveName = async () => {
+    setBusy(true);
+    setMessage(null);
+    try {
+      const c = await friends.setName(name);
+      setCard(c);
+      loadBoard();
+    } catch (e) {
+      fail(e);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  if (!card) {
+    return (
+      <TabScreen title={t("friends.title")}>
+        <section className="rounded-3xl bg-white p-5">
+          <p className="mb-3 text-ink">{t("friends.intro")}</p>
+          <label className="mb-3 block">
+            <span className="mb-1 block text-sm font-bold text-muted">{t("friends.nameLabel")}</span>
+            <input className={field} maxLength={30} value={name} onChange={(e) => setName(e.target.value)} />
+          </label>
+          {message ? (
+            <p role="alert" className="mb-3 text-sm font-bold text-berry">
+              {message.text}
+            </p>
+          ) : null}
+          <Button block disabled={busy || !name.trim()} onClick={() => void saveName()}>
+            {t("friends.start")}
+          </Button>
+          <p className="mt-3 text-xs text-muted">{t("friends.privacy")}</p>
+        </section>
+      </TabScreen>
+    );
+  }
+
+  const share = async () => {
+    const text = t("friends.shareText", { code: formatCode(card.friend_code) });
+    try {
+      if (navigator.share) await navigator.share({ text });
+      else {
+        await navigator.clipboard.writeText(text);
+        setMessage({ text: t("friends.copied"), ok: true });
+      }
+    } catch {
+      // Sharing cancelled.
+    }
+  };
+
+  const add = async () => {
+    setBusy(true);
+    setMessage(null);
+    try {
+      const friendName = await friends.add(code);
+      setMessage({ text: t("friends.added", { name: friendName }), ok: true });
+      setCode("");
+      loadBoard();
+    } catch (e) {
+      fail(e);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const nudge = async (row: BoardRow) => {
+    try {
+      await friends.nudge(row.user_id);
+      setNudged((s) => new Set(s).add(row.user_id));
+      setMessage({ text: t("friends.nudged", { name: row.display_name }), ok: true });
+    } catch (e) {
+      fail(e);
+    }
+  };
+
+  const remove = async (row: BoardRow) => {
+    try {
+      await friends.remove(row.user_id);
+      setRemoving(null);
+      loadBoard();
+    } catch (e) {
+      fail(e);
+    }
+  };
+
+  const places = board ? ranks(board) : [];
+  return (
+    <TabScreen title={t("friends.title")}>
+      <section className="mb-4 rounded-3xl bg-night p-5 text-sand">
+        <p className="text-sm font-bold text-sand/80">{t("friends.yourCode")}</p>
+        <p className="font-display text-3xl font-extrabold tracking-widest">{formatCode(card.friend_code)}</p>
+        <p className="mb-3 text-sm text-sand/80">{t("friends.codeHint", { name: card.display_name })}</p>
+        <button
+          type="button"
+          onClick={() => void share()}
+          className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-sun font-display font-extrabold text-night"
+        >
+          {t("friends.share")}
+        </button>
+      </section>
+
+      <section className="mb-4 rounded-3xl bg-white p-4">
+        <label className="mb-2 block text-sm font-bold text-muted" htmlFor="friend-code">
+          {t("friends.addLabel")}
+        </label>
+        <div className="flex gap-2">
+          <input
+            id="friend-code"
+            className={`${field} tracking-widest uppercase`}
+            placeholder="ABCD 2345"
+            value={code}
+            autoCapitalize="characters"
+            autoCorrect="off"
+            spellCheck={false}
+            onChange={(e) => setCode(e.target.value)}
+          />
+          <Button disabled={busy || normaliseCode(code).length !== 8} onClick={() => void add()}>
+            {t("friends.add")}
+          </Button>
+        </div>
+      </section>
+
+      {message ? (
+        <p role={message.ok ? "status" : "alert"} className={`mb-4 rounded-2xl p-3 text-sm font-bold ${message.ok ? "bg-sea-soft text-sea" : "bg-berry-soft text-berry"}`}>
+          {message.text}
+        </p>
+      ) : null}
+
+      <h2 className="mb-1 font-display text-xl font-extrabold text-night">{t("friends.weekTitle")}</h2>
+      <p className="mb-3 text-sm text-muted">{t("friends.weekHint")}</p>
+      {!board ? (
+        <Loading />
+      ) : board.length <= 1 ? (
+        <p className="rounded-2xl bg-white p-4 text-muted">{t("friends.none")}</p>
+      ) : null}
+      {board && board.length > 0 ? (
+        <ol className="space-y-2">
+          {board.map((r, i) => (
+            <li
+              key={r.user_id}
+              className={`flex items-center gap-3 rounded-2xl border-2 p-3 ${r.is_me ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
+            >
+              <span className="w-8 text-center font-display text-xl font-extrabold text-night">{MEDALS[places[i]! - 1] ?? places[i]}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate font-bold text-night">
+                  {r.display_name}
+                  {r.is_me ? ` (${t("friends.you")})` : ""}
+                </span>
+                <span className="text-sm text-muted">
+                  {t("friends.xp", { n: r.week_xp })}
+                  {r.streak > 0 ? ` · 🔥 ${r.streak}` : ""}
+                </span>
+              </span>
+              {!r.is_me ? (
+                <>
+                  <button
+                    type="button"
+                    disabled={nudged.has(r.user_id)}
+                    onClick={() => void nudge(r)}
+                    className="rounded-xl bg-sea-soft px-3 py-2 text-sm font-bold text-sea disabled:opacity-50"
+                  >
+                    👋 {t("friends.nudge")}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={t("friends.remove", { name: r.display_name })}
+                    onClick={() => setRemoving(r)}
+                    className="grid h-9 w-9 place-items-center rounded-xl text-muted"
+                  >
+                    ✕
+                  </button>
+                </>
+              ) : null}
+            </li>
+          ))}
+        </ol>
+      ) : null}
+
+      <Dialog open={!!removing} onClose={() => setRemoving(null)} title={t("friends.removeTitle")}>
+        <p className="mb-5 text-muted">{t("friends.removeBody", { name: removing?.display_name ?? "" })}</p>
+        <div className="flex flex-col gap-3">
+          <Button block variant="wrong" onClick={() => removing && void remove(removing)}>
+            {t("friends.removeConfirm")}
+          </Button>
+          <Button block variant="secondary" onClick={() => setRemoving(null)}>
+            {t("common.cancel")}
+          </Button>
+        </div>
+      </Dialog>
+    </TabScreen>
+  );
+}
