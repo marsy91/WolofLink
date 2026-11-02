@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WolofLink for organisations</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; color: #1b1a24; font-size: 10pt; line-height: 1.36; }
+  .page { width: 210mm; height: 296mm; overflow: hidden; padding: 13mm 16mm 10mm; display: flex; flex-direction: column; }
+  .top { background: #1d2550; color: #fbf3e6; margin: -13mm -16mm 6mm; padding: 11mm 16mm 8mm; position: relative; }
+  .top::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
+    background: linear-gradient(90deg, #00853f 33.33%, #fdef42 33.33% 66.66%, #e31b23 66.66%); }
+  .brand { font-weight: 800; font-size: 13pt; letter-spacing: .3px; }
+  .brand b { color: #f2a93b; }
+  h1 { font-size: 21pt; line-height: 1.12; margin: 4mm 0 2mm; font-weight: 800; }
+  .lead { font-size: 11.5pt; opacity: .9; margin: 0; max-width: 150mm; }
+  h2 { font-size: 12.5pt; color: #1d2550; margin: 0 0 2mm; font-weight: 800; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  ul { margin: 0; padding-left: 4.5mm; }
+  li { margin-bottom: 1.2mm; }
+  .box { border: 1.5px solid #e6d3b5; border-radius: 4mm; padding: 4mm 5mm; background: #fbf3e6; }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-top: 2mm; }
+  .plan { border: 1.5px solid #e6d3b5; border-radius: 4mm; padding: 4mm; }
+  .plan.hl { border-color: #b9481f; background: #fff8ee; }
+  .plan h3 { margin: 0 0 1mm; font-size: 11pt; }
+  .price { font-size: 17pt; font-weight: 800; color: #b9481f; }
+  .small { font-size: 8.8pt; color: #5b5568; }
+  .steps { counter-reset: s; list-style: none; padding: 0; }
+  .steps li { counter-increment: s; padding-left: 8mm; position: relative; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 5.5mm; height: 5.5mm; border-radius: 50%;
+    background: #0f6e72; color: #fff; font-weight: 800; font-size: 8.5pt; display: grid; place-items: center; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; align-items: end; border-top: 1.5px solid #e6d3b5; padding-top: 4mm; }
+  .cta { font-size: 12pt; font-weight: 800; color: #1d2550; }
+  section { margin-bottom: 4mm; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div class="brand">Wolof<b>Link</b> · for organisations</div>
+    <h1>Wolof for your team, before they land in Senegal</h1>
+    <p class="lead">Short daily lessons on their phone, a 100-phrase survival kit, and a simple dashboard so you can see who is keeping up. Works offline.</p>
+  </div>
+
+  <section class="grid">
+    <div>
+      <h2>What your staff get</h2>
+      <ul>
+        <li><b>20 units, 53 lessons</b>: greetings, directions, food, health, prices, feelings</li>
+        <li><b>Survival Wolof</b>: the 100 words and phrases to know first</li>
+        <li><b>Culture and etiquette</b>: greetings, Ramadan, being a good guest</li>
+        <li><b>Holidays in Senegal</b>: closures, travel peaks and the right greeting</li>
+        <li>Audio for every line, a dictionary of 480+ entries, and a pronunciation guide</li>
+        <li>Learn from English, French, Spanish, German or Italian; <b>fully offline</b></li>
+      </ul>
+    </div>
+    <div>
+      <h2>What you get</h2>
+      <ul>
+        <li><b>One team code</b>: staff join from the app in seconds</li>
+        <li><b>Progress dashboard</b> on woloflink.com: XP, lessons completed, streaks, last practice</li>
+        <li><b>Privacy built in</b>: you see the name each person chooses, never their email</li>
+        <li>All Premium features for your members while your plan is active</li>
+        <li>Invoice and bank transfer; no app-store payments to manage</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>Who it's for</h2>
+    Embassies and consulates · NGOs and volunteer programmes · international schools · companies sending staff to Senegal ·
+    universities and study-abroad programmes · health and field teams.
+  </section>
+
+  <section>
+    <h2>Plans (per year)</h2>
+    <div class="plans">
+      <div class="plan">
+        <h3>Pilot</h3>
+        <div class="price">Free</div>
+        <div class="small">1 month · up to 10 people · full dashboard · no commitment</div>
+      </div>
+      <div class="plan hl">
+        <h3>Team</h3>
+        <div class="price">£480</div>
+        <div class="small">Up to 25 people · dashboard · Premium for members · email support</div>
+      </div>
+      <div class="plan">
+        <h3>Organisation</h3>
+        <div class="price">£1,200</div>
+        <div class="small">Up to 100 people · priority support · larger teams on request</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:2mm">Prices exclude any applicable VAT. Equivalent prices in EUR, USD or XOF on request. Discounts for small NGOs and schools.</p>
+  </section>
+
+  <section class="grid">
+    <div>
+      <h2>Getting started takes a day</h2>
+      <ol class="steps">
+        <li>Reply to this email with your organisation's name and team size.</li>
+        <li>We send your team code and dashboard access.</li>
+        <li>Staff install WolofLink (Android) and enter the code.</li>
+        <li>After a month, keep going on a plan or simply stop.</li>
+      </ol>
+    </div>
+    <div>
+      <h2>Good to know</h2>
+      <ul>
+        <li>No ads and no tracking</li>
+        <li>Staff can leave the team at any time; their data stays theirs</li>
+        <li>Checked against Senegalese sources; review by native speakers under way</li>
+        <li>iPhone version planned</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="foot">
+    <div>
+      <div class="cta">Start a free pilot: support@woloflink.com</div>
+      <div class="small">woloflink.com/organisations</div>
+    </div>
+    <div class="small" style="text-align:right">Dalal ak jàmm · Welcome<br>WolofLink</div>
+  </div>
+</div>
+</body>
+</html>
