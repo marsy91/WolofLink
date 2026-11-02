@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { ArenaCard } from "@/components/ArenaCard";
 import { Button, Dialog, Loading, TabScreen } from "@/components/ui";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
@@ -172,6 +173,8 @@ export default function FriendsPage() {
   const places = board ? ranks(board) : [];
   return (
     <TabScreen title={t("friends.title")}>
+      {board ? <ArenaCard trophies={board.find((r) => r.is_me)?.trophies ?? 0} /> : null}
+
       <section className="mb-4 rounded-3xl bg-night p-5 text-sand">
         <p className="text-sm font-bold text-sand/80">{t("friends.yourCode")}</p>
         <p className="font-display text-3xl font-extrabold tracking-widest">{formatCode(card.friend_code)}</p>
