@@ -208,6 +208,8 @@ export const de: Dictionary = {
   "mode.system": "Automatisch",
   "mode.light": "Hell",
   "mode.dark": "Dunkel",
+  "show.open": "Zeigen",
+  "show.hint": "Halte das Handy hoch, damit die Person es lesen kann, und tippe auf den Lautsprecher, um es abzuspielen.",
   "org.title": "Deine Organisation",
   "org.intro": "Wenn deine NGO, Schule, Firma oder Botschaft dir einen Team-Code gegeben hat, gib ihn hier ein, um deinen Fortschritt mit ihr zu teilen.",
   "org.code": "Team-Code",

@@ -203,6 +203,8 @@ export const en = {
   "mode.system": "Automatic",
   "mode.light": "Light",
   "mode.dark": "Dark",
+  "show.open": "Show it",
+  "show.hint": "Hold up your phone so the person can read it, and tap the speaker to play it out loud.",
   "org.title": "Your organisation",
   "org.intro": "If your NGO, school, company or embassy gave you a team code, enter it here to share your progress with them.",
   "org.code": "Team code",

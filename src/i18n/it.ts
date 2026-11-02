@@ -207,6 +207,8 @@ export const it: Dictionary = {
   "mode.system": "Automatico",
   "mode.light": "Chiaro",
   "mode.dark": "Scuro",
+  "show.open": "Mostra",
+  "show.hint": "Mostra il telefono così la persona può leggere, e tocca l'altoparlante per farlo sentire ad alta voce.",
   "org.title": "La tua organizzazione",
   "org.intro": "Se la tua ONG, scuola, azienda o ambasciata ti ha dato un codice squadra, inseriscilo qui per condividere i tuoi progressi.",
   "org.code": "Codice squadra",

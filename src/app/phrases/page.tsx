@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { IconSnail, IconSpeaker } from "@/components/icons";
 import Link from "next/link";
 import { ReportProblem } from "@/components/ReportProblem";
+import { ShowCard } from "@/components/ShowCard";
 import { soundsIn } from "@/content/sounds";
 import { TabScreen } from "@/components/ui";
 import {
@@ -36,6 +37,7 @@ export default function Phrases() {
     if (new URLSearchParams(window.location.search).get("show") === "survival") setFilter("survival");
   }, []);
   const [open, setOpen] = useState<string | null>(null);
+  const [showing, setShowing] = useState<Entry | null>(null);
   const saved = progress.savedPhrases;
   // Every entry uses the same kind of audio, so one label covers the page.
   const voice = audioSourceFor(dictionary[0]!);
@@ -135,6 +137,15 @@ export default function Phrases() {
             </button>
           </div>
         </div>
+        {expanded ? (
+          <button
+            type="button"
+            onClick={() => setShowing(e)}
+            className="mx-3 mb-2 flex items-center gap-2 rounded-xl bg-night px-3 py-2 text-sm font-extrabold text-sand"
+          >
+            <span aria-hidden>⛶</span> {t("show.open")}
+          </button>
+        ) : null}
         {expanded && soundsIn(e.wo).length ? (
           <div className="mx-3 mb-2 rounded-xl bg-sand p-2 text-sm">
             <span className="font-bold text-night">{t("sounds.howTo")}</span>
@@ -208,6 +219,7 @@ export default function Phrases() {
         <ul className="space-y-2">{results.slice(0, limit).map(row)}</ul>
       )}
       {results.length > 0 && limit < total ? <MoreOnScroll onMore={more} /> : null}
+      {showing ? <ShowCard entry={showing} onClose={() => setShowing(null)} /> : null}
     </TabScreen>
   );
 }
