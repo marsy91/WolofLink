@@ -189,6 +189,56 @@ function RenewalsCard({ say, showEmpty = false }: { say: Say; showEmpty?: boolea
   );
 }
 
+const pct = (n: number, d: number) => (d ? `${Math.round((n / d) * 100)}%` : "—");
+
+/** Do learners come back? Totals only (learners with an account; activity from synced XP). */
+function RetentionCard({ say }: { say: Say }) {
+  const [rows] = useLoad(owner.retention, say);
+  const [cohorts] = useLoad(owner.cohorts, say);
+  return (
+    <Card>
+      <h2 className="mb-1 font-display text-lg font-extrabold text-night">Do learners come back?</h2>
+      <p className="mb-3 text-sm text-muted">
+        Of the learners with an account who joined long enough ago, the share who practised again on that day or later.
+        Most apps lose many people in the first week; watch the trend after each update.
+      </p>
+      {!rows ? (
+        <Loading />
+      ) : (
+        <div className="mb-3 grid grid-cols-3 gap-2">
+          {rows.map((r) => (
+            <div key={r.period} className="rounded-xl bg-sand p-3 text-center">
+              <p className="font-display text-2xl font-extrabold text-night">{pct(r.returned, r.eligible)}</p>
+              <p className="text-xs text-muted">
+                after {r.period}
+                <br />
+                {r.returned} of {r.eligible}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+      {cohorts && cohorts.length ? (
+        <>
+          <p className="mb-1 text-sm font-bold text-night">By week joined (still practising a week later)</p>
+          <table className="w-full text-sm">
+            <tbody>
+              {cohorts.map((c) => (
+                <tr key={c.week_start} className="border-t border-sand-3">
+                  <td className="py-1 text-muted">Week of {date(c.week_start)}</td>
+                  <td className="py-1 text-right">{c.joined} joined</td>
+                  <td className="py-1 text-right font-bold text-night">{pct(c.active_after_week, c.joined)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="mt-1 text-xs text-muted">The most recent week can&apos;t be judged yet (less than 7 days).</p>
+        </>
+      ) : null}
+    </Card>
+  );
+}
+
 function OverviewTab({ say }: { say: Say }) {
   const [o] = useLoad<Overview>(owner.overview, say);
   if (!o) return <Loading />;
@@ -203,6 +253,7 @@ function OverviewTab({ say }: { say: Say }) {
   return (
     <>
       <RenewalsCard say={say} />
+      <RetentionCard say={say} />
       <div className="grid grid-cols-2 gap-3">
         {tiles.map(([label, n]) => (
           <div key={label} className="rounded-2xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">

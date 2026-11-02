@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /** Friends and the weekly ranking (supabase/migrations/*_friends.sql). Needs an account. */
 import { getCloud } from "./cloud";
+import { notifyFriend } from "./push";
 
 export interface FriendCard {
   display_name: string;
@@ -30,7 +31,10 @@ export const friends = {
   add: (code: string) => cloud().rpc<string>("add_friend", { code: normaliseCode(code) }),
   remove: (friend: string) => cloud().rpc<void>("remove_friend", { friend }),
   board: async () => (await cloud().rpc<BoardRow[]>("friends_board")) ?? [],
-  nudge: (friend: string) => cloud().rpc<void>("nudge_friend", { friend }),
+  nudge: async (friend: string) => {
+    await cloud().rpc<void>("nudge_friend", { friend });
+    notifyFriend("nudge", { to: friend });
+  },
   myNudges: async () => (await cloud().rpc<{ from_name: string; sent_at: string }[]>("my_nudges")) ?? [],
 };
 

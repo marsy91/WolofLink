@@ -9,6 +9,7 @@ import { course } from "@/content/course";
 import type { Entry, UiLang } from "@/content/types";
 import { translate } from "@/i18n";
 import { getCloud } from "./cloud";
+import { notifyFriend } from "./push";
 import { normalize, seeded, shuffle } from "./engine";
 import type { Progress } from "./progress";
 
@@ -108,12 +109,18 @@ function cloud() {
 
 export const duels = {
   list: async () => (await cloud().rpc<DuelRow[]>("my_duels")) ?? [],
-  create: (friend: string, seed: number, entries: string[], score: number) =>
-    cloud().rpc<string>("create_duel", { friend, duel_seed: seed, duel_entries: entries, score }),
-  play: async (id: string, score: number) =>
-    (await cloud().rpc<{ my_score: number; their_score: number; result: "won" | "lost" | "draw"; trophies_won: number }[]>("play_duel", {
+  create: async (friend: string, seed: number, entries: string[], score: number) => {
+    const id = await cloud().rpc<string>("create_duel", { friend, duel_seed: seed, duel_entries: entries, score });
+    notifyFriend("duel", { id });
+    return id;
+  },
+  play: async (id: string, score: number) => {
+    const rows = await cloud().rpc<{ my_score: number; their_score: number; result: "won" | "lost" | "draw"; trophies_won: number }[]>("play_duel", {
       duel: id,
       score,
-    }))?.[0] ?? null,
+    });
+    notifyFriend("result", { id });
+    return rows?.[0] ?? null;
+  },
   decline: (id: string) => cloud().rpc<void>("decline_duel", { duel: id }),
 };

@@ -70,6 +70,8 @@ export interface Progress {
     seasonal?: boolean;
     /** Light or dark appearance; "system" follows the phone. */
     mode?: "system" | "light" | "dark";
+    /** Push notifications for duels and nudges (off until the learner turns them on). */
+    friendPush?: boolean;
   };
 }
 

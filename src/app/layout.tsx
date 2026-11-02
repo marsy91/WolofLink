@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import { AccountProvider } from "@/lib/account";
 import { PremiumProvider } from "@/lib/premium-context";
+import { PushInit } from "@/components/PushInit";
 import { ThemeApplier } from "@/components/ThemeApplier";
 import { VoicesLoader } from "@/lib/voices";
 import { StoreProvider } from "@/lib/store";
@@ -39,7 +40,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeApplier />
           <VoicesLoader />
           <AccountProvider>
-            <PremiumProvider>{children}</PremiumProvider>
+            <PremiumProvider>
+              <PushInit />
+              {children}
+            </PremiumProvider>
           </AccountProvider>
         </StoreProvider>
       </body>

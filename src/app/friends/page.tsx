@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { ArenaCard } from "@/components/ArenaCard";
+import { useFriendPushToggle } from "@/components/PushInit";
 import { Button, Dialog, Loading, TabScreen } from "@/components/ui";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
@@ -26,6 +27,8 @@ export default function FriendsPage() {
   const [removing, setRemoving] = useState<BoardRow | null>(null);
   const [busy, setBusy] = useState(false);
   const [duelRows, setDuelRows] = useState<DuelRow[] | null>(null);
+  const push = useFriendPushToggle();
+  const [pushDenied, setPushDenied] = useState(false);
 
   const loadBoard = useCallback(() => {
     friends
@@ -173,6 +176,18 @@ export default function FriendsPage() {
   const places = board ? ranks(board) : [];
   return (
     <TabScreen title={t("friends.title")}>
+      {push.supported && !push.on ? (
+        <section className="mb-4 flex items-center gap-3 rounded-3xl border-2 border-sun/50 bg-sun-soft p-4">
+          <span aria-hidden className="text-2xl">
+            🔔
+          </span>
+          <p className="min-w-0 flex-1 text-sm font-bold text-night">{pushDenied ? t("push.denied") : t("push.card")}</p>
+          {!pushDenied ? (
+            <Button onClick={() => void push.set(true).then((r) => setPushDenied(r === "denied"))}>{t("push.turnOn")}</Button>
+          ) : null}
+        </section>
+      ) : null}
+
       {board ? <ArenaCard trophies={board.find((r) => r.is_me)?.trophies ?? 0} /> : null}
 
       <section className="mb-4 rounded-3xl bg-night p-5 text-sand">

@@ -8,6 +8,7 @@ import { Button, Dialog, TabScreen } from "@/components/ui";
 import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_NAMES } from "@/i18n";
 import { IconBell } from "@/components/icons";
+import { useFriendPushToggle } from "@/components/PushInit";
 import { useAccount } from "@/lib/account";
 import { hasAiClips } from "@/lib/audio";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
@@ -40,6 +41,7 @@ export default function Settings() {
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
   const [voiceCredits, setVoiceCredits] = useState<[string, number][]>([]);
+  const friendPush = useFriendPushToggle();
   useEffect(() => {
     let alive = true;
     void loadVoices().then((rows) => alive && setVoiceCredits(credits(rows)));
@@ -179,6 +181,9 @@ export default function Settings() {
             <IconBell size={22} className="text-clay" />
             {t("remind.title")}
           </h2>
+          {friendPush.supported ? (
+            <Toggle label={t("push.setting")} checked={friendPush.on} onChange={(v) => void friendPush.set(v)} />
+          ) : null}
           {remindersSupported() ? (
             <>
               <Toggle label={t("remind.on")} checked={reminder.enabled} onChange={(v) => void setReminder({ enabled: v })} />

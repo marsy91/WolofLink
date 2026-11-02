@@ -19,3 +19,10 @@ export const ACCOUNTS_ENABLED =
   !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export const CIRCLE_ENABLED = process.env.NEXT_PUBLIC_CIRCLE === "on";
+
+/**
+ * Push notifications for friends (duels, nudges). Needs Firebase: put
+ * android/app/google-services.json in place and set NEXT_PUBLIC_PUSH=on, otherwise
+ * Android would crash on registration. Off by default.
+ */
+export const PUSH_ENABLED = process.env.NEXT_PUBLIC_PUSH === "on";

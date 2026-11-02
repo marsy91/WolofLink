@@ -90,7 +90,9 @@ export default function Privacy() {
           you enter) become your friends and can see that name, your XP this week, your streak and when you last
           practised, never your email. There is no public list or search, and no messaging; friends can only send a
           “nudge” reminder, at most once a day. You can remove a friend at any time; deleting your account removes your
-          friends list and nudges.
+          friends list and nudges. If you turn on friend notifications, your phone&apos;s notification token is stored
+          so we can tell you when a friend challenges or nudges you (sent through Google&apos;s Firebase Cloud
+          Messaging); turning them off or deleting your account removes it.
         </Section>
       ) : null}
 

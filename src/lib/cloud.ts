@@ -75,6 +75,8 @@ export interface CloudBackend {
   uploadFile?(bucket: string, path: string, data: Blob, contentType: string): Promise<void>;
   /** Downloads a file from Storage, or throws when not allowed / not found. */
   downloadFile?(bucket: string, path: string): Promise<Blob>;
+  /** Calls an edge function as the signed-in user. */
+  invoke?(fn: string, body: Record<string, unknown>): Promise<unknown>;
 }
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -243,6 +245,15 @@ function supabaseBackend(url: string, anonKey: string): CloudBackend {
       try {
         const { data, error } = await (await sb()).storage.from(bucket).download(path);
         if (error || !data) throw error ?? new Error("not found");
+        return data;
+      } catch (e) {
+        throw toError(e);
+      }
+    },
+    async invoke(fn, body) {
+      try {
+        const { data, error } = await (await sb()).functions.invoke(fn, { method: "POST", body });
+        if (error) throw error;
         return data;
       } catch (e) {
         throw toError(e);

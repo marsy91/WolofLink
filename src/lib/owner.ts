@@ -175,6 +175,8 @@ export const owner = {
     call<void>("owner_save_recorder", { member_email: email, name, approver, is_active: active }),
   blockedWords: () => call<{ word: string }[]>("owner_blocked_words"),
   setBlockedWord: (word: string, add: boolean) => call<void>("owner_set_blocked_word", { blocked: word, add }),
+  retention: () => call<{ period: string; eligible: number; returned: number }[]>("owner_retention"),
+  cohorts: () => call<{ week_start: string; joined: number; active_after_week: number }[]>("owner_cohorts"),
   setHolidayDate: (holiday: string, year: number, day: string, confirmed: boolean) =>
     call<void>("owner_set_calendar_date", { holiday, yr: year, holiday_day: day, is_confirmed: confirmed }),
   clearHolidayDate: (holiday: string, year: number) => call<void>("owner_clear_calendar_date", { holiday, yr: year }),

@@ -116,3 +116,12 @@ screen for invited contributors. Add to Data safety:
   friends): already collected for sync; now also shown to friends. Not shared
   with third parties.
 - No public profiles, no search, no messaging between users (nudges only).
+
+## Since 0.21.0 (friend notifications)
+
+- **Device or other IDs: Collected** (the push token) when the learner turns on
+  friend notifications. Optional; purpose: App functionality. Shared with
+  Google (Firebase Cloud Messaging) only to deliver the notification, as a
+  service provider.
+- The retention numbers in the owner console are totals from data already
+  collected for sync; nothing new is collected for them.
