@@ -84,6 +84,17 @@ export default function Privacy() {
         </Section>
       ) : null}
 
+      {ACCOUNTS_ENABLED ? (
+        <Section title="Voice recordings (invited contributors only)">
+          Native speakers we invite can record lines in their own voice. Their recordings are stored securely, checked
+          automatically (a speech-recognition model transcribes each clip to make sure it matches the line and contains
+          nothing offensive), and listened to by a reviewer. Only approved recordings are played to learners, with the
+          name the contributor chose in the credits. Contributors can ask for their recordings to be deleted at any time
+          by writing to support@woloflink.com; deleting their account deletes them too. Learners are never recorded:
+          the app only asks for the microphone on the recording screen for invited contributors.
+        </Section>
+      ) : null}
+
       {PREMIUM_ENABLED ? (
         <Section title="Purchases (WolofLink Premium)">
           Payments are handled entirely by Google Play or the Apple App Store; we never see your card details. To check

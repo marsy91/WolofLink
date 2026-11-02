@@ -93,3 +93,16 @@ these answers and the privacy policy.
   when the learner is signed in, and deleted with it (the link is cleared).
 - The holiday calendar only downloads public dates; it sends nothing about
   the learner.
+
+## Since 0.17.0 (community voice recordings)
+
+The app now declares the microphone permission, used only on the recording
+screen for invited contributors. Add to Data safety:
+
+- **Audio → Voice or sound recordings: Collected.** Optional, not shared with
+  third parties, purpose: App functionality. Only from invited contributors
+  who accept the recording terms; learners are never recorded.
+- Recordings are deleted with the contributor's account, or on request
+  (support@woloflink.com).
+- The automatic check runs in the owner's GitHub Actions account; it reads the
+  clip and writes the result back, and keeps nothing.

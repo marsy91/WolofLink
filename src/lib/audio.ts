@@ -28,6 +28,23 @@ let currentClip: HTMLAudioElement | null = null;
 
 const manifest = audioManifest as Record<string, string>;
 
+/**
+ * Community voices (approved native-speaker recordings, src/lib/voices.ts):
+ * entry id → storage path, plus a resolver that returns a playable URL (cached
+ * on the device after the first download). They take priority over clips.
+ */
+let communityVoices = new Map<string, string>();
+let resolveVoice: ((path: string) => Promise<string | null>) | null = null;
+export function setCommunityVoices(voices: Map<string, string>, resolver: (path: string) => Promise<string | null>) {
+  communityVoices = voices;
+  resolveVoice = resolver;
+}
+export function hasCommunityVoice(entryId: string): boolean {
+  return communityVoices.has(entryId);
+}
+const withTimeout = <T,>(p: Promise<T>, ms: number): Promise<T | null> =>
+  Promise.race([p, new Promise<null>((r) => setTimeout(() => r(null), ms))]);
+
 /** Path under /public of the recorded clip for an entry, if one exists. */
 export function clipFor(entry: Entry): string | undefined {
   return entry.audio ?? manifest[entry.id];
@@ -39,6 +56,7 @@ const clipSource = (clip: string): AudioSource => (clip.startsWith(AI_CLIP_DIR) 
 export const hasAiClips = Object.values(manifest).some((clip) => clip.startsWith(AI_CLIP_DIR));
 
 export function audioSourceFor(entry: Entry): AudioSource {
+  if (communityVoices.has(entry.id)) return "recording";
   const clip = clipFor(entry);
   if (clip) return clipSource(clip);
   if (Capacitor.isNativePlatform()) return "tts";
@@ -48,6 +66,22 @@ export function audioSourceFor(entry: Entry): AudioSource {
 
 export async function playEntry(entry: Entry, { slow = false } = {}): Promise<AudioSource> {
   stopAudio();
+  const voicePath = communityVoices.get(entry.id);
+  if (voicePath && resolveVoice) {
+    try {
+      // A slow network shouldn't delay the sound: after 2.5 s use the bundled clip (the download still finishes and is cached).
+      const url = await withTimeout(resolveVoice(voicePath), 2500);
+      if (url) {
+        const audio = new Audio(url);
+        currentClip = audio;
+        audio.playbackRate = slow ? 0.7 : 1;
+        await audio.play();
+        return "recording";
+      }
+    } catch {
+      // Fall back to the bundled clip.
+    }
+  }
   const clip = clipFor(entry);
   if (clip) {
     try {

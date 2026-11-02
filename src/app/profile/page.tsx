@@ -9,6 +9,7 @@ import { useAccount } from "@/lib/account";
 import { useIsOwner } from "@/lib/owner";
 import { PREMIUM_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
+import { useRecorderStatus } from "@/lib/recorder";
 import { ACHIEVEMENTS, currentStreak, MAX_SHIELDS } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
@@ -16,6 +17,7 @@ export default function Profile() {
   const { progress, lang, t } = useStore();
   const account = useAccount();
   const isOwner = useIsOwner();
+  const [recorder] = useRecorderStatus();
   const { premium, unlockAll } = usePremium();
   const now = useNow();
   const profile = progress.profile;
@@ -124,6 +126,18 @@ export default function Profile() {
           );
         })}
       </ul>
+
+      {recorder.isRecorder ? (
+        <Link href="/record/" className="mb-4 block rounded-3xl border-2 border-dusk/40 bg-white p-5 active:translate-y-[2px]">
+          <h2 className="mb-1 font-display text-lg font-extrabold text-dusk">🎙️ {t("rec.title")}</h2>
+          <p className="text-sm text-muted">{t("rec.card")}</p>
+        </Link>
+      ) : null}
+      {recorder.canApprove && !isOwner ? (
+        <Link href="/voice-review/" className="mb-4 block rounded-3xl border-2 border-dusk/40 bg-white p-5 active:translate-y-[2px]">
+          <h2 className="mb-1 font-display text-lg font-extrabold text-dusk">🎧 {t("rec.review")}</h2>
+        </Link>
+      ) : null}
 
       {isOwner ? (
         <Link

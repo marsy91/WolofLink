@@ -71,6 +71,10 @@ export interface CloudBackend {
   rpc<T = unknown>(fn: string, args?: Record<string, unknown>): Promise<T>;
   myOrganisations(): Promise<Membership[]>;
   leaveOrganisation(orgId: string): Promise<void>;
+  /** Uploads a file to Storage (the bucket's policies decide who may). */
+  uploadFile?(bucket: string, path: string, data: Blob, contentType: string): Promise<void>;
+  /** Downloads a file from Storage, or throws when not allowed / not found. */
+  downloadFile?(bucket: string, path: string): Promise<Blob>;
 }
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -223,6 +227,23 @@ function supabaseBackend(url: string, anonKey: string): CloudBackend {
         if (!uid) throw new CloudError("forbidden", "not signed in");
         const { error } = await c.from("memberships").delete().eq("org_id", orgId).eq("user_id", uid);
         if (error) throw error;
+      } catch (e) {
+        throw toError(e);
+      }
+    },
+    async uploadFile(bucket, path, data, contentType) {
+      try {
+        const { error } = await (await sb()).storage.from(bucket).upload(path, data, { contentType, upsert: false });
+        if (error) throw error;
+      } catch (e) {
+        throw toError(e);
+      }
+    },
+    async downloadFile(bucket, path) {
+      try {
+        const { data, error } = await (await sb()).storage.from(bucket).download(path);
+        if (error || !data) throw error ?? new Error("not found");
+        return data;
       } catch (e) {
         throw toError(e);
       }

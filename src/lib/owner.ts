@@ -96,6 +96,18 @@ export interface SeasonRow {
   message: Record<string, string> | null;
 }
 
+export interface RecorderRow {
+  user_id: string;
+  email: string;
+  display_name: string;
+  can_approve: boolean;
+  active: boolean;
+  consented: boolean;
+  approved: number;
+  waiting: number;
+  rejected: number;
+}
+
 export interface AuditRow {
   at: string;
   action: string;
@@ -158,6 +170,11 @@ export const owner = {
       event_message: s.message,
     }),
   deleteSeason: (id: string) => call<void>("owner_delete_season", { event: id }),
+  recorders: () => call<RecorderRow[]>("owner_recorders"),
+  saveRecorder: (email: string, name: string, approver: boolean, active: boolean) =>
+    call<void>("owner_save_recorder", { member_email: email, name, approver, is_active: active }),
+  blockedWords: () => call<{ word: string }[]>("owner_blocked_words"),
+  setBlockedWord: (word: string, add: boolean) => call<void>("owner_set_blocked_word", { blocked: word, add }),
   setHolidayDate: (holiday: string, year: number, day: string, confirmed: boolean) =>
     call<void>("owner_set_calendar_date", { holiday, yr: year, holiday_day: day, is_confirmed: confirmed }),
   clearHolidayDate: (holiday: string, year: number) => call<void>("owner_clear_calendar_date", { holiday, yr: year }),

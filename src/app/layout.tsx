@@ -4,6 +4,7 @@ import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import { AccountProvider } from "@/lib/account";
 import { PremiumProvider } from "@/lib/premium-context";
 import { ThemeApplier } from "@/components/ThemeApplier";
+import { VoicesLoader } from "@/lib/voices";
 import { StoreProvider } from "@/lib/store";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-dvh antialiased">
         <StoreProvider>
           <ThemeApplier />
+          <VoicesLoader />
           <AccountProvider>
             <PremiumProvider>{children}</PremiumProvider>
           </AccountProvider>

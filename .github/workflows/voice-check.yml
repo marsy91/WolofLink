@@ -1,0 +1,55 @@
+# Automatic check for community recordings: see scripts/voice-check/check.py.
+# Needs two repository secrets (Settings → Secrets and variables → Actions):
+#   SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY. They are never stored in the code.
+name: Voice check
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch: {}
+concurrency:
+  group: voice-check
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Anything to check?
+        id: pending
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_ROLE_KEY" ]; then echo "Secrets not set yet; skipping."; echo "count=0" >> "$GITHUB_OUTPUT"; exit 0; fi
+          pip install --quiet requests==2.32.3
+          python scripts/voice-check/check.py --count-only
+      - if: steps.pending.outputs.count != '0'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - if: steps.pending.outputs.count != '0'
+        name: Export the course lines
+        run: |
+          npm ci --ignore-scripts
+          npx tsx scripts/review/export-lines.ts > "$RUNNER_TEMP/lines.json"
+      - if: steps.pending.outputs.count != '0'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-whisper-small-wolof-v1
+      - if: steps.pending.outputs.count != '0'
+        name: Check new recordings
+        env:
+          LINES_JSON: ${{ runner.temp }}/lines.json
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install --quiet torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet -r scripts/voice-check/requirements.txt
+          python scripts/voice-check/check.py

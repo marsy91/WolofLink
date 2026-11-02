@@ -26,18 +26,21 @@ import {
   type OrgRow,
   type Overview,
   type PersonRow,
+  type RecorderRow,
   type ReportRow,
   type SeasonRow,
 } from "@/lib/owner";
 import { LOOKS, LOOK_EMOJI, activeSeason } from "@/content/seasons";
 import { renewalLabel, renewalsDue } from "@/lib/renewals";
+import { VoiceReview } from "@/components/VoiceReview";
 
-type Tab = "overview" | "orgs" | "people" | "billing" | "reports" | "words" | "holidays" | "themes" | "log";
+type Tab = "overview" | "orgs" | "people" | "billing" | "voices" | "reports" | "words" | "holidays" | "themes" | "log";
 const TABS: [Tab, string][] = [
   ["overview", "Overview"],
   ["orgs", "Organisations"],
   ["people", "People"],
   ["billing", "Billing"],
+  ["voices", "Voices"],
   ["reports", "Reports"],
   ["words", "Missed words"],
   ["holidays", "Holidays"],
@@ -116,6 +119,7 @@ export default function OwnerPage() {
           {tab === "orgs" ? <OrgsTab say={say} /> : null}
           {tab === "people" ? <PeopleTab say={say} /> : null}
           {tab === "billing" ? <BillingTab say={say} /> : null}
+          {tab === "voices" ? <VoicesTab say={say} /> : null}
           {tab === "reports" ? <ReportsTab say={say} /> : null}
           {tab === "words" ? <WordsTab say={say} /> : null}
           {tab === "holidays" ? <HolidaysTab say={say} /> : null}
@@ -651,6 +655,162 @@ function BillingTab({ say }: { say: Say }) {
           </Card>
         );
       })}
+    </>
+  );
+}
+
+/* ── Voices ────────────────────────────────────────────────────────────── */
+function VoicesTab({ say }: { say: Say }) {
+  const [part, setPart] = useState<"review" | "recorders" | "blocked">("review");
+  return (
+    <>
+      <div className="mb-3 flex gap-2">
+        {(
+          [
+            ["review", "Review"],
+            ["recorders", "Recorders"],
+            ["blocked", "Blocked words"],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            type="button"
+            aria-pressed={part === id}
+            onClick={() => setPart(id)}
+            className={`rounded-full border-2 px-3 py-1.5 text-sm font-bold ${part === id ? "border-night bg-night text-sand" : "border-sand-3 bg-white text-night"}`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {part === "review" ? <VoiceReview say={say} /> : null}
+      {part === "recorders" ? <RecordersPart say={say} /> : null}
+      {part === "blocked" ? <BlockedPart say={say} /> : null}
+    </>
+  );
+}
+
+function RecordersPart({ say }: { say: Say }) {
+  const [rows, reload] = useLoad<RecorderRow[]>(owner.recorders, say);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [approver, setApprover] = useState(false);
+  const save = async (e: string, n: string, a: boolean, active: boolean, done: string) => {
+    try {
+      await owner.saveRecorder(e, n, a, active);
+      say(done);
+      reload();
+    } catch (err) {
+      say(errText(err), false);
+    }
+  };
+  return (
+    <>
+      <Card>
+        <h2 className="mb-1 font-display text-lg font-extrabold text-night">Invite a recorder</h2>
+        <p className="mb-2 text-sm text-muted">
+          They must have created an account in the app first. Their name appears in the app&apos;s voice credits.
+          Reviewers can approve other people&apos;s recordings (never their own). 20 approved lines give them a year of
+          Premium automatically.
+        </p>
+        <div className="grid gap-2">
+          <input className={field} type="email" placeholder="Their account email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className={field} placeholder="Name for the credits" maxLength={60} value={name} onChange={(e) => setName(e.target.value)} />
+          <label className="flex items-center gap-2 text-sm font-bold">
+            <input type="checkbox" checked={approver} onChange={(e) => setApprover(e.target.checked)} /> Also a reviewer (can approve)
+          </label>
+          <Button
+            disabled={!email.includes("@") || !name.trim()}
+            onClick={() =>
+              void save(email.trim(), name.trim(), approver, true, `${name.trim()} can now record from Profile → Record voices.`).then(() => {
+                setEmail("");
+                setName("");
+                setApprover(false);
+              })
+            }
+          >
+            Invite
+          </Button>
+        </div>
+      </Card>
+      {!rows ? <Loading /> : rows.length === 0 ? <p className="text-muted">No recorders yet.</p> : null}
+      {rows?.map((r) => (
+        <Card key={r.user_id}>
+          <p className="font-bold text-night">
+            {r.display_name} <span className="text-sm font-normal text-muted">· {r.email}</span>
+          </p>
+          <p className="text-sm text-muted">
+            {r.approved} approved · {r.waiting} waiting · {r.rejected} rejected
+            {r.can_approve ? " · reviewer" : ""}
+            {!r.consented ? " · hasn't accepted the terms yet" : ""}
+            {!r.active ? " · removed" : ""}
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <Button
+              variant="secondary"
+              onClick={() =>
+                void save(r.email, r.display_name, !r.can_approve, r.active, r.can_approve ? "No longer a reviewer." : "Now a reviewer.")
+              }
+            >
+              {r.can_approve ? "Remove reviewer" : "Make reviewer"}
+            </Button>
+            <Button
+              variant={r.active ? "wrong" : "secondary"}
+              onClick={() =>
+                void save(r.email, r.display_name, r.can_approve, !r.active, r.active ? "Recorder removed (their approved voices stay)." : "Recorder restored.")
+              }
+            >
+              {r.active ? "Remove" : "Restore"}
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </>
+  );
+}
+
+function BlockedPart({ say }: { say: Say }) {
+  const [rows, reload] = useLoad<{ word: string }[]>(owner.blockedWords, say);
+  const [word, setWord] = useState("");
+  const set = async (w: string, add: boolean) => {
+    try {
+      await owner.setBlockedWord(w, add);
+      say(add ? `"${w}" blocked.` : `"${w}" removed.`);
+      setWord("");
+      reload();
+    } catch (err) {
+      say(errText(err), false);
+    }
+  };
+  return (
+    <>
+      <Card>
+        <p className="mb-2 text-sm text-muted">
+          The automatic check flags any recording whose transcript contains one of these words (accents ignored). Ask
+          your Wolof reviewer to add Wolof swear words and insults here. Every recording is still heard by a person
+          before it goes live.
+        </p>
+        <div className="flex gap-2">
+          <input className={field} placeholder="Word to block" maxLength={40} value={word} onChange={(e) => setWord(e.target.value)} />
+          <Button disabled={word.trim().length < 2} onClick={() => void set(word.trim(), true)}>
+            Add
+          </Button>
+        </div>
+      </Card>
+      {!rows ? <Loading /> : null}
+      <div className="flex flex-wrap gap-2">
+        {rows?.map((r) => (
+          <button
+            key={r.word}
+            type="button"
+            onClick={() => void set(r.word, false)}
+            className="rounded-full border-2 border-sand-3 bg-white px-3 py-1 text-sm"
+            aria-label={`Remove ${r.word}`}
+          >
+            {r.word} ✕
+          </button>
+        ))}
+      </div>
     </>
   );
 }

@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Dialog, TabScreen } from "@/components/ui";
 import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_NAMES } from "@/i18n";
@@ -13,6 +13,7 @@ import { hasAiClips } from "@/lib/audio";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
+import { credits, loadVoices } from "@/lib/voices";
 
 import { APP_VERSION as VERSION } from "@/lib/version";
 
@@ -38,6 +39,14 @@ export default function Settings() {
   const account = useAccount();
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
+  const [voiceCredits, setVoiceCredits] = useState<[string, number][]>([]);
+  useEffect(() => {
+    let alive = true;
+    void loadVoices().then((rows) => alive && setVoiceCredits(credits(rows)));
+    return () => {
+      alive = false;
+    };
+  }, []);
   const [reminderState, setReminderState] = useState<ReminderResult | null>(null);
   const profile = progress.profile;
   if (!profile) return <TabScreen>{null}</TabScreen>;
@@ -201,6 +210,9 @@ export default function Settings() {
           <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("settings.about")}</h2>
           <p className="text-sm text-muted">{t("settings.aboutBody")}</p>
           {hasAiClips ? <p className="mt-2 text-sm text-muted">{t("settings.voice")}</p> : null}
+          {voiceCredits.length ? (
+            <p className="mt-2 text-sm text-muted">{t("settings.voices", { names: voiceCredits.map(([n]) => n).join(", ") })}</p>
+          ) : null}
           <p className="mt-2 text-xs text-muted">
             {t("settings.version", { v: VERSION })} · © 2026 WolofLink ·{" "}
             <Link href="/privacy/" className="font-bold text-clay underline">
