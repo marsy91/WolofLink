@@ -1,6 +1,6 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Unit } from "../types";
-import { entry, tx } from "./helpers";
+import { entry, line, question, tx } from "./helpers";
 
 export const entries = [
   // phone-1
@@ -85,4 +85,37 @@ export const unit: Unit = {
       ],
     },
   ],
+  story: {
+    id: "story-call",
+    title: tx(["A phone call", "Un coup de fil", "Una llamada", "Ein Anruf", "Una telefonata"]),
+    lines: [
+      line("Awa", "Allo, kan la?", ["Hello, who is it?", "Allô, c'est qui ?", "¿Diga? ¿Quién es?", "Hallo, wer ist da?", "Pronto, chi è?"]),
+      line("Moodu", "Man la. Dama la doon woo.", ["It's me. I was trying to call you.", "C'est moi. J'essayais de t'appeler.", "Soy yo. Te estaba llamando.", "Ich bin's. Ich wollte dich gerade anrufen.", "Sono io. Ti stavo chiamando."]),
+      line("Awa", "Dégguma la bu baax. Waxaatal!", ["I can't hear you well. Say it again!", "Je ne t'entends pas bien. Répète !", "No te oigo bien. ¡Repítelo!", "Ich höre dich nicht gut. Sag es noch einmal!", "Non ti sento bene. Ripeti!"]),
+      line("Moodu", "Ndax dinga ñëw?", ["Will you come?", "Est-ce que tu viendras ?", "¿Vendrás?", "Kommst du?", "Verrai?"]),
+      line("Awa", "Mënuma tey, waaye suba mën naa.", ["I can't today, but tomorrow I can.", "Je ne peux pas aujourd'hui, mais demain je peux.", "Hoy no puedo, pero mañana sí.", "Heute kann ich nicht, aber morgen schon.", "Oggi non posso, ma domani sì."]),
+      line("Moodu", "Waaw. Dinaa la woo. Ba suba!", ["Yes. I'll call you. See you tomorrow!", "Oui. Je t'appellerai. À demain !", "Sí. Te llamaré. ¡Hasta mañana!", "Ja. Ich rufe dich an. Bis morgen!", "Sì. Ti chiamerò. A domani!"]),
+      line("Awa", "Su Yàlla soobee. Jërëjëf!", ["God willing. Thank you!", "Si Dieu le veut. Merci !", "Si Dios quiere. ¡Gracias!", "So Gott will. Danke!", "Se Dio vuole. Grazie!"]),
+    ],
+    questions: [
+      question(
+        ["Who is calling?", "Qui appelle ?", "¿Quién llama?", "Wer ruft an?", "Chi chiama?"],
+        ["Moodu", "Moodu", "Moodu", "Moodu", "Moodu"],
+        ["Awa", "Awa", "Awa", "Awa", "Awa"],
+        ["A doctor", "Un médecin", "Un médico", "Ein Arzt", "Un medico"],
+      ),
+      question(
+        ["When can Awa come?", "Quand Awa peut-elle venir ?", "¿Cuándo puede venir Awa?", "Wann kann Awa kommen?", "Quando può venire Awa?"],
+        ["Tomorrow", "Demain", "Mañana", "Morgen", "Domani"],
+        ["Today", "Aujourd'hui", "Hoy", "Heute", "Oggi"],
+        ["Never", "Jamais", "Nunca", "Nie", "Mai"],
+      ),
+      question(
+        ["Why does Awa say “Waxaatal”?", "Pourquoi Awa dit-elle « Waxaatal » ?", "¿Por qué dice Awa «Waxaatal»?", "Warum sagt Awa „Waxaatal“?", "Perché Awa dice «Waxaatal»?"],
+        ["She can't hear him well", "Elle ne l'entend pas bien", "No lo oye bien", "Sie hört ihn nicht gut", "Non lo sente bene"],
+        ["She is angry", "Elle est fâchée", "Está enfadada", "Sie ist wütend", "È arrabbiata"],
+        ["She wants his number", "Elle veut son numéro", "Quiere su número", "Sie will seine Nummer", "Vuole il suo numero"],
+      ),
+    ],
+  },
 };

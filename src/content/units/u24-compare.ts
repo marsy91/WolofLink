@@ -1,6 +1,6 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Unit } from "../types";
-import { entry, tx } from "./helpers";
+import { entry, line, question, tx } from "./helpers";
 
 export const entries = [
   // compare-1
@@ -85,4 +85,36 @@ export const unit: Unit = {
       ],
     },
   ],
+  story: {
+    id: "story-compare",
+    title: tx(["Which one is cheaper?", "Lequel est moins cher ?", "¿Cuál es más barato?", "Welches ist billiger?", "Quale costa meno?"]),
+    lines: [
+      line("Fatou", "Lii moo gëna yomb?", ["Is this one cheaper?", "Celui-ci est moins cher ?", "¿Este es más barato?", "Ist das hier billiger?", "Questo costa meno?"]),
+      line("Moodu", "Déedéet, lii moo gëna seer.", ["No, this one is more expensive.", "Non, celui-ci est plus cher.", "No, este es más caro.", "Nein, das hier ist teurer.", "No, questo costa di più."]),
+      line("Fatou", "Dafa seer lool! Mën nga ko wàññi?", ["It's very expensive! Can you lower the price?", "C'est très cher ! Tu peux baisser le prix ?", "¡Es muy caro! ¿Puedes bajar el precio?", "Das ist sehr teuer! Kannst du mit dem Preis runtergehen?", "È molto caro! Puoi abbassare il prezzo?"]),
+      line("Moodu", "Juróomi téeméer la.", ["It's five hundred.", "C'est cinq cents.", "Son quinientos.", "Das macht fünfhundert.", "Sono cinquecento."]),
+      line("Fatou", "Dafa rafet lool. Jërëjëf!", ["It's really beautiful. Thank you!", "C'est vraiment beau. Merci !", "Es precioso. ¡Gracias!", "Das ist wunderschön. Danke!", "È bellissimo. Grazie!"]),
+      line("Moodu", "Ba beneen yoon!", ["See you next time!", "À la prochaine !", "¡Hasta la próxima!", "Bis zum nächsten Mal!", "Alla prossima!"]),
+    ],
+    questions: [
+      question(
+        ["Is the first one cheaper?", "Le premier est-il moins cher ?", "¿El primero es más barato?", "Ist das erste billiger?", "Il primo costa meno?"],
+        ["No, it's more expensive", "Non, il est plus cher", "No, es más caro", "Nein, es ist teurer", "No, costa di più"],
+        ["Yes, it's cheaper", "Oui, il est moins cher", "Sí, es más barato", "Ja, es ist billiger", "Sì, costa meno"],
+        ["It's free", "C'est gratuit", "Es gratis", "Es ist umsonst", "È gratis"],
+      ),
+      question(
+        ["What price does Moodu give?", "Quel prix Moodu donne-t-il ?", "¿Qué precio da Moodu?", "Welchen Preis nennt Moodu?", "Che prezzo dice Moodu?"],
+        ["Five hundred", "Cinq cents", "Quinientos", "Fünfhundert", "Cinquecento"],
+        ["Two thousand", "Deux mille", "Dos mil", "Zweitausend", "Duemila"],
+        ["Three hundred", "Trois cents", "Trescientos", "Dreihundert", "Trecento"],
+      ),
+      question(
+        ["What does Fatou think of it?", "Qu'en pense Fatou ?", "¿Qué opina Fatou?", "Was hält Fatou davon?", "Cosa ne pensa Fatou?"],
+        ["It's really beautiful", "C'est vraiment beau", "Es precioso", "Es ist wunderschön", "È bellissimo"],
+        ["It's too short", "C'est trop court", "Es demasiado corto", "Es ist zu kurz", "È troppo corto"],
+        ["It's too small", "C'est trop petit", "Es demasiado pequeño", "Es ist zu klein", "È troppo piccolo"],
+      ),
+    ],
+  },
 };
