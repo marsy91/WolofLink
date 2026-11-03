@@ -45,6 +45,9 @@ WHAT'S INSIDE
 • Listen hands-free: every line, then slowly, then its meaning, for the bus or the kitchen
 • Already speak some Wolof? Test out of a unit and skip ahead
 • 6 short dialogues that follow real conversations
+• Role-play: take a part in a dialogue and choose what to say
+• Record yourself and compare with the model voice (stays on your phone)
+• Grammar guide, progress page and printable certificates for each level
 • Holidays in Senegal: Tabaski, Korité, the Magal and more, with what to expect, the right greeting and an optional reminder
 • Spot a mistake? Report it from any word in one tap
 • Seasonal themes for Ramadan, Tabaski, Korité, Independence Day and more
@@ -87,6 +90,9 @@ AU PROGRAMME
 • Écoute mains libres : chaque phrase, puis lentement, puis son sens, pour le bus ou la cuisine
 • Vous parlez déjà un peu wolof ? Passez le test d'une unité et avancez
 • 6 petits dialogues tirés de vraies conversations
+• Jeu de rôle : prenez un rôle et choisissez quoi dire
+• Enregistrez-vous et comparez avec la voix modèle (reste sur votre téléphone)
+• Guide de grammaire, page de progression et certificats pour chaque niveau
 • Fêtes au Sénégal : Tabaski, Korité, Magal et d'autres, avec ce qui vous attend, la bonne formule et un rappel facultatif
 • Une erreur ? Signalez-la depuis n'importe quel mot, en un geste
 • Thèmes de saison pour le Ramadan, la Tabaski, la Korité, la fête de l'Indépendance et plus
@@ -129,6 +135,9 @@ QUÉ INCLUYE
 • Escucha sin manos: cada frase, luego despacio y su significado, para el autobús o la cocina
 • ¿Ya hablas algo de wolof? Haz la prueba de una unidad y avanza
 • 6 diálogos cortos sacados de conversaciones reales
+• Juego de roles: haz un papel y elige qué decir
+• Grábate y compárate con la voz modelo (se queda en tu teléfono)
+• Guía de gramática, página de progreso y certificados por nivel
 • Fiestas en Senegal: Tabaski, Korité, el Magal y más, con qué esperar, el saludo adecuado y un recordatorio opcional
 • ¿Ves un error? Infórmalo desde cualquier palabra con un toque
 • Temas de temporada para el Ramadán, la Tabaski, la Korité, el Día de la Independencia y más
@@ -171,6 +180,9 @@ DAS ERWARTET DICH
 • Freihändig hören: jeder Satz, dann langsam, dann seine Bedeutung, für Bus oder Küche
 • Du sprichst schon etwas Wolof? Mach den Test einer Einheit und spring weiter
 • 6 kurze Dialoge aus echten Gesprächen
+• Rollenspiel: übernimm eine Rolle und wähle, was du sagst
+• Nimm dich auf und vergleiche mit der Vorbildstimme (bleibt auf deinem Handy)
+• Grammatikführer, Fortschrittsseite und Zertifikate für jede Stufe
 • Feiertage im Senegal: Tabaski, Korité, der Magal und mehr, mit dem, was dich erwartet, dem passenden Gruß und optionaler Erinnerung
 • Fehler entdeckt? Melde ihn mit einem Tipp bei jedem Wort
 • Saisonale Designs zu Ramadan, Tabaski, Korité, Unabhängigkeitstag und mehr
@@ -213,6 +225,9 @@ COSA TROVI
 • Ascolto a mani libere: ogni frase, poi lentamente, poi il significato, per l'autobus o la cucina
 • Sai già un po' di wolof? Fai il test di un'unità e vai avanti
 • 6 brevi dialoghi presi da conversazioni vere
+• Gioco di ruolo: prendi una parte e scegli cosa dire
+• Registrati e confrontati con la voce modello (resta sul telefono)
+• Guida di grammatica, pagina dei progressi e certificati per ogni livello
 • Feste in Senegal: Tabaski, Korité, il Magal e altre, con cosa aspettarsi, il saluto giusto e un promemoria facoltativo
 • Hai trovato un errore? Segnalalo da qualsiasi parola con un tocco
 • Temi stagionali per Ramadan, Tabaski, Korité, Festa dell'Indipendenza e altro
