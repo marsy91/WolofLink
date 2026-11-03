@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { RecordCompare } from "./RecordCompare";
 import type { Entry } from "@/content/types";
 import { audioSourceFor, playEntry } from "@/lib/audio";
 import type {
@@ -464,9 +465,7 @@ export function SpeakView({ ex, locked, onSubmit }: ExerciseProps<SpeakExercise>
       </div>
       <TtsNote entry={ex.entry} />
       <div className="my-6 flex flex-col items-center gap-3 text-center">
-        <span className="grid h-20 w-20 place-items-center rounded-full bg-dusk-soft text-dusk" aria-hidden>
-          <IconMic size={36} />
-        </span>
+        <RecordCompare entry={ex.entry} disabled={locked} />
         {!checker.available ? <p className="max-w-xs text-sm text-muted">{t("ex.speakHint")}</p> : null}
       </div>
       {!locked && (

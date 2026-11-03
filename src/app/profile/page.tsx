@@ -103,6 +103,16 @@ export default function Profile() {
         </Link>
       ) : null}
 
+      <Link href="/progress/" className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sea/30 bg-white p-4 active:translate-y-[2px]">
+        <span aria-hidden className="text-2xl">
+          📈
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-display font-extrabold text-night">{t("insights.cardTitle")}</span>
+          <span className="text-sm text-muted">{t("insights.card")}</span>
+        </span>
+      </Link>
+
       <section className="mb-6 flex gap-3 rounded-2xl bg-night p-4 text-sand" aria-labelledby="shield-h">
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-sun">
           <IconShield size={28} />

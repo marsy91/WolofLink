@@ -4,12 +4,13 @@
 import Link from "next/link";
 import { IconDrop, IconLoop } from "@/components/icons";
 import { TabScreen } from "@/components/ui";
-import { course } from "@/content/course";
+import { allStories, course } from "@/content/course";
 import { upcoming } from "@/content/calendar";
 import { SURVIVAL_IDS, SURVIVAL_TITLE } from "@/content/survival";
 import { translate } from "@/i18n";
 import { useDateOverrides } from "@/lib/holidays";
 import { dueEntries, MAX_DROPS, minutesToNextDrop, refreshDrops } from "@/lib/progress";
+import { usePremium } from "@/lib/premium-context";
 import { useNow, useStore } from "@/lib/store";
 
 export default function Practice() {
@@ -24,6 +25,8 @@ export default function Practice() {
   const learned = Object.keys(progress.srs).length;
   const overrides = useDateOverrides();
   const nextHoliday = upcoming(new Date(now), overrides)[0];
+  const { unlockAll } = usePremium();
+  const openStories = allStories.filter(({ unit }) => unlockAll || unit.lessons.every((l) => progress.lessons[l.id]));
 
   return (
     <TabScreen title={t("practice.title")}>
@@ -69,6 +72,29 @@ export default function Practice() {
         </div>
       </section>
 
+      <section className="mb-5 rounded-3xl border-2 border-night/20 bg-white p-5" aria-labelledby="roleplay-h">
+        <h2 id="roleplay-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
+          <span aria-hidden>🎭</span> {t("roleplay.cardTitle")}
+        </h2>
+        <p className="mb-3 text-sm text-muted">{t("roleplay.card")}</p>
+        {openStories.length ? (
+          <ul className="space-y-2">
+            {openStories.map(({ story }) => (
+              <li key={story.id}>
+                <Link
+                  href={`/roleplay/${story.id}/`}
+                  className="flex min-h-12 items-center justify-between rounded-2xl border-2 border-sand-3 bg-white px-4 font-bold text-night"
+                >
+                  {translate(story.title, lang)} <span className="text-clay">{t("roleplay.start")} →</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-muted">{t("roleplay.none", { units: allStories.map(({ unit }) => course.units.indexOf(unit) + 1).join(", ") })}</p>
+        )}
+      </section>
+
       <section className="mb-5 rounded-3xl border-2 border-sun/50 bg-sun-soft p-5" aria-labelledby="listen-h">
         <h2 id="listen-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <span aria-hidden>🎧</span> {t("listen.cardTitle")}
@@ -79,6 +105,19 @@ export default function Practice() {
           className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-night font-display font-extrabold text-sand"
         >
           {t("listen.open")}
+        </Link>
+      </section>
+
+      <section className="mb-5 rounded-3xl border-2 border-sea/30 bg-white p-5" aria-labelledby="guide-h">
+        <h2 id="guide-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
+          <span aria-hidden>📘</span> {t("guide.cardTitle")}
+        </h2>
+        <p className="mb-4 text-sm text-muted">{t("guide.card")}</p>
+        <Link
+          href="/guide/"
+          className="flex min-h-12 w-full items-center justify-center rounded-2xl border-2 border-sand-3 bg-white font-display font-extrabold text-night"
+        >
+          {t("guide.open")}
         </Link>
       </section>
 
