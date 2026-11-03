@@ -1,0 +1,24 @@
+# Who must approve changes. With "Require review from Code Owners" switched on in the
+# branch ruleset (docs/team/README.md), a pull request touching a path below cannot merge
+# without these people. Today that is only the owner. When you trust a reviewer, add their
+# GitHub name next to the paths they may approve (for example Wolof content).
+
+*                          @marsy91
+
+/supabase/                 @marsy91
+/android/                  @marsy91
+/.github/                  @marsy91
+/.env*                     @marsy91
+/scripts/ci/               @marsy91
+/CLAUDE.md                 @marsy91
+/SECURITY.md               @marsy91
+/LICENSE                   @marsy91
+/NOTICE                    @marsy91
+/docs/store/               @marsy91
+/src/lib/cloud.ts          @marsy91
+/src/lib/billing.ts        @marsy91
+/src/lib/features.ts       @marsy91
+/src/app/privacy/          @marsy91
+/src/app/terms/            @marsy91
+/src/app/owner/            @marsy91
+/src/content/              @marsy91

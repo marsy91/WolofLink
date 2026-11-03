@@ -1,0 +1,35 @@
+# Automatic checks for every proposed change (pull request) and for main.
+# The job is named "Checks": make it a required status check in the branch ruleset
+# (docs/team/README.md), so nothing merges while it is red.
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: No secrets in the code
+        run: bash scripts/ci/check-secrets.sh
+      - name: Type check
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Tests
+        run: npm test
+      - name: Build the app
+        run: npm run build
