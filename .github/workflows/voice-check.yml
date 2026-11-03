@@ -40,7 +40,7 @@ jobs:
           npm ci --ignore-scripts
           npx tsx scripts/review/export-lines.ts > "$RUNNER_TEMP/lines.json"
       - if: steps.pending.outputs.count != '0'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/huggingface
           key: hf-whisper-small-wolof-v1
