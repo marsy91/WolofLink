@@ -9,7 +9,7 @@ import { Button, Loading, RedirectTo, useRequireProfile } from "@/components/ui"
 import { course } from "@/content/course";
 import type { UiKey } from "@/i18n";
 import type { PlanKind } from "@/lib/billing";
-import { PREMIUM_ENABLED } from "@/lib/features";
+import { PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { FREE_LESSON_COUNT, TOTAL_LESSON_COUNT } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
 import { useStore } from "@/lib/store";
@@ -22,9 +22,9 @@ const PLAN_LABEL: Record<PlanKind, UiKey> = {
 };
 const ORDER: PlanKind[] = ["annual", "monthly", "lifetime", "other"];
 
-/** Premium is switched off in free builds (src/lib/features.ts): send old links to the path. */
+/** Neither Premium nor Supporter is on in free builds (src/lib/features.ts): send old links to the path. */
 export default function PremiumRoute() {
-  return PREMIUM_ENABLED ? <PremiumPage /> : <RedirectTo href="/learn/" />;
+  return PAID_ENABLED ? <PremiumPage /> : <RedirectTo href="/learn/" />;
 }
 
 function PremiumPage() {
@@ -59,16 +59,21 @@ function PremiumPage() {
     setBusy(true);
     const on = await p.restore();
     setBusy(false);
-    setMessage(on ? { key: "premium.restored", ok: true } : { key: "premium.nothingToRestore", ok: false });
+    setMessage(
+      on ? { key: SUPPORTER_ENABLED ? "supporter.restored" : "premium.restored", ok: true } : { key: "premium.nothingToRestore", ok: false },
+    );
   };
 
-  const benefits: string[] = [
-    t("premium.b1", { n: TOTAL_LESSON_COUNT, u: course.units.length, free: FREE_LESSON_COUNT }),
-    t("premium.b2"),
-    t("premium.b3"),
-    t("premium.b4"),
-    t("premium.b5"),
-  ];
+  const supporter = SUPPORTER_ENABLED;
+  const benefits: string[] = supporter
+    ? [t("supporter.b1"), t("supporter.b2"), t("supporter.b3"), t("supporter.b4")]
+    : [
+        t("premium.b1", { n: TOTAL_LESSON_COUNT, u: course.units.length, free: FREE_LESSON_COUNT }),
+        t("premium.b2"),
+        t("premium.b3"),
+        t("premium.b4"),
+        t("premium.b5"),
+      ];
 
   return (
     <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
@@ -85,10 +90,16 @@ function PremiumPage() {
 
       <div className="mb-6 rounded-3xl bg-night p-6 text-center text-sand">
         <span className="mx-auto mb-3 grid h-16 w-16 place-items-center rounded-2xl bg-white/10 text-sun">
-          <IconGem size={36} />
+          {supporter ? (
+            <span aria-hidden className="text-4xl">
+              💛
+            </span>
+          ) : (
+            <IconGem size={36} />
+          )}
         </span>
-        <h1 className="font-display text-3xl font-extrabold">{t("premium.title")}</h1>
-        <p className="mt-1 text-sand/85">{t("premium.subtitle")}</p>
+        <h1 className="font-display text-3xl font-extrabold">{t(supporter ? "supporter.title" : "premium.title")}</h1>
+        <p className="mt-1 text-sand/85">{t(supporter ? "supporter.subtitle" : "premium.subtitle")}</p>
       </div>
 
       <ul className="mb-6 space-y-3">
@@ -110,11 +121,11 @@ function PremiumPage() {
 
       {premium ? (
         <div className="rounded-3xl bg-sun-soft p-5 text-center">
-          <p className="font-display text-xl font-extrabold text-night">{t("premium.thanks")}</p>
+          <p className="font-display text-xl font-extrabold text-night">{t(supporter ? "supporter.thanks" : "premium.thanks")}</p>
           <p className="mt-2 text-sm text-muted">{t("premium.manage")}</p>
         </div>
       ) : !available ? (
-        <p className="rounded-2xl bg-white p-4 text-muted">{t("premium.unavailable")}</p>
+        <p className="rounded-2xl bg-white p-4 text-muted">{t(supporter ? "supporter.unavailable" : "premium.unavailable")}</p>
       ) : p.loadingPlans ? (
         <p className="text-muted" role="status">
           {t("premium.loading")}
@@ -128,7 +139,7 @@ function PremiumPage() {
         </div>
       ) : (
         <>
-          <div role="radiogroup" aria-label={t("premium.title")} className="mb-4 space-y-3">
+          <div role="radiogroup" aria-label={t(supporter ? "supporter.title" : "premium.title")} className="mb-4 space-y-3">
             {plans.map((plan) => (
               <button
                 key={plan.id}
@@ -163,7 +174,7 @@ function PremiumPage() {
       ) : null}
 
       <p className="mt-4 pb-6 text-xs leading-relaxed text-muted">
-        {t("premium.fine")}{" "}
+        {t(supporter ? "supporter.fine" : "premium.fine")}{" "}
         <Link href="/terms/" className="font-bold text-clay underline">
           {t("premium.terms")}
         </Link>{" "}

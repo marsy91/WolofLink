@@ -74,6 +74,7 @@ free:
 | Switch | Launch value | What it does |
 | --- | --- | --- |
 | `NEXT_PUBLIC_PREMIUM` | `off` | `off`: every unit and dialogue is free, the Premium screen and links are hidden and the store SDK never loads. `on`: units 4 and up need Premium (set up RevenueCat and the store products first; see "Premium" below). |
+| `NEXT_PUBLIC_SUPPORTER` | `off` | `on`: an optional Supporter subscription (badge and unlimited drops); every lesson stays free. Ignored when `NEXT_PUBLIC_PREMIUM=on`. Needs the RevenueCat key; see `docs/sales/supporter-setup.md`. |
 | `NEXT_PUBLIC_ACCOUNTS` | `on` (since 0.10) | Optional account, cloud sync, team codes and the owner console. Needs the Supabase *Magic Link* and *Confirm signup* email templates to contain `{{ .Token }}` (the app asks for the 6-digit code). `off` hides them. |
 | `NEXT_PUBLIC_CIRCLE` | `off` | The Circle tab is a demo ranking with sample learners; keep it off in store builds. |
 

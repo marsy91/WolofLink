@@ -15,7 +15,7 @@ checked by `scripts/check-listing.py`.
 - Website: https://woloflink.com
 - Privacy policy: https://woloflink.com/privacy
 - Account deletion URL (Data safety): https://woloflink.com/delete-account
-- Contains ads: No. In-app purchases: No.
+- Contains ads: No. In-app purchases: No at first; **Yes** once the optional Supporter subscription ships (see docs/sales/supporter-setup.md).
 
 Don't call the audio "native speakers" (it's a synthetic voice), and never
 mention other language apps by name.

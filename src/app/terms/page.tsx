@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PAID_ENABLED, PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 
 export const metadata: Metadata = { title: "Terms of use — WolofLink" };
 
@@ -11,6 +12,7 @@ const UPDATED = "31 October 2026";
  * subscriptions). Have a lawyer review before charging money.
  */
 export default function Terms() {
+  const plan = SUPPORTER_ENABLED ? "Supporter" : "Premium";
   return (
     <main className="safe-top safe-bottom mx-auto max-w-2xl px-5 py-8 leading-relaxed text-ink">
       <Link href="/" className="font-bold text-clay underline">
@@ -20,22 +22,28 @@ export default function Terms() {
       <p className="mb-6 text-sm text-muted">Last updated: {UPDATED}</p>
 
       <Section title="The service">
-        WolofLink is an app for learning Wolof. The first units are free. WolofLink Premium unlocks every unit, every
-        dialogue and unlimited drops. By using the app you agree to these terms.
+        WolofLink is an app for learning Wolof.{" "}
+        {PREMIUM_ENABLED
+          ? "The first units are free. WolofLink Premium unlocks every unit, every dialogue and unlimited drops."
+          : SUPPORTER_ENABLED
+            ? "Every unit and dialogue is free. An optional Supporter subscription adds a supporter badge and unlimited drops."
+            : "Every unit and dialogue is free."}{" "}
+        By using the app you agree to these terms.
       </Section>
 
+      {PAID_ENABLED ? (
       <Section title="Subscriptions and purchases">
         <ul className="list-disc space-y-1 pl-5">
-          <li>Premium is sold through Google Play or the Apple App Store, and paid to your store account.</li>
+          <li>{plan} is sold through Google Play or the Apple App Store, and paid to your store account.</li>
           <li>
             Monthly and yearly subscriptions renew automatically at the price shown, unless you cancel at least 24 hours
             before the end of the current period.
           </li>
           <li>
             You can manage or cancel your subscription in your Google Play or App Store account settings. If you
-            cancel, you keep Premium until the end of the period you paid for.
+            cancel, you keep {plan} until the end of the period you paid for.
           </li>
-          <li>A lifetime purchase, where offered, is a one-off payment for Premium on your store account.</li>
+          <li>A lifetime purchase, where offered, is a one-off payment for {plan} on your store account.</li>
           <li>
             Refunds are handled by Google or Apple under their refund policies. Your statutory consumer rights are not
             affected.
@@ -43,6 +51,7 @@ export default function Terms() {
           <li>If a free trial is offered, it turns into a paid subscription when it ends unless you cancel before.</li>
         </ul>
       </Section>
+      ) : null}
 
       <Section title="Accounts">
         Accounts are optional. You are responsible for keeping access to your email address. You can delete your

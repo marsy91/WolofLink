@@ -1,7 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ACCOUNTS_ENABLED, PREMIUM_ENABLED } from "@/lib/features";
+import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
@@ -107,12 +107,13 @@ export default function Privacy() {
         </Section>
       ) : null}
 
-      {PREMIUM_ENABLED ? (
-        <Section title="Purchases (WolofLink Premium)">
+      {PAID_ENABLED ? (
+        <Section title={SUPPORTER_ENABLED ? "Purchases (optional Supporter subscription)" : "Purchases (WolofLink Premium)"}>
           Payments are handled entirely by Google Play or the Apple App Store; we never see your card details. To check
           your subscription, the app uses RevenueCat, which receives an anonymous app user ID (or your account ID if you
           are signed in) and your purchase history from the store. RevenueCat acts as our service provider and does not
           sell this data.
+          {SUPPORTER_ENABLED ? " Every lesson stays free whether or not you subscribe; a subscription only adds a supporter badge and unlimited drops." : ""}
         </Section>
       ) : null}
 
@@ -130,7 +131,11 @@ export default function Privacy() {
           <li>
             <strong>Vibration:</strong> used for answer feedback; you can turn it off in Settings.
           </li>
-          <li>The app does not use your microphone, camera, contacts or location.</li>
+          <li>
+            <strong>Microphone:</strong> only on the recording screen, which exists for native speakers we invite to
+            record lines (see “Voice recordings”). Learners are never recorded. The app does not use your camera,
+            contacts or location.
+          </li>
         </ul>
       </Section>
 

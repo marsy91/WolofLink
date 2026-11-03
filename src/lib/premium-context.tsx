@@ -82,6 +82,20 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
     billing?.onChange(setPremium);
   }, [billing, setPremium]);
 
+  // Stable identity: the purchase screen calls this from an effect, so a new function on every
+  // state change would make it re-request the plans forever.
+  const loadPlans = useCallback(async () => {
+    if (!billing) return;
+    setLoadingPlans(true);
+    try {
+      setPlans(await billing.plans());
+    } catch {
+      setPlans([]);
+    } finally {
+      setLoadingPlans(false);
+    }
+  }, [billing]);
+
   const value = useMemo<Premium>(
     () => ({
       available: !!billing,
@@ -89,17 +103,7 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
       unlockAll: grants.unlockAll,
       plans,
       loadingPlans,
-      async loadPlans() {
-        if (!billing) return;
-        setLoadingPlans(true);
-        try {
-          setPlans(await billing.plans());
-        } catch {
-          setPlans([]);
-        } finally {
-          setLoadingPlans(false);
-        }
-      },
+      loadPlans,
       async purchase(planId) {
         if (!billing) return "failed";
         const result = await billing.purchase(planId);
@@ -117,7 +121,7 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
         }
       },
     }),
-    [billing, premium, grants.premium, grants.unlockAll, plans, loadingPlans, setPremium],
+    [billing, premium, grants.premium, grants.unlockAll, plans, loadingPlans, loadPlans, setPremium],
   );
 
   return <PremiumContext.Provider value={value}>{children}</PremiumContext.Provider>;

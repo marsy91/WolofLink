@@ -10,6 +10,8 @@ import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
 import { duelState, duels, type DuelRow } from "@/lib/duels";
 import { formatCode, friends, normaliseCode, ranks, type BoardRow, type FriendCard } from "@/lib/friends";
+import { SUPPORTER_ENABLED } from "@/lib/features";
+import { usePremium } from "@/lib/premium-context";
 import { useStore } from "@/lib/store";
 
 const field = "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
@@ -28,6 +30,7 @@ export default function FriendsPage() {
   const [busy, setBusy] = useState(false);
   const [duelRows, setDuelRows] = useState<DuelRow[] | null>(null);
   const push = useFriendPushToggle();
+  const { premium } = usePremium();
   const [pushDenied, setPushDenied] = useState(false);
 
   const loadBoard = useCallback(() => {
@@ -276,6 +279,7 @@ export default function FriendsPage() {
                 <span className="block truncate font-bold text-night">
                   {r.display_name}
                   {r.is_me ? ` (${t("friends.you")})` : ""}
+                  {r.is_me && SUPPORTER_ENABLED && premium ? " 💛" : ""}
                 </span>
                 <span className="text-sm text-muted">
                   {t("friends.xp", { n: r.week_xp })}

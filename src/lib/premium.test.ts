@@ -75,6 +75,46 @@ describe("premium gating (NEXT_PUBLIC_PREMIUM=on)", () => {
   });
 });
 
+describe("Supporter mode (NEXT_PUBLIC_SUPPORTER=on)", () => {
+  it("keeps every unit and dialogue free", async () => {
+    const m = await loadPremium({ NEXT_PUBLIC_PREMIUM: "", NEXT_PUBLIC_SUPPORTER: "on" });
+    expect(m.FREE_UNITS).toBe(course.units.length);
+    course.units.forEach((unit, i) => {
+      expect(m.isPremiumUnit(i)).toBe(false);
+      for (const lesson of unit.lessons) expect(m.canOpenLesson(lesson.id, false), lesson.id).toBe(true);
+      if (unit.story) expect(m.canOpenStory(unit.story.id, false)).toBe(true);
+    });
+  });
+
+  it("turns on the purchase screen and store SDK, without a paywall", async () => {
+    vi.resetModules();
+    vi.stubEnv("NEXT_PUBLIC_PREMIUM", "");
+    vi.stubEnv("NEXT_PUBLIC_SUPPORTER", "on");
+    const f = await import("./features");
+    expect(f.SUPPORTER_ENABLED).toBe(true);
+    expect(f.PREMIUM_ENABLED).toBe(false);
+    expect(f.PAID_ENABLED).toBe(true);
+  });
+
+  it("is ignored when the Premium paywall is on", async () => {
+    vi.resetModules();
+    vi.stubEnv("NEXT_PUBLIC_PREMIUM", "on");
+    vi.stubEnv("NEXT_PUBLIC_SUPPORTER", "on");
+    const f = await import("./features");
+    expect(f.SUPPORTER_ENABLED).toBe(false);
+    expect(f.PAID_ENABLED).toBe(true);
+  });
+
+  it("is off by default", async () => {
+    vi.resetModules();
+    vi.stubEnv("NEXT_PUBLIC_PREMIUM", "");
+    vi.stubEnv("NEXT_PUBLIC_SUPPORTER", "");
+    const f = await import("./features");
+    expect(f.SUPPORTER_ENABLED).toBe(false);
+    expect(f.PAID_ENABLED).toBe(false);
+  });
+});
+
 describe("build switches", () => {
   it("hides accounts when switched off, even with Supabase settings", async () => {
     vi.resetModules();

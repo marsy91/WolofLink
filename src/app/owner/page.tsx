@@ -13,7 +13,7 @@ import { Button, Dialog, Loading } from "@/components/ui";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
 import { HOLIDAYS, dateIn, type DateOverrides } from "@/content/calendar";
-import { PREMIUM_ENABLED } from "@/lib/features";
+import { PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { loadOverrides } from "@/lib/holidays";
 import { dictionaryById } from "@/content/dictionary";
 import {
@@ -675,9 +675,10 @@ function BillingTab({ say }: { say: Say }) {
       <Card>
         <h2 className="mb-1 font-display text-lg font-extrabold text-night">App subscriptions</h2>
         <p className="text-sm text-muted">
-          Premium is <b>{PREMIUM_ENABLED ? "on" : "off"}</b> in this build
-          {PREMIUM_ENABLED ? "." : ": everything is free for learners."} Card payments, refunds and prices for app
-          subscriptions are managed in the Google Play Console and RevenueCat, not here.
+          Paid access in this build: <b>{PREMIUM_ENABLED ? "Premium (paywall)" : SUPPORTER_ENABLED ? "Supporter (everything free)" : "off"}</b>
+          {PREMIUM_ENABLED || SUPPORTER_ENABLED ? "." : ": everything is free for learners."} Card payments, refunds and prices for app
+          subscriptions are managed in the Google Play Console and RevenueCat, not here. Supporters appear in RevenueCat
+          (Customers); to thank someone without a purchase, give them Premium in People.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <a className="rounded-xl border-2 border-sand-3 px-3 py-2 font-bold text-clay" href="https://play.google.com/console" target="_blank" rel="noreferrer">

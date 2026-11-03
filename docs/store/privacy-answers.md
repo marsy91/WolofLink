@@ -125,3 +125,16 @@ screen for invited contributors. Add to Data safety:
   service provider.
 - The retention numbers in the owner console are totals from data already
   collected for sync; nothing new is collected for them.
+
+## Since 0.23.0 (optional Supporter subscription)
+
+Only when `NEXT_PUBLIC_SUPPORTER=on` ships (docs/sales/supporter-setup.md):
+
+- **Financial info → Purchase history: Collected.** Not shared with third
+  parties except RevenueCat, our service provider, which checks the
+  subscription; optional; purpose: App functionality.
+- **Device or other IDs** (already declared for notifications): RevenueCat
+  also receives an anonymous app user ID, or the account ID when signed in.
+- Play Console → App content → store listing: **In-app purchases: Yes.** Contains
+  ads: No.
+- Payments are processed by Google Play; the app never sees card details.

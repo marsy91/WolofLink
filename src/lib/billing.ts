@@ -10,7 +10,7 @@
  */
 import { Capacitor } from "@capacitor/core";
 import { ENTITLEMENT } from "./premium";
-import { PREMIUM_ENABLED } from "./features";
+import { PAID_ENABLED } from "./features";
 
 export type PlanKind = "monthly" | "annual" | "lifetime" | "other";
 
@@ -46,8 +46,14 @@ let backend: BillingBackend | null | undefined;
 /** The billing backend, or null where purchases aren't available (web, or no key). */
 export function getBilling(): BillingBackend | null {
   if (backend !== undefined) return backend;
-  // Premium switched off: everything is free, so the store SDK is never loaded.
-  const key = PREMIUM_ENABLED && Capacitor.isNativePlatform() ? sdkKey() : undefined;
+  // Test double for browser tests only (NEXT_PUBLIC_FAKE_BILLING=on at build time). With the
+  // switch unset, the bundler removes this branch from release builds.
+  if (process.env.NEXT_PUBLIC_FAKE_BILLING === "on" && PAID_ENABLED) {
+    backend = fakeBilling();
+    return backend;
+  }
+  // Nothing paid: everything is free, so the store SDK is never loaded.
+  const key = PAID_ENABLED && Capacitor.isNativePlatform() ? sdkKey() : undefined;
   backend = key ? revenueCatBackend(key) : null;
   return backend;
 }
@@ -105,6 +111,35 @@ function revenueCatBackend(apiKey: string): BillingBackend {
     },
     onChange(cb) {
       void rc().then(({ Purchases }) => Purchases.addCustomerInfoUpdateListener((info) => cb(active(info))));
+    },
+  };
+}
+
+function fakeBilling(): BillingBackend {
+  const KEY = "woloflink.fakebilling";
+  const on = () => window.localStorage.getItem(KEY) === "1";
+  let listener: ((premium: boolean) => void) | null = null;
+  return {
+    async identify() {},
+    async isPremium() {
+      return on();
+    },
+    async plans() {
+      return [
+        { id: "$rc_monthly", kind: "monthly", price: "£2.99", title: "Supporter monthly" },
+        { id: "$rc_annual", kind: "annual", price: "£19.99", title: "Supporter yearly" },
+      ];
+    },
+    async purchase() {
+      window.localStorage.setItem(KEY, "1");
+      listener?.(true);
+      return "purchased";
+    },
+    async restore() {
+      return on();
+    },
+    onChange(cb) {
+      listener = cb;
     },
   };
 }

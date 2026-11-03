@@ -6,12 +6,21 @@
  * - NEXT_PUBLIC_PREMIUM=on   paid Premium: units 4+ need a subscription.
  *                            Off (default): every unit is free and no purchase
  *                            screens or store SDK are used.
+ * - NEXT_PUBLIC_SUPPORTER=on optional "Supporter" subscription: every unit stays free for
+ *                            everyone; supporters get a badge and unlimited drops. Needs
+ *                            RevenueCat and the store subscriptions (docs/sales/supporter-setup.md).
+ *                            Ignored when NEXT_PUBLIC_PREMIUM is on (paywall wins).
  * - NEXT_PUBLIC_ACCOUNTS=off hides the optional account and cloud sync, even
  *                            when the Supabase settings are present.
  * - NEXT_PUBLIC_CIRCLE=on    shows the Circle tab (a demo ranking with sample
  *                            learners until real circles exist).
  */
 export const PREMIUM_ENABLED = process.env.NEXT_PUBLIC_PREMIUM === "on";
+
+export const SUPPORTER_ENABLED = process.env.NEXT_PUBLIC_SUPPORTER === "on" && !PREMIUM_ENABLED;
+
+/** Either paid model is on: the store SDK loads and the purchase screen exists. */
+export const PAID_ENABLED = PREMIUM_ENABLED || SUPPORTER_ENABLED;
 
 export const ACCOUNTS_ENABLED =
   process.env.NEXT_PUBLIC_ACCOUNTS !== "off" &&

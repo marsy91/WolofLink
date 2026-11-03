@@ -7,7 +7,7 @@ import { TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
 import { useIsOwner } from "@/lib/owner";
-import { PREMIUM_ENABLED } from "@/lib/features";
+import { PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { useRecorderStatus } from "@/lib/recorder";
 import { ACHIEVEMENTS, currentStreak, MAX_SHIELDS } from "@/lib/progress";
@@ -18,7 +18,7 @@ export default function Profile() {
   const account = useAccount();
   const isOwner = useIsOwner();
   const [recorder] = useRecorderStatus();
-  const { premium, unlockAll } = usePremium();
+  const { premium, unlockAll, available } = usePremium();
   const now = useNow();
   const profile = progress.profile;
   const since = profile ? new Date(profile.createdAt).toLocaleDateString(lang, { dateStyle: "medium" }) : "";
@@ -30,7 +30,14 @@ export default function Profile() {
           <IconProfile size={34} />
         </span>
         <div className="flex-1">
-          <h1 className="font-display text-2xl font-extrabold text-night">{profile?.name || t("profile.guest")}</h1>
+          <h1 className="font-display text-2xl font-extrabold text-night">
+            {profile?.name || t("profile.guest")}
+            {SUPPORTER_ENABLED && premium ? (
+              <span className="ml-2 inline-block rounded-full bg-sun-soft px-2 py-0.5 align-middle text-xs font-extrabold text-night">
+                💛 {t("supporter.badge")}
+              </span>
+            ) : null}
+          </h1>
           <p className="text-sm text-muted">{t("profile.since", { d: since })}</p>
         </div>
         <Link
@@ -55,14 +62,29 @@ export default function Profile() {
         ))}
       </dl>
 
-      {!PREMIUM_ENABLED && (premium || unlockAll) ? (
+      {!PREMIUM_ENABLED && (unlockAll || (premium && !SUPPORTER_ENABLED)) ? (
         <p className="mb-4 flex items-start gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 text-sm font-bold text-night">
           <IconGem size={24} className="shrink-0 text-dusk" />
           <span>
             {unlockAll ? <span className="block">{t("grant.unlockAll")}</span> : null}
-            {premium ? <span className="block">{t("grant.premium")}</span> : null}
+            {premium && !SUPPORTER_ENABLED ? <span className="block">{t("grant.premium")}</span> : null}
           </span>
         </p>
+      ) : null}
+
+      {SUPPORTER_ENABLED && (available || premium) ? (
+        <Link
+          href="/premium/"
+          className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sun/60 bg-sun-soft p-4 active:translate-y-[2px]"
+        >
+          <span aria-hidden className="text-3xl">
+            💛
+          </span>
+          <span className="flex-1">
+            <span className="block font-display font-extrabold text-night">{t("supporter.title")}</span>
+            <span className="text-sm text-muted">{premium ? t("supporter.cardThanks") : t("supporter.card")}</span>
+          </span>
+        </Link>
       ) : null}
 
       {PREMIUM_ENABLED ? (
