@@ -18,7 +18,7 @@ import { loadOverrides } from "@/lib/holidays";
 import { dictionaryById } from "@/content/dictionary";
 import {
   owner,
-  useIsOwner,
+  useConsoleRole,
   type AuditRow,
   type GrantRow,
   type MemberRow,
@@ -29,12 +29,14 @@ import {
   type RecorderRow,
   type ReportRow,
   type SeasonRow,
+  type StaffRow,
 } from "@/lib/owner";
+import { ROLE_HELP, STAFF_ROLES, tabsFor, type StaffRole } from "@/lib/staff-roles";
 import { LOOKS, LOOK_EMOJI, activeSeason } from "@/content/seasons";
 import { renewalLabel, renewalsDue } from "@/lib/renewals";
 import { VoiceReview } from "@/components/VoiceReview";
 
-type Tab = "overview" | "orgs" | "people" | "billing" | "voices" | "reports" | "words" | "holidays" | "themes" | "log";
+type Tab = "overview" | "orgs" | "people" | "billing" | "voices" | "reports" | "words" | "holidays" | "themes" | "log" | "team";
 const TABS: [Tab, string][] = [
   ["overview", "Overview"],
   ["orgs", "Organisations"],
@@ -46,6 +48,7 @@ const TABS: [Tab, string][] = [
   ["holidays", "Holidays"],
   ["themes", "Themes"],
   ["log", "Log"],
+  ["team", "Team"],
 ];
 
 const field = "w-full rounded-xl border-2 border-sand-3 bg-white px-3 py-2 outline-none focus:border-clay";
@@ -62,11 +65,13 @@ const errText = (e: unknown) =>
 export default function OwnerPage() {
   const router = useRouter();
   const account = useAccount();
-  const isOwner = useIsOwner();
+  const role = useConsoleRole();
   const [tab, setTab] = useState<Tab>("overview");
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
 
-  if (account.user === undefined) return <Loading />;
+  if (account.user === undefined || (account.user && role === undefined)) return <Loading />;
+  const visible = TABS.filter(([id]) => tabsFor(role ?? null).includes(id));
+  const current = visible.some(([id]) => id === tab) ? tab : (visible[0]?.[0] ?? "overview");
   const say = (text: string, ok = true) => setMessage({ text, ok });
 
   return (
@@ -80,27 +85,27 @@ export default function OwnerPage() {
         >
           <IconArrowLeft />
         </button>
-        <h1 className="font-display text-2xl font-extrabold text-night">Owner console</h1>
+        <h1 className="font-display text-2xl font-extrabold text-night">{role && role !== "owner" ? "Team console" : "Owner console"}</h1>
       </div>
 
-      {!account.user || !isOwner ? (
+      {!account.user || !role ? (
         <p className="rounded-2xl bg-white p-4 text-muted">
-          This page is only for the WolofLink owner. Sign in with the owner email in Profile → Account.
+          This page is only for the WolofLink owner and invited team members. Sign in with your team email in Profile → Account.
         </p>
       ) : (
         <>
           <nav className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4" aria-label="Owner sections">
-            {TABS.map(([id, label]) => (
+            {visible.map(([id, label]) => (
               <button
                 key={id}
                 type="button"
-                aria-pressed={tab === id}
+                aria-pressed={current === id}
                 onClick={() => {
                   setTab(id);
                   setMessage(null);
                 }}
                 className={`shrink-0 rounded-full border-2 px-4 py-2 font-bold ${
-                  tab === id ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"
+                  current === id ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"
                 }`}
               >
                 {label}
@@ -115,16 +120,17 @@ export default function OwnerPage() {
               {message.text}
             </p>
           ) : null}
-          {tab === "overview" ? <OverviewTab say={say} /> : null}
-          {tab === "orgs" ? <OrgsTab say={say} /> : null}
-          {tab === "people" ? <PeopleTab say={say} /> : null}
-          {tab === "billing" ? <BillingTab say={say} /> : null}
-          {tab === "voices" ? <VoicesTab say={say} /> : null}
-          {tab === "reports" ? <ReportsTab say={say} /> : null}
-          {tab === "words" ? <WordsTab say={say} /> : null}
-          {tab === "holidays" ? <HolidaysTab say={say} /> : null}
-          {tab === "themes" ? <ThemesTab say={say} /> : null}
-          {tab === "log" ? <LogTab say={say} /> : null}
+          {current === "overview" ? <OverviewTab say={say} /> : null}
+          {current === "orgs" ? <OrgsTab say={say} /> : null}
+          {current === "people" ? <PeopleTab say={say} /> : null}
+          {current === "billing" ? <BillingTab say={say} /> : null}
+          {current === "voices" ? <VoicesTab say={say} /> : null}
+          {current === "reports" ? <ReportsTab say={say} /> : null}
+          {current === "words" ? <WordsTab say={say} /> : null}
+          {current === "holidays" ? <HolidaysTab say={say} /> : null}
+          {current === "themes" ? <ThemesTab say={say} /> : null}
+          {current === "log" ? <LogTab say={say} /> : null}
+          {current === "team" ? <TeamTab say={say} /> : null}
         </>
       )}
     </main>
@@ -1266,6 +1272,7 @@ function LogTab({ say }: { say: Say }) {
       {rows.map((r, i) => (
         <li key={i} className="rounded-xl bg-white p-3 text-sm">
           <span className="font-bold text-night">{r.action}</span>{" "}
+          {r.who ? <span className="text-muted">by {r.who} </span> : null}
           <span className="text-muted">· {new Date(r.at).toLocaleString()}</span>
           <span className="block break-all text-muted">
             {Object.entries(r.detail)
@@ -1276,5 +1283,77 @@ function LogTab({ say }: { say: Say }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/* ── Team (owner only; the server refuses everyone else) ───────────────── */
+function TeamTab({ say }: { say: Say }) {
+  const [rows, reload] = useLoad<StaffRow[]>(owner.staff, say);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState<StaffRole>("support");
+  const act = async (fn: () => Promise<void>, done: string) => {
+    try {
+      await fn();
+      say(done);
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
+  if (!rows) return <Loading />;
+  return (
+    <>
+      <Card>
+        <h2 className="mb-1 font-display text-lg font-extrabold text-night">Invite a team member</h2>
+        <p className="mb-3 text-sm text-muted">
+          They sign in to the app with this email (a one-time code), then open Profile → Team console. Remove them
+          here and their access ends at once.
+        </p>
+        <input className={`${field} mb-2`} type="email" placeholder="Their email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input className={`${field} mb-2`} placeholder="Their name" maxLength={60} value={name} onChange={(e) => setName(e.target.value)} />
+        <select className={`${field} mb-1`} value={role} onChange={(e) => setRole(e.target.value as StaffRole)}>
+          {STAFF_ROLES.map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
+        </select>
+        <p className="mb-3 text-xs text-muted">{ROLE_HELP[role]}</p>
+        <Button
+          block
+          disabled={!email.trim() || !name.trim()}
+          onClick={() =>
+            void act(() => owner.saveStaff(email, name, role, true), "Saved.").then(() => {
+              setEmail("");
+              setName("");
+            })
+          }
+        >
+          Save team member
+        </Button>
+      </Card>
+      {rows.length === 0 ? <p className="text-muted">No team members yet.</p> : null}
+      {rows.map((s) => (
+        <Card key={s.email}>
+          <p className="font-bold text-night">
+            {s.name} · {s.role}
+            {s.active ? "" : " (paused)"}
+          </p>
+          <p className="break-all text-sm text-muted">
+            {s.email}
+            {s.signed_up ? "" : " · hasn't created an account yet"}
+          </p>
+          <div className="mt-2 flex gap-2">
+            <Button variant="secondary" onClick={() => void act(() => owner.saveStaff(s.email, s.name, s.role, !s.active), s.active ? "Paused." : "Resumed.")}>
+              {s.active ? "Pause" : "Resume"}
+            </Button>
+            <Button variant="wrong" onClick={() => void act(() => owner.removeStaff(s.email), "Removed.")}>
+              Remove
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </>
   );
 }

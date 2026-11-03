@@ -10,6 +10,7 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "./account";
 import { getCloud } from "./cloud";
+import { isConsoleRole, type ConsoleRole, type StaffRole } from "./staff-roles";
 
 export interface Overview {
   learners: number;
@@ -112,6 +113,16 @@ export interface AuditRow {
   at: string;
   action: string;
   detail: Record<string, unknown>;
+  who?: string;
+}
+
+export interface StaffRow {
+  email: string;
+  name: string;
+  role: StaffRole;
+  active: boolean;
+  added_at: string;
+  signed_up: boolean;
 }
 
 function call<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
@@ -146,6 +157,10 @@ export const owner = {
   people: (search: string) => call<PersonRow[]>("owner_people", { search }),
   setSuspended: (member: string, suspend: boolean) => call<void>("owner_set_suspended", { member, suspend }),
   deleteAccount: (member: string) => call<void>("owner_delete_account", { member }),
+  staff: () => call<StaffRow[]>("owner_staff"),
+  saveStaff: (email: string, name: string, role: StaffRole, active: boolean) =>
+    call<void>("owner_save_staff", { member_email: email, member_name: name, member_role: role, is_active: active }),
+  removeStaff: (email: string) => call<void>("owner_remove_staff", { member_email: email }),
   audit: () => call<AuditRow[]>("owner_audit", { max_rows: 100 }),
   reports: (status: "open" | "all") => call<ReportRow[]>("owner_reports", { report_status: status, max_rows: 200 }),
   setReportStatus: (id: number, status: ReportRow["status"]) => call<void>("owner_set_report_status", { report: id, new_status: status }),
@@ -181,6 +196,27 @@ export const owner = {
     call<void>("owner_set_calendar_date", { holiday, yr: year, holiday_day: day, is_confirmed: confirmed }),
   clearHolidayDate: (holiday: string, year: number) => call<void>("owner_clear_calendar_date", { holiday, yr: year }),
 };
+
+/** The signed-in user's console role from the server (owner, a staff role, or null). */
+export function useConsoleRole(): ConsoleRole | null | undefined {
+  const { user } = useAccount();
+  const [role, setRole] = useState<ConsoleRole | null | undefined>(undefined);
+  const userId = user?.id ?? null;
+  useEffect(() => {
+    let alive = true;
+    if (!userId) {
+      void Promise.resolve().then(() => alive && setRole(null));
+      return;
+    }
+    call<unknown>("owner_role")
+      .then((r) => alive && setRole(isConsoleRole(r) ? r : null))
+      .catch(() => alive && setRole(null));
+    return () => {
+      alive = false;
+    };
+  }, [userId]);
+  return role;
+}
 
 /** True once the server confirms the signed-in account is the owner. */
 export function useIsOwner(): boolean {

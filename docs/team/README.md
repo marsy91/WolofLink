@@ -74,6 +74,22 @@ Do this on a laptop if you can. Open your repo on github.com → **Settings**.
 5. **Approve → Merge.** The change is on `main` but **not live**: nothing reaches users until
    you build a signed release and upload it (or press Publish on the website).
 
+## Part 3b. Team members inside the app (owner console → Team tab)
+Not everyone who helps needs GitHub. Invite them under **Owner console → Team** with a role.
+They create an ordinary account in the app with that email, then see **Profile → Team console**.
+
+| Role | Can do | Cannot do |
+|---|---|---|
+| admin | everything in the console day to day, reads the log | delete accounts or organisations, free access (grants), manage the team |
+| support | overview, look up learners and organisations, handle problem reports | suspend or delete, anything with money |
+| reviewer | read problem reports and missed words, mark reports done | see people |
+| analyst | overview numbers and missed words | see any personal details |
+
+The database enforces this, not the screen. Anything not listed stays owner-only. The Log
+shows who did each action. Pause or remove a person and access ends immediately.
+Needs migration `20261103000000_staff_roles.sql` (you apply it) and
+`supabase/tests/staff_roles_test.sql` should print "STAFF TESTS PASSED (rolled back)".
+
 ## Part 4. Releases stay with you
 Only you (or your Claude session, with your key) build, sign and upload to Google Play. After
 each release, test it on your phone, and roll out to a small percentage first in Play Console.
