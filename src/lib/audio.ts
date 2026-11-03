@@ -151,3 +151,48 @@ export function playTone(kind: "correct" | "wrong" | "complete") {
     // Audio is optional.
   }
 }
+
+/** Resolves when the clip started by playEntry has finished (or after `maxMs`). */
+export function waitForClip(maxMs = 8000): Promise<void> {
+  const clip = currentClip;
+  return new Promise((resolve) => {
+    const done = () => {
+      clearTimeout(timer);
+      resolve();
+    };
+    const timer = setTimeout(done, clip ? maxMs : 1500);
+    if (!clip) return;
+    if (clip.ended || clip.paused) return done();
+    clip.addEventListener("ended", done, { once: true });
+    clip.addEventListener("pause", done, { once: true });
+    clip.addEventListener("error", done, { once: true });
+  });
+}
+
+/** BCP 47 voices for reading a translation aloud in listening mode. */
+export const UI_VOICE: Record<string, string> = { en: "en-GB", fr: "fr-FR", es: "es-ES", de: "de-DE", it: "it-IT" };
+
+/** Reads a translation aloud with the phone's own voice; resolves when it has finished. */
+export async function speakMeaning(text: string, uiLang: string): Promise<void> {
+  const lang = UI_VOICE[uiLang] ?? "en-GB";
+  if (Capacitor.isNativePlatform()) {
+    try {
+      const { TextToSpeech } = await import("@capacitor-community/text-to-speech");
+      await TextToSpeech.speak({ text, lang, rate: 1, category: "playback" });
+    } catch {
+      // No voice for this language: the text is on screen anyway.
+    }
+    return;
+  }
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  await new Promise<void>((resolve) => {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    const timer = setTimeout(resolve, 6000);
+    u.onend = u.onerror = () => {
+      clearTimeout(timer);
+      resolve();
+    };
+    window.speechSynthesis.speak(u);
+  });
+}

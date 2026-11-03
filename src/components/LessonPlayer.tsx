@@ -20,11 +20,15 @@ import {
   type TypedGrade,
 } from "@/lib/engine";
 import { haptic } from "@/lib/native";
-import { canOpenLesson } from "@/lib/premium";
+import { canOpenLesson, isPremiumUnit } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
 import {
   ACHIEVEMENTS,
   applySession,
+  applyTestOut,
+  TEST_OUT_PASS,
+  TEST_OUT_SIZE,
+  testOutEntries,
   currentStreak,
   dueEntries,
   minutesToNextDrop,
@@ -52,7 +56,7 @@ import { ReportProblem } from "./ReportProblem";
 import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 
 /** A lesson, a review of due cards, or a drill of a fixed list (e.g. the Survival 100). */
-type Props = { mode: "lesson"; lessonId: string } | { mode: "review"; drill?: readonly string[] };
+type Props = { mode: "lesson"; lessonId: string } | { mode: "review"; drill?: readonly string[]; testOut?: string };
 
 export function LessonPlayer(props: Props) {
   const allowed = useRequireProfile();
@@ -84,7 +88,11 @@ export function LessonPlayer(props: Props) {
       if (!found) return;
       exercises = buildLesson(found.lesson, { course, lang, rng }, level);
     } else {
-      if (props.drill) {
+      const testUnit = props.testOut ? course.units.find((u) => u.id === props.testOut) : undefined;
+      if (testUnit && isPremiumUnit(course.units.indexOf(testUnit)) && !premium) return router.replace("/premium/");
+      if (testUnit) {
+        exercises = buildReview(shuffle(testOutEntries(testUnit.lessons), rng).slice(0, TEST_OUT_SIZE), lang, rng);
+      } else if (props.drill) {
         exercises = buildReview(shuffle(props.drill, rng).slice(0, 12), lang, rng);
       } else {
         const due = dueEntries(progress, now, 10);
@@ -135,6 +143,10 @@ export function LessonPlayer(props: Props) {
       mistakes: session.mistakes.length,
     };
     const applied = applySession(progress, result, Date.now());
+    const testUnit = props.mode === "review" && props.testOut ? course.units.find((u) => u.id === props.testOut) : undefined;
+    if (testUnit) {
+      applied.progress = applyTestOut(applied.progress, testUnit.lessons.map((l) => l.id), result.accuracy, Date.now());
+    }
     update(() => applied.progress);
     setOutcome(applied);
   }, [session, sound, vibrate, update, props, progress]);
@@ -186,8 +198,17 @@ export function LessonPlayer(props: Props) {
 
   /* ── Intro ── */
   if (!session) {
-    const title = found ? translate(found.lesson.title, lang) : t("practice.title");
-    const tip = found?.lesson.tip ? translate(found.lesson.tip, lang) : t("practice.body");
+    const testUnit = props.mode === "review" && props.testOut ? course.units.find((u) => u.id === props.testOut) : undefined;
+    const title = found
+      ? translate(found.lesson.title, lang)
+      : testUnit
+        ? t("testout.title", { unit: translate(testUnit.title, lang) })
+        : t("practice.title");
+    const tip = found?.lesson.tip
+      ? translate(found.lesson.tip, lang)
+      : testUnit
+        ? t("testout.body", { n: Math.round(TEST_OUT_PASS * 100) })
+        : t("practice.body");
     const outOfDrops = props.mode === "lesson" && !premium && refreshDrops(progress, now).drops.count <= 0;
     return (
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
@@ -282,6 +303,13 @@ export function LessonPlayer(props: Props) {
             />
           </div>
 
+          {props.mode === "review" && props.testOut ? (
+            <Banner icon={<IconRings size={26} />}>
+              {accuracy(session) >= TEST_OUT_PASS
+                ? t("testout.passed")
+                : t("testout.failed", { n: Math.round(TEST_OUT_PASS * 100) })}
+            </Banner>
+          ) : null}
           {outcome.streakExtended ? (
             <Banner icon={<IconSun size={26} />}>
               {t("result.streakUp", { n: currentStreak(outcome.progress, now) })}

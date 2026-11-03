@@ -316,6 +316,30 @@ export function nextLevel(p: Progress, lessonId: string, max = 3): number {
   return Math.min(max, (p.lessons[lessonId]?.times ?? 0) + 1);
 }
 
+/** Share of right answers needed to test out of a unit. */
+export const TEST_OUT_PASS = 0.8;
+/** How many questions a test-out has (at most). */
+export const TEST_OUT_SIZE = 15;
+
+/** The words a test-out asks about: everything taught in the unit, once. */
+export function testOutEntries(lessons: readonly { entries: readonly string[] }[]): string[] {
+  return [...new Set(lessons.flatMap((l) => l.entries))];
+}
+
+/**
+ * For learners who already speak some Wolof: passing a unit's checkpoint marks
+ * its lessons as done (so the next unit opens). Lessons already played keep
+ * their own record. Below the pass mark nothing changes.
+ */
+export function applyTestOut(p: Progress, lessonIds: readonly string[], score: number, now: number): Progress {
+  if (score < TEST_OUT_PASS || lessonIds.length === 0) return p;
+  const lessons = { ...p.lessons };
+  for (const id of lessonIds) {
+    if (!lessons[id]) lessons[id] = { times: 1, bestAccuracy: score, lastAt: now };
+  }
+  return { ...p, lessons };
+}
+
 /** Lessons unlock in course order. */
 export function isUnlocked(lessonOrder: string[], lessonId: string, p: Progress): boolean {
   const i = lessonOrder.indexOf(lessonId);

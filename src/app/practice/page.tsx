@@ -69,6 +69,19 @@ export default function Practice() {
         </div>
       </section>
 
+      <section className="mb-5 rounded-3xl border-2 border-sun/50 bg-sun-soft p-5" aria-labelledby="listen-h">
+        <h2 id="listen-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
+          <span aria-hidden>🎧</span> {t("listen.cardTitle")}
+        </h2>
+        <p className="mb-4 text-sm text-night/80">{t("listen.card")}</p>
+        <Link
+          href="/listen/"
+          className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-night font-display font-extrabold text-sand"
+        >
+          {t("listen.open")}
+        </Link>
+      </section>
+
       <section className="mb-5 rounded-3xl border-2 border-dusk/30 bg-white p-5" aria-labelledby="sounds-h">
         <h2 id="sounds-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <span aria-hidden>🗣️</span> {t("sounds.title")}
