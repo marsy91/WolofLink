@@ -6,7 +6,8 @@ import { BADGE_GLYPHS, IconGem, IconLock, IconProfile, IconRosette, IconShield, 
 import { TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
-import { useIsOwner } from "@/lib/owner";
+import { useConsoleRole, useIsOwner } from "@/lib/owner";
+import { useSwitchOff } from "@/lib/notices";
 import { PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { useRecorderStatus } from "@/lib/recorder";
@@ -17,6 +18,8 @@ export default function Profile() {
   const { progress, lang, t } = useStore();
   const account = useAccount();
   const isOwner = useIsOwner();
+  const consoleRole = useConsoleRole();
+  const supporterOff = useSwitchOff("supporter");
   const [recorder] = useRecorderStatus();
   const { premium, unlockAll, available } = usePremium();
   const now = useNow();
@@ -72,7 +75,7 @@ export default function Profile() {
         </p>
       ) : null}
 
-      {SUPPORTER_ENABLED && (available || premium) ? (
+      {SUPPORTER_ENABLED && !supporterOff && (available || premium) ? (
         <Link
           href="/premium/"
           className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sun/60 bg-sun-soft p-4 active:translate-y-[2px]"
@@ -178,6 +181,13 @@ export default function Profile() {
         >
           <h2 className="mb-1 font-display text-lg font-extrabold text-clay">Owner console</h2>
           <p className="text-sm text-muted">Organisations, people, licences and the change log.</p>
+        </Link>
+      ) : null}
+
+      {consoleRole && consoleRole !== "owner" ? (
+        <Link href="/owner/" className="mb-4 block rounded-3xl border-2 border-clay bg-white p-5 active:translate-y-[2px]">
+          <h2 className="mb-1 font-display text-lg font-extrabold text-clay">Team console</h2>
+          <p className="text-sm text-muted">Tools for WolofLink team members.</p>
         </Link>
       ) : null}
 

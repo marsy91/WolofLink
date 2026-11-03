@@ -11,6 +11,8 @@ import { CloudError } from "@/lib/cloud";
 import { duelState, duels, type DuelRow } from "@/lib/duels";
 import { formatCode, friends, normaliseCode, ranks, type BoardRow, type FriendCard } from "@/lib/friends";
 import { SUPPORTER_ENABLED } from "@/lib/features";
+import { useSwitchOff } from "@/lib/notices";
+import { Paused } from "@/components/Paused";
 import { usePremium } from "@/lib/premium-context";
 import { useStore } from "@/lib/store";
 
@@ -32,6 +34,8 @@ export default function FriendsPage() {
   const push = useFriendPushToggle();
   const { premium } = usePremium();
   const [pushDenied, setPushDenied] = useState(false);
+  const friendsOff = useSwitchOff("friends");
+  const duelsOff = useSwitchOff("duels");
 
   const loadBoard = useCallback(() => {
     friends
@@ -78,6 +82,7 @@ export default function FriendsPage() {
     setMessage({ text, ok: false });
   };
 
+  if (friendsOff) return <Paused />;
   if (user === undefined) return <Loading />;
   if (!user) {
     return (
@@ -233,7 +238,7 @@ export default function FriendsPage() {
         </p>
       ) : null}
 
-      {duelRows && duelRows.length ? (
+      {!duelsOff && duelRows && duelRows.length ? (
         <section className="mb-5">
           <h2 className="mb-2 font-display text-xl font-extrabold text-night">⚔️ {t("duel.listTitle")}</h2>
           <ul className="space-y-2">
@@ -289,6 +294,7 @@ export default function FriendsPage() {
               </span>
               {!r.is_me ? (
                 <>
+                  {duelsOff ? null : (
                   <Link
                     href={`/duel/?friend=${encodeURIComponent(r.user_id)}&name=${encodeURIComponent(r.display_name)}`}
                     aria-label={t("duel.challenge", { name: r.display_name })}
@@ -296,6 +302,7 @@ export default function FriendsPage() {
                   >
                     ⚔️
                   </Link>
+                  )}
                   <button
                     type="button"
                     disabled={nudged.has(r.user_id)}

@@ -74,6 +74,33 @@ Do this on a laptop if you can. Open your repo on github.com → **Settings**.
 5. **Approve → Merge.** The change is on `main` but **not live**: nothing reaches users until
    you build a signed release and upload it (or press Publish on the website).
 
+## Part 3b. Team members inside the app (owner console → Team tab)
+Not everyone who helps needs GitHub. Invite them under **Owner console → Team** with a role.
+They create an ordinary account in the app with that email, then see **Profile → Team console**.
+
+| Role | Can do | Cannot do |
+|---|---|---|
+| admin | everything in the console day to day, reads the log | delete accounts or organisations, free access (grants), manage the team |
+| support | overview, look up learners and organisations, handle problem reports | suspend or delete, anything with money |
+| reviewer | read problem reports and missed words, mark reports done | see people |
+| analyst | overview numbers and missed words | see any personal details |
+
+The database enforces this, not the screen. Anything not listed stays owner-only. The Log
+shows who did each action. Pause or remove a person and access ends immediately.
+**Two-person rule.** Admins and support can't delete accounts or organisations (support can't
+suspend either). They press "Ask owner to…", give a reason, and it waits in the **Requests** tab
+until you approve. Approving does it at once.
+
+**Notices tab** (owner and admin): post an announcement shown on everyone's Learn screen, in
+up to five languages, between two dates; or **pause** friends, duels, voice recording,
+Supporter or "Report a problem" for everyone in an emergency. Apps check within an hour.
+A pause can only switch off what the app already has.
+
+Needs migrations `20261103000000_staff_roles.sql` then
+`20261103000100_notices_switches_approvals.sql` (you apply them, in that order). The tests
+`supabase/tests/staff_roles_test.sql` and `notices_switches_approvals_test.sql` should print
+"… TESTS PASSED (rolled back)".
+
 ## Part 4. Releases stay with you
 Only you (or your Claude session, with your key) build, sign and upload to Google Play. After
 each release, test it on your phone, and roll out to a small percentage first in Play Console.

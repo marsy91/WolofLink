@@ -11,6 +11,7 @@ import { translate } from "@/i18n";
 import { canOpenLesson, canOpenStory, isPremiumUnit } from "@/lib/premium";
 import { NudgeBanner } from "@/components/NudgeBanner";
 import { SeasonBanner } from "@/components/SeasonBanner";
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import { usePremium } from "@/lib/premium-context";
 import { dailyGoal, isUnlocked, xpToday } from "@/lib/progress";
@@ -35,6 +36,7 @@ export default function Learn() {
 
   return (
     <TabScreen>
+      <AnnouncementBanner />
       <SeasonBanner />
       <NudgeBanner />
       <section className="mb-6 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">

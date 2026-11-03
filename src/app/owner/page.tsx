@@ -7,7 +7,7 @@
  * (src/lib/owner.ts).
  */
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { IconArrowLeft } from "@/components/icons";
 import { Button, Dialog, Loading } from "@/components/ui";
 import { useAccount } from "@/lib/account";
@@ -18,7 +18,7 @@ import { loadOverrides } from "@/lib/holidays";
 import { dictionaryById } from "@/content/dictionary";
 import {
   owner,
-  useIsOwner,
+  useConsoleRole,
   type AuditRow,
   type GrantRow,
   type MemberRow,
@@ -29,12 +29,21 @@ import {
   type RecorderRow,
   type ReportRow,
   type SeasonRow,
+  type AnnouncementRow,
+  type RequestRow,
+  type StaffRow,
+  type SwitchRow,
 } from "@/lib/owner";
+import { ROLE_HELP, STAFF_ROLES, mustRequest, tabsFor, type ConsoleRole, type RiskyAction, type StaffRole } from "@/lib/staff-roles";
+import { SWITCH_KEYS } from "@/lib/notices";
+
+/** The signed-in console role, for showing "Ask the owner" instead of risky buttons. */
+const RoleCtx = createContext<ConsoleRole>("owner");
 import { LOOKS, LOOK_EMOJI, activeSeason } from "@/content/seasons";
 import { renewalLabel, renewalsDue } from "@/lib/renewals";
 import { VoiceReview } from "@/components/VoiceReview";
 
-type Tab = "overview" | "orgs" | "people" | "billing" | "voices" | "reports" | "words" | "holidays" | "themes" | "log";
+type Tab = "overview" | "orgs" | "people" | "billing" | "voices" | "reports" | "words" | "holidays" | "themes" | "notices" | "requests" | "log" | "team";
 const TABS: [Tab, string][] = [
   ["overview", "Overview"],
   ["orgs", "Organisations"],
@@ -45,7 +54,10 @@ const TABS: [Tab, string][] = [
   ["words", "Missed words"],
   ["holidays", "Holidays"],
   ["themes", "Themes"],
+  ["notices", "Notices"],
+  ["requests", "Requests"],
   ["log", "Log"],
+  ["team", "Team"],
 ];
 
 const field = "w-full rounded-xl border-2 border-sand-3 bg-white px-3 py-2 outline-none focus:border-clay";
@@ -62,11 +74,13 @@ const errText = (e: unknown) =>
 export default function OwnerPage() {
   const router = useRouter();
   const account = useAccount();
-  const isOwner = useIsOwner();
+  const role = useConsoleRole();
   const [tab, setTab] = useState<Tab>("overview");
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
 
-  if (account.user === undefined) return <Loading />;
+  if (account.user === undefined || (account.user && role === undefined)) return <Loading />;
+  const visible = TABS.filter(([id]) => tabsFor(role ?? null).includes(id));
+  const current = visible.some(([id]) => id === tab) ? tab : (visible[0]?.[0] ?? "overview");
   const say = (text: string, ok = true) => setMessage({ text, ok });
 
   return (
@@ -80,27 +94,27 @@ export default function OwnerPage() {
         >
           <IconArrowLeft />
         </button>
-        <h1 className="font-display text-2xl font-extrabold text-night">Owner console</h1>
+        <h1 className="font-display text-2xl font-extrabold text-night">{role && role !== "owner" ? "Team console" : "Owner console"}</h1>
       </div>
 
-      {!account.user || !isOwner ? (
+      {!account.user || !role ? (
         <p className="rounded-2xl bg-white p-4 text-muted">
-          This page is only for the WolofLink owner. Sign in with the owner email in Profile → Account.
+          This page is only for the WolofLink owner and invited team members. Sign in with your team email in Profile → Account.
         </p>
       ) : (
         <>
           <nav className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4" aria-label="Owner sections">
-            {TABS.map(([id, label]) => (
+            {visible.map(([id, label]) => (
               <button
                 key={id}
                 type="button"
-                aria-pressed={tab === id}
+                aria-pressed={current === id}
                 onClick={() => {
                   setTab(id);
                   setMessage(null);
                 }}
                 className={`shrink-0 rounded-full border-2 px-4 py-2 font-bold ${
-                  tab === id ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"
+                  current === id ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"
                 }`}
               >
                 {label}
@@ -115,16 +129,21 @@ export default function OwnerPage() {
               {message.text}
             </p>
           ) : null}
-          {tab === "overview" ? <OverviewTab say={say} /> : null}
-          {tab === "orgs" ? <OrgsTab say={say} /> : null}
-          {tab === "people" ? <PeopleTab say={say} /> : null}
-          {tab === "billing" ? <BillingTab say={say} /> : null}
-          {tab === "voices" ? <VoicesTab say={say} /> : null}
-          {tab === "reports" ? <ReportsTab say={say} /> : null}
-          {tab === "words" ? <WordsTab say={say} /> : null}
-          {tab === "holidays" ? <HolidaysTab say={say} /> : null}
-          {tab === "themes" ? <ThemesTab say={say} /> : null}
-          {tab === "log" ? <LogTab say={say} /> : null}
+          <RoleCtx.Provider value={role}>
+          {current === "overview" ? <OverviewTab say={say} /> : null}
+          {current === "orgs" ? <OrgsTab say={say} /> : null}
+          {current === "people" ? <PeopleTab say={say} /> : null}
+          {current === "billing" ? <BillingTab say={say} /> : null}
+          {current === "voices" ? <VoicesTab say={say} /> : null}
+          {current === "reports" ? <ReportsTab say={say} /> : null}
+          {current === "words" ? <WordsTab say={say} /> : null}
+          {current === "holidays" ? <HolidaysTab say={say} /> : null}
+          {current === "themes" ? <ThemesTab say={say} /> : null}
+          {current === "log" ? <LogTab say={say} /> : null}
+          {current === "team" ? <TeamTab say={say} /> : null}
+          {current === "notices" ? <NoticesTab say={say} /> : null}
+          {current === "requests" ? <RequestsTab say={say} /> : null}
+          </RoleCtx.Provider>
         </>
       )}
     </main>
@@ -134,11 +153,12 @@ export default function OwnerPage() {
 type Say = (text: string, ok?: boolean) => void;
 
 /** Loads data once and on demand; reports errors through `say`. */
-function useLoad<T>(load: () => Promise<T>, say: Say): [T | null, () => void] {
+function useLoad<T>(load: () => Promise<T>, say: Say, enabled = true): [T | null, () => void] {
   const [data, setData] = useState<T | null>(null);
   const [tick, setTick] = useState(0);
   useEffect(() => {
     let alive = true;
+    if (!enabled) return;
     load()
       .then((d) => alive && setData(d))
       .catch((e) => alive && say(errText(e), false));
@@ -147,7 +167,7 @@ function useLoad<T>(load: () => Promise<T>, say: Say): [T | null, () => void] {
     };
     // `load` is recreated each render; reload only when asked.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tick]);
+  }, [tick, enabled]);
   return [data, useCallback(() => setTick((n) => n + 1), [])];
 }
 
@@ -240,6 +260,7 @@ function RetentionCard({ say }: { say: Say }) {
 }
 
 function OverviewTab({ say }: { say: Say }) {
+  const role = useContext(RoleCtx);
   const [o] = useLoad<Overview>(owner.overview, say);
   if (!o) return <Loading />;
   const tiles: [string, number][] = [
@@ -253,7 +274,7 @@ function OverviewTab({ say }: { say: Say }) {
   return (
     <>
       <RenewalsCard say={say} />
-      <RetentionCard say={say} />
+      {role !== "support" ? <RetentionCard say={say} /> : null}
       <div className="grid grid-cols-2 gap-3">
         {tiles.map(([label, n]) => (
           <div key={label} className="rounded-2xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
@@ -328,6 +349,8 @@ function OrgCard({ org, open, onToggle, say, reload }: { org: OrgRow; open: bool
   const [email, setEmail] = useState("");
   const [memberName, setMemberName] = useState("");
   const [confirm, setConfirm] = useState(false);
+  const role = useContext(RoleCtx);
+  const [ask, setAsk] = useState<{ kind: RiskyAction; target: string; label: string } | null>(null);
 
   const loadMembers = useCallback(() => {
     owner.members(org.id).then(setMembers).catch((e) => say(errText(e), false));
@@ -479,14 +502,28 @@ function OrgCard({ org, open, onToggle, say, reload }: { org: OrgRow; open: bool
         </div>
       ) : null}
 
+      <RequestDialog ask={ask} onClose={() => setAsk(null)} say={say} />
       <Dialog open={confirm} onClose={() => setConfirm(false)} title={`Delete ${org.name}?`}>
         <p className="mb-5 text-muted">
           This removes the organisation and all its memberships. Learners keep their accounts and progress.
         </p>
         <div className="flex flex-col gap-3">
-          <Button block variant="wrong" onClick={() => void act(() => owner.deleteOrganisation(org.id), "Organisation deleted.").then(() => setConfirm(false))}>
-            Delete organisation
-          </Button>
+          {mustRequest(role, "delete organisation") ? (
+            <Button
+              block
+              variant="wrong"
+              onClick={() => {
+                setConfirm(false);
+                setAsk({ kind: "delete organisation", target: org.id, label: org.name });
+              }}
+            >
+              Ask owner to delete
+            </Button>
+          ) : (
+            <Button block variant="wrong" onClick={() => void act(() => owner.deleteOrganisation(org.id), "Organisation deleted.").then(() => setConfirm(false))}>
+              Delete organisation
+            </Button>
+          )}
           <Button block variant="secondary" onClick={() => setConfirm(false)}>
             Cancel
           </Button>
@@ -566,7 +603,9 @@ function PeopleTab({ say }: { say: Say }) {
   const [search, setSearch] = useState("");
   const [rows, setRows] = useState<PersonRow[] | null>(null);
   const [remove, setRemove] = useState<PersonRow | null>(null);
-  const [grants, reloadGrants] = useLoad<GrantRow[]>(owner.grants, say);
+  const role = useContext(RoleCtx);
+  const [ask, setAsk] = useState<{ kind: RiskyAction; target: string; label: string } | null>(null);
+  const [grants, reloadGrants] = useLoad<GrantRow[]>(owner.grants, say, role === "owner");
   const grantOf = (id: string) => grants?.find((g) => g.user_id === id);
 
   const find = useCallback(
@@ -629,21 +668,34 @@ function PeopleTab({ say }: { say: Say }) {
           ) : null}
           {!p.is_owner ? (
             <div className="mt-2 flex flex-wrap gap-2">
-              <Button
-                variant="secondary"
-                onClick={() =>
-                  void act(() => owner.setSuspended(p.user_id, !p.suspended), p.suspended ? "Account reactivated." : "Account suspended.")
-                }
-              >
-                {p.suspended ? "Reactivate" : "Suspend"}
-              </Button>
-              <Button variant="wrong" onClick={() => setRemove(p)}>
-                Delete account
-              </Button>
+              {!p.suspended && mustRequest(role, "suspend account") ? (
+                <Button variant="secondary" onClick={() => setAsk({ kind: "suspend account", target: p.user_id, label: p.email })}>
+                  Ask owner to suspend
+                </Button>
+              ) : (
+                <Button
+                  variant="secondary"
+                  onClick={() =>
+                    void act(() => owner.setSuspended(p.user_id, !p.suspended), p.suspended ? "Account reactivated." : "Account suspended.")
+                  }
+                >
+                  {p.suspended ? "Reactivate" : "Suspend"}
+                </Button>
+              )}
+              {mustRequest(role, "delete account") ? (
+                <Button variant="wrong" onClick={() => setAsk({ kind: "delete account", target: p.user_id, label: p.email })}>
+                  Ask owner to delete
+                </Button>
+              ) : (
+                <Button variant="wrong" onClick={() => setRemove(p)}>
+                  Delete account
+                </Button>
+              )}
             </div>
           ) : null}
         </Card>
       ))}
+      <RequestDialog ask={ask} onClose={() => setAsk(null)} say={say} />
       <Dialog open={!!remove} onClose={() => setRemove(null)} title="Delete this account?">
         <p className="mb-5 text-muted">
           {remove?.email}: their account, cloud progress and memberships are deleted permanently. Use Suspend if you might
@@ -1266,6 +1318,7 @@ function LogTab({ say }: { say: Say }) {
       {rows.map((r, i) => (
         <li key={i} className="rounded-xl bg-white p-3 text-sm">
           <span className="font-bold text-night">{r.action}</span>{" "}
+          {r.who ? <span className="text-muted">by {r.who} </span> : null}
           <span className="text-muted">· {new Date(r.at).toLocaleString()}</span>
           <span className="block break-all text-muted">
             {Object.entries(r.detail)
@@ -1276,5 +1329,318 @@ function LogTab({ say }: { say: Say }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/* ── Team (owner only; the server refuses everyone else) ───────────────── */
+function TeamTab({ say }: { say: Say }) {
+  const [rows, reload] = useLoad<StaffRow[]>(owner.staff, say);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState<StaffRole>("support");
+  const act = async (fn: () => Promise<void>, done: string) => {
+    try {
+      await fn();
+      say(done);
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
+  if (!rows) return <Loading />;
+  return (
+    <>
+      <Card>
+        <h2 className="mb-1 font-display text-lg font-extrabold text-night">Invite a team member</h2>
+        <p className="mb-3 text-sm text-muted">
+          They sign in to the app with this email (a one-time code), then open Profile → Team console. Remove them
+          here and their access ends at once.
+        </p>
+        <input className={`${field} mb-2`} type="email" placeholder="Their email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input className={`${field} mb-2`} placeholder="Their name" maxLength={60} value={name} onChange={(e) => setName(e.target.value)} />
+        <select className={`${field} mb-1`} value={role} onChange={(e) => setRole(e.target.value as StaffRole)}>
+          {STAFF_ROLES.map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
+        </select>
+        <p className="mb-3 text-xs text-muted">{ROLE_HELP[role]}</p>
+        <Button
+          block
+          disabled={!email.trim() || !name.trim()}
+          onClick={() =>
+            void act(() => owner.saveStaff(email, name, role, true), "Saved.").then(() => {
+              setEmail("");
+              setName("");
+            })
+          }
+        >
+          Save team member
+        </Button>
+      </Card>
+      {rows.length === 0 ? <p className="text-muted">No team members yet.</p> : null}
+      {rows.map((s) => (
+        <Card key={s.email}>
+          <p className="font-bold text-night">
+            {s.name} · {s.role}
+            {s.active ? "" : " (paused)"}
+          </p>
+          <p className="break-all text-sm text-muted">
+            {s.email}
+            {s.signed_up ? "" : " · hasn't created an account yet"}
+          </p>
+          <div className="mt-2 flex gap-2">
+            <Button variant="secondary" onClick={() => void act(() => owner.saveStaff(s.email, s.name, s.role, !s.active), s.active ? "Paused." : "Resumed.")}>
+              {s.active ? "Pause" : "Resume"}
+            </Button>
+            <Button variant="wrong" onClick={() => void act(() => owner.removeStaff(s.email), "Removed.")}>
+              Remove
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </>
+  );
+}
+
+/* ── Two-person rule: staff ask, the owner approves ────────────────────── */
+function RequestDialog({ ask, onClose, say }: { ask: { kind: RiskyAction; target: string; label: string } | null; onClose: () => void; say: Say }) {
+  const [reason, setReason] = useState("");
+  const [busy, setBusy] = useState(false);
+  const send = async () => {
+    if (!ask) return;
+    setBusy(true);
+    try {
+      await owner.requestAction(ask.kind, ask.target, reason);
+      say("Sent to the owner for approval. Nothing happens until they approve it.");
+      setReason("");
+      onClose();
+    } catch (e) {
+      say(errText(e), false);
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <Dialog open={!!ask} onClose={onClose} title="Ask the owner">
+      <p className="mb-2 text-muted">
+        {ask?.kind} · <span className="break-all">{ask?.label}</span>
+      </p>
+      <textarea
+        className={`${field} mb-3`}
+        rows={3}
+        maxLength={300}
+        placeholder="Why? (for example: they asked by email on 3 Nov)"
+        value={reason}
+        onChange={(e) => setReason(e.target.value)}
+      />
+      <div className="flex flex-col gap-3">
+        <Button block disabled={busy || reason.trim().length < 3} onClick={() => void send()}>
+          Send request
+        </Button>
+        <Button block variant="secondary" onClick={onClose}>
+          Cancel
+        </Button>
+      </div>
+    </Dialog>
+  );
+}
+
+function RequestsTab({ say }: { say: Say }) {
+  const role = useContext(RoleCtx);
+  const [rows, reload] = useLoad<RequestRow[]>(owner.pendingActions, say);
+  const decide = async (id: number, approve: boolean) => {
+    try {
+      await owner.decideAction(id, approve);
+      say(approve ? "Approved and done." : "Rejected.");
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
+  if (!rows) return <Loading />;
+  return (
+    <>
+      <p className="mb-3 text-sm text-muted">
+        {role === "owner"
+          ? "Team members can't delete accounts or organisations themselves; they ask here. Approving does it at once and can't be undone."
+          : "Requests you and your team have sent. Only the owner can approve them."}
+      </p>
+      {rows.length === 0 ? <p className="text-muted">No requests.</p> : null}
+      {rows.map((r) => (
+        <Card key={r.id}>
+          <p className="font-bold text-night">
+            {r.kind} · <span className="break-all">{r.target_label}</span>
+          </p>
+          <p className="text-sm text-ink">“{r.reason}”</p>
+          <p className="text-sm text-muted">
+            Asked by {r.requested_by} · {date(r.requested_at)} · {r.status}
+            {r.decided_at ? ` ${date(r.decided_at)}` : ""}
+          </p>
+          {role === "owner" && r.status === "pending" ? (
+            <div className="mt-2 flex gap-2">
+              <Button variant="wrong" onClick={() => void decide(r.id, true)}>
+                Approve
+              </Button>
+              <Button variant="secondary" onClick={() => void decide(r.id, false)}>
+                Reject
+              </Button>
+            </div>
+          ) : null}
+        </Card>
+      ))}
+    </>
+  );
+}
+
+/* ── Notices: announcements and remote off-switches ────────────────────── */
+const SWITCH_HELP: Record<string, string> = {
+  friends: "Friends, the weekly board and nudges (duels too)",
+  duels: "Duels only",
+  voices: "The recording screen for invited speakers",
+  supporter: "The Supporter purchase screen (when Supporter is on in the build)",
+  reports: "The “Report a problem” button",
+};
+
+const blankNotice = (): Omit<AnnouncementRow, "id"> & { id: string | null } => ({
+  id: null,
+  starts_on: todayIso(),
+  ends_on: todayIso(),
+  title: { en: "" },
+  message: null,
+});
+
+function NoticesTab({ say }: { say: Say }) {
+  const [rows, reload] = useLoad<AnnouncementRow[]>(owner.announcements, say);
+  const [switches, reloadSwitches] = useLoad<SwitchRow[]>(owner.switches, say);
+  const [edit, setEdit] = useState<(Omit<AnnouncementRow, "id"> & { id: string | null }) | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  const run = async (fn: () => Promise<unknown>, done: string, after: () => void) => {
+    setBusy(true);
+    try {
+      await fn();
+      say(done);
+      after();
+    } catch (e) {
+      say(errText(e), false);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const save = () => {
+    if (!edit) return;
+    const clean = (o: Record<string, string> | null) => {
+      const out = Object.fromEntries(Object.entries(o ?? {}).map(([k, v]) => [k, v.trim()]).filter(([, v]) => v));
+      return Object.keys(out).length ? out : null;
+    };
+    const title = clean(edit.title);
+    if (!title?.en) return say("An English title is needed (the other languages fall back to it).", false);
+    if (edit.ends_on < edit.starts_on) return say("The end date is before the start date.", false);
+    void run(() => owner.saveAnnouncement({ ...edit, title, message: clean(edit.message) }), "Saved. Apps show it within an hour.", () => {
+      setEdit(null);
+      reload();
+    });
+  };
+  const isOff = (key: string) => !!switches?.find((s) => s.key === key)?.is_off;
+
+  return (
+    <>
+      <Card>
+        <h2 className="mb-1 font-display text-lg font-extrabold text-night">Pause a feature</h2>
+        <p className="mb-3 text-sm text-muted">
+          For emergencies, without a new release: apps check within an hour (offline phones when they reconnect). This
+          can only pause what the app already has; it never switches anything new on.
+        </p>
+        {!switches ? <Loading /> : null}
+        {switches
+          ? SWITCH_KEYS.map((key) => (
+              <div key={key} className="flex items-center gap-3 border-t border-sand-3 py-2">
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-night">
+                    {key} {isOff(key) ? <span className="rounded-full bg-berry-soft px-2 text-xs text-berry">paused</span> : null}
+                  </p>
+                  <p className="text-xs text-muted">{SWITCH_HELP[key]}</p>
+                </div>
+                <Button
+                  variant={isOff(key) ? "primary" : "secondary"}
+                  disabled={busy}
+                  onClick={() => void run(() => owner.setSwitch(key, !isOff(key), null), isOff(key) ? "Switched back on." : "Paused.", reloadSwitches)}
+                >
+                  {isOff(key) ? "Resume" : "Pause"}
+                </Button>
+              </div>
+            ))
+          : null}
+      </Card>
+
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="font-display text-lg font-extrabold text-night">Announcements</h2>
+        {!edit ? <Button onClick={() => setEdit(blankNotice())}>New</Button> : null}
+      </div>
+      {edit ? (
+        <Card>
+          <div className="mb-3 flex flex-wrap gap-3">
+            <label className="text-sm font-bold">
+              From
+              <input type="date" className={`${field} mt-1`} value={edit.starts_on} onChange={(e) => setEdit({ ...edit, starts_on: e.target.value })} />
+            </label>
+            <label className="text-sm font-bold">
+              To (inclusive)
+              <input type="date" className={`${field} mt-1`} value={edit.ends_on} onChange={(e) => setEdit({ ...edit, ends_on: e.target.value })} />
+            </label>
+          </div>
+          {LANGS.map((l) => (
+            <div key={l} className="mb-2 grid gap-1 sm:grid-cols-2 sm:gap-2">
+              <input
+                className={field}
+                maxLength={80}
+                placeholder={`Title (${LANG_LABEL[l]})${l === "en" ? ", required" : ""}`}
+                value={edit.title[l] ?? ""}
+                onChange={(e) => setEdit({ ...edit, title: { ...edit.title, [l]: e.target.value } })}
+              />
+              <input
+                className={field}
+                maxLength={200}
+                placeholder={`Message (${LANG_LABEL[l]}), optional`}
+                value={edit.message?.[l] ?? ""}
+                onChange={(e) => setEdit({ ...edit, message: { ...(edit.message ?? {}), [l]: e.target.value } })}
+              />
+            </div>
+          ))}
+          <p className="mb-3 text-xs text-muted">
+            Everyone sees this on the Learn screen, with or without an account. Wolof in it should be checked by your
+            reviewer first. No personal details.
+          </p>
+          <div className="flex gap-2">
+            <Button disabled={busy} onClick={save}>
+              Save
+            </Button>
+            <Button variant="ghost" onClick={() => setEdit(null)}>
+              Cancel
+            </Button>
+          </div>
+        </Card>
+      ) : null}
+      {!rows ? <Loading /> : rows.length === 0 ? <p className="text-muted">No announcements.</p> : null}
+      {rows?.map((r) => (
+        <Card key={r.id}>
+          <p className="font-display font-extrabold text-night">📣 {r.title.en}</p>
+          {r.message?.en ? <p className="text-sm">{r.message.en}</p> : null}
+          <p className="text-sm text-muted">
+            {r.starts_on} → {r.ends_on} · languages: {Object.keys(r.title).join(", ")}
+          </p>
+          <div className="mt-2 flex gap-2">
+            <Button variant="secondary" onClick={() => setEdit({ ...r })}>
+              Edit
+            </Button>
+            <Button variant="wrong" disabled={busy} onClick={() => void run(() => owner.deleteAnnouncement(r.id), "Deleted.", reload)}>
+              Delete
+            </Button>
+          </div>
+        </Card>
+      ))}
+    </>
   );
 }

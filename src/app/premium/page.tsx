@@ -10,6 +10,8 @@ import { course } from "@/content/course";
 import type { UiKey } from "@/i18n";
 import type { PlanKind } from "@/lib/billing";
 import { PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
+import { useSwitchOff } from "@/lib/notices";
+import { Paused } from "@/components/Paused";
 import { FREE_LESSON_COUNT, TOTAL_LESSON_COUNT } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
 import { useStore } from "@/lib/store";
@@ -24,6 +26,8 @@ const ORDER: PlanKind[] = ["annual", "monthly", "lifetime", "other"];
 
 /** Neither Premium nor Supporter is on in free builds (src/lib/features.ts): send old links to the path. */
 export default function PremiumRoute() {
+  const supporterOff = useSwitchOff("supporter");
+  if (SUPPORTER_ENABLED && supporterOff) return <Paused back="/profile/" />;
   return PAID_ENABLED ? <PremiumPage /> : <RedirectTo href="/learn/" />;
 }
 

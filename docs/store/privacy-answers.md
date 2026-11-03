@@ -126,6 +126,17 @@ screen for invited contributors. Add to Data safety:
 - The retention numbers in the owner console are totals from data already
   collected for sync; nothing new is collected for them.
 
+## Since 0.23.0 (team roles, announcements, remote switches)
+
+- **Nothing new is collected from learners.** Team members the owner invites
+  (admin, support, reviewer, analyst) can see, depending on role, data that is
+  already declared (account email, progress, reports). They work for WolofLink
+  under a confidentiality agreement, so Google does not count this as sharing.
+- Announcements and remote switches are read by the app without an account and
+  contain no personal data.
+- Approval requests store the team member who asked, the account or
+  organisation concerned and a short reason; they stay in the private console.
+
 ## Since 0.23.0 (optional Supporter subscription)
 
 Only when `NEXT_PUBLIC_SUPPORTER=on` ships (docs/sales/supporter-setup.md):

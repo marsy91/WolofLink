@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSwitchOff } from "@/lib/notices";
 import { PROBLEMS, reportsAvailable, sendReport, type Problem } from "@/lib/reports";
 import { useStore } from "@/lib/store";
 import { Button, Dialog } from "./ui";
@@ -13,7 +14,8 @@ export function ReportProblem({ entryId, className = "" }: { entryId: string; cl
   const [problem, setProblem] = useState<Problem>("spelling");
   const [note, setNote] = useState("");
   const [state, setState] = useState<"idle" | "busy" | "sent" | "failed">("idle");
-  if (!reportsAvailable()) return null;
+  const paused = useSwitchOff("reports");
+  if (!reportsAvailable() || paused) return null;
 
   const close = () => {
     setOpen(false);
