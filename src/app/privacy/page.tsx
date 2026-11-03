@@ -105,8 +105,8 @@ export default function Privacy() {
           automatically (a speech-recognition model transcribes each clip to make sure it matches the line and contains
           nothing offensive), and listened to by a reviewer. Only approved recordings are played to learners, with the
           name the contributor chose in the credits. Contributors can ask for their recordings to be deleted at any time
-          by writing to support@woloflink.com; deleting their account deletes them too. Learners are never recorded:
-          the app only asks for the microphone on the recording screen for invited contributors.
+          by writing to support@woloflink.com; deleting their account deletes them too. Learners&apos; voices are never sent
+          anywhere (see “Device features”).
         </Section>
       ) : null}
 
@@ -135,9 +135,10 @@ export default function Privacy() {
             <strong>Vibration:</strong> used for answer feedback; you can turn it off in Settings.
           </li>
           <li>
-            <strong>Microphone:</strong> only on the recording screen, which exists for native speakers we invite to
-            record lines (see “Voice recordings”). Learners are never recorded. The app does not use your camera,
-            contacts or location.
+            <strong>Microphone:</strong> only when you tap it. In speaking exercises you can record yourself to compare
+            with the model voice: that recording stays on your phone, is never uploaded and is deleted when you move on.
+            The recording screen for native speakers we invite is the only place where a recording is sent (see
+            “Voice recordings”). The app does not use your camera, contacts or location.
           </li>
         </ul>
       </Section>

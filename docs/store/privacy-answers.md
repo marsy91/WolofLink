@@ -126,6 +126,14 @@ screen for invited contributors. Add to Data safety:
 - The retention numbers in the owner console are totals from data already
   collected for sync; nothing new is collected for them.
 
+## Since 0.25.0 (record and compare)
+
+- Speaking exercises can record the learner's voice **on the phone only** to
+  play it back next to the model. It is never uploaded, never stored after the
+  exercise, and never sent to us or anyone else. Google counts data that never
+  leaves the device as **not collected**, so Data safety does not change.
+  The microphone permission is already declared (0.17.0).
+
 ## Since 0.23.0 (team roles, announcements, remote switches)
 
 - **Nothing new is collected from learners.** Team members the owner invites
