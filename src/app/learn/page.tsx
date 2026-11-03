@@ -69,6 +69,14 @@ export default function Learn() {
                   <p className="text-xs font-bold tracking-widest uppercase opacity-90">{t("path.unit", { n: ui + 1 })}</p>
                   <h2 className="font-display text-xl leading-tight font-extrabold">{translate(unit.title, lang)}</h2>
                   {planned ? <p className="text-sm font-bold">{t("path.comingSoon")}</p> : null}
+                  {!planned && ui > 0 && !unlockAll && !(isPremiumUnit(ui) && !premium) && !unit.lessons.every((l) => progress.lessons[l.id]) ? (
+                    <Link
+                      href={`/review/?testout=${unit.id}`}
+                      className="mt-1 inline-block rounded-full bg-white/90 px-3 py-1 text-xs font-extrabold text-night"
+                    >
+                      {t("testout.button")}
+                    </Link>
+                  ) : null}
                 </div>
                 {isPremiumUnit(ui) && !premium ? (
                   <span className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-extrabold text-dusk">

@@ -98,7 +98,7 @@ review **No**; committed to the Families policy **No**.
 ## 5. Create the closed test (Test and release → Testing → Closed testing)
 
 1. **Create track** → name it "Testers" (or use the default). 
-2. **Countries:** add the United Kingdom, France, Senegal and anywhere your testers live.
+2. **Countries:** add the United Kingdom, France, Senegal, the Gambia, Mauritania and anywhere your testers live.
 3. **Testers → Create email list** → paste at least **12 Gmail addresses** (Google accounts only;
    friends and family with Android phones are fine) → save. Tick the list.
 4. Note the **opt-in link** (Testers tab → "Copy link"). Send it to every tester. **Each one must

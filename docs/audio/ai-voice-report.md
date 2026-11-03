@@ -18,9 +18,9 @@ placeholder until native speakers record the course; a human recording imported 
 
 ## Results
 
-- **629 lines**, 3875 takes in total.
-- **525 lines passed** the automatic check; median error rate 20%.
-- **104 lines are flagged** below: the best take still did not match the text
+- **682 lines**, 4208 takes in total.
+- **572 lines passed** the automatic check; median error rate 20%.
+- **110 lines are flagged** below: the best take still did not match the text
   well, or its length looked wrong. They may be fine (the checker itself often misspells
   short words), but have a native speaker listen to these first.
 
@@ -222,3 +222,19 @@ still listen to every line before the app is promoted as having native audio.
 | File | Wolof | Heard by the checker | Error |
 |---|---|---|---|
 | `m.bulragal.mp3` | **Bul ragal** | buntu raataal | 50% |
+
+### 23. On the phone
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `i.allo.mp3` | **Allo, kan la?** | alu tën la | 38% |
+| `i.doonlawoo.mp3` | **Dama la doon woo** | dama laa go | 36% |
+| `story-call.7.mp3` | **Su Yàlla soobee. Jërëjëf!** | suññaana sóobé / jën ju  jëf | 43% |
+
+### 24. Comparing and describing
+
+| File | Wolof | Heard by the checker | Error |
+|---|---|---|---|
+| `z.ndakaarumag.mp3` | **Ndakaaru dafa mag** | da kaalu de foma | 36% |
+| `story-compare.2.mp3` | **Déedéet, lii moo gëna seer.** | dërgë  lii moo gërëse | 38% |
+| `story-compare.5.mp3` | **Dafa rafet lool. Jërëjëf!** | dafara sejloon / joro juuf | 43% |

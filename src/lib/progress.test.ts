@@ -2,6 +2,9 @@
 import { describe, expect, it } from "vitest";
 import {
   applySession,
+  applyTestOut,
+  TEST_OUT_PASS,
+  testOutEntries,
   currentStreak,
   DROP_REFILL_MS,
   dueEntries,
@@ -168,5 +171,27 @@ describe("levels and stories", () => {
     expect(p.settings.reminder.hour).toBe(19);
     expect(p.streak.shields).toBe(0);
     expect(p.stories).toEqual({});
+  });
+});
+
+describe("test out of a unit", () => {
+  const now = Date.UTC(2026, 10, 3);
+  it("marks every lesson of the unit done when the learner passes", () => {
+    const p = applyTestOut(emptyProgress(now), ["a-1", "a-2"], 0.85, now);
+    expect(Object.keys(p.lessons).sort()).toEqual(["a-1", "a-2"]);
+    expect(p.lessons["a-1"]!.times).toBe(1);
+  });
+  it("changes nothing below the pass mark", () => {
+    const base = emptyProgress(now);
+    expect(applyTestOut(base, ["a-1"], TEST_OUT_PASS - 0.01, now)).toBe(base);
+  });
+  it("keeps the record of lessons already played", () => {
+    const base = { ...emptyProgress(now), lessons: { "a-1": { times: 3, bestAccuracy: 1, lastAt: 5 } } };
+    const p = applyTestOut(base, ["a-1", "a-2"], 0.9, now);
+    expect(p.lessons["a-1"]).toEqual({ times: 3, bestAccuracy: 1, lastAt: 5 });
+    expect(p.lessons["a-2"]).toBeDefined();
+  });
+  it("asks about each word of the unit once", () => {
+    expect(testOutEntries([{ entries: ["x", "y"] }, { entries: ["y", "z"] }])).toEqual(["x", "y", "z"]);
   });
 });

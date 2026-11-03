@@ -7,9 +7,9 @@
  * (src/lib/owner.ts).
  */
 import { useRouter } from "next/navigation";
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { IconArrowLeft } from "@/components/icons";
-import { Button, Dialog, Loading } from "@/components/ui";
+import { createContext, useCallback, useContext, useEffect, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { IconArrowLeft, IconBook, IconPodium, IconProfile, IconShield } from "@/components/icons";
+import { Dialog, Loading } from "@/components/ui";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
 import { HOLIDAYS, dateIn, type DateOverrides } from "@/content/calendar";
@@ -59,8 +59,38 @@ const TABS: [Tab, string][] = [
   ["log", "Log"],
   ["team", "Team"],
 ];
+const TAB_LABEL = Object.fromEntries(TABS) as Record<Tab, string>;
+const GROUPS: { id: string; label: string; icon: typeof IconPodium; tabs: Tab[] }[] = [
+  { id: "home", label: "Home", icon: IconPodium, tabs: ["overview"] },
+  { id: "people", label: "People", icon: IconProfile, tabs: ["people", "orgs", "billing", "requests"] },
+  { id: "content", label: "Content", icon: IconBook, tabs: ["reports", "words", "voices", "notices", "holidays", "themes"] },
+  { id: "admin", label: "Admin", icon: IconShield, tabs: ["team", "log"] },
+];
 
-const field = "w-full rounded-xl border-2 border-sand-3 bg-white px-3 py-2 outline-none focus:border-clay";
+const field = "w-full rounded-xl border border-sand-3 bg-white px-3 py-2 outline-none focus:border-night focus:ring-2 focus:ring-night/10";
+
+/** The console's own flat, compact buttons (the learning screens keep their playful ones). */
+const FLAT = {
+  primary: "bg-night text-sand hover:bg-night/90",
+  secondary: "border border-sand-3 bg-white text-night hover:bg-sand-2",
+  ghost: "text-night hover:underline",
+  correct: "bg-sea text-white hover:bg-sea/90",
+  wrong: "bg-berry text-white hover:bg-berry/90",
+} as const;
+function Button({
+  variant = "primary",
+  block,
+  className = "",
+  ...rest
+}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: keyof typeof FLAT; block?: boolean }) {
+  return (
+    <button
+      type="button"
+      className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${FLAT[variant]} ${block ? "w-full" : ""} ${className}`}
+      {...rest}
+    />
+  );
+}
 const date = (s: string | null) => (s ? new Date(s).toLocaleDateString(undefined, { dateStyle: "medium" }) : "—");
 const errText = (e: unknown) =>
   e instanceof CloudError
@@ -79,74 +109,139 @@ export default function OwnerPage() {
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
 
   if (account.user === undefined || (account.user && role === undefined)) return <Loading />;
-  const visible = TABS.filter(([id]) => tabsFor(role ?? null).includes(id));
+  const allowed = tabsFor(role ?? null);
+  const visible = TABS.filter(([id]) => allowed.includes(id));
   const current = visible.some(([id]) => id === tab) ? tab : (visible[0]?.[0] ?? "overview");
+  const groups = GROUPS.map((g) => ({ ...g, tabs: g.tabs.filter((id) => allowed.includes(id)) })).filter((g) => g.tabs.length);
+  const group = groups.find((g) => g.tabs.includes(current)) ?? groups[0];
   const say = (text: string, ok = true) => setMessage({ text, ok });
+  const open = (id: Tab) => {
+    setTab(id);
+    setMessage(null);
+  };
 
   return (
-    <main className="safe-top safe-bottom mx-auto min-h-dvh max-w-2xl px-4 pb-10">
-      <div className="flex items-center gap-2 py-3">
-        <button
-          type="button"
-          onClick={() => router.replace("/profile/")}
-          aria-label="Back"
-          className="grid h-10 w-10 place-items-center rounded-full text-night hover:bg-sand-2"
-        >
-          <IconArrowLeft />
-        </button>
-        <h1 className="font-display text-2xl font-extrabold text-night">{role && role !== "owner" ? "Team console" : "Owner console"}</h1>
-      </div>
+    <main className="safe-bottom mx-auto min-h-dvh max-w-2xl pb-10">
+      <header className="safe-top rounded-b-[2rem] bg-night px-4 pb-5 text-sand">
+        <div className="flex items-center gap-2 py-3">
+          <button
+            type="button"
+            onClick={() => router.replace("/profile/")}
+            aria-label="Back"
+            className="grid h-10 w-10 place-items-center rounded-full text-sand hover:bg-white/10"
+          >
+            <IconArrowLeft />
+          </button>
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-bold tracking-[0.2em] text-sand/60 uppercase">WolofLink</p>
+            <h1 className="font-display text-2xl leading-tight font-extrabold">
+              {role && role !== "owner" ? "Team console" : "Owner console"}
+            </h1>
+          </div>
+          {role ? (
+            <span className="rounded-full bg-sun px-3 py-1 text-xs font-extrabold tracking-wide text-night uppercase">{role}</span>
+          ) : null}
+        </div>
+        {account.user && role && allowed.includes("overview") && current === "overview" ? <HeaderStats say={say} /> : null}
+      </header>
 
-      {!account.user || !role ? (
-        <p className="rounded-2xl bg-white p-4 text-muted">
-          This page is only for the WolofLink owner and invited team members. Sign in with your team email in Profile → Account.
-        </p>
-      ) : (
-        <>
-          <nav className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4" aria-label="Owner sections">
-            {visible.map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                aria-pressed={current === id}
-                onClick={() => {
-                  setTab(id);
-                  setMessage(null);
-                }}
-                className={`shrink-0 rounded-full border-2 px-4 py-2 font-bold ${
-                  current === id ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"
+      <div className="px-4">
+        {!account.user || !role ? (
+          <p className="mt-4 rounded-2xl border border-sand-3 bg-white p-4 text-muted">
+            This page is only for the WolofLink owner and invited team members. Sign in with your team email in Profile → Account.
+          </p>
+        ) : (
+          <>
+            <nav aria-label="Console sections" className="sticky top-0 z-10 -mx-4 mb-4 bg-sand/95 px-4 pt-4 pb-2 backdrop-blur">
+              <div className="grid gap-1 rounded-2xl border border-sand-3 bg-white p-1" style={{ gridTemplateColumns: `repeat(${groups.length}, minmax(0, 1fr))` }}>
+                {groups.map((g) => {
+                  const on = g.id === group?.id;
+                  const Glyph = g.icon;
+                  return (
+                    <button
+                      key={g.id}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => open(g.tabs[0]!)}
+                      className={`flex flex-col items-center gap-0.5 rounded-xl py-2 text-xs font-extrabold transition-colors ${
+                        on ? "bg-night text-sand" : "text-muted hover:bg-sand-2"
+                      }`}
+                    >
+                      <Glyph size={20} />
+                      {g.label}
+                    </button>
+                  );
+                })}
+              </div>
+              {group && group.tabs.length > 1 ? (
+                <div className="mt-2 flex gap-5 overflow-x-auto border-b border-sand-3 px-1" role="tablist">
+                  {group.tabs.map((id) => (
+                    <button
+                      key={id}
+                      type="button"
+                      role="tab"
+                      aria-selected={current === id}
+                      onClick={() => open(id)}
+                      className={`-mb-px shrink-0 border-b-2 py-2 text-sm font-bold ${
+                        current === id ? "border-clay text-night" : "border-transparent text-muted"
+                      }`}
+                    >
+                      {TAB_LABEL[id]}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+            </nav>
+            {message ? (
+              <p
+                role={message.ok ? "status" : "alert"}
+                className={`mb-4 rounded-2xl border p-3 text-sm font-bold ${
+                  message.ok ? "border-sea/30 bg-sea-soft text-sea" : "border-berry/30 bg-berry-soft text-berry"
                 }`}
               >
-                {label}
-              </button>
-            ))}
-          </nav>
-          {message ? (
-            <p
-              role={message.ok ? "status" : "alert"}
-              className={`mb-4 rounded-2xl p-3 ${message.ok ? "bg-sea-soft text-sea" : "bg-berry-soft text-berry"}`}
-            >
-              {message.text}
-            </p>
-          ) : null}
-          <RoleCtx.Provider value={role}>
-          {current === "overview" ? <OverviewTab say={say} /> : null}
-          {current === "orgs" ? <OrgsTab say={say} /> : null}
-          {current === "people" ? <PeopleTab say={say} /> : null}
-          {current === "billing" ? <BillingTab say={say} /> : null}
-          {current === "voices" ? <VoicesTab say={say} /> : null}
-          {current === "reports" ? <ReportsTab say={say} /> : null}
-          {current === "words" ? <WordsTab say={say} /> : null}
-          {current === "holidays" ? <HolidaysTab say={say} /> : null}
-          {current === "themes" ? <ThemesTab say={say} /> : null}
-          {current === "log" ? <LogTab say={say} /> : null}
-          {current === "team" ? <TeamTab say={say} /> : null}
-          {current === "notices" ? <NoticesTab say={say} /> : null}
-          {current === "requests" ? <RequestsTab say={say} /> : null}
-          </RoleCtx.Provider>
-        </>
-      )}
+                {message.text}
+              </p>
+            ) : null}
+            {group && group.tabs.length === 1 ? <h2 className="mb-3 font-display text-xl font-extrabold text-night">{TAB_LABEL[current]}</h2> : null}
+            <RoleCtx.Provider value={role}>
+              {current === "overview" ? <OverviewTab say={say} /> : null}
+              {current === "orgs" ? <OrgsTab say={say} /> : null}
+              {current === "people" ? <PeopleTab say={say} /> : null}
+              {current === "billing" ? <BillingTab say={say} /> : null}
+              {current === "voices" ? <VoicesTab say={say} /> : null}
+              {current === "reports" ? <ReportsTab say={say} /> : null}
+              {current === "words" ? <WordsTab say={say} /> : null}
+              {current === "holidays" ? <HolidaysTab say={say} /> : null}
+              {current === "themes" ? <ThemesTab say={say} /> : null}
+              {current === "log" ? <LogTab say={say} /> : null}
+              {current === "team" ? <TeamTab say={say} /> : null}
+              {current === "notices" ? <NoticesTab say={say} /> : null}
+              {current === "requests" ? <RequestsTab say={say} /> : null}
+            </RoleCtx.Provider>
+          </>
+        )}
+      </div>
     </main>
+  );
+}
+
+/** Three headline numbers in the dark header. */
+function HeaderStats({ say }: { say: Say }) {
+  const [o] = useLoad<Overview>(owner.overview, say);
+  const stats: [string, number | string][] = [
+    ["Learners", o?.learners ?? "–"],
+    ["Active 7 days", o?.active7 ?? "–"],
+    ["New 7 days", o?.new7 ?? "–"],
+  ];
+  return (
+    <dl className="grid grid-cols-3 gap-2">
+      {stats.map(([label, n]) => (
+        <div key={label} className="rounded-2xl bg-white/10 px-3 py-2.5">
+          <dt className="text-[11px] font-bold text-sand/70">{label}</dt>
+          <dd className="font-display text-2xl font-extrabold">{n}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -172,7 +267,7 @@ function useLoad<T>(load: () => Promise<T>, say: Say, enabled = true): [T | null
 }
 
 function Card({ children }: { children: ReactNode }) {
-  return <section className="mb-3 rounded-2xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">{children}</section>;
+  return <section className="mb-3 rounded-2xl border border-sand-3 bg-white p-4">{children}</section>;
 }
 
 /* ── Overview ──────────────────────────────────────────────────────────── */
@@ -264,9 +359,6 @@ function OverviewTab({ say }: { say: Say }) {
   const [o] = useLoad<Overview>(owner.overview, say);
   if (!o) return <Loading />;
   const tiles: [string, number][] = [
-    ["Learners with an account", o.learners],
-    ["New this week", o.new7],
-    ["Active this week", o.active7],
     ["Organisations", o.organisations],
     ["Organisation members", o.members],
     ["Suspended accounts", o.suspended],
@@ -275,14 +367,14 @@ function OverviewTab({ say }: { say: Say }) {
     <>
       <RenewalsCard say={say} />
       {role !== "support" ? <RetentionCard say={say} /> : null}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-3 gap-2">
         {tiles.map(([label, n]) => (
-          <div key={label} className="rounded-2xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
-            <p className="font-display text-3xl font-extrabold text-night">{n}</p>
-            <p className="text-sm text-muted">{label}</p>
+          <div key={label} className="rounded-2xl border border-sand-3 bg-white p-4">
+            <p className="font-display text-2xl font-extrabold text-night">{n}</p>
+            <p className="text-xs font-bold text-muted">{label}</p>
           </div>
         ))}
-        <p className="col-span-2 text-sm text-muted">
+        <p className="col-span-3 text-sm text-muted">
           Learners without an account use the app offline and aren&apos;t counted here.
         </p>
       </div>

@@ -14,7 +14,7 @@ people are welcomed there.
 
 WolofLink gives your team:
 
-- 20 units of everyday Wolof, plus a 100-phrase survival kit for the first weeks
+- 24 units of everyday Wolof, plus a 100-phrase survival kit for the first weeks
 - culture and etiquette lessons, and a calendar of Senegalese holidays
 - audio for every line, and it works fully offline
 - one team code to join, and a dashboard where you see progress (never emails)
