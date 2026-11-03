@@ -35,8 +35,8 @@ Learn Wolof the way Senegal speaks it.
 WolofLink teaches Wolof, the most widely spoken language of Senegal, in short, friendly lessons. Learn in English, French, Spanish, German or Italian, and practise a few minutes a day, even without internet.
 
 WHAT'S INSIDE
-• 20 units and 53 lessons, from greetings to market prices, food, health, travel and feelings
-• 410 words and phrases, each with audio and a slow-play button
+• 24 units and 61 lessons, from greetings to market prices, food, health, travel and feelings
+• 450 words and phrases, each with audio and a slow-play button
 • Pictures, listening, building sentences and typing; every lesson replays at three levels
 • A dictionary of 440+ words and phrases: search in Wolof or your own language, accents optional
 • Survival Wolof: the 100 words and phrases to know first, with a quick practice mode
@@ -74,8 +74,8 @@ Apprenez le wolof comme on le parle au Sénégal.
 WolofLink enseigne le wolof, la langue la plus parlée au Sénégal, en leçons courtes et conviviales. Apprenez en français, anglais, espagnol, allemand ou italien, et pratiquez quelques minutes par jour, même sans internet.
 
 AU PROGRAMME
-• 20 unités et 53 leçons, des salutations aux prix au marché, en passant par la cuisine, la santé, les voyages et les émotions
-• 410 mots et phrases, chacun avec audio et lecture lente
+• 24 unités et 61 leçons, des salutations aux prix au marché, en passant par la cuisine, la santé, les voyages et les émotions
+• 450 mots et phrases, chacun avec audio et lecture lente
 • Images, écoute, construction de phrases et saisie ; chaque leçon se rejoue à trois niveaux
 • Un dictionnaire de plus de 440 mots et phrases : cherchez en wolof ou dans votre langue, accents facultatifs
 • Wolof de survie : les 100 mots et phrases à connaître en premier, avec un mode d'entraînement rapide
@@ -113,8 +113,8 @@ Aprende wolof como se habla en Senegal.
 WolofLink enseña wolof, la lengua más hablada de Senegal, con lecciones cortas y amenas. Aprende en español, inglés, francés, alemán o italiano y practica unos minutos al día, incluso sin internet.
 
 QUÉ INCLUYE
-• 20 unidades y 53 lecciones: saludos, precios en el mercado, comida, salud, viajes y sentimientos
-• 410 palabras y frases, cada una con audio y reproducción lenta
+• 24 unidades y 61 lecciones: saludos, precios en el mercado, comida, salud, viajes y sentimientos
+• 450 palabras y frases, cada una con audio y reproducción lenta
 • Imágenes, escucha, construcción de frases y escritura; cada lección se repite en tres niveles
 • Un diccionario de más de 440 palabras y frases: busca en wolof o en tu idioma, sin necesidad de acentos
 • Wolof de supervivencia: las 100 palabras y frases imprescindibles, con un modo de práctica rápida
@@ -152,8 +152,8 @@ Lerne Wolof so, wie es im Senegal gesprochen wird.
 WolofLink bringt dir Wolof bei, die meistgesprochene Sprache Senegals, in kurzen, freundlichen Lektionen. Lerne auf Deutsch, Englisch, Französisch, Spanisch oder Italienisch und übe ein paar Minuten am Tag, auch ohne Internet.
 
 DAS ERWARTET DICH
-• 20 Einheiten und 53 Lektionen: von der Begrüßung über Marktpreise, Essen, Gesundheit und Reisen bis zu Gefühlen
-• 410 Wörter und Sätze, jeweils mit Audio und langsamer Wiedergabe
+• 24 Einheiten und 61 Lektionen: von der Begrüßung über Marktpreise, Essen, Gesundheit und Reisen bis zu Gefühlen
+• 450 Wörter und Sätze, jeweils mit Audio und langsamer Wiedergabe
 • Bilder, Hören, Sätze bauen und Tippen; jede Lektion lässt sich auf drei Stufen wiederholen
 • Ein Wörterbuch mit über 440 Wörtern und Sätzen: Suche auf Wolof oder in deiner Sprache, Akzente optional
 • Wolof zum Überleben: die 100 wichtigsten Wörter und Sätze, mit schnellem Übungsmodus
@@ -191,8 +191,8 @@ Impara il wolof come si parla in Senegal.
 WolofLink insegna il wolof, la lingua più parlata del Senegal, con lezioni brevi e piacevoli. Impara in italiano, inglese, francese, spagnolo o tedesco ed esercitati pochi minuti al giorno, anche senza internet.
 
 COSA TROVI
-• 20 unità e 53 lezioni: dai saluti ai prezzi al mercato, cibo, salute, viaggi ed emozioni
-• 410 parole e frasi, ognuna con audio e riproduzione lenta
+• 24 unità e 61 lezioni: dai saluti ai prezzi al mercato, cibo, salute, viaggi ed emozioni
+• 450 parole e frasi, ognuna con audio e riproduzione lenta
 • Immagini, ascolto, costruzione di frasi e scrittura; ogni lezione si ripete su tre livelli
 • Un dizionario di oltre 440 parole e frasi: cerca in wolof o nella tua lingua, accenti facoltativi
 • Wolof di sopravvivenza: le 100 parole e frasi da sapere per prime, con una modalità di esercizio rapido

@@ -100,6 +100,30 @@ spelling): *bisaab*, *cakri*, *fataya*.
 Native check, please: *Dama rus*, *Dama jaaxle*, *Mu ngi bég*, *Dafa yomb*,
 *Mën nga ko wàññi?*, and whether *lax ak soow* is the usual name.
 
+## Units 21–24 (added in 0.24.0, first A2 units)
+
+Talking about the past, Plans and the future, On the phone, Comparing and
+describing: 40 entries, built on grammar already in the course (*naa/nga/na*,
+*-uma*, *dinaa*, *Dafa …*). Every word is in the reference text or already in
+the course, except the loanwords *allo*, *oto* and *nimero*. The reference
+spells *soobee* ("su la soobee"), *yónnee*, *bataaxal*, *gëna* (522 times;
+*gën a* only 3) and *woon / doon* as used here.
+
+Native check, please, before release:
+
+1. *Su Yàlla soobee*: is this the usual everyday form (left out in 0.9.0)?
+2. *gëna* vs *gën a* in *Kii moo gëna mag*, *Lii moo gëna yomb / seer*,
+   *Tey dafa gëna tàng*.
+3. *Fan nga demoon?* (the reference has *Fu ngeen demoon?*): which do people say?
+4. *Am naa woon oto* for "I used to have a car".
+5. *Dama la doon woo* ("I was trying to call you") and *Dinaa la dellu woo*
+   ("I'll call you back").
+6. *Allo, kan la?*, *Man la*, *Dégguma la bu baax*, *Joxal ma sa nimero*,
+   *Yónnee ma bataaxal* (or do people just say *message*/SMS?).
+7. *Dinañu gis*, *Ba suba*, *Duma ñëw tey*, *Yaakaar naa ne dinga ñëw*,
+   *Mënuma tey, waaye suba mën naa*.
+8. *Dëkk bi dafa ndaw*, *Ndakaaru dafa mag*, *Dafa rafet lool*, *Lii moo gën*.
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:

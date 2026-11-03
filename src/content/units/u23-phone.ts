@@ -1,0 +1,88 @@
+// Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
+import type { Unit } from "../types";
+import { entry, tx } from "./helpers";
+
+export const entries = [
+  // phone-1
+  entry("i.allo", "Allo, kan la?", ["Hello, who is it?", "Allô, c'est qui ?", "¿Diga? ¿Quién es?", "Hallo, wer ist da?", "Pronto, chi è?"]),
+  entry("i.manla", "Man la", ["It's me", "C'est moi", "Soy yo", "Ich bin's", "Sono io"]),
+  entry("i.deggumala", "Dégguma la bu baax", ["I can't hear you well", "Je ne t'entends pas bien", "No te oigo bien", "Ich höre dich nicht gut", "Non ti sento bene"]),
+  entry("i.wooma", "Woo ma suba", ["Call me tomorrow", "Appelle-moi demain", "Llámame mañana", "Ruf mich morgen an", "Chiamami domani"]),
+  entry("i.doonlawoo", "Dama la doon woo", ["I was trying to call you", "J'essayais de t'appeler", "Te estaba llamando", "Ich wollte dich gerade anrufen", "Ti stavo chiamando"]),
+
+  // phone-2
+  entry("i.yonneema", "Yónnee ma bataaxal", ["Send me a message", "Envoie-moi un message", "Mándame un mensaje", "Schick mir eine Nachricht", "Mandami un messaggio"], {
+    note: [
+      "bataaxal is a letter or message; for a text many people simply say SMS or message.",
+      "bataaxal, c'est une lettre ou un message ; pour un texto, beaucoup disent simplement SMS ou message.",
+      "bataaxal es una carta o un mensaje; para un SMS mucha gente dice simplemente SMS o message.",
+      "bataaxal ist ein Brief oder eine Nachricht; für eine SMS sagen viele einfach SMS oder message.",
+      "bataaxal è una lettera o un messaggio; per un SMS molti dicono semplicemente SMS o message.",
+    ],
+  }),
+  entry("i.joxalnimero", "Joxal ma sa nimero", ["Give me your number", "Donne-moi ton numéro", "Dame tu número", "Gib mir deine Nummer", "Dammi il tuo numero"]),
+  entry("i.bindalma", "Bindal ma", ["Write to me", "Écris-moi", "Escríbeme", "Schreib mir", "Scrivimi"]),
+  entry("i.yonneengako", "Ndax yónnee nga ko?", ["Did you send it?", "Tu l'as envoyé ?", "¿Lo enviaste?", "Hast du es geschickt?", "L'hai mandato?"]),
+  entry("i.delluwoo", "Dinaa la dellu woo", ["I'll call you back", "Je te rappellerai", "Te devuelvo la llamada", "Ich rufe dich zurück", "Ti richiamo"]),
+];
+
+export const unit: Unit = {
+  id: "u23",
+  glyph: "chat",
+  tone: "clay",
+  title: tx(["On the phone", "Au téléphone", "Por teléfono", "Am Telefon", "Al telefono"]),
+  lessons: [
+    {
+      id: "phone-1",
+      title: tx(["Calling someone", "Appeler quelqu'un", "Llamar a alguien", "Jemanden anrufen", "Chiamare qualcuno"]),
+      tip: tx([
+        "woo means “to call”. Put ma (me) or la (you) before it in the future: Dinaa la woo, and after it in a request: Woo ma.",
+        "woo veut dire « appeler ». Au futur, ma (moi) ou la (toi) vient avant : Dinaa la woo ; dans une demande, après : Woo ma.",
+        "woo significa «llamar». En futuro, ma (me) o la (te) va delante: Dinaa la woo; en una petición, detrás: Woo ma.",
+        "woo heißt „anrufen“. In der Zukunft steht ma (mich) oder la (dich) davor: Dinaa la woo; in einer Bitte dahinter: Woo ma.",
+        "woo vuol dire «chiamare». Al futuro ma (mi) o la (ti) va prima: Dinaa la woo; in una richiesta dopo: Woo ma.",
+      ]),
+      entries: ["i.allo", "i.manla", "i.deggumala", "i.wooma", "i.doonlawoo", "u.dinaalawoo"],
+      exercises: [
+        { type: "pick_meaning", entry: "i.allo" },
+        { type: "pick_meaning", entry: "i.manla" },
+        { type: "listen", entry: "i.deggumala" },
+        { type: "match", entries: ["i.allo", "i.manla", "i.wooma", "u.dinaalawoo"] },
+        { type: "pick_wolof", entry: "i.deggumala" },
+        { type: "fill_blank", entry: "i.wooma", blank: 2, options: ["suba", "démb", "fii"] },
+        { type: "build", entry: "i.doonlawoo", distractors: ["naa", "dinaa"] },
+        { type: "pick_meaning", entry: "i.doonlawoo" },
+        { type: "listen", entry: "i.allo" },
+        { type: "pick_wolof", entry: "i.wooma" },
+        { type: "type_wolof", entry: "i.manla" },
+        { type: "speak", entry: "i.allo" },
+      ],
+    },
+    {
+      id: "phone-2",
+      title: tx(["Messages and numbers", "Messages et numéros", "Mensajes y números", "Nachrichten und Nummern", "Messaggi e numeri"]),
+      tip: tx([
+        "Phone numbers are usually given in pairs, often in French: 77 123 45 67. Ask to hear it again with Waxaatal!",
+        "Les numéros se donnent souvent par paires, souvent en français : 77 123 45 67. Pour réentendre, dites Waxaatal !",
+        "Los números se dan por pares, a menudo en francés: 77 123 45 67. Para oírlo otra vez di ¡Waxaatal!",
+        "Telefonnummern nennt man meist paarweise, oft auf Französisch: 77 123 45 67. Zum Wiederholen sag Waxaatal!",
+        "I numeri si dicono di solito a coppie, spesso in francese: 77 123 45 67. Per riascoltarlo di' Waxaatal!",
+      ]),
+      entries: ["i.yonneema", "i.joxalnimero", "i.bindalma", "i.yonneengako", "i.delluwoo"],
+      exercises: [
+        { type: "pick_meaning", entry: "i.yonneema" },
+        { type: "pick_meaning", entry: "i.joxalnimero" },
+        { type: "match", entries: ["i.yonneema", "i.joxalnimero", "i.bindalma", "i.delluwoo"] },
+        { type: "listen", entry: "i.yonneengako" },
+        { type: "pick_wolof", entry: "i.bindalma" },
+        { type: "fill_blank", entry: "i.joxalnimero", blank: 2, options: ["sa", "sama", "ak"] },
+        { type: "build", entry: "i.delluwoo", distractors: ["ma", "duma"] },
+        { type: "pick_meaning", entry: "i.yonneengako" },
+        { type: "pick_wolof", entry: "i.delluwoo" },
+        { type: "listen", entry: "i.joxalnimero" },
+        { type: "type_wolof", entry: "i.bindalma" },
+        { type: "speak", entry: "i.yonneema" },
+      ],
+    },
+  ],
+};
