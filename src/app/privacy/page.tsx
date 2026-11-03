@@ -70,7 +70,10 @@ export default function Privacy() {
           can see the name you chose, your XP, the number of lessons completed, your streak and when you last practised.
           They never see your email address or anything else. You can leave an organisation at any time in Profile →
           Account, and they stop seeing your progress straight away. The WolofLink owner can manage organisations and
-          accounts to run the service, for example to remove abuse.
+          accounts to run the service, for example to remove abuse. The owner may give a small number of WolofLink team
+          members limited access for support (for example to look up an account by email when you write to us). They
+          are bound by confidentiality, every action is logged, and deleting an account always needs the owner&apos;s
+          approval.
         </Section>
       ) : null}
 
@@ -78,7 +81,7 @@ export default function Privacy() {
         <Section title="Problem reports and statistics">
           If you tap “Report a problem” on a word, we receive which word it was, the kind of problem, your optional note,
           the app language and the app version. If you are signed in, the report is linked to your account so we can
-          limit abuse; it never includes your name or email. Reports are only read by the WolofLink owner to correct the
+          limit abuse; it never includes your name or email. Reports are only read by the WolofLink owner and team members they authorise, to correct the
           course. We also count, across all learners with an account, how often each word is answered right or wrong, so
           we can find and fix difficult or mistaken content. Those totals never identify anyone.
         </Section>

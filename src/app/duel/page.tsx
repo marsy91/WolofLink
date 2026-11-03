@@ -10,6 +10,8 @@ import { playEntry, playTone } from "@/lib/audio";
 import { buildDuel, duels, optionLabel, pickDuelEntries, pointsFor, DUEL_LENGTH, type DuelQuestion } from "@/lib/duels";
 import { haptic } from "@/lib/native";
 import { useStore } from "@/lib/store";
+import { useSwitchOff } from "@/lib/notices";
+import { Paused } from "@/components/Paused";
 
 interface Setup {
   mode: "challenge" | "reply";
@@ -35,6 +37,9 @@ export default function DuelPage() {
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [sendState, setSendState] = useState<"idle" | "sending" | "failed">("idle");
   const shownAt = useRef(0);
+  const duelsOff = useSwitchOff("duels");
+  const friendsOff = useSwitchOff("friends");
+  const paused = duelsOff || friendsOff;
 
   // Read the link after mount (the page is pre-rendered): ?friend=…&name=… to challenge, ?id=… to reply.
   useEffect(() => {
@@ -66,6 +71,7 @@ export default function DuelPage() {
     if (q.kind === "listen") void playEntry(q.entry);
   }, [q]);
 
+  if (paused) return <Paused back="/friends/" />;
   if (setup === null) return <Loading />;
   if (setup === "missing") {
     return (

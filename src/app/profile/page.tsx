@@ -7,6 +7,7 @@ import { TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
 import { useConsoleRole, useIsOwner } from "@/lib/owner";
+import { useSwitchOff } from "@/lib/notices";
 import { PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { useRecorderStatus } from "@/lib/recorder";
@@ -18,6 +19,7 @@ export default function Profile() {
   const account = useAccount();
   const isOwner = useIsOwner();
   const consoleRole = useConsoleRole();
+  const supporterOff = useSwitchOff("supporter");
   const [recorder] = useRecorderStatus();
   const { premium, unlockAll, available } = usePremium();
   const now = useNow();
@@ -73,7 +75,7 @@ export default function Profile() {
         </p>
       ) : null}
 
-      {SUPPORTER_ENABLED && (available || premium) ? (
+      {SUPPORTER_ENABLED && !supporterOff && (available || premium) ? (
         <Link
           href="/premium/"
           className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sun/60 bg-sun-soft p-4 active:translate-y-[2px]"

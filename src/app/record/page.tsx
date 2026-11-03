@@ -10,6 +10,8 @@ import { useAccount } from "@/lib/account";
 import { getCloud } from "@/lib/cloud";
 import { extFor, nextLines, pickMime, safeName, useRecorderStatus } from "@/lib/recorder";
 import { useStore } from "@/lib/store";
+import { useSwitchOff } from "@/lib/notices";
+import { Paused } from "@/components/Paused";
 
 const MAX_MS = 12_000;
 type Progress = { entry_id: string; mine: boolean; approved: boolean }[];
@@ -23,6 +25,7 @@ export default function RecordPage() {
   const [agree, setAgree] = useState(false);
   const [state, setState] = useState<"idle" | "recording" | "recorded" | "sending" | "sent" | "failed" | "denied">("idle");
   const [take, setTake] = useState<{ blob: Blob; ms: number; mime: string; url: string } | null>(null);
+  const paused = useSwitchOff("voices");
   const rec = useRef<{ mr: MediaRecorder; stream: MediaStream; started: number; timer: number } | null>(null);
 
   useEffect(() => {
@@ -42,6 +45,7 @@ export default function RecordPage() {
 
   useEffect(() => () => rec.current?.stream.getTracks().forEach((tr) => tr.stop()), []);
 
+  if (paused) return <Paused back="/profile/" />;
   if (user === undefined || (user && !status.loaded)) return <Loading />;
   if (!user || !status.isRecorder) {
     return (

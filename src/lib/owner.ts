@@ -10,7 +10,7 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "./account";
 import { getCloud } from "./cloud";
-import { isConsoleRole, type ConsoleRole, type StaffRole } from "./staff-roles";
+import { isConsoleRole, type ConsoleRole, type RiskyAction, type StaffRole } from "./staff-roles";
 
 export interface Overview {
   learners: number;
@@ -116,6 +116,31 @@ export interface AuditRow {
   who?: string;
 }
 
+export interface AnnouncementRow {
+  id: string;
+  title: Record<string, string>;
+  message: Record<string, string> | null;
+  starts_on: string;
+  ends_on: string;
+}
+export interface SwitchRow {
+  key: string;
+  is_off: boolean;
+  note: string | null;
+  updated_at: string;
+}
+export interface RequestRow {
+  id: number;
+  kind: RiskyAction;
+  target: string;
+  target_label: string;
+  reason: string;
+  requested_by: string;
+  requested_at: string;
+  status: "pending" | "approved" | "rejected";
+  decided_at: string | null;
+}
+
 export interface StaffRow {
   email: string;
   name: string;
@@ -161,6 +186,23 @@ export const owner = {
   saveStaff: (email: string, name: string, role: StaffRole, active: boolean) =>
     call<void>("owner_save_staff", { member_email: email, member_name: name, member_role: role, is_active: active }),
   removeStaff: (email: string) => call<void>("owner_remove_staff", { member_email: email }),
+  announcements: () => call<AnnouncementRow[]>("owner_announcements"),
+  saveAnnouncement: (a: Omit<AnnouncementRow, "id"> & { id: string | null }) =>
+    call<string>("owner_save_announcement", {
+      item: a.id,
+      item_title: a.title,
+      item_message: a.message,
+      item_start: a.starts_on,
+      item_end: a.ends_on,
+    }),
+  deleteAnnouncement: (id: string) => call<void>("owner_delete_announcement", { item: id }),
+  switches: () => call<SwitchRow[]>("owner_switches"),
+  setSwitch: (key: string, off: boolean, note: string | null) =>
+    call<void>("owner_set_switch", { switch_key: key, turn_off: off, switch_note: note }),
+  requestAction: (kind: RiskyAction, target: string, reason: string) =>
+    call<number>("owner_request_action", { action_kind: kind, action_target: target, action_reason: reason }),
+  pendingActions: () => call<RequestRow[]>("owner_pending_actions"),
+  decideAction: (id: number, approve: boolean) => call<void>("owner_decide_action", { request: id, approve }),
   audit: () => call<AuditRow[]>("owner_audit", { max_rows: 100 }),
   reports: (status: "open" | "all") => call<ReportRow[]>("owner_reports", { report_status: status, max_rows: 200 }),
   setReportStatus: (id: number, status: ReportRow["status"]) => call<void>("owner_set_report_status", { report: id, new_status: status }),

@@ -87,8 +87,19 @@ They create an ordinary account in the app with that email, then see **Profile �
 
 The database enforces this, not the screen. Anything not listed stays owner-only. The Log
 shows who did each action. Pause or remove a person and access ends immediately.
-Needs migration `20261103000000_staff_roles.sql` (you apply it) and
-`supabase/tests/staff_roles_test.sql` should print "STAFF TESTS PASSED (rolled back)".
+**Two-person rule.** Admins and support can't delete accounts or organisations (support can't
+suspend either). They press "Ask owner to…", give a reason, and it waits in the **Requests** tab
+until you approve. Approving does it at once.
+
+**Notices tab** (owner and admin): post an announcement shown on everyone's Learn screen, in
+up to five languages, between two dates; or **pause** friends, duels, voice recording,
+Supporter or "Report a problem" for everyone in an emergency. Apps check within an hour.
+A pause can only switch off what the app already has.
+
+Needs migrations `20261103000000_staff_roles.sql` then
+`20261103000100_notices_switches_approvals.sql` (you apply them, in that order). The tests
+`supabase/tests/staff_roles_test.sql` and `notices_switches_approvals_test.sql` should print
+"… TESTS PASSED (rolled back)".
 
 ## Part 4. Releases stay with you
 Only you (or your Claude session, with your key) build, sign and upload to Google Play. After
