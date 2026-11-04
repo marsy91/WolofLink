@@ -5,10 +5,10 @@ import { entry, line, question, tx } from "./helpers";
 export const entries = [
   // places-1
   entry("l.ker", "kër", ["house, home", "maison", "casa", "Haus", "casa"], { pic: "🏠" }),
-  entry("l.lekool", "lekool", ["school", "école", "escuela", "Schule", "scuola"], { pic: "🏫" }),
+  entry("l.lekool", "lekkool", ["school", "école", "escuela", "Schule", "scuola"], { pic: "🏫" }),
   entry("l.loppitaan", "loppitaan", ["hospital", "hôpital", "hospital", "Krankenhaus", "ospedale"], { pic: "🏥" }),
   entry("l.tali", "tali", ["road", "route", "carretera", "Straße", "strada"], { pic: "🛣️" }),
-  entry("l.garaas", "garaas", [
+  entry("l.garaas", "gaaraas", [
     "bus station",
     "gare routière",
     "estación de autobuses",
@@ -54,7 +54,7 @@ export const entries = [
   }),
   entry("l.fii", "fii", ["here", "ici", "aquí", "hier", "qui"]),
   entry("l.fale", "fale", ["there", "là-bas", "allí", "dort", "lì"]),
-  entry("l.cammoon", "càmmoñ", ["left", "gauche", "izquierda", "links", "sinistra"], { pic: "⬅️" }),
+  entry("l.cammoon", "càmmooñ", ["left", "gauche", "izquierda", "links", "sinistra"], { pic: "⬅️" }),
   entry("l.ndeyjoor", "ndeyjoor", ["right", "droite", "derecha", "rechts", "destra"], {
     pic: "➡️",
     note: [
@@ -93,7 +93,7 @@ export const entries = [
   }),
   entry("l.welo", "welo", ["bicycle", "vélo", "bicicleta", "Fahrrad", "bicicletta"], { pic: "🚲" }),
   entry("l.gaal", "gaal", ["boat, pirogue", "pirogue", "piragua", "Boot, Piroge", "piroga"], { pic: "🛶" }),
-  entry("l.roppalaan", "roppalaan", ["airplane", "avion", "avión", "Flugzeug", "aereo"], { pic: "✈️" }),
+  entry("l.roppalaan", "roppëlaan", ["airplane", "avion", "avión", "Flugzeug", "aereo"], { pic: "✈️" }),
   entry("l.ndakaaru", "Ndakaaru", ["Dakar", "Dakar", "Dakar", "Dakar", "Dakar"], {
     pic: "🏙️",
     note: [
