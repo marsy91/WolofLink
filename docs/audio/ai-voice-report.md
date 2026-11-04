@@ -18,7 +18,7 @@ placeholder until native speakers record the course; a human recording imported 
 
 ## Results
 
-- **682 lines**, 4208 takes in total.
+- **682 lines**, 4232 takes in total.
 - **572 lines passed** the automatic check; median error rate 20%.
 - **110 lines are flagged** below: the best take still did not match the text
   well, or its length looked wrong. They may be fine (the checker itself often misspells
@@ -80,10 +80,9 @@ still listen to every line before the app is promoted as having native audio.
 
 | File | Wolof | Heard by the checker | Error |
 |---|---|---|---|
-| `l.lekool.mp3` | **lekool** | ni koor | 60% |
+| `l.lekool.mp3` | **lekkool** | nekkoon | 40% |
 | `l.geej.mp3` | **géej** | jën | 67% |
 | `l.fale.mp3` | **fale** | foo më | 50% |
-| `l.cammoon.mp3` | **càmmoñ** | jammoo | 40% |
 | `l.ndeyjoor.mp3` | **ndeyjoor** | dëy tuor | 43% |
 | `l.jubal.mp3` | **Jubal** | juboo | 40% |
 | `l.sore.mp3` | **Dafa sore** | di fó sóór | 38% |
@@ -95,6 +94,7 @@ still listen to every line before the app is promoted as having native audio.
 
 | File | Wolof | Heard by the checker | Error |
 |---|---|---|---|
+| `t.alxames.mp3` | **alxemes** | aw xemmi | 43% |
 | `t.leegi.mp3` | **léegi** | lëlsi | 50% |
 | `t.at.mp3` | **at** | aañ | 50% |
 | `t.kannganew.mp3` | **Kañ ngay ñëw?** | kan gi ñu | 44% |

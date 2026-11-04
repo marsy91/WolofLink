@@ -5,13 +5,13 @@ import { entry, line, question, tx } from "./helpers";
 export const entries = [
   // compare-1
   entry("z.liimoogen", "Lii moo gën", ["This one is better", "Celui-ci est mieux", "Este es mejor", "Das hier ist besser", "Questo è meglio"]),
-  entry("z.genamag", "Kii moo gëna mag", ["This person is older", "Celui-ci est plus âgé", "Esta persona es mayor", "Diese Person ist älter", "Questa persona è più grande"], {
+  entry("z.genamag", "Kii moo gën a mag", ["This person is older", "Celui-ci est plus âgé", "Esta persona es mayor", "Diese Person ist älter", "Questa persona è più grande"], {
     note: [
-      "gëna before an adjective means “more”: gëna mag “older”, gëna yomb “cheaper”. You'll also see it written gën a.",
-      "gëna devant un adjectif veut dire « plus » : gëna mag « plus âgé », gëna yomb « moins cher ». On l'écrit aussi gën a.",
-      "gëna delante de un adjetivo significa «más»: gëna mag «mayor», gëna yomb «más barato». También se escribe gën a.",
-      "gëna vor einem Adjektiv heißt „mehr“: gëna mag „älter“, gëna yomb „billiger“. Man schreibt es auch gën a.",
-      "gëna davanti a un aggettivo vuol dire «più»: gëna mag «più grande», gëna yomb «più economico». Si scrive anche gën a.",
+      "gën a before an adjective means “more”: gën a mag “older”, gën a yomb “cheaper”. You'll also see it written gën a.",
+      "gën a devant un adjectif veut dire « plus » : gën a mag « plus âgé », gën a yomb « moins cher ». On l'écrit aussi gën a.",
+      "gën a delante de un adjetivo significa «más»: gën a mag «mayor», gën a yomb «más barato». También se escribe gën a.",
+      "gën a vor einem Adjektiv heißt „mehr“: gën a mag „älter“, gën a yomb „billiger“. Man schreibt es auch gën a.",
+      "gën a davanti a un aggettivo vuol dire «più»: gën a mag «più grande», gën a yomb «più economico». Si scrive anche gën a.",
     ],
   }),
   entry("z.gudd", "Dafa gudd", ["It's long", "C'est long", "Es largo", "Das ist lang", "È lungo"]),
@@ -21,9 +21,9 @@ export const entries = [
   // compare-2
   entry("z.ndakaarumag", "Ndakaaru dafa mag", ["Dakar is big", "Dakar est grand", "Dakar es grande", "Dakar ist groß", "Dakar è grande"]),
   entry("z.dekkbindaw", "Dëkk bi dafa ndaw", ["The town is small", "La ville est petite", "El pueblo es pequeño", "Der Ort ist klein", "Il paese è piccolo"]),
-  entry("z.genatang", "Tey dafa gëna tàng", ["It's hotter today", "Il fait plus chaud aujourd'hui", "Hoy hace más calor", "Heute ist es heißer", "Oggi fa più caldo"]),
-  entry("z.genayomb", "Lii moo gëna yomb", ["This one is cheaper", "Celui-ci est moins cher", "Este es más barato", "Das hier ist billiger", "Questo costa meno"]),
-  entry("z.genaseer", "Lii moo gëna seer", ["This one is more expensive", "Celui-ci est plus cher", "Este es más caro", "Das hier ist teurer", "Questo costa di più"]),
+  entry("z.genatang", "Tey dafa gën a tàng", ["It's hotter today", "Il fait plus chaud aujourd'hui", "Hoy hace más calor", "Heute ist es heißer", "Oggi fa più caldo"]),
+  entry("z.genayomb", "Lii moo gën a yomb", ["This one is cheaper", "Celui-ci est moins cher", "Este es más barato", "Das hier ist billiger", "Questo costa meno"]),
+  entry("z.genaseer", "Lii moo gën a seer", ["This one is more expensive", "Celui-ci est plus cher", "Este es más caro", "Das hier ist teurer", "Questo costa di più"]),
 ];
 
 export const unit: Unit = {
@@ -62,11 +62,11 @@ export const unit: Unit = {
       id: "compare-2",
       title: tx(["Places, weather and prices", "Lieux, météo et prix", "Lugares, tiempo y precios", "Orte, Wetter und Preise", "Luoghi, tempo e prezzi"]),
       tip: tx([
-        "Comparing prices is part of every market visit: point and say Lii moo gëna yomb? to ask for the cheaper one.",
-        "Comparer les prix fait partie de chaque visite au marché : montrez et dites Lii moo gëna yomb ? pour demander le moins cher.",
-        "Comparar precios es parte de cada visita al mercado: señala y di ¿Lii moo gëna yomb? para pedir el más barato.",
-        "Preise vergleichen gehört zu jedem Marktbesuch: zeig darauf und frag Lii moo gëna yomb?, um das Billigere zu finden.",
-        "Confrontare i prezzi fa parte di ogni visita al mercato: indica e chiedi Lii moo gëna yomb? per trovare quello più economico.",
+        "Comparing prices is part of every market visit: point and say Lii moo gën a yomb? to ask for the cheaper one.",
+        "Comparer les prix fait partie de chaque visite au marché : montrez et dites Lii moo gën a yomb ? pour demander le moins cher.",
+        "Comparar precios es parte de cada visita al mercado: señala y di ¿Lii moo gën a yomb? para pedir el más barato.",
+        "Preise vergleichen gehört zu jedem Marktbesuch: zeig darauf und frag Lii moo gën a yomb?, um das Billigere zu finden.",
+        "Confrontare i prezzi fa parte di ogni visita al mercato: indica e chiedi Lii moo gën a yomb? per trovare quello più economico.",
       ]),
       entries: ["z.ndakaarumag", "z.dekkbindaw", "z.genatang", "z.genayomb", "z.genaseer", "v.sedd"],
       exercises: [
@@ -75,7 +75,7 @@ export const unit: Unit = {
         { type: "match", entries: ["z.ndakaarumag", "z.dekkbindaw", "z.genatang", "v.sedd"] },
         { type: "listen", entry: "z.genayomb" },
         { type: "pick_wolof", entry: "z.genaseer" },
-        { type: "fill_blank", entry: "z.genayomb", blank: 3, options: ["yomb", "seer", "mag"] },
+        { type: "fill_blank", entry: "z.genayomb", blank: 4, options: ["yomb", "seer", "mag"] },
         { type: "build", entry: "z.dekkbindaw", distractors: ["mag", "lii"] },
         { type: "pick_meaning", entry: "z.genaseer" },
         { type: "pick_wolof", entry: "z.dekkbindaw" },
@@ -89,8 +89,8 @@ export const unit: Unit = {
     id: "story-compare",
     title: tx(["Which one is cheaper?", "Lequel est moins cher ?", "¿Cuál es más barato?", "Welches ist billiger?", "Quale costa meno?"]),
     lines: [
-      line("Fatou", "Lii moo gëna yomb?", ["Is this one cheaper?", "Celui-ci est moins cher ?", "¿Este es más barato?", "Ist das hier billiger?", "Questo costa meno?"]),
-      line("Moodu", "Déedéet, lii moo gëna seer.", ["No, this one is more expensive.", "Non, celui-ci est plus cher.", "No, este es más caro.", "Nein, das hier ist teurer.", "No, questo costa di più."]),
+      line("Fatou", "Lii moo gën a yomb?", ["Is this one cheaper?", "Celui-ci est moins cher ?", "¿Este es más barato?", "Ist das hier billiger?", "Questo costa meno?"]),
+      line("Moodu", "Déedéet, lii moo gën a seer.", ["No, this one is more expensive.", "Non, celui-ci est plus cher.", "No, este es más caro.", "Nein, das hier ist teurer.", "No, questo costa di più."]),
       line("Fatou", "Dafa seer lool! Mën nga ko wàññi?", ["It's very expensive! Can you lower the price?", "C'est très cher ! Tu peux baisser le prix ?", "¡Es muy caro! ¿Puedes bajar el precio?", "Das ist sehr teuer! Kannst du mit dem Preis runtergehen?", "È molto caro! Puoi abbassare il prezzo?"]),
       line("Moodu", "Juróomi téeméer la.", ["It's five hundred.", "C'est cinq cents.", "Son quinientos.", "Das macht fünfhundert.", "Sono cinquecento."]),
       line("Fatou", "Dafa rafet lool. Jërëjëf!", ["It's really beautiful. Thank you!", "C'est vraiment beau. Merci !", "Es precioso. ¡Gracias!", "Das ist wunderschön. Danke!", "È bellissimo. Grazie!"]),

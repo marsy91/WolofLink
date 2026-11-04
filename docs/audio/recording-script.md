@@ -266,10 +266,10 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
 | 161 | `l.ker.mp3` | **kër** | house, home / maison |  |
-| 162 | `l.lekool.mp3` | **lekool** | school / école |  |
+| 162 | `l.lekool.mp3` | **lekkool** | school / école |  |
 | 163 | `l.loppitaan.mp3` | **loppitaan** | hospital / hôpital |  |
 | 164 | `l.tali.mp3` | **tali** | road / route |  |
-| 165 | `l.garaas.mp3` | **garaas** | bus station / gare routière |  |
+| 165 | `l.garaas.mp3` | **gaaraas** | bus station / gare routière |  |
 | 166 | `l.bitig.mp3` | **bitig** | shop / boutique |  |
 | 167 | `l.geej.mp3` | **géej** | sea / mer |  |
 | 168 | `l.dekk.mp3` | **dëkk** | town, village / ville, village |  |
@@ -283,7 +283,7 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | 171 | `l.ana.mp3` | **Ana marse bi?** | Where is the market? / Où est le marché ? |  |
 | 172 | `l.fii.mp3` | **fii** | here / ici |  |
 | 173 | `l.fale.mp3` | **fale** | there / là-bas |  |
-| 174 | `l.cammoon.mp3` | **càmmoñ** | left / gauche |  |
+| 174 | `l.cammoon.mp3` | **càmmooñ** | left / gauche |  |
 | 175 | `l.ndeyjoor.mp3` | **ndeyjoor** | right / droite |  |
 | 176 | `l.jubal.mp3` | **Jubal** | Go straight on / Va tout droit |  |
 | 177 | `l.sore.mp3` | **Dafa sore** | It's far / C'est loin |  |
@@ -299,7 +299,7 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | 182 | `l.kaar.mp3` | **kaar** | minibus / car (minibus) |  |
 | 183 | `l.welo.mp3` | **welo** | bicycle / vélo |  |
 | 184 | `l.gaal.mp3` | **gaal** | boat, pirogue / pirogue |  |
-| 185 | `l.roppalaan.mp3` | **roppalaan** | airplane / avion |  |
+| 185 | `l.roppalaan.mp3` | **roppëlaan** | airplane / avion |  |
 | 186 | `l.ndakaaru.mp3` | **Ndakaaru** | Dakar / Dakar |  |
 | 187 | `l.demndakaaru.mp3` | **Dama bëgg dem Ndakaaru** | I want to go to Dakar / Je veux aller à Dakar |  |
 
@@ -323,7 +323,7 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | 194 | `t.altine.mp3` | **altine** | Monday / lundi |  |
 | 195 | `t.talaata.mp3` | **talaata** | Tuesday / mardi |  |
 | 196 | `t.allarba.mp3` | **àllarba** | Wednesday / mercredi |  |
-| 197 | `t.alxames.mp3` | **alxames** | Thursday / jeudi |  |
+| 197 | `t.alxames.mp3` | **alxemes** | Thursday / jeudi |  |
 | 198 | `t.ajjuma.mp3` | **àjjuma** | Friday / vendredi |  |
 | 199 | `t.gaawu.mp3` | **gaawu** | Saturday / samedi |  |
 | 200 | `t.dibeer.mp3` | **dibéer** | Sunday / dimanche |  |
@@ -486,7 +486,7 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 292 | `k.yewwu.mp3` | **Dama yewwu** | I wake up / Je me réveille |  |
+| 292 | `k.yewwu.mp3` | **Dama yeewu** | I wake up / Je me réveille |  |
 | 293 | `k.sangu.mp3` | **Maa ngi sangu** | I'm taking a shower / Je me lave |  |
 | 294 | `k.sol.mp3` | **Maa ngi sol sama yére** | I'm getting dressed / Je m'habille |  |
 | 295 | `k.foot.mp3` | **Maa ngi fóot** | I'm doing the laundry / Je fais la lessive |  |
@@ -849,7 +849,7 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
 | 473 | `z.liimoogen.mp3` | **Lii moo gën** | This one is better / Celui-ci est mieux |  |
-| 474 | `z.genamag.mp3` | **Kii moo gëna mag** | This person is older / Celui-ci est plus âgé |  |
+| 474 | `z.genamag.mp3` | **Kii moo gën a mag** | This person is older / Celui-ci est plus âgé |  |
 | 475 | `z.gudd.mp3` | **Dafa gudd** | It's long / C'est long |  |
 | 476 | `z.gatt.mp3` | **Dafa gàtt** | It's short / C'est court |  |
 | 477 | `z.rafetlool.mp3` | **Dafa rafet lool** | It's really beautiful / C'est vraiment beau |  |
@@ -860,16 +860,16 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 |---|---|---|---|---|
 | 478 | `z.ndakaarumag.mp3` | **Ndakaaru dafa mag** | Dakar is big / Dakar est grand |  |
 | 479 | `z.dekkbindaw.mp3` | **Dëkk bi dafa ndaw** | The town is small / La ville est petite |  |
-| 480 | `z.genatang.mp3` | **Tey dafa gëna tàng** | It's hotter today / Il fait plus chaud aujourd'hui |  |
-| 481 | `z.genayomb.mp3` | **Lii moo gëna yomb** | This one is cheaper / Celui-ci est moins cher |  |
-| 482 | `z.genaseer.mp3` | **Lii moo gëna seer** | This one is more expensive / Celui-ci est plus cher |  |
+| 480 | `z.genatang.mp3` | **Tey dafa gën a tàng** | It's hotter today / Il fait plus chaud aujourd'hui |  |
+| 481 | `z.genayomb.mp3` | **Lii moo gën a yomb** | This one is cheaper / Celui-ci est moins cher |  |
+| 482 | `z.genaseer.mp3` | **Lii moo gën a seer** | This one is more expensive / Celui-ci est plus cher |  |
 
 ### Dialogue: Which one is cheaper?
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 483 | `story-compare.1.mp3` | ***Fatou:* Lii moo gëna yomb?** | Is this one cheaper? / Celui-ci est moins cher ? |  |
-| 484 | `story-compare.2.mp3` | ***Moodu:* Déedéet, lii moo gëna seer.** | No, this one is more expensive. / Non, celui-ci est plus cher. |  |
+| 483 | `story-compare.1.mp3` | ***Fatou:* Lii moo gën a yomb?** | Is this one cheaper? / Celui-ci est moins cher ? |  |
+| 484 | `story-compare.2.mp3` | ***Moodu:* Déedéet, lii moo gën a seer.** | No, this one is more expensive. / Non, celui-ci est plus cher. |  |
 | 485 | `story-compare.3.mp3` | ***Fatou:* Dafa seer lool! Mën nga ko wàññi?** | It's very expensive! Can you lower the price? / C'est très cher ! Tu peux baisser le prix ? |  |
 | 486 | `story-compare.4.mp3` | ***Moodu:* Juróomi téeméer la.** | It's five hundred. / C'est cinq cents. |  |
 | 487 | `story-compare.5.mp3` | ***Fatou:* Dafa rafet lool. Jërëjëf!** | It's really beautiful. Thank you! / C'est vraiment beau. Merci ! |  |
@@ -978,14 +978,14 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | 563 | `pb.directions.ana-wanag-wi.mp3` | **Ana wanag wi?** | Where is the toilet? / Où sont les toilettes ? |  |
 | 564 | `pb.directions.ana-loppitaan-bi.mp3` | **Ana loppitaan bi?** | Where is the hospital? / Où est l'hôpital ? |  |
 | 565 | `pb.directions.ana-farmasi-bi.mp3` | **Ana farmasi bi?** | Where is the pharmacy? / Où est la pharmacie ? |  |
-| 566 | `pb.directions.ana-garaas-bi.mp3` | **Ana garaas bi?** | Where is the bus station? / Où est la gare routière ? |  |
+| 566 | `pb.directions.ana-gaaraas-bi.mp3` | **Ana gaaraas bi?** | Where is the bus station? / Où est la gare routière ? |  |
 | 567 | `pb.directions.fan-la-otel-bi-nekk.mp3` | **Fan la otel bi nekk?** | Where is the hotel? / Où se trouve l'hôtel ? |  |
 | 568 | `pb.directions.won-ma-yoon-wi.mp3` | **Won ma yoon wi** | Show me the way / Montre-moi le chemin |  |
 | 569 | `pb.directions.dama-reer.mp3` | **Dama réer** | I'm lost / Je suis perdu(e) |  |
 | 570 | `pb.directions.dafa-sore.mp3` | **Dafa sore?** | Is it far? / C'est loin ? |  |
 | 571 | `pb.directions.dafa-jege.mp3` | **Dafa jege** | It's near / C'est près |  |
 | 572 | `pb.directions.jubal.mp3` | **Jubal** | Go straight on / Va tout droit |  |
-| 573 | `pb.directions.jaddal-sa-cammon.mp3` | **Jàddal sa càmmoñ** | Turn left / Tourne à gauche |  |
+| 573 | `pb.directions.jaddal-sa-cammoon.mp3` | **Jàddal sa càmmooñ** | Turn left / Tourne à gauche |  |
 | 574 | `pb.directions.jaddal-sa-ndeyjoor.mp3` | **Jàddal sa ndeyjoor** | Turn right / Tourne à droite |  |
 | 575 | `pb.directions.fii.mp3` | **Fii** | Here / Ici |  |
 | 576 | `pb.directions.fale.mp3` | **Fale** | Over there / Là-bas |  |
@@ -1124,7 +1124,7 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | 669 | `pb.home.sama-doom.mp3` | **Sama doom** | My child / Mon enfant |  |
 | 670 | `pb.home.sama-ker.mp3` | **Sama kër** | My home / Ma maison |  |
 | 671 | `pb.home.newal-sama-ker.mp3` | **Ñëwal sama kër** | Come to my home / Viens chez moi |  |
-| 672 | `pb.home.dama-yewwu.mp3` | **Dama yewwu** | I wake up / Je me réveille |  |
+| 672 | `pb.home.dama-yeewu.mp3` | **Dama yeewu** | I wake up / Je me réveille |  |
 | 673 | `pb.home.dama-begg-nelaw.mp3` | **Dama bëgg nelaw** | I want to sleep / Je veux dormir |  |
 | 674 | `pb.home.maa-ngi-dem-liggeey.mp3` | **Maa ngi dem liggéey** | I'm going to work / Je vais au travail |  |
 

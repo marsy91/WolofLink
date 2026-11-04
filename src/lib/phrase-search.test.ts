@@ -23,7 +23,7 @@ describe("phrasebook content", () => {
   it("derives stable, file-safe ids", () => {
     expect(phraseSlug("Na nga def?")).toBe("na-nga-def");
     expect(phraseSlug("Ñaata la?")).toBe("naata-la");
-    expect(phraseSlug("Jàddal sa càmmoñ")).toBe("jaddal-sa-cammon");
+    expect(phraseSlug("Jàddal sa càmmooñ")).toBe("jaddal-sa-cammoon");
     for (const p of allPhrases) expect(p.id).toMatch(/^pb\.[a-z]+\.[a-z0-9-]+$/);
   });
 });

@@ -19,7 +19,7 @@ export const entries = [
   ]),
 
   // home-2
-  entry("k.yewwu", "Dama yewwu", ["I wake up", "Je me réveille", "Me despierto", "Ich wache auf", "Mi sveglio"]),
+  entry("k.yewwu", "Dama yeewu", ["I wake up", "Je me réveille", "Me despierto", "Ich wache auf", "Mi sveglio"]),
   entry("k.sangu", "Maa ngi sangu", ["I'm taking a shower", "Je me lave", "Me estoy duchando", "Ich dusche gerade", "Mi sto lavando"]),
   entry("k.sol", "Maa ngi sol sama yére", [
     "I'm getting dressed",

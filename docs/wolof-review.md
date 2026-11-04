@@ -124,6 +124,39 @@ Native check, please, before release:
    *Mënuma tey, waaye suba mën naa*.
 8. *Dëkk bi dafa ndaw*, *Ndakaaru dafa mag*, *Dafa rafet lool*, *Lii moo gën*.
 
+## Spelling check against a printed dictionary (November 2026)
+
+All Wolof words in the app were compared with the *Dictionnaire wolof-français*
+(Jean-Léopold Diouf, Karthala), which follows the official CLAD spelling. It was
+used only to check spellings; none of its text, definitions or examples are in the app.
+
+**Corrected** (the dictionary clearly spells them differently):
+
+| Was | Now | Meaning |
+| --- | --- | --- |
+| alxames | **alxemes** | Thursday |
+| garaas | **gaaraas** | garage, bus station |
+| lekool | **lekkool** | school |
+| yewwu | **yeewu** | to wake up |
+| roppalaan | **roppëlaan** | aeroplane |
+| càmmoñ | **càmmooñ** | the left |
+| gëna | **gën a** | "more" (written as two words 13 times in the dictionary, never joined) |
+
+**Confirmed as already correct:** àjjuma, àllarba, altine, dibéer, ndànk, déedéet,
+waaw, ceeb, maafe, dibi, kër, oto, jóge, làmb, màrse, wàññi (to lower a price),
+yóbbu, yónnee, jëkkër, fóot, ñaata, yéem (root of yéemu), ndeyjoor, soobee (the dictionary has
+*bu soobee Yàlla* "if God wills") and teraanga.
+
+**Still for the native speaker** (the dictionary doesn't settle them):
+1. *Maalekum salaam* / *Salaam aleekum*: the dictionary writes *Salaam-maalikum* / *Maalikum-salaam* (with an *i*).
+2. *Su Yàlla soobee*: the dictionary has *bu soobee Yàlla*. Which is the everyday form?
+3. *ndogu* (meal that breaks the fast): not in the dictionary.
+4. Loanwords not listed: *taksi*, *otel*, *farañse*, *angale*, *nimero*, *allo*, *milyoŋ*.
+5. *jërëjëf* (thank you): my text search did not find it in the dictionary (the scan may have misread the accents). Please confirm the spelling to teach.
+6. *dalal ak jàmm*, *joob*, *bërki-démb*, *jàddal* (imperative of "turn"): not found.
+7. In the dictionary, the example sentence under *jublu* translates *ci sa càmmooñ* as "à droite"
+   while the entry *càmmooñ* is defined as "la gauche". Please confirm left = *càmmooñ*, right = *ndeyjoor*.
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:
