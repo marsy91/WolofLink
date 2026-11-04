@@ -12,8 +12,8 @@
   --color-sand-3: #e6d3b5;
   --color-ink: #1b1a24;
   --color-muted: #5b5568;
-  --color-clay: #b9481f;
-  --color-clay-2: #93391a;
+  --color-clay: #a8421a;
+  --color-clay-2: #8a3517;
   --color-sun: #f2a93b;
   --color-sun-soft: #fde9c4;
   --color-sea: #0f6e72;
@@ -172,13 +172,13 @@ body {
   --color-night: #e8e6f6;
   --color-night-2: #c9c6ea;
   --color-night-3: #f5f4fb;
-  --color-clay: #d4643a;
-  --color-clay-2: #a84c28;
+  --color-clay: #b9481f;
+  --color-clay-2: #93391a;
   --color-sea: #2a9da0;
   --color-sea-2: #1d7c7f;
-  --color-berry: #e0554b;
-  --color-berry-2: #b33a31;
-  --color-dusk: #b46aa3;
+  --color-berry: #c9453b;
+  --color-berry-2: #a8352c;
+  --color-dusk: #9a4f89;
   --color-sun-soft: #3b3018;
   --color-sea-soft: #12343a;
   --color-berry-soft: #3d1d1f;
@@ -198,6 +198,12 @@ body {
   --color-sun-soft: #37361a;
   --color-sea-soft: #12301f;
 }
+/* Brand colours used as TEXT on dark surfaces need to be lighter than when they are a
+   background under white text (WCAG AA 4.5:1). Not for the flag theme, which has its own. */
+:root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-clay { color: #e8825a; }
+:root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-dusk { color: #d6a3ca; }
+:root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-sea { color: #52c7ca; }
+:root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-berry { color: #f58e84; }
 :root[data-mode="dark"] .bg-white { background-color: #1a1e38; }
 :root[data-mode="dark"] .bg-white\/50 { background-color: rgb(26 30 56 / 0.5); }
 :root[data-mode="dark"] .text-white { color: #ffffff; }

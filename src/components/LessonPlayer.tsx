@@ -386,7 +386,7 @@ export function LessonPlayer(props: Props) {
           label={t("lesson.progress", { n: session.index + 1, total: session.queue.length })}
         />
         {session.mode === "lesson" ? (
-          <span className="flex items-center gap-1 font-display font-extrabold text-sea" aria-label={t("stats.drops", { n: session.drops })}>
+          <span className="flex items-center gap-1 font-display font-extrabold text-sea" role="img" aria-label={t("stats.drops", { n: session.drops })}>
             <IconDrop size={22} filled />
             {Number.isFinite(session.drops) ? session.drops : "∞"}
           </span>

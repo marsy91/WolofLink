@@ -40,9 +40,9 @@ export default function Learn() {
       <SeasonBanner />
       <NudgeBanner />
       <section className="mb-6 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
-        <p className="mb-1 font-display text-xl font-extrabold text-night">
+        <h1 className="mb-1 font-display text-xl font-extrabold text-night">
           {name ? `Salaam aleekum, ${name}!` : "Salaam aleekum!"}
-        </p>
+        </h1>
         <p className="mb-3 text-sm text-muted">
           {today >= goal ? t("goal.met") : t("goal.progress", { x: today, y: goal })}
         </p>
