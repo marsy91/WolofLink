@@ -163,7 +163,7 @@ export default function Practice() {
         <h2 id="drops-h" className="mb-2 font-display text-lg font-extrabold text-night">
           {t("drops.title")}
         </h2>
-        <div className="mb-2 flex gap-1.5 text-sea" aria-label={t("stats.drops", { n: fresh.drops.count })}>
+        <div className="mb-2 flex gap-1.5 text-sea" role="img" aria-label={t("stats.drops", { n: fresh.drops.count })}>
           {Array.from({ length: MAX_DROPS }, (_, i) => (
             <IconDrop key={i} size={30} filled={i < fresh.drops.count} className={i < fresh.drops.count ? "" : "text-sand-3"} />
           ))}
