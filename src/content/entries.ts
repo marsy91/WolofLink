@@ -1,5 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
-import type { Entry } from "./types";
+import type { Entry, Unit } from "./types";
+import { dataUnitModules } from "./units-data";
+import { visibleModules } from "./unit-source";
 import * as u1 from "./units/u1-greetings";
 import * as u2 from "./units/u2-numbers";
 import * as u3 from "./units/u3-food";
@@ -36,7 +38,10 @@ import * as u24 from "./units/u24-compare";
  * Recorded audio does not exist yet; when it does, add `audio:
  * "audio/wo/<id>.mp3"` to an entry and drop the file in public/audio/wo/.
  */
-export const unitModules = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22, u23, u24];
+const allModules: { entries: Entry[]; unit: Unit }[] = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22, u23, u24, ...dataUnitModules];
+
+/** Draft units (new, awaiting a native-speaker review) only appear in builds made with NEXT_PUBLIC_DRAFT_UNITS=on. */
+export const unitModules = visibleModules(allModules, process.env.NEXT_PUBLIC_DRAFT_UNITS === "on");
 
 const list: Entry[] = unitModules.flatMap((m) => m.entries);
 

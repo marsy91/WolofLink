@@ -115,6 +115,8 @@ export interface Unit {
   /** Accent colour token for the unit banner. */
   tone: "sun" | "clay" | "sea" | "dusk";
   lessons: Lesson[];
+  /** Not shown to learners until approved: remove this to release the unit. */
+  draft?: boolean;
   /** Unlocks once every lesson in the unit is done. */
   story?: Story;
 }
