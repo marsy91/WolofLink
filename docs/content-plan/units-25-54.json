@@ -1,0 +1,5282 @@
+[
+ {
+  "unit": "u25",
+  "title": {
+   "en": "Clothes shopping",
+   "fr": "Acheter des vêtements"
+  },
+  "focus": {
+   "en": "Colours and sizes after the noun; asking to try something on; 'too' + adjective.",
+   "fr": "Couleurs et tailles après le nom ; demander à essayer ; « trop » + adjectif."
+  },
+  "lessons": [
+   {
+    "id": "u25-1",
+    "title": {
+     "en": "Trying things on",
+     "fr": "Essayer"
+    },
+    "items": [
+     {
+      "id": "u25.1.01",
+      "en": "a shirt",
+      "fr": "une chemise"
+     },
+     {
+      "id": "u25.1.02",
+      "en": "trousers",
+      "fr": "un pantalon"
+     },
+     {
+      "id": "u25.1.03",
+      "en": "a dress",
+      "fr": "une robe"
+     },
+     {
+      "id": "u25.1.04",
+      "en": "shoes",
+      "fr": "des chaussures"
+     },
+     {
+      "id": "u25.1.05",
+      "en": "a bigger size",
+      "fr": "une taille plus grande"
+     },
+     {
+      "id": "u25.1.06",
+      "en": "Can I try it on?",
+      "fr": "Je peux l'essayer ?"
+     },
+     {
+      "id": "u25.1.07",
+      "en": "It's too small",
+      "fr": "C'est trop petit"
+     },
+     {
+      "id": "u25.1.08",
+      "en": "It's too big",
+      "fr": "C'est trop grand"
+     },
+     {
+      "id": "u25.1.09",
+      "en": "It fits me well",
+      "fr": "Ça me va bien"
+     },
+     {
+      "id": "u25.1.10",
+      "en": "Do you have it in blue?",
+      "fr": "Vous l'avez en bleu ?"
+     }
+    ]
+   },
+   {
+    "id": "u25-2",
+    "title": {
+     "en": "At the tailor",
+     "fr": "Chez le tailleur"
+    },
+    "items": [
+     {
+      "id": "u25.2.01",
+      "en": "a tailor",
+      "fr": "un tailleur"
+     },
+     {
+      "id": "u25.2.02",
+      "en": "fabric",
+      "fr": "du tissu"
+     },
+     {
+      "id": "u25.2.03",
+      "en": "Can you make me a boubou?",
+      "fr": "Vous pouvez me coudre un boubou ?"
+     },
+     {
+      "id": "u25.2.04",
+      "en": "When will it be ready?",
+      "fr": "Quand sera-t-il prêt ?"
+     },
+     {
+      "id": "u25.2.05",
+      "en": "Take my measurements",
+      "fr": "Prenez mes mesures"
+     },
+     {
+      "id": "u25.2.06",
+      "en": "Make it a little longer",
+      "fr": "Faites-le un peu plus long"
+     },
+     {
+      "id": "u25.2.07",
+      "en": "I want it for the wedding",
+      "fr": "Je le veux pour le mariage"
+     },
+     {
+      "id": "u25.2.08",
+      "en": "How much for the sewing?",
+      "fr": "Combien pour la couture ?"
+     },
+     {
+      "id": "u25.2.09",
+      "en": "Come back on Friday",
+      "fr": "Revenez vendredi"
+     },
+     {
+      "id": "u25.2.10",
+      "en": "It's very well made",
+      "fr": "C'est très bien fait"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u25",
+   "title": {
+    "en": "At the tailor's",
+    "fr": "Chez le tailleur"
+   },
+   "lines": [
+    {
+     "id": "u25.d.01",
+     "speaker": "Awa",
+     "en": "Good morning. Can you make me a boubou?",
+     "fr": "Bonjour. Vous pouvez me coudre un boubou ?"
+    },
+    {
+     "id": "u25.d.02",
+     "speaker": "Tailor",
+     "en": "Yes. Do you have the fabric?",
+     "fr": "Oui. Vous avez le tissu ?"
+    },
+    {
+     "id": "u25.d.03",
+     "speaker": "Awa",
+     "en": "Yes, here it is. I want it for the wedding.",
+     "fr": "Oui, le voici. Je le veux pour le mariage."
+    },
+    {
+     "id": "u25.d.04",
+     "speaker": "Tailor",
+     "en": "When is the wedding?",
+     "fr": "C'est quand, le mariage ?"
+    },
+    {
+     "id": "u25.d.05",
+     "speaker": "Awa",
+     "en": "Next Saturday.",
+     "fr": "Samedi prochain."
+    },
+    {
+     "id": "u25.d.06",
+     "speaker": "Tailor",
+     "en": "Come back on Friday. It will be ready.",
+     "fr": "Revenez vendredi. Il sera prêt."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u26",
+  "title": {
+   "en": "At the restaurant",
+   "fr": "Au restaurant"
+  },
+  "focus": {
+   "en": "Polite requests with 'I'd like'; 'some more'; asking for the bill.",
+   "fr": "Demandes polies avec « je voudrais » ; « encore » ; demander l'addition."
+  },
+  "lessons": [
+   {
+    "id": "u26-1",
+    "title": {
+     "en": "Ordering",
+     "fr": "Commander"
+    },
+    "items": [
+     {
+      "id": "u26.1.01",
+      "en": "the menu",
+      "fr": "le menu"
+     },
+     {
+      "id": "u26.1.02",
+      "en": "I'd like rice with fish",
+      "fr": "Je voudrais du riz au poisson"
+     },
+     {
+      "id": "u26.1.03",
+      "en": "What do you recommend?",
+      "fr": "Qu'est-ce que vous conseillez ?"
+     },
+     {
+      "id": "u26.1.04",
+      "en": "Without chilli, please",
+      "fr": "Sans piment, s'il vous plaît"
+     },
+     {
+      "id": "u26.1.05",
+      "en": "A bottle of water",
+      "fr": "Une bouteille d'eau"
+     },
+     {
+      "id": "u26.1.06",
+      "en": "A glass of juice",
+      "fr": "Un verre de jus"
+     },
+     {
+      "id": "u26.1.07",
+      "en": "Is it ready?",
+      "fr": "C'est prêt ?"
+     },
+     {
+      "id": "u26.1.08",
+      "en": "It's delicious",
+      "fr": "C'est délicieux"
+     },
+     {
+      "id": "u26.1.09",
+      "en": "A little more bread",
+      "fr": "Encore un peu de pain"
+     },
+     {
+      "id": "u26.1.10",
+      "en": "I'm vegetarian",
+      "fr": "Je suis végétarien"
+     }
+    ]
+   },
+   {
+    "id": "u26-2",
+    "title": {
+     "en": "Paying and leaving",
+     "fr": "Payer et partir"
+    },
+    "items": [
+     {
+      "id": "u26.2.01",
+      "en": "The bill, please",
+      "fr": "L'addition, s'il vous plaît"
+     },
+     {
+      "id": "u26.2.02",
+      "en": "Can I pay by phone?",
+      "fr": "Je peux payer par téléphone ?"
+     },
+     {
+      "id": "u26.2.03",
+      "en": "Keep the change",
+      "fr": "Gardez la monnaie"
+     },
+     {
+      "id": "u26.2.04",
+      "en": "It was very good",
+      "fr": "C'était très bon"
+     },
+     {
+      "id": "u26.2.05",
+      "en": "We are four",
+      "fr": "Nous sommes quatre"
+     },
+     {
+      "id": "u26.2.06",
+      "en": "Is this table free?",
+      "fr": "Cette table est libre ?"
+     },
+     {
+      "id": "u26.2.07",
+      "en": "Where are the toilets?",
+      "fr": "Où sont les toilettes ?"
+     },
+     {
+      "id": "u26.2.08",
+      "en": "We'll come back",
+      "fr": "Nous reviendrons"
+     },
+     {
+      "id": "u26.2.09",
+      "en": "Take it away",
+      "fr": "À emporter"
+     },
+     {
+      "id": "u26.2.10",
+      "en": "Eat here",
+      "fr": "Sur place"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u26",
+   "title": {
+    "en": "Lunch in town",
+    "fr": "Déjeuner en ville"
+   },
+   "lines": [
+    {
+     "id": "u26.d.01",
+     "speaker": "Waiter",
+     "en": "Welcome! How many are you?",
+     "fr": "Bienvenue ! Vous êtes combien ?"
+    },
+    {
+     "id": "u26.d.02",
+     "speaker": "Moodu",
+     "en": "We are two. Is this table free?",
+     "fr": "Nous sommes deux. Cette table est libre ?"
+    },
+    {
+     "id": "u26.d.03",
+     "speaker": "Waiter",
+     "en": "Yes. What would you like?",
+     "fr": "Oui. Qu'est-ce que vous voulez ?"
+    },
+    {
+     "id": "u26.d.04",
+     "speaker": "Moodu",
+     "en": "I'd like rice with fish, without chilli.",
+     "fr": "Je voudrais du riz au poisson, sans piment."
+    },
+    {
+     "id": "u26.d.05",
+     "speaker": "Waiter",
+     "en": "And to drink?",
+     "fr": "Et à boire ?"
+    },
+    {
+     "id": "u26.d.06",
+     "speaker": "Moodu",
+     "en": "A bottle of water, please.",
+     "fr": "Une bouteille d'eau, s'il vous plaît."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u27",
+  "title": {
+   "en": "Cooking at home",
+   "fr": "Cuisiner à la maison"
+  },
+  "focus": {
+   "en": "Imperatives for instructions; sequence words 'first', 'then', 'after that'.",
+   "fr": "Impératifs pour les consignes ; « d'abord », « ensuite », « après »."
+  },
+  "lessons": [
+   {
+    "id": "u27-1",
+    "title": {
+     "en": "In the kitchen",
+     "fr": "Dans la cuisine"
+    },
+    "items": [
+     {
+      "id": "u27.1.01",
+      "en": "an onion",
+      "fr": "un oignon"
+     },
+     {
+      "id": "u27.1.02",
+      "en": "oil",
+      "fr": "de l'huile"
+     },
+     {
+      "id": "u27.1.03",
+      "en": "salt",
+      "fr": "du sel"
+     },
+     {
+      "id": "u27.1.04",
+      "en": "a pot",
+      "fr": "une marmite"
+     },
+     {
+      "id": "u27.1.05",
+      "en": "the fire, the stove",
+      "fr": "le feu, le réchaud"
+     },
+     {
+      "id": "u27.1.06",
+      "en": "Cut the onions",
+      "fr": "Coupe les oignons"
+     },
+     {
+      "id": "u27.1.07",
+      "en": "Wash the rice",
+      "fr": "Lave le riz"
+     },
+     {
+      "id": "u27.1.08",
+      "en": "Add some water",
+      "fr": "Ajoute de l'eau"
+     },
+     {
+      "id": "u27.1.09",
+      "en": "Let it cook slowly",
+      "fr": "Laisse cuire doucement"
+     },
+     {
+      "id": "u27.1.10",
+      "en": "Taste it",
+      "fr": "Goûte"
+     }
+    ]
+   },
+   {
+    "id": "u27-2",
+    "title": {
+     "en": "Making a meal",
+     "fr": "Préparer un repas"
+    },
+    "items": [
+     {
+      "id": "u27.2.01",
+      "en": "First",
+      "fr": "D'abord"
+     },
+     {
+      "id": "u27.2.02",
+      "en": "Then",
+      "fr": "Ensuite"
+     },
+     {
+      "id": "u27.2.03",
+      "en": "When it boils",
+      "fr": "Quand ça bout"
+     },
+     {
+      "id": "u27.2.04",
+      "en": "It's burning!",
+      "fr": "Ça brûle !"
+     },
+     {
+      "id": "u27.2.05",
+      "en": "It needs more salt",
+      "fr": "Il faut plus de sel"
+     },
+     {
+      "id": "u27.2.06",
+      "en": "The food is ready",
+      "fr": "Le repas est prêt"
+     },
+     {
+      "id": "u27.2.07",
+      "en": "Call everyone to eat",
+      "fr": "Appelle tout le monde à manger"
+     },
+     {
+      "id": "u27.2.08",
+      "en": "Who cooked today?",
+      "fr": "Qui a cuisiné aujourd'hui ?"
+     },
+     {
+      "id": "u27.2.09",
+      "en": "Teach me how to make it",
+      "fr": "Apprends-moi à le faire"
+     },
+     {
+      "id": "u27.2.10",
+      "en": "I'll do the dishes",
+      "fr": "Je fais la vaisselle"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u27",
+   "title": {
+    "en": "Learning to cook",
+    "fr": "Apprendre à cuisiner"
+   },
+   "lines": [
+    {
+     "id": "u27.d.01",
+     "speaker": "Fatou",
+     "en": "Teach me how to make mafé.",
+     "fr": "Apprends-moi à faire le mafé."
+    },
+    {
+     "id": "u27.d.02",
+     "speaker": "Grandmother",
+     "en": "First, cut the onions.",
+     "fr": "D'abord, coupe les oignons."
+    },
+    {
+     "id": "u27.d.03",
+     "speaker": "Fatou",
+     "en": "Then?",
+     "fr": "Et ensuite ?"
+    },
+    {
+     "id": "u27.d.04",
+     "speaker": "Grandmother",
+     "en": "Add the oil and let it cook slowly.",
+     "fr": "Ajoute l'huile et laisse cuire doucement."
+    },
+    {
+     "id": "u27.d.05",
+     "speaker": "Fatou",
+     "en": "Taste it. Does it need more salt?",
+     "fr": "Goûte. Il faut plus de sel ?"
+    },
+    {
+     "id": "u27.d.06",
+     "speaker": "Grandmother",
+     "en": "No, it's good. Call everyone to eat.",
+     "fr": "Non, c'est bon. Appelle tout le monde à manger."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u28",
+  "title": {
+   "en": "Getting around town",
+   "fr": "Se déplacer en ville"
+  },
+  "focus": {
+   "en": "'To', 'from', 'until'; asking 'which one'; giving short directions.",
+   "fr": "« à », « de », « jusqu'à » ; demander « lequel » ; donner des directions."
+  },
+  "lessons": [
+   {
+    "id": "u28-1",
+    "title": {
+     "en": "Buses and taxis",
+     "fr": "Bus et taxis"
+    },
+    "items": [
+     {
+      "id": "u28.1.01",
+      "en": "the bus stop",
+      "fr": "l'arrêt de bus"
+     },
+     {
+      "id": "u28.1.02",
+      "en": "a shared minibus",
+      "fr": "un minibus collectif"
+     },
+     {
+      "id": "u28.1.03",
+      "en": "Does this bus go to the market?",
+      "fr": "Ce bus va au marché ?"
+     },
+     {
+      "id": "u28.1.04",
+      "en": "Stop here, please",
+      "fr": "Arrêtez-vous ici, s'il vous plaît"
+     },
+     {
+      "id": "u28.1.05",
+      "en": "How much to the airport?",
+      "fr": "Combien jusqu'à l'aéroport ?"
+     },
+     {
+      "id": "u28.1.06",
+      "en": "That's too much",
+      "fr": "C'est trop cher"
+     },
+     {
+      "id": "u28.1.07",
+      "en": "I'm in a hurry",
+      "fr": "Je suis pressé"
+     },
+     {
+      "id": "u28.1.08",
+      "en": "Drive slowly",
+      "fr": "Roulez doucement"
+     },
+     {
+      "id": "u28.1.09",
+      "en": "I'm getting off here",
+      "fr": "Je descends ici"
+     },
+     {
+      "id": "u28.1.10",
+      "en": "Is it far?",
+      "fr": "C'est loin ?"
+     }
+    ]
+   },
+   {
+    "id": "u28-2",
+    "title": {
+     "en": "Finding the way",
+     "fr": "Trouver son chemin"
+    },
+    "items": [
+     {
+      "id": "u28.2.01",
+      "en": "Go straight on",
+      "fr": "Allez tout droit"
+     },
+     {
+      "id": "u28.2.02",
+      "en": "Turn at the mosque",
+      "fr": "Tournez à la mosquée"
+     },
+     {
+      "id": "u28.2.03",
+      "en": "It's next to the pharmacy",
+      "fr": "C'est à côté de la pharmacie"
+     },
+     {
+      "id": "u28.2.04",
+      "en": "It's opposite the school",
+      "fr": "C'est en face de l'école"
+     },
+     {
+      "id": "u28.2.05",
+      "en": "Behind the market",
+      "fr": "Derrière le marché"
+     },
+     {
+      "id": "u28.2.06",
+      "en": "I'm lost",
+      "fr": "Je suis perdu"
+     },
+     {
+      "id": "u28.2.07",
+      "en": "Can you show me?",
+      "fr": "Vous pouvez me montrer ?"
+     },
+     {
+      "id": "u28.2.08",
+      "en": "Which street?",
+      "fr": "Quelle rue ?"
+     },
+     {
+      "id": "u28.2.09",
+      "en": "It's two minutes on foot",
+      "fr": "C'est à deux minutes à pied"
+     },
+     {
+      "id": "u28.2.10",
+      "en": "Ask over there",
+      "fr": "Demandez là-bas"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u28",
+   "title": {
+    "en": "Lost in town",
+    "fr": "Perdu en ville"
+   },
+   "lines": [
+    {
+     "id": "u28.d.01",
+     "speaker": "Paul",
+     "en": "Excuse me, I'm lost. Where is the pharmacy?",
+     "fr": "Excusez-moi, je suis perdu. Où est la pharmacie ?"
+    },
+    {
+     "id": "u28.d.02",
+     "speaker": "Woman",
+     "en": "Go straight on and turn at the mosque.",
+     "fr": "Allez tout droit et tournez à la mosquée."
+    },
+    {
+     "id": "u28.d.03",
+     "speaker": "Paul",
+     "en": "Is it far?",
+     "fr": "C'est loin ?"
+    },
+    {
+     "id": "u28.d.04",
+     "speaker": "Woman",
+     "en": "No, it's two minutes on foot.",
+     "fr": "Non, c'est à deux minutes à pied."
+    },
+    {
+     "id": "u28.d.05",
+     "speaker": "Paul",
+     "en": "Is it next to the school?",
+     "fr": "C'est à côté de l'école ?"
+    },
+    {
+     "id": "u28.d.06",
+     "speaker": "Woman",
+     "en": "No, it's opposite the school.",
+     "fr": "Non, c'est en face de l'école."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u29",
+  "title": {
+   "en": "Travel and hotels",
+   "fr": "Voyages et hôtels"
+  },
+  "focus": {
+   "en": "Dates and durations ('for two nights', 'since Monday'); requests with 'is there…?'.",
+   "fr": "Dates et durées (« pour deux nuits », « depuis lundi ») ; « il y a… ? »."
+  },
+  "lessons": [
+   {
+    "id": "u29-1",
+    "title": {
+     "en": "At the hotel",
+     "fr": "À l'hôtel"
+    },
+    "items": [
+     {
+      "id": "u29.1.01",
+      "en": "a room",
+      "fr": "une chambre"
+     },
+     {
+      "id": "u29.1.02",
+      "en": "Is there a free room?",
+      "fr": "Il y a une chambre libre ?"
+     },
+     {
+      "id": "u29.1.03",
+      "en": "For two nights",
+      "fr": "Pour deux nuits"
+     },
+     {
+      "id": "u29.1.04",
+      "en": "With air conditioning",
+      "fr": "Avec climatisation"
+     },
+     {
+      "id": "u29.1.05",
+      "en": "Is breakfast included?",
+      "fr": "Le petit-déjeuner est compris ?"
+     },
+     {
+      "id": "u29.1.06",
+      "en": "The key",
+      "fr": "La clé"
+     },
+     {
+      "id": "u29.1.07",
+      "en": "There is no water",
+      "fr": "Il n'y a pas d'eau"
+     },
+     {
+      "id": "u29.1.08",
+      "en": "The light doesn't work",
+      "fr": "La lumière ne marche pas"
+     },
+     {
+      "id": "u29.1.09",
+      "en": "What time must I leave?",
+      "fr": "À quelle heure dois-je partir ?"
+     },
+     {
+      "id": "u29.1.10",
+      "en": "I'd like to pay",
+      "fr": "Je voudrais payer"
+     }
+    ]
+   },
+   {
+    "id": "u29-2",
+    "title": {
+     "en": "Trips",
+     "fr": "Excursions"
+    },
+    "items": [
+     {
+      "id": "u29.2.01",
+      "en": "a ticket",
+      "fr": "un billet"
+     },
+     {
+      "id": "u29.2.02",
+      "en": "the ferry",
+      "fr": "le bateau, le ferry"
+     },
+     {
+      "id": "u29.2.03",
+      "en": "the island",
+      "fr": "l'île"
+     },
+     {
+      "id": "u29.2.04",
+      "en": "When does it leave?",
+      "fr": "Il part quand ?"
+     },
+     {
+      "id": "u29.2.05",
+      "en": "When does it arrive?",
+      "fr": "Il arrive quand ?"
+     },
+     {
+      "id": "u29.2.06",
+      "en": "I'd like to visit the village",
+      "fr": "Je voudrais visiter le village"
+     },
+     {
+      "id": "u29.2.07",
+      "en": "Is there a guide?",
+      "fr": "Il y a un guide ?"
+     },
+     {
+      "id": "u29.2.08",
+      "en": "We're going to the coast",
+      "fr": "Nous allons à la côte"
+     },
+     {
+      "id": "u29.2.09",
+      "en": "Have a good trip!",
+      "fr": "Bon voyage !"
+     },
+     {
+      "id": "u29.2.10",
+      "en": "I arrived yesterday",
+      "fr": "Je suis arrivé hier"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u29",
+   "title": {
+    "en": "A room for two nights",
+    "fr": "Une chambre pour deux nuits"
+   },
+   "lines": [
+    {
+     "id": "u29.d.01",
+     "speaker": "Anna",
+     "en": "Good evening. Is there a free room?",
+     "fr": "Bonsoir. Il y a une chambre libre ?"
+    },
+    {
+     "id": "u29.d.02",
+     "speaker": "Receptionist",
+     "en": "Yes. For how many nights?",
+     "fr": "Oui. Pour combien de nuits ?"
+    },
+    {
+     "id": "u29.d.03",
+     "speaker": "Anna",
+     "en": "For two nights. Is breakfast included?",
+     "fr": "Pour deux nuits. Le petit-déjeuner est compris ?"
+    },
+    {
+     "id": "u29.d.04",
+     "speaker": "Receptionist",
+     "en": "Yes, it's included. Here is the key.",
+     "fr": "Oui, il est compris. Voici la clé."
+    },
+    {
+     "id": "u29.d.05",
+     "speaker": "Anna",
+     "en": "Thank you. What time must I leave?",
+     "fr": "Merci. À quelle heure dois-je partir ?"
+    },
+    {
+     "id": "u29.d.06",
+     "speaker": "Receptionist",
+     "en": "Before noon. Have a good stay!",
+     "fr": "Avant midi. Bon séjour !"
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u30",
+  "title": {
+   "en": "At the pharmacy",
+   "fr": "À la pharmacie"
+  },
+  "focus": {
+   "en": "Body + 'hurts'; 'since' + time; how often ('twice a day').",
+   "fr": "Partie du corps + « avoir mal » ; « depuis » ; fréquence (« deux fois par jour »)."
+  },
+  "lessons": [
+   {
+    "id": "u30-1",
+    "title": {
+     "en": "Symptoms",
+     "fr": "Symptômes"
+    },
+    "items": [
+     {
+      "id": "u30.1.01",
+      "en": "I have a headache",
+      "fr": "J'ai mal à la tête"
+     },
+     {
+      "id": "u30.1.02",
+      "en": "My stomach hurts",
+      "fr": "J'ai mal au ventre"
+     },
+     {
+      "id": "u30.1.03",
+      "en": "I have a fever",
+      "fr": "J'ai de la fièvre"
+     },
+     {
+      "id": "u30.1.04",
+      "en": "I'm coughing",
+      "fr": "Je tousse"
+     },
+     {
+      "id": "u30.1.05",
+      "en": "I feel dizzy",
+      "fr": "J'ai des vertiges"
+     },
+     {
+      "id": "u30.1.06",
+      "en": "Since yesterday",
+      "fr": "Depuis hier"
+     },
+     {
+      "id": "u30.1.07",
+      "en": "For three days",
+      "fr": "Depuis trois jours"
+     },
+     {
+      "id": "u30.1.08",
+      "en": "I can't sleep",
+      "fr": "Je n'arrive pas à dormir"
+     },
+     {
+      "id": "u30.1.09",
+      "en": "I'm allergic",
+      "fr": "Je suis allergique"
+     },
+     {
+      "id": "u30.1.10",
+      "en": "It's getting better",
+      "fr": "Ça va mieux"
+     }
+    ]
+   },
+   {
+    "id": "u30-2",
+    "title": {
+     "en": "Medicine",
+     "fr": "Médicaments"
+    },
+    "items": [
+     {
+      "id": "u30.2.01",
+      "en": "medicine",
+      "fr": "un médicament"
+     },
+     {
+      "id": "u30.2.02",
+      "en": "a tablet",
+      "fr": "un comprimé"
+     },
+     {
+      "id": "u30.2.03",
+      "en": "Twice a day",
+      "fr": "Deux fois par jour"
+     },
+     {
+      "id": "u30.2.04",
+      "en": "After eating",
+      "fr": "Après le repas"
+     },
+     {
+      "id": "u30.2.05",
+      "en": "Before sleeping",
+      "fr": "Avant de dormir"
+     },
+     {
+      "id": "u30.2.06",
+      "en": "Do I need a prescription?",
+      "fr": "Il faut une ordonnance ?"
+     },
+     {
+      "id": "u30.2.07",
+      "en": "Something for a cough",
+      "fr": "Quelque chose contre la toux"
+     },
+     {
+      "id": "u30.2.08",
+      "en": "Mosquito repellent",
+      "fr": "Un produit anti-moustiques"
+     },
+     {
+      "id": "u30.2.09",
+      "en": "Drink a lot of water",
+      "fr": "Buvez beaucoup d'eau"
+     },
+     {
+      "id": "u30.2.10",
+      "en": "Rest",
+      "fr": "Reposez-vous"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u30",
+   "title": {
+    "en": "A cough",
+    "fr": "Une toux"
+   },
+   "lines": [
+    {
+     "id": "u30.d.01",
+     "speaker": "Pharmacist",
+     "en": "Good morning. How can I help?",
+     "fr": "Bonjour. Je peux vous aider ?"
+    },
+    {
+     "id": "u30.d.02",
+     "speaker": "Ibou",
+     "en": "I'm coughing and I have a fever.",
+     "fr": "Je tousse et j'ai de la fièvre."
+    },
+    {
+     "id": "u30.d.03",
+     "speaker": "Pharmacist",
+     "en": "Since when?",
+     "fr": "Depuis quand ?"
+    },
+    {
+     "id": "u30.d.04",
+     "speaker": "Ibou",
+     "en": "For three days.",
+     "fr": "Depuis trois jours."
+    },
+    {
+     "id": "u30.d.05",
+     "speaker": "Pharmacist",
+     "en": "Take this twice a day, after eating.",
+     "fr": "Prenez ceci deux fois par jour, après le repas."
+    },
+    {
+     "id": "u30.d.06",
+     "speaker": "Pharmacist",
+     "en": "Drink a lot of water and rest.",
+     "fr": "Buvez beaucoup d'eau et reposez-vous."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u31",
+  "title": {
+   "en": "Emergencies",
+   "fr": "Urgences"
+  },
+  "focus": {
+   "en": "Urgent imperatives; 'quickly'; reporting what happened in the past.",
+   "fr": "Impératifs urgents ; « vite » ; raconter ce qui s'est passé."
+  },
+  "lessons": [
+   {
+    "id": "u31-1",
+    "title": {
+     "en": "Getting help",
+     "fr": "Demander de l'aide"
+    },
+    "items": [
+     {
+      "id": "u31.1.01",
+      "en": "Help!",
+      "fr": "Au secours !"
+     },
+     {
+      "id": "u31.1.02",
+      "en": "Call the police",
+      "fr": "Appelez la police"
+     },
+     {
+      "id": "u31.1.03",
+      "en": "Call an ambulance",
+      "fr": "Appelez une ambulance"
+     },
+     {
+      "id": "u31.1.04",
+      "en": "Quickly!",
+      "fr": "Vite !"
+     },
+     {
+      "id": "u31.1.05",
+      "en": "There's been an accident",
+      "fr": "Il y a eu un accident"
+     },
+     {
+      "id": "u31.1.06",
+      "en": "Someone is hurt",
+      "fr": "Quelqu'un est blessé"
+     },
+     {
+      "id": "u31.1.07",
+      "en": "Where is the hospital?",
+      "fr": "Où est l'hôpital ?"
+     },
+     {
+      "id": "u31.1.08",
+      "en": "Fire!",
+      "fr": "Au feu !"
+     },
+     {
+      "id": "u31.1.09",
+      "en": "Be careful!",
+      "fr": "Attention !"
+     },
+     {
+      "id": "u31.1.10",
+      "en": "Don't move",
+      "fr": "Ne bougez pas"
+     }
+    ]
+   },
+   {
+    "id": "u31-2",
+    "title": {
+     "en": "Reporting a problem",
+     "fr": "Signaler un problème"
+    },
+    "items": [
+     {
+      "id": "u31.2.01",
+      "en": "My bag was stolen",
+      "fr": "On m'a volé mon sac"
+     },
+     {
+      "id": "u31.2.02",
+      "en": "I lost my phone",
+      "fr": "J'ai perdu mon téléphone"
+     },
+     {
+      "id": "u31.2.03",
+      "en": "I lost my passport",
+      "fr": "J'ai perdu mon passeport"
+     },
+     {
+      "id": "u31.2.04",
+      "en": "It happened this morning",
+      "fr": "C'est arrivé ce matin"
+     },
+     {
+      "id": "u31.2.05",
+      "en": "At the market",
+      "fr": "Au marché"
+     },
+     {
+      "id": "u31.2.06",
+      "en": "A man took it",
+      "fr": "Un homme l'a pris"
+     },
+     {
+      "id": "u31.2.07",
+      "en": "I need help",
+      "fr": "J'ai besoin d'aide"
+     },
+     {
+      "id": "u31.2.08",
+      "en": "I'm a foreigner",
+      "fr": "Je suis étranger"
+     },
+     {
+      "id": "u31.2.09",
+      "en": "Can you write it down?",
+      "fr": "Vous pouvez l'écrire ?"
+     },
+     {
+      "id": "u31.2.10",
+      "en": "Thank you for your help",
+      "fr": "Merci pour votre aide"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u31",
+   "title": {
+    "en": "A lost phone",
+    "fr": "Un téléphone perdu"
+   },
+   "lines": [
+    {
+     "id": "u31.d.01",
+     "speaker": "Lena",
+     "en": "Excuse me, I need help. I lost my phone.",
+     "fr": "Excusez-moi, j'ai besoin d'aide. J'ai perdu mon téléphone."
+    },
+    {
+     "id": "u31.d.02",
+     "speaker": "Policeman",
+     "en": "Where did it happen?",
+     "fr": "Où est-ce arrivé ?"
+    },
+    {
+     "id": "u31.d.03",
+     "speaker": "Lena",
+     "en": "At the market, this morning.",
+     "fr": "Au marché, ce matin."
+    },
+    {
+     "id": "u31.d.04",
+     "speaker": "Policeman",
+     "en": "Did someone take it?",
+     "fr": "Quelqu'un l'a pris ?"
+    },
+    {
+     "id": "u31.d.05",
+     "speaker": "Lena",
+     "en": "I don't know.",
+     "fr": "Je ne sais pas."
+    },
+    {
+     "id": "u31.d.06",
+     "speaker": "Policeman",
+     "en": "Write your name and number here.",
+     "fr": "Écrivez votre nom et votre numéro ici."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u32",
+  "title": {
+   "en": "At work",
+   "fr": "Au travail"
+  },
+  "focus": {
+   "en": "Obligation ('I have to'); the progressive past ('I was working'); colleagues and tasks.",
+   "fr": "Obligation (« je dois ») ; passé progressif (« j'étais en train de ») ; collègues et tâches."
+  },
+  "lessons": [
+   {
+    "id": "u32-1",
+    "title": {
+     "en": "In the office",
+     "fr": "Au bureau"
+    },
+    "items": [
+     {
+      "id": "u32.1.01",
+      "en": "my colleague",
+      "fr": "mon collègue"
+     },
+     {
+      "id": "u32.1.02",
+      "en": "the boss",
+      "fr": "le patron, la cheffe"
+     },
+     {
+      "id": "u32.1.03",
+      "en": "a meeting",
+      "fr": "une réunion"
+     },
+     {
+      "id": "u32.1.04",
+      "en": "a report",
+      "fr": "un rapport"
+     },
+     {
+      "id": "u32.1.05",
+      "en": "I have to finish this today",
+      "fr": "Je dois finir ça aujourd'hui"
+     },
+     {
+      "id": "u32.1.06",
+      "en": "I'm busy",
+      "fr": "Je suis occupé"
+     },
+     {
+      "id": "u32.1.07",
+      "en": "Can you help me?",
+      "fr": "Tu peux m'aider ?"
+     },
+     {
+      "id": "u32.1.08",
+      "en": "Send me the file",
+      "fr": "Envoie-moi le fichier"
+     },
+     {
+      "id": "u32.1.09",
+      "en": "The internet isn't working",
+      "fr": "Internet ne marche pas"
+     },
+     {
+      "id": "u32.1.10",
+      "en": "I'm working from home today",
+      "fr": "Je travaille à la maison aujourd'hui"
+     }
+    ]
+   },
+   {
+    "id": "u32-2",
+    "title": {
+     "en": "Projects and the field",
+     "fr": "Projets et terrain"
+    },
+    "items": [
+     {
+      "id": "u32.2.01",
+      "en": "a project",
+      "fr": "un projet"
+     },
+     {
+      "id": "u32.2.02",
+      "en": "the community",
+      "fr": "la communauté"
+     },
+     {
+      "id": "u32.2.03",
+      "en": "a training",
+      "fr": "une formation"
+     },
+     {
+      "id": "u32.2.04",
+      "en": "We're going to the field",
+      "fr": "Nous allons sur le terrain"
+     },
+     {
+      "id": "u32.2.05",
+      "en": "The car leaves at seven",
+      "fr": "La voiture part à sept heures"
+     },
+     {
+      "id": "u32.2.06",
+      "en": "We'll meet the village chief",
+      "fr": "Nous allons rencontrer le chef de village"
+     },
+     {
+      "id": "u32.2.07",
+      "en": "Thank you for welcoming us",
+      "fr": "Merci de nous accueillir"
+     },
+     {
+      "id": "u32.2.08",
+      "en": "We've come to listen",
+      "fr": "Nous sommes venus écouter"
+     },
+     {
+      "id": "u32.2.09",
+      "en": "What do you need?",
+      "fr": "De quoi avez-vous besoin ?"
+     },
+     {
+      "id": "u32.2.10",
+      "en": "We'll come back next month",
+      "fr": "Nous reviendrons le mois prochain"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u32",
+   "title": {
+    "en": "A visit to the village",
+    "fr": "Une visite au village"
+   },
+   "lines": [
+    {
+     "id": "u32.d.01",
+     "speaker": "Marie",
+     "en": "Peace be with you. Thank you for welcoming us.",
+     "fr": "La paix soit avec vous. Merci de nous accueillir."
+    },
+    {
+     "id": "u32.d.02",
+     "speaker": "Village chief",
+     "en": "You are welcome here.",
+     "fr": "Vous êtes les bienvenus."
+    },
+    {
+     "id": "u32.d.03",
+     "speaker": "Marie",
+     "en": "We've come to listen. What do you need?",
+     "fr": "Nous sommes venus écouter. De quoi avez-vous besoin ?"
+    },
+    {
+     "id": "u32.d.04",
+     "speaker": "Village chief",
+     "en": "We need a well for the school.",
+     "fr": "Il nous faut un puits pour l'école."
+    },
+    {
+     "id": "u32.d.05",
+     "speaker": "Marie",
+     "en": "We'll talk about it with our team.",
+     "fr": "Nous allons en parler avec notre équipe."
+    },
+    {
+     "id": "u32.d.06",
+     "speaker": "Marie",
+     "en": "We'll come back next month.",
+     "fr": "Nous reviendrons le mois prochain."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u33",
+  "title": {
+   "en": "Appointments",
+   "fr": "Rendez-vous"
+  },
+  "focus": {
+   "en": "Days, times and 'at' + time; suggesting ('shall we…?'); changing plans.",
+   "fr": "Jours, heures et « à » + heure ; proposer (« on… ? ») ; changer de plan."
+  },
+  "lessons": [
+   {
+    "id": "u33-1",
+    "title": {
+     "en": "Making an appointment",
+     "fr": "Prendre rendez-vous"
+    },
+    "items": [
+     {
+      "id": "u33.1.01",
+      "en": "an appointment",
+      "fr": "un rendez-vous"
+     },
+     {
+      "id": "u33.1.02",
+      "en": "At ten o'clock",
+      "fr": "À dix heures"
+     },
+     {
+      "id": "u33.1.03",
+      "en": "On Tuesday morning",
+      "fr": "Mardi matin"
+     },
+     {
+      "id": "u33.1.04",
+      "en": "Are you free tomorrow?",
+      "fr": "Tu es libre demain ?"
+     },
+     {
+      "id": "u33.1.05",
+      "en": "Shall we meet at the café?",
+      "fr": "On se retrouve au café ?"
+     },
+     {
+      "id": "u33.1.06",
+      "en": "That suits me",
+      "fr": "Ça me va"
+     },
+     {
+      "id": "u33.1.07",
+      "en": "What time?",
+      "fr": "À quelle heure ?"
+     },
+     {
+      "id": "u33.1.08",
+      "en": "I'll be there",
+      "fr": "J'y serai"
+     },
+     {
+      "id": "u33.1.09",
+      "en": "Don't be late",
+      "fr": "Ne sois pas en retard"
+     },
+     {
+      "id": "u33.1.10",
+      "en": "See you then",
+      "fr": "À tout à l'heure"
+     }
+    ]
+   },
+   {
+    "id": "u33-2",
+    "title": {
+     "en": "Changing plans",
+     "fr": "Changer de plan"
+    },
+    "items": [
+     {
+      "id": "u33.2.01",
+      "en": "I'm going to be late",
+      "fr": "Je vais être en retard"
+     },
+     {
+      "id": "u33.2.02",
+      "en": "I'm stuck in traffic",
+      "fr": "Je suis dans les embouteillages"
+     },
+     {
+      "id": "u33.2.03",
+      "en": "Can we change the time?",
+      "fr": "On peut changer l'heure ?"
+     },
+     {
+      "id": "u33.2.04",
+      "en": "Can we do it another day?",
+      "fr": "On peut le faire un autre jour ?"
+     },
+     {
+      "id": "u33.2.05",
+      "en": "Something came up",
+      "fr": "J'ai un empêchement"
+     },
+     {
+      "id": "u33.2.06",
+      "en": "Sorry for the delay",
+      "fr": "Désolé pour le retard"
+     },
+     {
+      "id": "u33.2.07",
+      "en": "Wait for me",
+      "fr": "Attends-moi"
+     },
+     {
+      "id": "u33.2.08",
+      "en": "I'm on my way",
+      "fr": "Je suis en route"
+     },
+     {
+      "id": "u33.2.09",
+      "en": "I've arrived",
+      "fr": "Je suis arrivé"
+     },
+     {
+      "id": "u33.2.10",
+      "en": "Where are you?",
+      "fr": "Tu es où ?"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u33",
+   "title": {
+    "en": "Stuck in traffic",
+    "fr": "Dans les embouteillages"
+   },
+   "lines": [
+    {
+     "id": "u33.d.01",
+     "speaker": "Aliou",
+     "en": "Hello? Where are you?",
+     "fr": "Allô ? Tu es où ?"
+    },
+    {
+     "id": "u33.d.02",
+     "speaker": "Sophie",
+     "en": "I'm on my way. I'm stuck in traffic.",
+     "fr": "Je suis en route. Je suis dans les embouteillages."
+    },
+    {
+     "id": "u33.d.03",
+     "speaker": "Aliou",
+     "en": "The meeting is at ten o'clock.",
+     "fr": "La réunion est à dix heures."
+    },
+    {
+     "id": "u33.d.04",
+     "speaker": "Sophie",
+     "en": "I'm going to be late. Sorry.",
+     "fr": "Je vais être en retard. Désolée."
+    },
+    {
+     "id": "u33.d.05",
+     "speaker": "Aliou",
+     "en": "No problem. Wait, I'll tell the boss.",
+     "fr": "Pas de problème. Attends, je préviens le patron."
+    },
+    {
+     "id": "u33.d.06",
+     "speaker": "Sophie",
+     "en": "Thank you. I'll be there soon.",
+     "fr": "Merci. J'arrive bientôt."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u34",
+  "title": {
+   "en": "School and studies",
+   "fr": "École et études"
+  },
+  "focus": {
+   "en": "'Want to' + verb; subjects; talking about what you study and why.",
+   "fr": "« vouloir » + verbe ; matières ; parler de ses études et pourquoi."
+  },
+  "lessons": [
+   {
+    "id": "u34-1",
+    "title": {
+     "en": "At school",
+     "fr": "À l'école"
+    },
+    "items": [
+     {
+      "id": "u34.1.01",
+      "en": "a teacher",
+      "fr": "un enseignant"
+     },
+     {
+      "id": "u34.1.02",
+      "en": "a pupil",
+      "fr": "un élève"
+     },
+     {
+      "id": "u34.1.03",
+      "en": "homework",
+      "fr": "les devoirs"
+     },
+     {
+      "id": "u34.1.04",
+      "en": "an exam",
+      "fr": "un examen"
+     },
+     {
+      "id": "u34.1.05",
+      "en": "I passed the exam",
+      "fr": "J'ai réussi l'examen"
+     },
+     {
+      "id": "u34.1.06",
+      "en": "I failed",
+      "fr": "J'ai échoué"
+     },
+     {
+      "id": "u34.1.07",
+      "en": "Listen carefully",
+      "fr": "Écoutez bien"
+     },
+     {
+      "id": "u34.1.08",
+      "en": "Raise your hand",
+      "fr": "Levez la main"
+     },
+     {
+      "id": "u34.1.09",
+      "en": "Open your books",
+      "fr": "Ouvrez vos livres"
+     },
+     {
+      "id": "u34.1.10",
+      "en": "Repeat after me",
+      "fr": "Répétez après moi"
+     }
+    ]
+   },
+   {
+    "id": "u34-2",
+    "title": {
+     "en": "Studies",
+     "fr": "Études"
+    },
+    "items": [
+     {
+      "id": "u34.2.01",
+      "en": "the university",
+      "fr": "l'université"
+     },
+     {
+      "id": "u34.2.02",
+      "en": "I study medicine",
+      "fr": "J'étudie la médecine"
+     },
+     {
+      "id": "u34.2.03",
+      "en": "I study languages",
+      "fr": "J'étudie les langues"
+     },
+     {
+      "id": "u34.2.04",
+      "en": "In which year are you?",
+      "fr": "Tu es en quelle année ?"
+     },
+     {
+      "id": "u34.2.05",
+      "en": "I'm in my second year",
+      "fr": "Je suis en deuxième année"
+     },
+     {
+      "id": "u34.2.06",
+      "en": "I want to be a doctor",
+      "fr": "Je veux devenir médecin"
+     },
+     {
+      "id": "u34.2.07",
+      "en": "The library",
+      "fr": "La bibliothèque"
+     },
+     {
+      "id": "u34.2.08",
+      "en": "I'm revising",
+      "fr": "Je révise"
+     },
+     {
+      "id": "u34.2.09",
+      "en": "The holidays start soon",
+      "fr": "Les vacances commencent bientôt"
+     },
+     {
+      "id": "u34.2.10",
+      "en": "I got a scholarship",
+      "fr": "J'ai obtenu une bourse"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u34",
+   "title": {
+    "en": "Two students",
+    "fr": "Deux étudiants"
+   },
+   "lines": [
+    {
+     "id": "u34.d.01",
+     "speaker": "Khady",
+     "en": "What do you study?",
+     "fr": "Tu étudies quoi ?"
+    },
+    {
+     "id": "u34.d.02",
+     "speaker": "Thomas",
+     "en": "I study languages. And you?",
+     "fr": "J'étudie les langues. Et toi ?"
+    },
+    {
+     "id": "u34.d.03",
+     "speaker": "Khady",
+     "en": "I study medicine. I want to be a doctor.",
+     "fr": "J'étudie la médecine. Je veux devenir médecin."
+    },
+    {
+     "id": "u34.d.04",
+     "speaker": "Thomas",
+     "en": "In which year are you?",
+     "fr": "Tu es en quelle année ?"
+    },
+    {
+     "id": "u34.d.05",
+     "speaker": "Khady",
+     "en": "In my second year. I have an exam tomorrow.",
+     "fr": "En deuxième année. J'ai un examen demain."
+    },
+    {
+     "id": "u34.d.06",
+     "speaker": "Thomas",
+     "en": "Good luck!",
+     "fr": "Bonne chance !"
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u35",
+  "title": {
+   "en": "Family events",
+   "fr": "Événements familiaux"
+  },
+  "focus": {
+   "en": "Congratulations and condolences; 'we are going to'; family roles.",
+   "fr": "Félicitations et condoléances ; « nous allons » ; rôles dans la famille."
+  },
+  "lessons": [
+   {
+    "id": "u35-1",
+    "title": {
+     "en": "Weddings and naming ceremonies",
+     "fr": "Mariages et baptêmes"
+    },
+    "items": [
+     {
+      "id": "u35.1.01",
+      "en": "a wedding",
+      "fr": "un mariage"
+     },
+     {
+      "id": "u35.1.02",
+      "en": "a naming ceremony",
+      "fr": "un baptême"
+     },
+     {
+      "id": "u35.1.03",
+      "en": "the bride",
+      "fr": "la mariée"
+     },
+     {
+      "id": "u35.1.04",
+      "en": "the groom",
+      "fr": "le marié"
+     },
+     {
+      "id": "u35.1.05",
+      "en": "Congratulations!",
+      "fr": "Félicitations !"
+     },
+     {
+      "id": "u35.1.06",
+      "en": "May the baby grow up well",
+      "fr": "Que le bébé grandisse bien"
+     },
+     {
+      "id": "u35.1.07",
+      "en": "What is the baby's name?",
+      "fr": "Comment s'appelle le bébé ?"
+     },
+     {
+      "id": "u35.1.08",
+      "en": "We're invited",
+      "fr": "Nous sommes invités"
+     },
+     {
+      "id": "u35.1.09",
+      "en": "Bring a gift",
+      "fr": "Apporte un cadeau"
+     },
+     {
+      "id": "u35.1.10",
+      "en": "The ceremony is on Sunday",
+      "fr": "La cérémonie est dimanche"
+     }
+    ]
+   },
+   {
+    "id": "u35-2",
+    "title": {
+     "en": "Sad news",
+     "fr": "Mauvaises nouvelles"
+    },
+    "items": [
+     {
+      "id": "u35.2.01",
+      "en": "a funeral",
+      "fr": "des funérailles"
+     },
+     {
+      "id": "u35.2.02",
+      "en": "My condolences",
+      "fr": "Mes condoléances"
+     },
+     {
+      "id": "u35.2.03",
+      "en": "May he rest in peace",
+      "fr": "Qu'il repose en paix"
+     },
+     {
+      "id": "u35.2.04",
+      "en": "May God give you strength",
+      "fr": "Que Dieu vous donne la force"
+     },
+     {
+      "id": "u35.2.05",
+      "en": "He passed away yesterday",
+      "fr": "Il est décédé hier"
+     },
+     {
+      "id": "u35.2.06",
+      "en": "We are with you",
+      "fr": "Nous sommes avec vous"
+     },
+     {
+      "id": "u35.2.07",
+      "en": "I'm sorry to hear that",
+      "fr": "Je suis désolé de l'apprendre"
+     },
+     {
+      "id": "u35.2.08",
+      "en": "Is everyone well at home?",
+      "fr": "Tout le monde va bien à la maison ?"
+     },
+     {
+      "id": "u35.2.09",
+      "en": "She's in hospital",
+      "fr": "Elle est à l'hôpital"
+     },
+     {
+      "id": "u35.2.10",
+      "en": "We'll visit her",
+      "fr": "Nous irons la voir"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u35",
+   "title": {
+    "en": "A naming ceremony",
+    "fr": "Un baptême"
+   },
+   "lines": [
+    {
+     "id": "u35.d.01",
+     "speaker": "Mariama",
+     "en": "Congratulations! May the baby grow up well.",
+     "fr": "Félicitations ! Que le bébé grandisse bien."
+    },
+    {
+     "id": "u35.d.02",
+     "speaker": "Aminata",
+     "en": "Thank you. You are welcome.",
+     "fr": "Merci. Tu es la bienvenue."
+    },
+    {
+     "id": "u35.d.03",
+     "speaker": "Mariama",
+     "en": "What is the baby's name?",
+     "fr": "Comment s'appelle le bébé ?"
+    },
+    {
+     "id": "u35.d.04",
+     "speaker": "Aminata",
+     "en": "Her name is Khadija, like her grandmother.",
+     "fr": "Elle s'appelle Khadija, comme sa grand-mère."
+    },
+    {
+     "id": "u35.d.05",
+     "speaker": "Mariama",
+     "en": "It's a beautiful name. Here is a small gift.",
+     "fr": "C'est un beau prénom. Voici un petit cadeau."
+    },
+    {
+     "id": "u35.d.06",
+     "speaker": "Aminata",
+     "en": "Thank you very much.",
+     "fr": "Merci beaucoup."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u36",
+  "title": {
+   "en": "Describing people",
+   "fr": "Décrire les gens"
+  },
+  "focus": {
+   "en": "Adjectives of character; 'he/she is'; 'very', 'a bit', 'not at all'.",
+   "fr": "Adjectifs de caractère ; « il/elle est » ; « très », « un peu », « pas du tout »."
+  },
+  "lessons": [
+   {
+    "id": "u36-1",
+    "title": {
+     "en": "Appearance",
+     "fr": "Apparence"
+    },
+    "items": [
+     {
+      "id": "u36.1.01",
+      "en": "tall",
+      "fr": "grand"
+     },
+     {
+      "id": "u36.1.02",
+      "en": "short",
+      "fr": "petit"
+     },
+     {
+      "id": "u36.1.03",
+      "en": "thin",
+      "fr": "mince"
+     },
+     {
+      "id": "u36.1.04",
+      "en": "old",
+      "fr": "vieux, âgé"
+     },
+     {
+      "id": "u36.1.05",
+      "en": "young",
+      "fr": "jeune"
+     },
+     {
+      "id": "u36.1.06",
+      "en": "He has a beard",
+      "fr": "Il a une barbe"
+     },
+     {
+      "id": "u36.1.07",
+      "en": "She wears glasses",
+      "fr": "Elle porte des lunettes"
+     },
+     {
+      "id": "u36.1.08",
+      "en": "She looks like her mother",
+      "fr": "Elle ressemble à sa mère"
+     },
+     {
+      "id": "u36.1.09",
+      "en": "He's very handsome",
+      "fr": "Il est très beau"
+     },
+     {
+      "id": "u36.1.10",
+      "en": "What does he look like?",
+      "fr": "Il est comment ?"
+     }
+    ]
+   },
+   {
+    "id": "u36-2",
+    "title": {
+     "en": "Character",
+     "fr": "Caractère"
+    },
+    "items": [
+     {
+      "id": "u36.2.01",
+      "en": "kind",
+      "fr": "gentil"
+     },
+     {
+      "id": "u36.2.02",
+      "en": "generous",
+      "fr": "généreux"
+     },
+     {
+      "id": "u36.2.03",
+      "en": "patient",
+      "fr": "patient"
+     },
+     {
+      "id": "u36.2.04",
+      "en": "funny",
+      "fr": "drôle"
+     },
+     {
+      "id": "u36.2.05",
+      "en": "lazy",
+      "fr": "paresseux"
+     },
+     {
+      "id": "u36.2.06",
+      "en": "hard-working",
+      "fr": "travailleur"
+     },
+     {
+      "id": "u36.2.07",
+      "en": "shy",
+      "fr": "timide"
+     },
+     {
+      "id": "u36.2.08",
+      "en": "He talks a lot",
+      "fr": "Il parle beaucoup"
+     },
+     {
+      "id": "u36.2.09",
+      "en": "She's very serious",
+      "fr": "Elle est très sérieuse"
+     },
+     {
+      "id": "u36.2.10",
+      "en": "He's not at all mean",
+      "fr": "Il n'est pas du tout méchant"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u36",
+   "title": {
+    "en": "My new neighbour",
+    "fr": "Mon nouveau voisin"
+   },
+   "lines": [
+    {
+     "id": "u36.d.01",
+     "speaker": "Binta",
+     "en": "Have you met our new neighbour?",
+     "fr": "Tu as rencontré notre nouveau voisin ?"
+    },
+    {
+     "id": "u36.d.02",
+     "speaker": "Coumba",
+     "en": "Yes. He's tall and he has a beard.",
+     "fr": "Oui. Il est grand et il a une barbe."
+    },
+    {
+     "id": "u36.d.03",
+     "speaker": "Binta",
+     "en": "Is he kind?",
+     "fr": "Il est gentil ?"
+    },
+    {
+     "id": "u36.d.04",
+     "speaker": "Coumba",
+     "en": "Very kind and very funny.",
+     "fr": "Très gentil et très drôle."
+    },
+    {
+     "id": "u36.d.05",
+     "speaker": "Binta",
+     "en": "Does he talk a lot?",
+     "fr": "Il parle beaucoup ?"
+    },
+    {
+     "id": "u36.d.06",
+     "speaker": "Coumba",
+     "en": "A bit! But he's generous.",
+     "fr": "Un peu ! Mais il est généreux."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u37",
+  "title": {
+   "en": "Opinions",
+   "fr": "Opinions"
+  },
+  "focus": {
+   "en": "Giving an opinion ('I think'), agreeing and disagreeing; 'because'.",
+   "fr": "Donner son avis (« je pense »), être d'accord ou non ; « parce que »."
+  },
+  "lessons": [
+   {
+    "id": "u37-1",
+    "title": {
+     "en": "What I think",
+     "fr": "Ce que je pense"
+    },
+    "items": [
+     {
+      "id": "u37.1.01",
+      "en": "I think that…",
+      "fr": "Je pense que…"
+     },
+     {
+      "id": "u37.1.02",
+      "en": "In my opinion",
+      "fr": "À mon avis"
+     },
+     {
+      "id": "u37.1.03",
+      "en": "I agree",
+      "fr": "Je suis d'accord"
+     },
+     {
+      "id": "u37.1.04",
+      "en": "I don't agree",
+      "fr": "Je ne suis pas d'accord"
+     },
+     {
+      "id": "u37.1.05",
+      "en": "You're right",
+      "fr": "Tu as raison"
+     },
+     {
+      "id": "u37.1.06",
+      "en": "That's not true",
+      "fr": "Ce n'est pas vrai"
+     },
+     {
+      "id": "u37.1.07",
+      "en": "Maybe",
+      "fr": "Peut-être"
+     },
+     {
+      "id": "u37.1.08",
+      "en": "Because",
+      "fr": "Parce que"
+     },
+     {
+      "id": "u37.1.09",
+      "en": "It depends",
+      "fr": "Ça dépend"
+     },
+     {
+      "id": "u37.1.10",
+      "en": "I'm not sure",
+      "fr": "Je ne suis pas sûr"
+     }
+    ]
+   },
+   {
+    "id": "u37-2",
+    "title": {
+     "en": "Likes and preferences",
+     "fr": "Goûts et préférences"
+    },
+    "items": [
+     {
+      "id": "u37.2.01",
+      "en": "I prefer tea",
+      "fr": "Je préfère le thé"
+     },
+     {
+      "id": "u37.2.02",
+      "en": "I love this music",
+      "fr": "J'adore cette musique"
+     },
+     {
+      "id": "u37.2.03",
+      "en": "I can't stand the heat",
+      "fr": "Je ne supporte pas la chaleur"
+     },
+     {
+      "id": "u37.2.04",
+      "en": "What do you prefer?",
+      "fr": "Qu'est-ce que tu préfères ?"
+     },
+     {
+      "id": "u37.2.05",
+      "en": "Both are good",
+      "fr": "Les deux sont bien"
+     },
+     {
+      "id": "u37.2.06",
+      "en": "Neither",
+      "fr": "Ni l'un ni l'autre"
+     },
+     {
+      "id": "u37.2.07",
+      "en": "It's boring",
+      "fr": "C'est ennuyeux"
+     },
+     {
+      "id": "u37.2.08",
+      "en": "It's interesting",
+      "fr": "C'est intéressant"
+     },
+     {
+      "id": "u37.2.09",
+      "en": "It's worth it",
+      "fr": "Ça vaut la peine"
+     },
+     {
+      "id": "u37.2.10",
+      "en": "It's a waste of time",
+      "fr": "C'est une perte de temps"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u37",
+   "title": {
+    "en": "Football or wrestling?",
+    "fr": "Football ou lutte ?"
+   },
+   "lines": [
+    {
+     "id": "u37.d.01",
+     "speaker": "Lamine",
+     "en": "What do you prefer, football or wrestling?",
+     "fr": "Tu préfères quoi, le football ou la lutte ?"
+    },
+    {
+     "id": "u37.d.02",
+     "speaker": "Pierre",
+     "en": "I prefer football. And you?",
+     "fr": "Je préfère le football. Et toi ?"
+    },
+    {
+     "id": "u37.d.03",
+     "speaker": "Lamine",
+     "en": "Wrestling, because it's our tradition.",
+     "fr": "La lutte, parce que c'est notre tradition."
+    },
+    {
+     "id": "u37.d.04",
+     "speaker": "Pierre",
+     "en": "You're right, it's interesting.",
+     "fr": "Tu as raison, c'est intéressant."
+    },
+    {
+     "id": "u37.d.05",
+     "speaker": "Lamine",
+     "en": "Come with me to a match on Sunday.",
+     "fr": "Viens avec moi à un combat dimanche."
+    },
+    {
+     "id": "u37.d.06",
+     "speaker": "Pierre",
+     "en": "I agree! It's worth it.",
+     "fr": "D'accord ! Ça vaut la peine."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u38",
+  "title": {
+   "en": "Weather and seasons",
+   "fr": "Météo et saisons"
+  },
+  "focus": {
+   "en": "Weather expressions; 'it's going to'; months and seasons.",
+   "fr": "Expressions de la météo ; « il va… » ; mois et saisons."
+  },
+  "lessons": [
+   {
+    "id": "u38-1",
+    "title": {
+     "en": "Today's weather",
+     "fr": "Le temps aujourd'hui"
+    },
+    "items": [
+     {
+      "id": "u38.1.01",
+      "en": "It's raining",
+      "fr": "Il pleut"
+     },
+     {
+      "id": "u38.1.02",
+      "en": "It's going to rain",
+      "fr": "Il va pleuvoir"
+     },
+     {
+      "id": "u38.1.03",
+      "en": "It's windy",
+      "fr": "Il y a du vent"
+     },
+     {
+      "id": "u38.1.04",
+      "en": "It's very hot today",
+      "fr": "Il fait très chaud aujourd'hui"
+     },
+     {
+      "id": "u38.1.05",
+      "en": "It's cool this morning",
+      "fr": "Il fait frais ce matin"
+     },
+     {
+      "id": "u38.1.06",
+      "en": "There's a lot of dust",
+      "fr": "Il y a beaucoup de poussière"
+     },
+     {
+      "id": "u38.1.07",
+      "en": "The sky is clear",
+      "fr": "Le ciel est dégagé"
+     },
+     {
+      "id": "u38.1.08",
+      "en": "A storm",
+      "fr": "Un orage"
+     },
+     {
+      "id": "u38.1.09",
+      "en": "Take an umbrella",
+      "fr": "Prends un parapluie"
+     },
+     {
+      "id": "u38.1.10",
+      "en": "The rain has stopped",
+      "fr": "La pluie s'est arrêtée"
+     }
+    ]
+   },
+   {
+    "id": "u38-2",
+    "title": {
+     "en": "Seasons and months",
+     "fr": "Saisons et mois"
+    },
+    "items": [
+     {
+      "id": "u38.2.01",
+      "en": "the rainy season",
+      "fr": "la saison des pluies"
+     },
+     {
+      "id": "u38.2.02",
+      "en": "the dry season",
+      "fr": "la saison sèche"
+     },
+     {
+      "id": "u38.2.03",
+      "en": "the cold season",
+      "fr": "la saison fraîche"
+     },
+     {
+      "id": "u38.2.04",
+      "en": "in August",
+      "fr": "en août"
+     },
+     {
+      "id": "u38.2.05",
+      "en": "in December",
+      "fr": "en décembre"
+     },
+     {
+      "id": "u38.2.06",
+      "en": "The rains start in July",
+      "fr": "Les pluies commencent en juillet"
+     },
+     {
+      "id": "u38.2.07",
+      "en": "The farmers are waiting for rain",
+      "fr": "Les paysans attendent la pluie"
+     },
+     {
+      "id": "u38.2.08",
+      "en": "The roads are flooded",
+      "fr": "Les routes sont inondées"
+     },
+     {
+      "id": "u38.2.09",
+      "en": "It hasn't rained this year",
+      "fr": "Il n'a pas plu cette année"
+     },
+     {
+      "id": "u38.2.10",
+      "en": "The best time to visit",
+      "fr": "La meilleure période pour visiter"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u38",
+   "title": {
+    "en": "Waiting for the rain",
+    "fr": "En attendant la pluie"
+   },
+   "lines": [
+    {
+     "id": "u38.d.01",
+     "speaker": "Samba",
+     "en": "It's very hot today.",
+     "fr": "Il fait très chaud aujourd'hui."
+    },
+    {
+     "id": "u38.d.02",
+     "speaker": "Musa",
+     "en": "Yes. It's going to rain this afternoon.",
+     "fr": "Oui. Il va pleuvoir cet après-midi."
+    },
+    {
+     "id": "u38.d.03",
+     "speaker": "Samba",
+     "en": "The farmers are waiting for rain.",
+     "fr": "Les paysans attendent la pluie."
+    },
+    {
+     "id": "u38.d.04",
+     "speaker": "Musa",
+     "en": "The rains started late this year.",
+     "fr": "Les pluies ont commencé tard cette année."
+    },
+    {
+     "id": "u38.d.05",
+     "speaker": "Samba",
+     "en": "Look, the sky is getting dark.",
+     "fr": "Regarde, le ciel s'assombrit."
+    },
+    {
+     "id": "u38.d.06",
+     "speaker": "Musa",
+     "en": "Take an umbrella!",
+     "fr": "Prends un parapluie !"
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u39",
+  "title": {
+   "en": "Village and farming",
+   "fr": "Village et agriculture"
+  },
+  "focus": {
+   "en": "Plural and collective nouns; 'we grow', 'we sell'; time of year.",
+   "fr": "Pluriels et noms collectifs ; « nous cultivons », « nous vendons » ; périodes de l'année."
+  },
+  "lessons": [
+   {
+    "id": "u39-1",
+    "title": {
+     "en": "In the fields",
+     "fr": "Aux champs"
+    },
+    "items": [
+     {
+      "id": "u39.1.01",
+      "en": "a field",
+      "fr": "un champ"
+     },
+     {
+      "id": "u39.1.02",
+      "en": "millet",
+      "fr": "le mil"
+     },
+     {
+      "id": "u39.1.03",
+      "en": "groundnuts",
+      "fr": "l'arachide"
+     },
+     {
+      "id": "u39.1.04",
+      "en": "a well",
+      "fr": "un puits"
+     },
+     {
+      "id": "u39.1.05",
+      "en": "a cow",
+      "fr": "une vache"
+     },
+     {
+      "id": "u39.1.06",
+      "en": "We grow millet",
+      "fr": "Nous cultivons le mil"
+     },
+     {
+      "id": "u39.1.07",
+      "en": "The harvest",
+      "fr": "La récolte"
+     },
+     {
+      "id": "u39.1.08",
+      "en": "We sell at the weekly market",
+      "fr": "Nous vendons au marché hebdomadaire"
+     },
+     {
+      "id": "u39.1.09",
+      "en": "We need fertiliser",
+      "fr": "Il nous faut de l'engrais"
+     },
+     {
+      "id": "u39.1.10",
+      "en": "The animals are thirsty",
+      "fr": "Les animaux ont soif"
+     }
+    ]
+   },
+   {
+    "id": "u39-2",
+    "title": {
+     "en": "Village life",
+     "fr": "La vie au village"
+    },
+    "items": [
+     {
+      "id": "u39.2.01",
+      "en": "the village chief",
+      "fr": "le chef de village"
+     },
+     {
+      "id": "u39.2.02",
+      "en": "the elders",
+      "fr": "les anciens"
+     },
+     {
+      "id": "u39.2.03",
+      "en": "the tree in the square",
+      "fr": "l'arbre de la place"
+     },
+     {
+      "id": "u39.2.04",
+      "en": "We pound the millet",
+      "fr": "Nous pilons le mil"
+     },
+     {
+      "id": "u39.2.05",
+      "en": "Fetch water",
+      "fr": "Va chercher de l'eau"
+     },
+     {
+      "id": "u39.2.06",
+      "en": "There's no electricity",
+      "fr": "Il n'y a pas d'électricité"
+     },
+     {
+      "id": "u39.2.07",
+      "en": "We go to bed early",
+      "fr": "Nous nous couchons tôt"
+     },
+     {
+      "id": "u39.2.08",
+      "en": "Everyone knows each other",
+      "fr": "Tout le monde se connaît"
+     },
+     {
+      "id": "u39.2.09",
+      "en": "Stay with us",
+      "fr": "Reste avec nous"
+     },
+     {
+      "id": "u39.2.10",
+      "en": "Come back for the harvest",
+      "fr": "Reviens pour la récolte"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u39",
+   "title": {
+    "en": "Harvest time",
+    "fr": "Le temps de la récolte"
+   },
+   "lines": [
+    {
+     "id": "u39.d.01",
+     "speaker": "Ousmane",
+     "en": "Welcome to our village!",
+     "fr": "Bienvenue dans notre village !"
+    },
+    {
+     "id": "u39.d.02",
+     "speaker": "Clara",
+     "en": "Thank you. What do you grow here?",
+     "fr": "Merci. Qu'est-ce que vous cultivez ici ?"
+    },
+    {
+     "id": "u39.d.03",
+     "speaker": "Ousmane",
+     "en": "We grow millet and groundnuts.",
+     "fr": "Nous cultivons le mil et l'arachide."
+    },
+    {
+     "id": "u39.d.04",
+     "speaker": "Clara",
+     "en": "When is the harvest?",
+     "fr": "C'est quand, la récolte ?"
+    },
+    {
+     "id": "u39.d.05",
+     "speaker": "Ousmane",
+     "en": "In October. Come back for the harvest!",
+     "fr": "En octobre. Reviens pour la récolte !"
+    },
+    {
+     "id": "u39.d.06",
+     "speaker": "Clara",
+     "en": "With pleasure, God willing.",
+     "fr": "Avec plaisir, si Dieu le veut."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u40",
+  "title": {
+   "en": "Fishing and the sea",
+   "fr": "La pêche et la mer"
+  },
+  "focus": {
+   "en": "Places by the sea; 'went to' + purpose; buying fresh fish.",
+   "fr": "Lieux de la côte ; « aller » + but ; acheter du poisson frais."
+  },
+  "lessons": [
+   {
+    "id": "u40-1",
+    "title": {
+     "en": "At the beach",
+     "fr": "À la plage"
+    },
+    "items": [
+     {
+      "id": "u40.1.01",
+      "en": "the sea",
+      "fr": "la mer"
+     },
+     {
+      "id": "u40.1.02",
+      "en": "a fishing boat",
+      "fr": "une pirogue"
+     },
+     {
+      "id": "u40.1.03",
+      "en": "a fisherman",
+      "fr": "un pêcheur"
+     },
+     {
+      "id": "u40.1.04",
+      "en": "the beach",
+      "fr": "la plage"
+     },
+     {
+      "id": "u40.1.05",
+      "en": "The boats are coming back",
+      "fr": "Les pirogues reviennent"
+     },
+     {
+      "id": "u40.1.06",
+      "en": "The sea is rough today",
+      "fr": "La mer est agitée aujourd'hui"
+     },
+     {
+      "id": "u40.1.07",
+      "en": "Can we swim here?",
+      "fr": "On peut se baigner ici ?"
+     },
+     {
+      "id": "u40.1.08",
+      "en": "Be careful of the waves",
+      "fr": "Attention aux vagues"
+     },
+     {
+      "id": "u40.1.09",
+      "en": "Sunrise",
+      "fr": "Le lever du soleil"
+     },
+     {
+      "id": "u40.1.10",
+      "en": "Sunset",
+      "fr": "Le coucher du soleil"
+     }
+    ]
+   },
+   {
+    "id": "u40-2",
+    "title": {
+     "en": "Buying fish",
+     "fr": "Acheter du poisson"
+    },
+    "items": [
+     {
+      "id": "u40.2.01",
+      "en": "Is it fresh?",
+      "fr": "Il est frais ?"
+     },
+     {
+      "id": "u40.2.02",
+      "en": "Caught this morning",
+      "fr": "Pêché ce matin"
+     },
+     {
+      "id": "u40.2.03",
+      "en": "How much is a kilo?",
+      "fr": "Combien le kilo ?"
+     },
+     {
+      "id": "u40.2.04",
+      "en": "Clean it for me",
+      "fr": "Nettoyez-le pour moi"
+     },
+     {
+      "id": "u40.2.05",
+      "en": "This one is bigger",
+      "fr": "Celui-ci est plus gros"
+     },
+     {
+      "id": "u40.2.06",
+      "en": "Give me three",
+      "fr": "Donnez-m'en trois"
+     },
+     {
+      "id": "u40.2.07",
+      "en": "Dried fish",
+      "fr": "Du poisson séché"
+     },
+     {
+      "id": "u40.2.08",
+      "en": "Smoked fish",
+      "fr": "Du poisson fumé"
+     },
+     {
+      "id": "u40.2.09",
+      "en": "The catch was good",
+      "fr": "La pêche a été bonne"
+     },
+     {
+      "id": "u40.2.10",
+      "en": "There is no fish today",
+      "fr": "Il n'y a pas de poisson aujourd'hui"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u40",
+   "title": {
+    "en": "At the fish market",
+    "fr": "Au marché aux poissons"
+   },
+   "lines": [
+    {
+     "id": "u40.d.01",
+     "speaker": "Seynabou",
+     "en": "Is this fish fresh?",
+     "fr": "Ce poisson est frais ?"
+    },
+    {
+     "id": "u40.d.02",
+     "speaker": "Fisherman",
+     "en": "Yes, caught this morning.",
+     "fr": "Oui, pêché ce matin."
+    },
+    {
+     "id": "u40.d.03",
+     "speaker": "Seynabou",
+     "en": "How much is a kilo?",
+     "fr": "Combien le kilo ?"
+    },
+    {
+     "id": "u40.d.04",
+     "speaker": "Fisherman",
+     "en": "Two thousand.",
+     "fr": "Deux mille."
+    },
+    {
+     "id": "u40.d.05",
+     "speaker": "Seynabou",
+     "en": "Give me two kilos. Clean them for me.",
+     "fr": "Donnez-m'en deux kilos. Nettoyez-les pour moi."
+    },
+    {
+     "id": "u40.d.06",
+     "speaker": "Fisherman",
+     "en": "Of course. The catch was good today.",
+     "fr": "Bien sûr. La pêche a été bonne aujourd'hui."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u41",
+  "title": {
+   "en": "Money and payments",
+   "fr": "Argent et paiements"
+  },
+  "focus": {
+   "en": "Numbers in prices; 'to owe', 'to lend', 'to send'; asking for change.",
+   "fr": "Nombres dans les prix ; « devoir », « prêter », « envoyer » ; demander la monnaie."
+  },
+  "lessons": [
+   {
+    "id": "u41-1",
+    "title": {
+     "en": "Paying",
+     "fr": "Payer"
+    },
+    "items": [
+     {
+      "id": "u41.1.01",
+      "en": "cash",
+      "fr": "en espèces"
+     },
+     {
+      "id": "u41.1.02",
+      "en": "change (coins)",
+      "fr": "la monnaie"
+     },
+     {
+      "id": "u41.1.03",
+      "en": "Do you have change?",
+      "fr": "Vous avez la monnaie ?"
+     },
+     {
+      "id": "u41.1.04",
+      "en": "I don't have small notes",
+      "fr": "Je n'ai pas de petits billets"
+     },
+     {
+      "id": "u41.1.05",
+      "en": "Can I pay by mobile money?",
+      "fr": "Je peux payer par mobile money ?"
+     },
+     {
+      "id": "u41.1.06",
+      "en": "Send it to this number",
+      "fr": "Envoyez-le à ce numéro"
+     },
+     {
+      "id": "u41.1.07",
+      "en": "I've sent it",
+      "fr": "Je l'ai envoyé"
+     },
+     {
+      "id": "u41.1.08",
+      "en": "Did you receive it?",
+      "fr": "Vous l'avez reçu ?"
+     },
+     {
+      "id": "u41.1.09",
+      "en": "A receipt, please",
+      "fr": "Un reçu, s'il vous plaît"
+     },
+     {
+      "id": "u41.1.10",
+      "en": "Where is a cash machine?",
+      "fr": "Où y a-t-il un distributeur ?"
+     }
+    ]
+   },
+   {
+    "id": "u41-2",
+    "title": {
+     "en": "Borrowing and saving",
+     "fr": "Emprunter et épargner"
+    },
+    "items": [
+     {
+      "id": "u41.2.01",
+      "en": "Can you lend me some money?",
+      "fr": "Tu peux me prêter de l'argent ?"
+     },
+     {
+      "id": "u41.2.02",
+      "en": "I'll pay you back tomorrow",
+      "fr": "Je te rembourse demain"
+     },
+     {
+      "id": "u41.2.03",
+      "en": "I owe you",
+      "fr": "Je te dois"
+     },
+     {
+      "id": "u41.2.04",
+      "en": "You owe me nothing",
+      "fr": "Tu ne me dois rien"
+     },
+     {
+      "id": "u41.2.05",
+      "en": "A savings group",
+      "fr": "Une tontine"
+     },
+     {
+      "id": "u41.2.06",
+      "en": "I'm saving for the school fees",
+      "fr": "J'économise pour les frais de scolarité"
+     },
+     {
+      "id": "u41.2.07",
+      "en": "Prices have gone up",
+      "fr": "Les prix ont augmenté"
+     },
+     {
+      "id": "u41.2.08",
+      "en": "Life is expensive",
+      "fr": "La vie est chère"
+     },
+     {
+      "id": "u41.2.09",
+      "en": "Money is short this month",
+      "fr": "L'argent manque ce mois-ci"
+     },
+     {
+      "id": "u41.2.10",
+      "en": "Be careful with your money",
+      "fr": "Fais attention à ton argent"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u41",
+   "title": {
+    "en": "Paying by phone",
+    "fr": "Payer par téléphone"
+   },
+   "lines": [
+    {
+     "id": "u41.d.01",
+     "speaker": "Customer",
+     "en": "Can I pay by mobile money?",
+     "fr": "Je peux payer par mobile money ?"
+    },
+    {
+     "id": "u41.d.02",
+     "speaker": "Shopkeeper",
+     "en": "Yes. Send it to this number.",
+     "fr": "Oui. Envoyez-le à ce numéro."
+    },
+    {
+     "id": "u41.d.03",
+     "speaker": "Customer",
+     "en": "How much is it?",
+     "fr": "C'est combien ?"
+    },
+    {
+     "id": "u41.d.04",
+     "speaker": "Shopkeeper",
+     "en": "Three thousand five hundred.",
+     "fr": "Trois mille cinq cents."
+    },
+    {
+     "id": "u41.d.05",
+     "speaker": "Customer",
+     "en": "I've sent it. Did you receive it?",
+     "fr": "Je l'ai envoyé. Vous l'avez reçu ?"
+    },
+    {
+     "id": "u41.d.06",
+     "speaker": "Shopkeeper",
+     "en": "Yes, I've received it. Thank you!",
+     "fr": "Oui, je l'ai reçu. Merci !"
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u42",
+  "title": {
+   "en": "Housing",
+   "fr": "Logement"
+  },
+  "focus": {
+   "en": "'There is / there isn't'; rooms; renting and repairs.",
+   "fr": "« il y a / il n'y a pas » ; pièces ; louer et réparer."
+  },
+  "lessons": [
+   {
+    "id": "u42-1",
+    "title": {
+     "en": "Looking for a flat",
+     "fr": "Chercher un appartement"
+    },
+    "items": [
+     {
+      "id": "u42.1.01",
+      "en": "a flat",
+      "fr": "un appartement"
+     },
+     {
+      "id": "u42.1.02",
+      "en": "a room to rent",
+      "fr": "une chambre à louer"
+     },
+     {
+      "id": "u42.1.03",
+      "en": "the rent",
+      "fr": "le loyer"
+     },
+     {
+      "id": "u42.1.04",
+      "en": "the landlord",
+      "fr": "le propriétaire"
+     },
+     {
+      "id": "u42.1.05",
+      "en": "How much is the rent?",
+      "fr": "Combien est le loyer ?"
+     },
+     {
+      "id": "u42.1.06",
+      "en": "Is water included?",
+      "fr": "L'eau est comprise ?"
+     },
+     {
+      "id": "u42.1.07",
+      "en": "How many rooms?",
+      "fr": "Combien de pièces ?"
+     },
+     {
+      "id": "u42.1.08",
+      "en": "Is there a kitchen?",
+      "fr": "Il y a une cuisine ?"
+     },
+     {
+      "id": "u42.1.09",
+      "en": "Can I see it?",
+      "fr": "Je peux la voir ?"
+     },
+     {
+      "id": "u42.1.10",
+      "en": "When can I move in?",
+      "fr": "Quand est-ce que je peux emménager ?"
+     }
+    ]
+   },
+   {
+    "id": "u42-2",
+    "title": {
+     "en": "Repairs",
+     "fr": "Réparations"
+    },
+    "items": [
+     {
+      "id": "u42.2.01",
+      "en": "The tap is leaking",
+      "fr": "Le robinet fuit"
+     },
+     {
+      "id": "u42.2.02",
+      "en": "The door won't close",
+      "fr": "La porte ne ferme pas"
+     },
+     {
+      "id": "u42.2.03",
+      "en": "There's a power cut",
+      "fr": "Il y a une coupure de courant"
+     },
+     {
+      "id": "u42.2.04",
+      "en": "The electricity is back",
+      "fr": "Le courant est revenu"
+     },
+     {
+      "id": "u42.2.05",
+      "en": "Call the plumber",
+      "fr": "Appelle le plombier"
+     },
+     {
+      "id": "u42.2.06",
+      "en": "Call the electrician",
+      "fr": "Appelle l'électricien"
+     },
+     {
+      "id": "u42.2.07",
+      "en": "When will he come?",
+      "fr": "Quand viendra-t-il ?"
+     },
+     {
+      "id": "u42.2.08",
+      "en": "It's broken",
+      "fr": "C'est cassé"
+     },
+     {
+      "id": "u42.2.09",
+      "en": "Can you fix it?",
+      "fr": "Vous pouvez le réparer ?"
+     },
+     {
+      "id": "u42.2.10",
+      "en": "It's fixed",
+      "fr": "C'est réparé"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u42",
+   "title": {
+    "en": "A room to rent",
+    "fr": "Une chambre à louer"
+   },
+   "lines": [
+    {
+     "id": "u42.d.01",
+     "speaker": "Julie",
+     "en": "Good afternoon. I'm looking for a room to rent.",
+     "fr": "Bonjour. Je cherche une chambre à louer."
+    },
+    {
+     "id": "u42.d.02",
+     "speaker": "Landlord",
+     "en": "I have one. Come and see it.",
+     "fr": "J'en ai une. Venez la voir."
+    },
+    {
+     "id": "u42.d.03",
+     "speaker": "Julie",
+     "en": "How much is the rent?",
+     "fr": "Combien est le loyer ?"
+    },
+    {
+     "id": "u42.d.04",
+     "speaker": "Landlord",
+     "en": "Seventy-five thousand a month.",
+     "fr": "Soixante-quinze mille par mois."
+    },
+    {
+     "id": "u42.d.05",
+     "speaker": "Julie",
+     "en": "Is water included?",
+     "fr": "L'eau est comprise ?"
+    },
+    {
+     "id": "u42.d.06",
+     "speaker": "Landlord",
+     "en": "Yes, water and electricity.",
+     "fr": "Oui, l'eau et l'électricité."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u43",
+  "title": {
+   "en": "Daily routine",
+   "fr": "La routine"
+  },
+  "focus": {
+   "en": "Habitual present ('every day I…'); times of day; reflexive actions.",
+   "fr": "Présent d'habitude (« chaque jour je… ») ; moments de la journée ; actions sur soi."
+  },
+  "lessons": [
+   {
+    "id": "u43-1",
+    "title": {
+     "en": "My day",
+     "fr": "Ma journée"
+    },
+    "items": [
+     {
+      "id": "u43.1.01",
+      "en": "I wake up at six",
+      "fr": "Je me réveille à six heures"
+     },
+     {
+      "id": "u43.1.02",
+      "en": "I wash",
+      "fr": "Je me lave"
+     },
+     {
+      "id": "u43.1.03",
+      "en": "I get dressed",
+      "fr": "Je m'habille"
+     },
+     {
+      "id": "u43.1.04",
+      "en": "I have breakfast",
+      "fr": "Je prends le petit-déjeuner"
+     },
+     {
+      "id": "u43.1.05",
+      "en": "I go to work",
+      "fr": "Je vais au travail"
+     },
+     {
+      "id": "u43.1.06",
+      "en": "I come home at five",
+      "fr": "Je rentre à cinq heures"
+     },
+     {
+      "id": "u43.1.07",
+      "en": "I have a rest",
+      "fr": "Je me repose"
+     },
+     {
+      "id": "u43.1.08",
+      "en": "I make tea",
+      "fr": "Je prépare le thé"
+     },
+     {
+      "id": "u43.1.09",
+      "en": "I go to bed late",
+      "fr": "Je me couche tard"
+     },
+     {
+      "id": "u43.1.10",
+      "en": "Every day",
+      "fr": "Tous les jours"
+     }
+    ]
+   },
+   {
+    "id": "u43-2",
+    "title": {
+     "en": "How often",
+     "fr": "À quelle fréquence"
+    },
+    "items": [
+     {
+      "id": "u43.2.01",
+      "en": "always",
+      "fr": "toujours"
+     },
+     {
+      "id": "u43.2.02",
+      "en": "often",
+      "fr": "souvent"
+     },
+     {
+      "id": "u43.2.03",
+      "en": "sometimes",
+      "fr": "parfois"
+     },
+     {
+      "id": "u43.2.04",
+      "en": "never",
+      "fr": "jamais"
+     },
+     {
+      "id": "u43.2.05",
+      "en": "once a week",
+      "fr": "une fois par semaine"
+     },
+     {
+      "id": "u43.2.06",
+      "en": "every Friday",
+      "fr": "chaque vendredi"
+     },
+     {
+      "id": "u43.2.07",
+      "en": "at the weekend",
+      "fr": "le week-end"
+     },
+     {
+      "id": "u43.2.08",
+      "en": "I usually walk",
+      "fr": "D'habitude je marche"
+     },
+     {
+      "id": "u43.2.09",
+      "en": "I rarely go out",
+      "fr": "Je sors rarement"
+     },
+     {
+      "id": "u43.2.10",
+      "en": "I've been doing it for years",
+      "fr": "Je le fais depuis des années"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u43",
+   "title": {
+    "en": "A busy day",
+    "fr": "Une journée chargée"
+   },
+   "lines": [
+    {
+     "id": "u43.d.01",
+     "speaker": "Ndeye",
+     "en": "What time do you wake up?",
+     "fr": "Tu te réveilles à quelle heure ?"
+    },
+    {
+     "id": "u43.d.02",
+     "speaker": "Malick",
+     "en": "At six. Then I make tea.",
+     "fr": "À six heures. Ensuite je prépare le thé."
+    },
+    {
+     "id": "u43.d.03",
+     "speaker": "Ndeye",
+     "en": "Every day?",
+     "fr": "Tous les jours ?"
+    },
+    {
+     "id": "u43.d.04",
+     "speaker": "Malick",
+     "en": "Every day, even at the weekend!",
+     "fr": "Tous les jours, même le week-end !"
+    },
+    {
+     "id": "u43.d.05",
+     "speaker": "Ndeye",
+     "en": "And when do you rest?",
+     "fr": "Et quand est-ce que tu te reposes ?"
+    },
+    {
+     "id": "u43.d.06",
+     "speaker": "Malick",
+     "en": "After lunch, I have a rest.",
+     "fr": "Après le déjeuner, je me repose."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u44",
+  "title": {
+   "en": "Faith and ceremonies",
+   "fr": "Foi et cérémonies"
+  },
+  "focus": {
+   "en": "Blessings and good wishes; days of prayer; respectful expressions.",
+   "fr": "Bénédictions et vœux ; jours de prière ; expressions respectueuses."
+  },
+  "lessons": [
+   {
+    "id": "u44-1",
+    "title": {
+     "en": "Prayer and blessings",
+     "fr": "Prière et bénédictions"
+    },
+    "items": [
+     {
+      "id": "u44.1.01",
+      "en": "the mosque",
+      "fr": "la mosquée"
+     },
+     {
+      "id": "u44.1.02",
+      "en": "the church",
+      "fr": "l'église"
+     },
+     {
+      "id": "u44.1.03",
+      "en": "Friday prayer",
+      "fr": "la prière du vendredi"
+     },
+     {
+      "id": "u44.1.04",
+      "en": "May God protect you",
+      "fr": "Que Dieu te protège"
+     },
+     {
+      "id": "u44.1.05",
+      "en": "May God bless you",
+      "fr": "Que Dieu te bénisse"
+     },
+     {
+      "id": "u44.1.06",
+      "en": "Amen",
+      "fr": "Amine"
+     },
+     {
+      "id": "u44.1.07",
+      "en": "Pray for me",
+      "fr": "Prie pour moi"
+     },
+     {
+      "id": "u44.1.08",
+      "en": "God is great",
+      "fr": "Dieu est grand"
+     },
+     {
+      "id": "u44.1.09",
+      "en": "Thanks be to God",
+      "fr": "Grâce à Dieu"
+     },
+     {
+      "id": "u44.1.10",
+      "en": "He has gone to pray",
+      "fr": "Il est parti prier"
+     }
+    ]
+   },
+   {
+    "id": "u44-2",
+    "title": {
+     "en": "Festivals",
+     "fr": "Fêtes"
+    },
+    "items": [
+     {
+      "id": "u44.2.01",
+      "en": "a pilgrimage",
+      "fr": "un pèlerinage"
+     },
+     {
+      "id": "u44.2.02",
+      "en": "the sheep for the festival",
+      "fr": "le mouton de la fête"
+     },
+     {
+      "id": "u44.2.03",
+      "en": "new clothes",
+      "fr": "des habits neufs"
+     },
+     {
+      "id": "u44.2.04",
+      "en": "We visit the family",
+      "fr": "Nous rendons visite à la famille"
+     },
+     {
+      "id": "u44.2.05",
+      "en": "We share the meat",
+      "fr": "Nous partageons la viande"
+     },
+     {
+      "id": "u44.2.06",
+      "en": "Happy festival!",
+      "fr": "Bonne fête !"
+     },
+     {
+      "id": "u44.2.07",
+      "en": "Forgive me for anything I did wrong",
+      "fr": "Pardonne-moi si je t'ai offensé"
+     },
+     {
+      "id": "u44.2.08",
+      "en": "I forgive you",
+      "fr": "Je te pardonne"
+     },
+     {
+      "id": "u44.2.09",
+      "en": "We're going to the village for the festival",
+      "fr": "Nous allons au village pour la fête"
+     },
+     {
+      "id": "u44.2.10",
+      "en": "Everyone is together",
+      "fr": "Tout le monde est réuni"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u44",
+   "title": {
+    "en": "The day of the festival",
+    "fr": "Le jour de la fête"
+   },
+   "lines": [
+    {
+     "id": "u44.d.01",
+     "speaker": "Abdou",
+     "en": "Happy festival!",
+     "fr": "Bonne fête !"
+    },
+    {
+     "id": "u44.d.02",
+     "speaker": "Moussa",
+     "en": "Happy festival! Forgive me for anything I did wrong.",
+     "fr": "Bonne fête ! Pardonne-moi si je t'ai offensé."
+    },
+    {
+     "id": "u44.d.03",
+     "speaker": "Abdou",
+     "en": "I forgive you. May God bless you.",
+     "fr": "Je te pardonne. Que Dieu te bénisse."
+    },
+    {
+     "id": "u44.d.04",
+     "speaker": "Moussa",
+     "en": "Amen. Are you going to the village?",
+     "fr": "Amine. Tu vas au village ?"
+    },
+    {
+     "id": "u44.d.05",
+     "speaker": "Abdou",
+     "en": "Yes, everyone is together there.",
+     "fr": "Oui, tout le monde est réuni là-bas."
+    },
+    {
+     "id": "u44.d.06",
+     "speaker": "Moussa",
+     "en": "Greet your family for me.",
+     "fr": "Salue ta famille de ma part."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u45",
+  "title": {
+   "en": "Music, wrestling and football",
+   "fr": "Musique, lutte et football"
+  },
+  "focus": {
+   "en": "'Who won?', scores and teams; going out; enthusiasm.",
+   "fr": "« Qui a gagné ? », scores et équipes ; sortir ; enthousiasme."
+  },
+  "lessons": [
+   {
+    "id": "u45-1",
+    "title": {
+     "en": "Sport",
+     "fr": "Sport"
+    },
+    "items": [
+     {
+      "id": "u45.1.01",
+      "en": "a match",
+      "fr": "un match"
+     },
+     {
+      "id": "u45.1.02",
+      "en": "a wrestler",
+      "fr": "un lutteur"
+     },
+     {
+      "id": "u45.1.03",
+      "en": "the team",
+      "fr": "l'équipe"
+     },
+     {
+      "id": "u45.1.04",
+      "en": "Who won?",
+      "fr": "Qui a gagné ?"
+     },
+     {
+      "id": "u45.1.05",
+      "en": "We won!",
+      "fr": "Nous avons gagné !"
+     },
+     {
+      "id": "u45.1.06",
+      "en": "They lost",
+      "fr": "Ils ont perdu"
+     },
+     {
+      "id": "u45.1.07",
+      "en": "It's a draw",
+      "fr": "C'est un match nul"
+     },
+     {
+      "id": "u45.1.08",
+      "en": "What's the score?",
+      "fr": "Quel est le score ?"
+     },
+     {
+      "id": "u45.1.09",
+      "en": "Goal!",
+      "fr": "But !"
+     },
+     {
+      "id": "u45.1.10",
+      "en": "Which team do you support?",
+      "fr": "Tu supportes quelle équipe ?"
+     }
+    ]
+   },
+   {
+    "id": "u45-2",
+    "title": {
+     "en": "Music and going out",
+     "fr": "Musique et sorties"
+    },
+    "items": [
+     {
+      "id": "u45.2.01",
+      "en": "a concert",
+      "fr": "un concert"
+     },
+     {
+      "id": "u45.2.02",
+      "en": "a singer",
+      "fr": "un chanteur"
+     },
+     {
+      "id": "u45.2.03",
+      "en": "the drums",
+      "fr": "les tambours"
+     },
+     {
+      "id": "u45.2.04",
+      "en": "Let's dance!",
+      "fr": "Dansons !"
+     },
+     {
+      "id": "u45.2.05",
+      "en": "This song is famous",
+      "fr": "Cette chanson est célèbre"
+     },
+     {
+      "id": "u45.2.06",
+      "en": "Turn up the music",
+      "fr": "Monte le son"
+     },
+     {
+      "id": "u45.2.07",
+      "en": "Turn it down",
+      "fr": "Baisse le son"
+     },
+     {
+      "id": "u45.2.08",
+      "en": "Let's go out tonight",
+      "fr": "Sortons ce soir"
+     },
+     {
+      "id": "u45.2.09",
+      "en": "The party starts late",
+      "fr": "La fête commence tard"
+     },
+     {
+      "id": "u45.2.10",
+      "en": "I'm tired, I'm going home",
+      "fr": "Je suis fatigué, je rentre"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u45",
+   "title": {
+    "en": "The big match",
+    "fr": "Le grand match"
+   },
+   "lines": [
+    {
+     "id": "u45.d.01",
+     "speaker": "Cheikh",
+     "en": "Did you watch the match?",
+     "fr": "Tu as regardé le match ?"
+    },
+    {
+     "id": "u45.d.02",
+     "speaker": "Marc",
+     "en": "Yes! Who won?",
+     "fr": "Oui ! Qui a gagné ?"
+    },
+    {
+     "id": "u45.d.03",
+     "speaker": "Cheikh",
+     "en": "We won two to one!",
+     "fr": "Nous avons gagné deux à un !"
+    },
+    {
+     "id": "u45.d.04",
+     "speaker": "Marc",
+     "en": "Great! Let's go out tonight to celebrate.",
+     "fr": "Super ! Sortons ce soir pour fêter ça."
+    },
+    {
+     "id": "u45.d.05",
+     "speaker": "Cheikh",
+     "en": "There's a concert in town.",
+     "fr": "Il y a un concert en ville."
+    },
+    {
+     "id": "u45.d.06",
+     "speaker": "Marc",
+     "en": "Let's go! But not too late.",
+     "fr": "Allons-y ! Mais pas trop tard."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u46",
+  "title": {
+   "en": "Telling a story",
+   "fr": "Raconter une histoire"
+  },
+  "focus": {
+   "en": "Narrative past; 'then', 'suddenly', 'in the end'; reporting what someone said.",
+   "fr": "Passé du récit ; « puis », « soudain », « finalement » ; rapporter des paroles."
+  },
+  "lessons": [
+   {
+    "id": "u46-1",
+    "title": {
+     "en": "What happened",
+     "fr": "Ce qui s'est passé"
+    },
+    "items": [
+     {
+      "id": "u46.1.01",
+      "en": "Yesterday I went to the market",
+      "fr": "Hier je suis allé au marché"
+     },
+     {
+      "id": "u46.1.02",
+      "en": "Then I met a friend",
+      "fr": "Puis j'ai rencontré un ami"
+     },
+     {
+      "id": "u46.1.03",
+      "en": "Suddenly it started raining",
+      "fr": "Soudain il s'est mis à pleuvoir"
+     },
+     {
+      "id": "u46.1.04",
+      "en": "We ran",
+      "fr": "Nous avons couru"
+     },
+     {
+      "id": "u46.1.05",
+      "en": "We waited under a tree",
+      "fr": "Nous avons attendu sous un arbre"
+     },
+     {
+      "id": "u46.1.06",
+      "en": "In the end we went home",
+      "fr": "Finalement nous sommes rentrés"
+     },
+     {
+      "id": "u46.1.07",
+      "en": "It was a long day",
+      "fr": "C'était une longue journée"
+     },
+     {
+      "id": "u46.1.08",
+      "en": "I was very tired",
+      "fr": "J'étais très fatigué"
+     },
+     {
+      "id": "u46.1.09",
+      "en": "It was funny",
+      "fr": "C'était drôle"
+     },
+     {
+      "id": "u46.1.10",
+      "en": "I'll never forget it",
+      "fr": "Je ne l'oublierai jamais"
+     }
+    ]
+   },
+   {
+    "id": "u46-2",
+    "title": {
+     "en": "He said…",
+     "fr": "Il a dit…"
+    },
+    "items": [
+     {
+      "id": "u46.2.01",
+      "en": "He told me that…",
+      "fr": "Il m'a dit que…"
+     },
+     {
+      "id": "u46.2.02",
+      "en": "She asked me…",
+      "fr": "Elle m'a demandé…"
+     },
+     {
+      "id": "u46.2.03",
+      "en": "What did he say?",
+      "fr": "Qu'est-ce qu'il a dit ?"
+     },
+     {
+      "id": "u46.2.04",
+      "en": "I didn't hear",
+      "fr": "Je n'ai pas entendu"
+     },
+     {
+      "id": "u46.2.05",
+      "en": "He said he would come",
+      "fr": "Il a dit qu'il viendrait"
+     },
+     {
+      "id": "u46.2.06",
+      "en": "She said no",
+      "fr": "Elle a dit non"
+     },
+     {
+      "id": "u46.2.07",
+      "en": "Tell me everything",
+      "fr": "Raconte-moi tout"
+     },
+     {
+      "id": "u46.2.08",
+      "en": "And then?",
+      "fr": "Et après ?"
+     },
+     {
+      "id": "u46.2.09",
+      "en": "Really?",
+      "fr": "C'est vrai ?"
+     },
+     {
+      "id": "u46.2.10",
+      "en": "I don't believe it!",
+      "fr": "Je n'y crois pas !"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u46",
+   "title": {
+    "en": "Caught in the rain",
+    "fr": "Surpris par la pluie"
+   },
+   "lines": [
+    {
+     "id": "u46.d.01",
+     "speaker": "Astou",
+     "en": "Tell me everything! What happened?",
+     "fr": "Raconte-moi tout ! Qu'est-ce qui s'est passé ?"
+    },
+    {
+     "id": "u46.d.02",
+     "speaker": "Yacine",
+     "en": "Yesterday I went to the market with Fatou.",
+     "fr": "Hier je suis allée au marché avec Fatou."
+    },
+    {
+     "id": "u46.d.03",
+     "speaker": "Astou",
+     "en": "And then?",
+     "fr": "Et après ?"
+    },
+    {
+     "id": "u46.d.04",
+     "speaker": "Yacine",
+     "en": "Suddenly it started raining. We ran!",
+     "fr": "Soudain il s'est mis à pleuvoir. Nous avons couru !"
+    },
+    {
+     "id": "u46.d.05",
+     "speaker": "Astou",
+     "en": "Really?",
+     "fr": "C'est vrai ?"
+    },
+    {
+     "id": "u46.d.06",
+     "speaker": "Yacine",
+     "en": "Yes. In the end we waited under a tree. It was funny.",
+     "fr": "Oui. Finalement nous avons attendu sous un arbre. C'était drôle."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u47",
+  "title": {
+   "en": "Hopes and plans",
+   "fr": "Projets et souhaits"
+  },
+  "focus": {
+   "en": "'I'd like to', 'I hope', 'one day'; conditions with 'if'.",
+   "fr": "« j'aimerais », « j'espère », « un jour » ; conditions avec « si »."
+  },
+  "lessons": [
+   {
+    "id": "u47-1",
+    "title": {
+     "en": "Wishes",
+     "fr": "Souhaits"
+    },
+    "items": [
+     {
+      "id": "u47.1.01",
+      "en": "One day I'd like to travel",
+      "fr": "Un jour j'aimerais voyager"
+     },
+     {
+      "id": "u47.1.02",
+      "en": "I hope to find a job",
+      "fr": "J'espère trouver un travail"
+     },
+     {
+      "id": "u47.1.03",
+      "en": "I dream of opening a shop",
+      "fr": "Je rêve d'ouvrir une boutique"
+     },
+     {
+      "id": "u47.1.04",
+      "en": "I want to build a house",
+      "fr": "Je veux construire une maison"
+     },
+     {
+      "id": "u47.1.05",
+      "en": "I'd like to learn to drive",
+      "fr": "J'aimerais apprendre à conduire"
+     },
+     {
+      "id": "u47.1.06",
+      "en": "Next year",
+      "fr": "L'année prochaine"
+     },
+     {
+      "id": "u47.1.07",
+      "en": "In five years",
+      "fr": "Dans cinq ans"
+     },
+     {
+      "id": "u47.1.08",
+      "en": "It's my dream",
+      "fr": "C'est mon rêve"
+     },
+     {
+      "id": "u47.1.09",
+      "en": "Little by little",
+      "fr": "Petit à petit"
+     },
+     {
+      "id": "u47.1.10",
+      "en": "God willing, it will happen",
+      "fr": "Si Dieu le veut, ça arrivera"
+     }
+    ]
+   },
+   {
+    "id": "u47-2",
+    "title": {
+     "en": "If…",
+     "fr": "Si…"
+    },
+    "items": [
+     {
+      "id": "u47.2.01",
+      "en": "If I have time, I'll come",
+      "fr": "Si j'ai le temps, je viendrai"
+     },
+     {
+      "id": "u47.2.02",
+      "en": "If it rains, we'll stay home",
+      "fr": "S'il pleut, nous resterons à la maison"
+     },
+     {
+      "id": "u47.2.03",
+      "en": "If you want",
+      "fr": "Si tu veux"
+     },
+     {
+      "id": "u47.2.04",
+      "en": "If possible",
+      "fr": "Si possible"
+     },
+     {
+      "id": "u47.2.05",
+      "en": "If I had money…",
+      "fr": "Si j'avais de l'argent…"
+     },
+     {
+      "id": "u47.2.06",
+      "en": "What would you do?",
+      "fr": "Qu'est-ce que tu ferais ?"
+     },
+     {
+      "id": "u47.2.07",
+      "en": "I'd help my parents",
+      "fr": "J'aiderais mes parents"
+     },
+     {
+      "id": "u47.2.08",
+      "en": "It's not easy",
+      "fr": "Ce n'est pas facile"
+     },
+     {
+      "id": "u47.2.09",
+      "en": "You can do it",
+      "fr": "Tu peux y arriver"
+     },
+     {
+      "id": "u47.2.10",
+      "en": "Don't give up",
+      "fr": "N'abandonne pas"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u47",
+   "title": {
+    "en": "Dreams",
+    "fr": "Des rêves"
+   },
+   "lines": [
+    {
+     "id": "u47.d.01",
+     "speaker": "Modou",
+     "en": "What's your dream?",
+     "fr": "Quel est ton rêve ?"
+    },
+    {
+     "id": "u47.d.02",
+     "speaker": "Elise",
+     "en": "One day I'd like to open a shop.",
+     "fr": "Un jour j'aimerais ouvrir une boutique."
+    },
+    {
+     "id": "u47.d.03",
+     "speaker": "Modou",
+     "en": "It's not easy.",
+     "fr": "Ce n'est pas facile."
+    },
+    {
+     "id": "u47.d.04",
+     "speaker": "Elise",
+     "en": "Little by little. And you?",
+     "fr": "Petit à petit. Et toi ?"
+    },
+    {
+     "id": "u47.d.05",
+     "speaker": "Modou",
+     "en": "If I had money, I'd build a house for my parents.",
+     "fr": "Si j'avais de l'argent, je construirais une maison pour mes parents."
+    },
+    {
+     "id": "u47.d.06",
+     "speaker": "Elise",
+     "en": "You can do it. Don't give up!",
+     "fr": "Tu peux y arriver. N'abandonne pas !"
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u48",
+  "title": {
+   "en": "Advice and rules",
+   "fr": "Conseils et règles"
+  },
+  "focus": {
+   "en": "'You should', 'you must', 'don't'; giving reasons.",
+   "fr": "« tu devrais », « il faut », « ne… pas » ; donner des raisons."
+  },
+  "lessons": [
+   {
+    "id": "u48-1",
+    "title": {
+     "en": "Advice",
+     "fr": "Conseils"
+    },
+    "items": [
+     {
+      "id": "u48.1.01",
+      "en": "You should rest",
+      "fr": "Tu devrais te reposer"
+     },
+     {
+      "id": "u48.1.02",
+      "en": "You should see a doctor",
+      "fr": "Tu devrais voir un médecin"
+     },
+     {
+      "id": "u48.1.03",
+      "en": "Don't worry",
+      "fr": "Ne t'inquiète pas"
+     },
+     {
+      "id": "u48.1.04",
+      "en": "Take your time",
+      "fr": "Prends ton temps"
+     },
+     {
+      "id": "u48.1.05",
+      "en": "Be patient",
+      "fr": "Sois patient"
+     },
+     {
+      "id": "u48.1.06",
+      "en": "Listen to your elders",
+      "fr": "Écoute tes aînés"
+     },
+     {
+      "id": "u48.1.07",
+      "en": "Think about it",
+      "fr": "Réfléchis-y"
+     },
+     {
+      "id": "u48.1.08",
+      "en": "It's better to wait",
+      "fr": "Il vaut mieux attendre"
+     },
+     {
+      "id": "u48.1.09",
+      "en": "Ask him first",
+      "fr": "Demande-lui d'abord"
+     },
+     {
+      "id": "u48.1.10",
+      "en": "That's good advice",
+      "fr": "C'est un bon conseil"
+     }
+    ]
+   },
+   {
+    "id": "u48-2",
+    "title": {
+     "en": "Rules",
+     "fr": "Règles"
+    },
+    "items": [
+     {
+      "id": "u48.2.01",
+      "en": "You must take off your shoes",
+      "fr": "Il faut enlever tes chaussures"
+     },
+     {
+      "id": "u48.2.02",
+      "en": "Smoking is not allowed",
+      "fr": "Il est interdit de fumer"
+     },
+     {
+      "id": "u48.2.03",
+      "en": "Don't take photos here",
+      "fr": "Ne prenez pas de photos ici"
+     },
+     {
+      "id": "u48.2.04",
+      "en": "Ask before taking a photo",
+      "fr": "Demandez avant de prendre une photo"
+     },
+     {
+      "id": "u48.2.05",
+      "en": "Eat with your right hand",
+      "fr": "Mange avec la main droite"
+     },
+     {
+      "id": "u48.2.06",
+      "en": "Greet the elders first",
+      "fr": "Salue d'abord les aînés"
+     },
+     {
+      "id": "u48.2.07",
+      "en": "Dress modestly",
+      "fr": "Habille-toi de façon discrète"
+     },
+     {
+      "id": "u48.2.08",
+      "en": "Speak quietly",
+      "fr": "Parle doucement"
+     },
+     {
+      "id": "u48.2.09",
+      "en": "It's forbidden",
+      "fr": "C'est interdit"
+     },
+     {
+      "id": "u48.2.10",
+      "en": "It's allowed",
+      "fr": "C'est permis"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u48",
+   "title": {
+    "en": "Before the visit",
+    "fr": "Avant la visite"
+   },
+   "lines": [
+    {
+     "id": "u48.d.01",
+     "speaker": "Seydou",
+     "en": "We're visiting my grandmother tomorrow.",
+     "fr": "Demain nous rendons visite à ma grand-mère."
+    },
+    {
+     "id": "u48.d.02",
+     "speaker": "Kate",
+     "en": "What should I do?",
+     "fr": "Qu'est-ce que je devrais faire ?"
+    },
+    {
+     "id": "u48.d.03",
+     "speaker": "Seydou",
+     "en": "Greet the elders first.",
+     "fr": "Salue d'abord les aînés."
+    },
+    {
+     "id": "u48.d.04",
+     "speaker": "Kate",
+     "en": "And at the meal?",
+     "fr": "Et pendant le repas ?"
+    },
+    {
+     "id": "u48.d.05",
+     "speaker": "Seydou",
+     "en": "Eat with your right hand. Take your time.",
+     "fr": "Mange avec la main droite. Prends ton temps."
+    },
+    {
+     "id": "u48.d.06",
+     "speaker": "Kate",
+     "en": "Thank you, that's good advice.",
+     "fr": "Merci, c'est un bon conseil."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u49",
+  "title": {
+   "en": "Preferences and choices",
+   "fr": "Préférences et choix"
+  },
+  "focus": {
+   "en": "'Which one?', 'this one / that one'; comparing two things; 'the most'.",
+   "fr": "« lequel ? », « celui-ci / celui-là » ; comparer deux choses ; « le plus »."
+  },
+  "lessons": [
+   {
+    "id": "u49-1",
+    "title": {
+     "en": "Choosing",
+     "fr": "Choisir"
+    },
+    "items": [
+     {
+      "id": "u49.1.01",
+      "en": "Which one do you want?",
+      "fr": "Lequel veux-tu ?"
+     },
+     {
+      "id": "u49.1.02",
+      "en": "This one",
+      "fr": "Celui-ci"
+     },
+     {
+      "id": "u49.1.03",
+      "en": "That one",
+      "fr": "Celui-là"
+     },
+     {
+      "id": "u49.1.04",
+      "en": "The red one",
+      "fr": "Le rouge"
+     },
+     {
+      "id": "u49.1.05",
+      "en": "The cheapest",
+      "fr": "Le moins cher"
+     },
+     {
+      "id": "u49.1.06",
+      "en": "The best",
+      "fr": "Le meilleur"
+     },
+     {
+      "id": "u49.1.07",
+      "en": "I'll take both",
+      "fr": "Je prends les deux"
+     },
+     {
+      "id": "u49.1.08",
+      "en": "I can't choose",
+      "fr": "Je n'arrive pas à choisir"
+     },
+     {
+      "id": "u49.1.09",
+      "en": "You choose",
+      "fr": "Choisis, toi"
+     },
+     {
+      "id": "u49.1.10",
+      "en": "Whatever you like",
+      "fr": "Comme tu veux"
+     }
+    ]
+   },
+   {
+    "id": "u49-2",
+    "title": {
+     "en": "Comparing",
+     "fr": "Comparer"
+    },
+    "items": [
+     {
+      "id": "u49.2.01",
+      "en": "It's better than that one",
+      "fr": "C'est mieux que celui-là"
+     },
+     {
+      "id": "u49.2.02",
+      "en": "It's worse",
+      "fr": "C'est pire"
+     },
+     {
+      "id": "u49.2.03",
+      "en": "The same",
+      "fr": "Pareil"
+     },
+     {
+      "id": "u49.2.04",
+      "en": "Different",
+      "fr": "Différent"
+     },
+     {
+      "id": "u49.2.05",
+      "en": "Dakar is bigger than Thiès",
+      "fr": "Dakar est plus grand que Thiès"
+     },
+     {
+      "id": "u49.2.06",
+      "en": "The bus is slower than the taxi",
+      "fr": "Le bus est plus lent que le taxi"
+     },
+     {
+      "id": "u49.2.07",
+      "en": "This road is the shortest",
+      "fr": "Cette route est la plus courte"
+     },
+     {
+      "id": "u49.2.08",
+      "en": "It's the most beautiful beach",
+      "fr": "C'est la plus belle plage"
+     },
+     {
+      "id": "u49.2.09",
+      "en": "They're almost the same",
+      "fr": "Ils sont presque pareils"
+     },
+     {
+      "id": "u49.2.10",
+      "en": "There's no difference",
+      "fr": "Il n'y a pas de différence"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u49",
+   "title": {
+    "en": "Bus or taxi?",
+    "fr": "Bus ou taxi ?"
+   },
+   "lines": [
+    {
+     "id": "u49.d.01",
+     "speaker": "Rokhaya",
+     "en": "Shall we take the bus or a taxi?",
+     "fr": "On prend le bus ou un taxi ?"
+    },
+    {
+     "id": "u49.d.02",
+     "speaker": "Ben",
+     "en": "Which one is cheaper?",
+     "fr": "Lequel est le moins cher ?"
+    },
+    {
+     "id": "u49.d.03",
+     "speaker": "Rokhaya",
+     "en": "The bus, but it's slower than the taxi.",
+     "fr": "Le bus, mais il est plus lent que le taxi."
+    },
+    {
+     "id": "u49.d.04",
+     "speaker": "Ben",
+     "en": "We're in a hurry. You choose.",
+     "fr": "Nous sommes pressés. Choisis, toi."
+    },
+    {
+     "id": "u49.d.05",
+     "speaker": "Rokhaya",
+     "en": "Then the taxi. This road is the shortest.",
+     "fr": "Alors le taxi. Cette route est la plus courte."
+    },
+    {
+     "id": "u49.d.06",
+     "speaker": "Ben",
+     "en": "Perfect!",
+     "fr": "Parfait !"
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u50",
+  "title": {
+   "en": "Hosting and visiting",
+   "fr": "Recevoir et rendre visite"
+  },
+  "focus": {
+   "en": "Welcome formulas; offering and refusing politely; taking leave.",
+   "fr": "Formules d'accueil ; offrir et refuser poliment ; prendre congé."
+  },
+  "lessons": [
+   {
+    "id": "u50-1",
+    "title": {
+     "en": "Welcoming guests",
+     "fr": "Accueillir des invités"
+    },
+    "items": [
+     {
+      "id": "u50.1.01",
+      "en": "Come in",
+      "fr": "Entrez"
+     },
+     {
+      "id": "u50.1.02",
+      "en": "Sit down",
+      "fr": "Asseyez-vous"
+     },
+     {
+      "id": "u50.1.03",
+      "en": "Make yourself at home",
+      "fr": "Faites comme chez vous"
+     },
+     {
+      "id": "u50.1.04",
+      "en": "Have some tea",
+      "fr": "Prenez du thé"
+     },
+     {
+      "id": "u50.1.05",
+      "en": "Will you eat with us?",
+      "fr": "Vous mangez avec nous ?"
+     },
+     {
+      "id": "u50.1.06",
+      "en": "Stay a little longer",
+      "fr": "Restez encore un peu"
+     },
+     {
+      "id": "u50.1.07",
+      "en": "You honour us",
+      "fr": "Vous nous honorez"
+     },
+     {
+      "id": "u50.1.08",
+      "en": "Thank you for coming",
+      "fr": "Merci d'être venu"
+     },
+     {
+      "id": "u50.1.09",
+      "en": "Greet your family for me",
+      "fr": "Saluez votre famille de ma part"
+     },
+     {
+      "id": "u50.1.10",
+      "en": "Come back soon",
+      "fr": "Revenez bientôt"
+     }
+    ]
+   },
+   {
+    "id": "u50-2",
+    "title": {
+     "en": "Being a guest",
+     "fr": "Être invité"
+    },
+    "items": [
+     {
+      "id": "u50.2.01",
+      "en": "Thank you, I've already eaten",
+      "fr": "Merci, j'ai déjà mangé"
+     },
+     {
+      "id": "u50.2.02",
+      "en": "Just a little",
+      "fr": "Juste un peu"
+     },
+     {
+      "id": "u50.2.03",
+      "en": "It's enough, thank you",
+      "fr": "Ça suffit, merci"
+     },
+     {
+      "id": "u50.2.04",
+      "en": "I brought you something",
+      "fr": "Je vous ai apporté quelque chose"
+     },
+     {
+      "id": "u50.2.05",
+      "en": "Your house is beautiful",
+      "fr": "Votre maison est belle"
+     },
+     {
+      "id": "u50.2.06",
+      "en": "I have to go now",
+      "fr": "Je dois partir maintenant"
+     },
+     {
+      "id": "u50.2.07",
+      "en": "It's getting late",
+      "fr": "Il se fait tard"
+     },
+     {
+      "id": "u50.2.08",
+      "en": "Thank you for the meal",
+      "fr": "Merci pour le repas"
+     },
+     {
+      "id": "u50.2.09",
+      "en": "I spent a good time",
+      "fr": "J'ai passé un bon moment"
+     },
+     {
+      "id": "u50.2.10",
+      "en": "May God reward you",
+      "fr": "Que Dieu vous le rende"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u50",
+   "title": {
+    "en": "An evening visit",
+    "fr": "Une visite le soir"
+   },
+   "lines": [
+    {
+     "id": "u50.d.01",
+     "speaker": "Host",
+     "en": "Come in, sit down! Make yourself at home.",
+     "fr": "Entrez, asseyez-vous ! Faites comme chez vous."
+    },
+    {
+     "id": "u50.d.02",
+     "speaker": "Guest",
+     "en": "Thank you. I brought you something.",
+     "fr": "Merci. Je vous ai apporté quelque chose."
+    },
+    {
+     "id": "u50.d.03",
+     "speaker": "Host",
+     "en": "You honour us. Will you eat with us?",
+     "fr": "Vous nous honorez. Vous mangez avec nous ?"
+    },
+    {
+     "id": "u50.d.04",
+     "speaker": "Guest",
+     "en": "Just a little, thank you.",
+     "fr": "Juste un peu, merci."
+    },
+    {
+     "id": "u50.d.05",
+     "speaker": "Guest",
+     "en": "It's getting late. I have to go now.",
+     "fr": "Il se fait tard. Je dois partir maintenant."
+    },
+    {
+     "id": "u50.d.06",
+     "speaker": "Host",
+     "en": "Thank you for coming. Come back soon!",
+     "fr": "Merci d'être venu. Revenez bientôt !"
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u51",
+  "title": {
+   "en": "Health and the body II",
+   "fr": "Santé et corps II"
+  },
+  "focus": {
+   "en": "Describing pain and duration; 'it hurts when…'; staying healthy.",
+   "fr": "Décrire une douleur et sa durée ; « ça fait mal quand… » ; rester en bonne santé."
+  },
+  "lessons": [
+   {
+    "id": "u51-1",
+    "title": {
+     "en": "At the clinic",
+     "fr": "Au dispensaire"
+    },
+    "items": [
+     {
+      "id": "u51.1.01",
+      "en": "the clinic",
+      "fr": "le dispensaire"
+     },
+     {
+      "id": "u51.1.02",
+      "en": "a nurse",
+      "fr": "un infirmier"
+     },
+     {
+      "id": "u51.1.03",
+      "en": "an injection",
+      "fr": "une piqûre"
+     },
+     {
+      "id": "u51.1.04",
+      "en": "It hurts when I walk",
+      "fr": "Ça fait mal quand je marche"
+     },
+     {
+      "id": "u51.1.05",
+      "en": "I hurt my foot",
+      "fr": "Je me suis fait mal au pied"
+     },
+     {
+      "id": "u51.1.06",
+      "en": "I've been vomiting",
+      "fr": "J'ai vomi"
+     },
+     {
+      "id": "u51.1.07",
+      "en": "I have malaria",
+      "fr": "J'ai le paludisme"
+     },
+     {
+      "id": "u51.1.08",
+      "en": "Do a test",
+      "fr": "Faites un test"
+     },
+     {
+      "id": "u51.1.09",
+      "en": "You need an X-ray",
+      "fr": "Il vous faut une radio"
+     },
+     {
+      "id": "u51.1.10",
+      "en": "Come back in a week",
+      "fr": "Revenez dans une semaine"
+     }
+    ]
+   },
+   {
+    "id": "u51-2",
+    "title": {
+     "en": "Staying healthy",
+     "fr": "Rester en bonne santé"
+    },
+    "items": [
+     {
+      "id": "u51.2.01",
+      "en": "Sleep under a mosquito net",
+      "fr": "Dors sous une moustiquaire"
+     },
+     {
+      "id": "u51.2.02",
+      "en": "Wash your hands",
+      "fr": "Lave-toi les mains"
+     },
+     {
+      "id": "u51.2.03",
+      "en": "Eat fruit and vegetables",
+      "fr": "Mange des fruits et des légumes"
+     },
+     {
+      "id": "u51.2.04",
+      "en": "Drink clean water",
+      "fr": "Bois de l'eau propre"
+     },
+     {
+      "id": "u51.2.05",
+      "en": "Do some sport",
+      "fr": "Fais du sport"
+     },
+     {
+      "id": "u51.2.06",
+      "en": "Don't eat too much salt",
+      "fr": "Ne mange pas trop salé"
+     },
+     {
+      "id": "u51.2.07",
+      "en": "Get vaccinated",
+      "fr": "Fais-toi vacciner"
+     },
+     {
+      "id": "u51.2.08",
+      "en": "I feel better",
+      "fr": "Je me sens mieux"
+     },
+     {
+      "id": "u51.2.09",
+      "en": "I'm completely better",
+      "fr": "Je suis complètement guéri"
+     },
+     {
+      "id": "u51.2.10",
+      "en": "Get well soon",
+      "fr": "Prompt rétablissement"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u51",
+   "title": {
+    "en": "At the clinic",
+    "fr": "Au dispensaire"
+   },
+   "lines": [
+    {
+     "id": "u51.d.01",
+     "speaker": "Nurse",
+     "en": "What's wrong?",
+     "fr": "Qu'est-ce qui ne va pas ?"
+    },
+    {
+     "id": "u51.d.02",
+     "speaker": "Babacar",
+     "en": "I have a fever and I've been vomiting.",
+     "fr": "J'ai de la fièvre et j'ai vomi."
+    },
+    {
+     "id": "u51.d.03",
+     "speaker": "Nurse",
+     "en": "Since when?",
+     "fr": "Depuis quand ?"
+    },
+    {
+     "id": "u51.d.04",
+     "speaker": "Babacar",
+     "en": "Since yesterday evening.",
+     "fr": "Depuis hier soir."
+    },
+    {
+     "id": "u51.d.05",
+     "speaker": "Nurse",
+     "en": "We'll do a test for malaria.",
+     "fr": "Nous allons faire un test de paludisme."
+    },
+    {
+     "id": "u51.d.06",
+     "speaker": "Nurse",
+     "en": "Sleep under a mosquito net and drink clean water.",
+     "fr": "Dors sous une moustiquaire et bois de l'eau propre."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u52",
+  "title": {
+   "en": "Polite requests",
+   "fr": "Demandes polies"
+  },
+  "focus": {
+   "en": "Softening requests ('could you', 'please', 'if it's no trouble'); apologising.",
+   "fr": "Adoucir une demande (« pourriez-vous », « s'il vous plaît », « si ça ne vous dérange pas ») ; s'excuser."
+  },
+  "lessons": [
+   {
+    "id": "u52-1",
+    "title": {
+     "en": "Asking nicely",
+     "fr": "Demander gentiment"
+    },
+    "items": [
+     {
+      "id": "u52.1.01",
+      "en": "Could you help me?",
+      "fr": "Pourriez-vous m'aider ?"
+     },
+     {
+      "id": "u52.1.02",
+      "en": "If it's no trouble",
+      "fr": "Si ça ne vous dérange pas"
+     },
+     {
+      "id": "u52.1.03",
+      "en": "Could you speak more slowly?",
+      "fr": "Pourriez-vous parler plus lentement ?"
+     },
+     {
+      "id": "u52.1.04",
+      "en": "Could you write it?",
+      "fr": "Pourriez-vous l'écrire ?"
+     },
+     {
+      "id": "u52.1.05",
+      "en": "May I sit here?",
+      "fr": "Je peux m'asseoir ici ?"
+     },
+     {
+      "id": "u52.1.06",
+      "en": "May I come in?",
+      "fr": "Je peux entrer ?"
+     },
+     {
+      "id": "u52.1.07",
+      "en": "Could you wait a moment?",
+      "fr": "Pourriez-vous attendre un instant ?"
+     },
+     {
+      "id": "u52.1.08",
+      "en": "Lend me your pen",
+      "fr": "Prête-moi ton stylo"
+     },
+     {
+      "id": "u52.1.09",
+      "en": "Show me, please",
+      "fr": "Montrez-moi, s'il vous plaît"
+     },
+     {
+      "id": "u52.1.10",
+      "en": "Thank you in advance",
+      "fr": "Merci d'avance"
+     }
+    ]
+   },
+   {
+    "id": "u52-2",
+    "title": {
+     "en": "Sorry",
+     "fr": "Pardon"
+    },
+    "items": [
+     {
+      "id": "u52.2.01",
+      "en": "Excuse me",
+      "fr": "Excusez-moi"
+     },
+     {
+      "id": "u52.2.02",
+      "en": "I'm sorry",
+      "fr": "Je suis désolé"
+     },
+     {
+      "id": "u52.2.03",
+      "en": "It's my fault",
+      "fr": "C'est ma faute"
+     },
+     {
+      "id": "u52.2.04",
+      "en": "I didn't mean to",
+      "fr": "Je ne l'ai pas fait exprès"
+     },
+     {
+      "id": "u52.2.05",
+      "en": "I forgot",
+      "fr": "J'ai oublié"
+     },
+     {
+      "id": "u52.2.06",
+      "en": "It's not serious",
+      "fr": "Ce n'est pas grave"
+     },
+     {
+      "id": "u52.2.07",
+      "en": "Don't be angry",
+      "fr": "Ne te fâche pas"
+     },
+     {
+      "id": "u52.2.08",
+      "en": "It won't happen again",
+      "fr": "Ça ne se reproduira pas"
+     },
+     {
+      "id": "u52.2.09",
+      "en": "No problem",
+      "fr": "Pas de problème"
+     },
+     {
+      "id": "u52.2.10",
+      "en": "Thank you for understanding",
+      "fr": "Merci de votre compréhension"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u52",
+   "title": {
+    "en": "A small favour",
+    "fr": "Un petit service"
+   },
+   "lines": [
+    {
+     "id": "u52.d.01",
+     "speaker": "Lucie",
+     "en": "Excuse me, could you help me?",
+     "fr": "Excusez-moi, pourriez-vous m'aider ?"
+    },
+    {
+     "id": "u52.d.02",
+     "speaker": "Man",
+     "en": "Of course.",
+     "fr": "Bien sûr."
+    },
+    {
+     "id": "u52.d.03",
+     "speaker": "Lucie",
+     "en": "Could you speak more slowly? I'm learning Wolof.",
+     "fr": "Pourriez-vous parler plus lentement ? J'apprends le wolof."
+    },
+    {
+     "id": "u52.d.04",
+     "speaker": "Man",
+     "en": "No problem. Where are you going?",
+     "fr": "Pas de problème. Où allez-vous ?"
+    },
+    {
+     "id": "u52.d.05",
+     "speaker": "Lucie",
+     "en": "To the post office. Could you show me?",
+     "fr": "À la poste. Pourriez-vous me montrer ?"
+    },
+    {
+     "id": "u52.d.06",
+     "speaker": "Man",
+     "en": "Come, it's this way.",
+     "fr": "Venez, c'est par ici."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u53",
+  "title": {
+   "en": "Proverbs and expressions",
+   "fr": "Proverbes et expressions"
+  },
+  "focus": {
+   "en": "Common sayings and what they mean; using them in context. Please give the usual Wolof proverb, not a word-for-word translation.",
+   "fr": "Dictons courants et leur sens ; les utiliser en contexte. Merci de donner le proverbe wolof habituel, pas une traduction mot à mot."
+  },
+  "lessons": [
+   {
+    "id": "u53-1",
+    "title": {
+     "en": "Everyday expressions",
+     "fr": "Expressions courantes"
+    },
+    "items": [
+     {
+      "id": "u53.1.01",
+      "en": "Take it easy",
+      "fr": "Doucement, tranquille"
+     },
+     {
+      "id": "u53.1.02",
+      "en": "Never mind",
+      "fr": "Tant pis"
+     },
+     {
+      "id": "u53.1.03",
+      "en": "That's life",
+      "fr": "C'est la vie"
+     },
+     {
+      "id": "u53.1.04",
+      "en": "Good luck",
+      "fr": "Bonne chance"
+     },
+     {
+      "id": "u53.1.05",
+      "en": "Well done!",
+      "fr": "Bravo !"
+     },
+     {
+      "id": "u53.1.06",
+      "en": "Enjoy your meal",
+      "fr": "Bon appétit"
+     },
+     {
+      "id": "u53.1.07",
+      "en": "Safe journey",
+      "fr": "Bon voyage"
+     },
+     {
+      "id": "u53.1.08",
+      "en": "Sleep well",
+      "fr": "Dors bien"
+     },
+     {
+      "id": "u53.1.09",
+      "en": "Long time no see!",
+      "fr": "Ça fait longtemps !"
+     },
+     {
+      "id": "u53.1.10",
+      "en": "You've changed!",
+      "fr": "Tu as changé !"
+     }
+    ]
+   },
+   {
+    "id": "u53-2",
+    "title": {
+     "en": "Proverbs",
+     "fr": "Proverbes"
+    },
+    "items": [
+     {
+      "id": "u53.2.01",
+      "en": "Patience brings everything (a proverb about patience)",
+      "fr": "Proverbe sur la patience"
+     },
+     {
+      "id": "u53.2.02",
+      "en": "Humans are each other's remedy (a proverb about helping each other)",
+      "fr": "Proverbe sur l'entraide"
+     },
+     {
+      "id": "u53.2.03",
+      "en": "A proverb about hard work",
+      "fr": "Proverbe sur le travail"
+     },
+     {
+      "id": "u53.2.04",
+      "en": "A proverb about family",
+      "fr": "Proverbe sur la famille"
+     },
+     {
+      "id": "u53.2.05",
+      "en": "A proverb about hospitality",
+      "fr": "Proverbe sur l'hospitalité"
+     },
+     {
+      "id": "u53.2.06",
+      "en": "A proverb about speaking and silence",
+      "fr": "Proverbe sur la parole et le silence"
+     },
+     {
+      "id": "u53.2.07",
+      "en": "A proverb about friendship",
+      "fr": "Proverbe sur l'amitié"
+     },
+     {
+      "id": "u53.2.08",
+      "en": "A proverb about knowledge",
+      "fr": "Proverbe sur le savoir"
+     },
+     {
+      "id": "u53.2.09",
+      "en": "A proverb about respect for elders",
+      "fr": "Proverbe sur le respect des aînés"
+     },
+     {
+      "id": "u53.2.10",
+      "en": "A proverb about money",
+      "fr": "Proverbe sur l'argent"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u53",
+   "title": {
+    "en": "Words of wisdom",
+    "fr": "Paroles de sagesse"
+   },
+   "lines": [
+    {
+     "id": "u53.d.01",
+     "speaker": "Grandfather",
+     "en": "Why are you in a hurry?",
+     "fr": "Pourquoi es-tu pressé ?"
+    },
+    {
+     "id": "u53.d.02",
+     "speaker": "Grandson",
+     "en": "I want to finish quickly.",
+     "fr": "Je veux finir vite."
+    },
+    {
+     "id": "u53.d.03",
+     "speaker": "Grandfather",
+     "en": "Take it easy. Patience brings everything.",
+     "fr": "Doucement. La patience apporte tout."
+    },
+    {
+     "id": "u53.d.04",
+     "speaker": "Grandson",
+     "en": "What does that mean?",
+     "fr": "Qu'est-ce que ça veut dire ?"
+    },
+    {
+     "id": "u53.d.05",
+     "speaker": "Grandfather",
+     "en": "Little by little, you'll get there.",
+     "fr": "Petit à petit, tu y arriveras."
+    },
+    {
+     "id": "u53.d.06",
+     "speaker": "Grandson",
+     "en": "Thank you, grandfather.",
+     "fr": "Merci, grand-père."
+    }
+   ]
+  }
+ },
+ {
+  "unit": "u54",
+  "title": {
+   "en": "Phone, internet and news",
+   "fr": "Téléphone, internet et actualités"
+  },
+  "focus": {
+   "en": "Technology words people really use (French loans are fine where that's what people say); talking about news.",
+   "fr": "Le vocabulaire de la technologie que les gens utilisent vraiment (les emprunts au français sont acceptés) ; parler des actualités."
+  },
+  "lessons": [
+   {
+    "id": "u54-1",
+    "title": {
+     "en": "Online",
+     "fr": "En ligne"
+    },
+    "items": [
+     {
+      "id": "u54.1.01",
+      "en": "I have no credit",
+      "fr": "Je n'ai pas de crédit"
+     },
+     {
+      "id": "u54.1.02",
+      "en": "The battery is dead",
+      "fr": "La batterie est vide"
+     },
+     {
+      "id": "u54.1.03",
+      "en": "Charge my phone",
+      "fr": "Charge mon téléphone"
+     },
+     {
+      "id": "u54.1.04",
+      "en": "There's no network",
+      "fr": "Il n'y a pas de réseau"
+     },
+     {
+      "id": "u54.1.05",
+      "en": "Send me a voice message",
+      "fr": "Envoie-moi un message vocal"
+     },
+     {
+      "id": "u54.1.06",
+      "en": "I'll send you a photo",
+      "fr": "Je t'envoie une photo"
+     },
+     {
+      "id": "u54.1.07",
+      "en": "Call me on video",
+      "fr": "Appelle-moi en vidéo"
+     },
+     {
+      "id": "u54.1.08",
+      "en": "What's the Wi-Fi password?",
+      "fr": "Quel est le mot de passe du wifi ?"
+     },
+     {
+      "id": "u54.1.09",
+      "en": "I saw it on the internet",
+      "fr": "Je l'ai vu sur internet"
+     },
+     {
+      "id": "u54.1.10",
+      "en": "Delete it",
+      "fr": "Supprime-le"
+     }
+    ]
+   },
+   {
+    "id": "u54-2",
+    "title": {
+     "en": "The news",
+     "fr": "Les actualités"
+    },
+    "items": [
+     {
+      "id": "u54.2.01",
+      "en": "the news",
+      "fr": "les informations"
+     },
+     {
+      "id": "u54.2.02",
+      "en": "the radio",
+      "fr": "la radio"
+     },
+     {
+      "id": "u54.2.03",
+      "en": "the newspaper",
+      "fr": "le journal"
+     },
+     {
+      "id": "u54.2.04",
+      "en": "Did you hear the news?",
+      "fr": "Tu as entendu la nouvelle ?"
+     },
+     {
+      "id": "u54.2.05",
+      "en": "What's new?",
+      "fr": "Quoi de neuf ?"
+     },
+     {
+      "id": "u54.2.06",
+      "en": "Nothing new",
+      "fr": "Rien de nouveau"
+     },
+     {
+      "id": "u54.2.07",
+      "en": "It's on the radio",
+      "fr": "C'est à la radio"
+     },
+     {
+      "id": "u54.2.08",
+      "en": "The president spoke",
+      "fr": "Le président a parlé"
+     },
+     {
+      "id": "u54.2.09",
+      "en": "There will be an election",
+      "fr": "Il y aura une élection"
+     },
+     {
+      "id": "u54.2.10",
+      "en": "Is it true?",
+      "fr": "C'est vrai ?"
+     }
+    ]
+   }
+  ],
+  "dialogue": {
+   "id": "story-u54",
+   "title": {
+    "en": "No battery",
+    "fr": "Plus de batterie"
+   },
+   "lines": [
+    {
+     "id": "u54.d.01",
+     "speaker": "Awa",
+     "en": "I called you three times!",
+     "fr": "Je t'ai appelé trois fois !"
+    },
+    {
+     "id": "u54.d.02",
+     "speaker": "Ibrahima",
+     "en": "Sorry, the battery was dead.",
+     "fr": "Désolé, la batterie était vide."
+    },
+    {
+     "id": "u54.d.03",
+     "speaker": "Awa",
+     "en": "Did you hear the news?",
+     "fr": "Tu as entendu la nouvelle ?"
+    },
+    {
+     "id": "u54.d.04",
+     "speaker": "Ibrahima",
+     "en": "No, what's new?",
+     "fr": "Non, quoi de neuf ?"
+    },
+    {
+     "id": "u54.d.05",
+     "speaker": "Awa",
+     "en": "There will be a concert on Saturday. It's on the radio.",
+     "fr": "Il y aura un concert samedi. C'est à la radio."
+    },
+    {
+     "id": "u54.d.06",
+     "speaker": "Ibrahima",
+     "en": "Send me a voice message with the details.",
+     "fr": "Envoie-moi un message vocal avec les détails."
+    }
+   ]
+  }
+ }
+]
