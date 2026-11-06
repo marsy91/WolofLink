@@ -18,7 +18,7 @@ placeholder until native speakers record the course; a human recording imported 
 
 ## Results
 
-- **682 lines**, 4232 takes in total.
+- **682 lines**, 4226 takes in total.
 - **572 lines passed** the automatic check; median error rate 20%.
 - **110 lines are flagged** below: the best take still did not match the text
   well, or its length looked wrong. They may be fine (the checker itself often misspells
