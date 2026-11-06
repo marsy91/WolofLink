@@ -40,8 +40,8 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 
 | # | File | Wolof | Meaning | ✓ |
 |---|---|---|---|---|
-| 21 | `g.fanaane.mp3` | **Naka nga fanaane?** | Did you sleep well? / Tu as bien dormi ? |  |
-| 22 | `g.yendoo.mp3` | **Naka nga yendoo?** | How was your day? / Comment s'est passée ta journée ? |  |
+| 21 | `g.fanaane.mp3` | **Jàmm nga fanaan?** | Did you sleep well? / Tu as bien dormi ? |  |
+| 22 | `g.yendoo.mp3` | **Jàmm nga yendoo?** | How was your day? / Comment s'est passée ta journée ? |  |
 | 23 | `g.lubees.mp3` | **Lu bees?** | What's new? / Quoi de neuf ? |  |
 | 24 | `g.dara.mp3` | **Dara** | Nothing / Rien |  |
 | 25 | `g.yownag.mp3` | **Yow nag?** | And you? / Et toi ? |  |
@@ -916,9 +916,9 @@ Save each recording with the exact **file** name shown. Read the Wolof only; the
 | 516 | `pb.greet.jamm-nga-am.mp3` | **Jàmm nga am?** | Are you at peace? / Es-tu en paix ? |  |
 | 517 | `pb.greet.jamm-rekk.mp3` | **Jàmm rekk** | Peace only (all is well) / La paix seulement (tout va bien) |  |
 | 518 | `pb.greet.alxamdulilaay.mp3` | **Alxamdulilaay** | Thank God (all is well) / Dieu merci (tout va bien) |  |
-| 519 | `pb.greet.naka-nga-fanaane.mp3` | **Naka nga fanaane?** | Good morning (did you sleep well?) / Bonjour (tu as bien dormi ?) |  |
-| 520 | `pb.greet.naka-nga-yendoo.mp3` | **Naka nga yendoo?** | Good evening (how was your day?) / Bonsoir (ta journée s'est bien passée ?) |  |
-| 521 | `pb.greet.naka-waa-ker-ga.mp3` | **Naka waa kër ga?** | How is your family? / Comment va ta famille ? |  |
+| 519 | `pb.greet.jamm-nga-fanaan.mp3` | **Jàmm nga fanaan?** | Good morning (did you sleep well?) / Bonjour (tu as bien dormi ?) |  |
+| 520 | `pb.greet.jamm-nga-yendoo.mp3` | **Jàmm nga yendoo?** | Good evening (how was your day?) / Bonsoir (ta journée s'est bien passée ?) |  |
+| 521 | `pb.greet.ana-waa-ker-ga.mp3` | **Ana waa kër ga?** | How is your family? / Comment va ta famille ? |  |
 | 522 | `pb.greet.nu-ngi-fa.mp3` | **Ñu ngi fa** | They're fine / Ils vont bien |  |
 | 523 | `pb.greet.naka-liggeey-bi.mp3` | **Naka liggéey bi?** | How's work? / Comment va le travail ? |  |
 | 524 | `pb.greet.lu-bees.mp3` | **Lu bees?** | What's new? / Quoi de neuf ? |  |

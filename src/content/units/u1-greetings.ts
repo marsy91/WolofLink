@@ -111,7 +111,7 @@ export const entries = [
   entry("g.ndank", "Ndànk-ndànk", ["Slowly", "Doucement", "Despacio", "Langsam", "Piano piano"]),
 
   // greetings-3
-  entry("g.fanaane", "Naka nga fanaane?", [
+  entry("g.fanaane", "Jàmm nga fanaan?", [
     "Did you sleep well?",
     "Tu as bien dormi ?",
     "¿Dormiste bien?",
@@ -119,20 +119,28 @@ export const entries = [
     "Hai dormito bene?",
   ], {
     note: [
-      "A morning greeting; literally “how did you spend the night?”",
-      "Salutation du matin ; littéralement « comment as-tu passé la nuit ? »",
-      "Saludo de la mañana; literalmente «¿cómo pasaste la noche?»",
-      "Ein Morgengruß; wörtlich „wie hast du die Nacht verbracht?“",
-      "Saluto del mattino; letteralmente «come hai passato la notte?»",
+      "The usual morning greeting; literally “did you spend the night in peace?” Answer: Jàmm rekk.",
+      "La salutation habituelle du matin ; littéralement « as-tu passé la nuit en paix ? » Réponse : Jàmm rekk.",
+      "El saludo habitual de la mañana; literalmente «¿pasaste la noche en paz?» Respuesta: Jàmm rekk.",
+      "Der übliche Morgengruß; wörtlich „hast du die Nacht in Frieden verbracht?“ Antwort: Jàmm rekk.",
+      "Il saluto abituale del mattino; letteralmente «hai passato la notte in pace?» Risposta: Jàmm rekk.",
     ],
   }),
-  entry("g.yendoo", "Naka nga yendoo?", [
+  entry("g.yendoo", "Jàmm nga yendoo?", [
     "How was your day?",
     "Comment s'est passée ta journée ?",
     "¿Qué tal tu día?",
     "Wie war dein Tag?",
     "Com'è andata la giornata?",
-  ]),
+  ], {
+    note: [
+      "The usual afternoon and evening greeting; literally “did you spend the day in peace?” Answer: Jàmm rekk.",
+      "La salutation habituelle de l'après-midi et du soir ; littéralement « as-tu passé la journée en paix ? » Réponse : Jàmm rekk.",
+      "El saludo habitual de la tarde y la noche; literalmente «¿pasaste el día en paz?» Respuesta: Jàmm rekk.",
+      "Der übliche Gruß am Nachmittag und Abend; wörtlich „hast du den Tag in Frieden verbracht?“ Antwort: Jàmm rekk.",
+      "Il saluto abituale del pomeriggio e della sera; letteralmente «hai passato la giornata in pace?» Risposta: Jàmm rekk.",
+    ],
+  }),
   entry("g.lubees", "Lu bees?", ["What's new?", "Quoi de neuf ?", "¿Qué hay de nuevo?", "Was gibt's Neues?", "Che c'è di nuovo?"]),
   entry("g.dara", "Dara", ["Nothing", "Rien", "Nada", "Nichts", "Niente"]),
   entry("g.yownag", "Yow nag?", ["And you?", "Et toi ?", "¿Y tú?", "Und du?", "E tu?"]),

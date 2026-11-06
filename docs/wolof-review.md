@@ -157,6 +157,33 @@ yóbbu, yónnee, jëkkër, fóot, ñaata, yéem (root of yéemu), ndeyjoor, soob
 7. In the dictionary, the example sentence under *jublu* translates *ci sa càmmooñ* as "à droite"
    while the entry *càmmooñ* is defined as "la gauche". Please confirm left = *càmmooñ*, right = *ndeyjoor*.
 
+## Greetings check (November 2026)
+
+Every greeting in unit 1 and the phrasebook's "Greetings and goodbyes" was checked against the
+*Dictionnaire wolof-français* (Diouf) and, for the classic exchanges, a Peace Corps trainee sheet
+(Gambian Wollof, used only as a cross-check; nothing is copied).
+
+**Changed:**
+
+| Was | Now | Why |
+| --- | --- | --- |
+| Naka nga fanaane? (good morning) | **Jàmm nga fanaan?** | The usual morning greeting is "did you spend the night in peace?", answered *Jàmm rekk*. |
+| Naka nga yendoo? (good evening) | **Jàmm nga yendoo?** | The usual afternoon/evening greeting is "did you spend the day in peace?", answered *Jàmm rekk*. |
+| Naka waa kër ga? (how is the family) | **Ana waa kër ga?** | Both sources give *Ana waa kër ga?* ("where are the people of the house?"), answered *Ñu ngi fa*. |
+
+**Confirmed:** Na nga def? (the dictionary has exactly this form), Maa ngi fi rekk, Jàmm nga am? /
+Jàmm rekk, Dégg nga wolof?, Yow nag?, Naka nga tudd? (*tudd* "to be named" is in the dictionary),
+Naka nga sant? and Joob laa sant (*sant* "family name" is in the dictionary), Maa ngi dem,
+Ba ci kanam, Fanaanal ak jàmm, Nuyul ma waa kër ga (*nuyu* "to greet" is in the dictionary).
+
+**For the native speaker:**
+1. *Salaam aleekum* / *Maalekum salaam*: the Peace Corps sheet writes it the same way, but the
+   dictionary writes *Salaam-maalikum* / *Maalikum-salaam*. Which spelling should learners see?
+2. The afternoon and evening greetings: besides *Jàmm nga yendoo?*, is *Naka ngoon si?* ("how is the
+   evening?", answer *Ngoon si ngi fi rekk*) the more usual evening greeting in Senegal?
+3. *Naka waa kër ga?* is also heard; is it acceptable as a variant of *Ana waa kër ga?*
+4. *Ba suba* ("until tomorrow morning") as "see you tomorrow": please confirm it is natural.
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:
