@@ -50,7 +50,7 @@ export function Pirogue({ hull, trim, size = 64, wake = false }: { hull: string;
   );
 }
 
-/** The night sea behind every duel screen: sky, glowing horizon, stars, moving waves and spray. */
+/** A sunny day at sea behind every duel screen: sky, sun, drifting clouds, moving waves and bubbles. */
 export function DuelScene({ children, lowEnd = false }: { children: ReactNode; lowEnd?: boolean }) {
   const sparks = useMemo(() => {
     const rng = seeded(11);
@@ -63,15 +63,15 @@ export function DuelScene({ children, lowEnd = false }: { children: ReactNode; l
     }));
   }, [lowEnd]);
   return (
-    <div className="duel-scene relative min-h-dvh overflow-hidden text-white">
+    <div className="duel-scene relative min-h-dvh overflow-hidden text-night">
       <div aria-hidden className="duel-sky absolute inset-0" />
       <div aria-hidden className={`duel-stars absolute inset-x-0 top-0 h-1/2 ${lowEnd ? "" : "anim-twinkle"}`} />
-      <div aria-hidden className="duel-glow absolute inset-x-0 top-[38%] h-64" />
+      <div aria-hidden className="duel-glow absolute inset-x-0 top-0 h-56" />
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-[34%]">
         {[
-          { cls: "wave-far", d: 22, fill: "#123a5c" },
-          { cls: "wave-mid", d: 14, fill: "#0d2f4d" },
-          { cls: "wave-near", d: 9, fill: "#08233b" },
+          { cls: "wave-far", d: 22, fill: "#5cc8e0" },
+          { cls: "wave-mid", d: 14, fill: "#33b0d0" },
+          { cls: "wave-near", d: 9, fill: "#1592b6" },
         ].map((w, i) => (
           <svg
             key={w.cls}
@@ -81,10 +81,10 @@ export function DuelScene({ children, lowEnd = false }: { children: ReactNode; l
             preserveAspectRatio="none"
           >
             <path d="M0 20 Q25 8 50 20 T100 20 T150 20 T200 20 T250 20 T300 20 T350 20 T400 20 V40 H0 Z" fill={w.fill} />
-            <path d="M0 20 Q25 8 50 20 T100 20 T150 20 T200 20 T250 20 T300 20 T350 20 T400 20" fill="none" stroke="#5fd0e6" strokeOpacity={0.25 + i * 0.1} strokeWidth="1" />
+            <path d="M0 20 Q25 8 50 20 T100 20 T150 20 T200 20 T250 20 T300 20 T350 20 T400 20" fill="none" stroke="#ffffff" strokeOpacity={0.5 + i * 0.15} strokeWidth="1" />
           </svg>
         ))}
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[#061a2d]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[#1592b6]" />
       </div>
       {sparks.map((s, i) => (
         <span

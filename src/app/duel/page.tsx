@@ -192,8 +192,8 @@ export default function DuelPage() {
     return (
       <DuelScene lowEnd>
         <main className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
-          <p className="text-lg text-white/85">{t("duel.missing")}</p>
-          <Link href="/friends/" className="font-bold text-[#ffd66b] underline">
+          <p className="text-lg text-night/85">{t("duel.missing")}</p>
+          <Link href="/friends/" className="font-bold text-clay underline">
             {t("duel.back")}
           </Link>
         </main>
@@ -207,7 +207,7 @@ export default function DuelPage() {
       aria-label={t("settings.sound")}
       aria-pressed={sound}
       onClick={() => update((p) => ({ ...p, settings: { ...p.settings, sound: !p.settings.sound } }))}
-      className={`grid h-10 w-10 place-items-center rounded-full bg-white/10 ${sound ? "text-white" : "text-white/40"}`}
+      className={`grid h-10 w-10 place-items-center rounded-full bg-white/80 ${sound ? "text-night" : "text-night/40"}`}
     >
       <IconSpeaker size={20} />
     </button>
@@ -329,31 +329,31 @@ export default function DuelPage() {
       <DuelScene lowEnd={lowEnd}>
         <main ref={stage} className="safe-top safe-bottom flex min-h-dvh flex-col p-6 text-center">
           <div className="relative mt-6 flex h-56 items-center justify-center" aria-hidden>
-            <div className="anim-panel-left absolute top-4 left-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#e0703f] to-[#7a2a14] shadow-[0_0_40px_rgba(224,112,63,0.55)]">
+            <div className="anim-panel-left absolute top-4 left-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#e0703f] to-[#7a2a14] shadow-[0_6px_0_#7a2a14]">
               <span className="grid h-24 w-24 skew-x-[8deg] place-items-center rounded-full bg-white/15 font-display text-5xl font-extrabold text-white ring-4 ring-white/60">
                 {initial(myName || t("friends.you"))}
               </span>
             </div>
-            <div className="anim-panel-right absolute top-4 right-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#9a5ab8] to-[#3b1a52] shadow-[0_0_40px_rgba(154,90,184,0.55)]">
+            <div className="anim-panel-right absolute top-4 right-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#9a5ab8] to-[#3b1a52] shadow-[0_6px_0_#3b1a52]">
               <span className="grid h-24 w-24 skew-x-[8deg] place-items-center rounded-full bg-white/15 font-display text-5xl font-extrabold text-white ring-4 ring-white/60">
                 {setup.mode === "bot" ? "🤖" : initial(setup.name)}
               </span>
             </div>
-            <span className="anim-ring absolute top-1/2 left-1/2 h-24 w-24 rounded-full border-4 border-[#ffd66b]" style={{ animationDelay: "480ms" }} />
-            <span className="anim-slam text-glow relative font-display text-6xl font-extrabold text-[#ffd66b]" style={{ animationDelay: "420ms" }}>
+            <span className="anim-ring absolute top-1/2 left-1/2 h-24 w-24 rounded-full border-4 border-[#ffc93c]" style={{ animationDelay: "480ms" }} />
+            <span className="anim-slam vs-text relative font-display text-6xl font-extrabold" style={{ animationDelay: "420ms" }}>
               {t("duel.vs")}
             </span>
           </div>
           <div className="flex flex-1 flex-col items-center justify-center gap-4">
             <h1 className="text-glow-white font-display text-3xl font-extrabold">{t("duel.title", { name: setup.name })}</h1>
-            <p className="text-white/85">
+            <p className="text-night/85">
               {setup.mode === "bot"
                 ? t("bot.intro", { n: DUEL_LENGTH })
                 : t(setup.mode === "challenge" ? "duel.introChallenge" : "duel.introReply", { n: DUEL_LENGTH, name: setup.name })}
             </p>
             {setup.mode === "bot" ? (
               <div className="w-full">
-                <p className="mb-2 text-sm font-bold text-white/80">{t("bot.pickLevel")}</p>
+                <p className="mb-2 text-sm font-bold text-muted">{t("bot.pickLevel")}</p>
                 <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label={t("bot.pickLevel")}>
                   {BOT_LEVELS.map((level) => (
                     <button
@@ -362,7 +362,7 @@ export default function DuelPage() {
                       role="radio"
                       aria-checked={setup.level === level}
                       onClick={() => setSetup({ ...setup, level })}
-                      className={`glass-card rounded-xl px-2 py-2 font-display font-extrabold ${setup.level === level ? "glow-gold text-[#ffd66b]" : "text-white"}`}
+                      className={`glass-card rounded-xl px-2 py-2 font-display font-extrabold ${setup.level === level ? "glow-gold text-night" : "text-night"}`}
                     >
                       {t(`bot.level.${level}`)}
                     </button>
@@ -371,7 +371,7 @@ export default function DuelPage() {
               </div>
             ) : null}
             {startError ? (
-              <p role="alert" className="rounded-2xl bg-white/10 p-3 font-bold text-[#ffd66b]">
+              <p role="alert" className="rounded-2xl bg-white/80 p-3 font-bold text-clay">
                 {startError}
               </p>
             ) : null}
@@ -384,7 +384,7 @@ export default function DuelPage() {
             </button>
           )}
           <div className="mt-4 flex items-center justify-between">
-            <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} className="font-bold text-white/80 underline">
+            <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} className="rounded-full bg-white/90 px-3 py-1 font-bold text-night underline">
               {t("common.cancel")}
             </Link>
             {soundToggle}
@@ -399,8 +399,8 @@ export default function DuelPage() {
     return (
       <DuelScene lowEnd={lowEnd}>
         <main key={count} className="safe-top safe-bottom flex min-h-dvh items-center justify-center" aria-live="polite">
-          <span className="anim-ring absolute top-1/2 left-1/2 h-40 w-40 rounded-full border-4 border-[#ffd66b]" aria-hidden />
-          <span className="anim-slam text-glow font-display text-9xl font-extrabold text-[#ffd66b]">{count > 0 ? count : t("duel.go")}</span>
+          <span className="anim-ring absolute top-1/2 left-1/2 h-40 w-40 rounded-full border-4 border-[#ffc93c]" aria-hidden />
+          <span className="anim-slam text-glow font-display text-9xl font-extrabold text-clay">{count > 0 ? count : t("duel.go")}</span>
         </main>
       </DuelScene>
     );
@@ -419,7 +419,7 @@ export default function DuelPage() {
         <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
           {r && allShown && r.result === "won" ? <Confetti pieces={lowEnd ? 24 : 48} /> : null}
           {r && allShown ? (
-            <p className={`anim-rise font-display text-5xl font-extrabold tracking-tight ${r.result === "lost" ? "text-glow-white text-white" : "text-glow text-[#ffd66b]"}`}>
+            <p className={`anim-rise font-display text-5xl font-extrabold tracking-tight ${r.result === "lost" ? "text-glow-white" : "text-glow text-clay"}`}>
               {r.result === "won" ? t("duel.won") : r.result === "draw" ? t("duel.draw") : setup.mode === "bot" ? t("bot.lost") : t("duel.lost")}
             </p>
           ) : null}
@@ -436,8 +436,8 @@ export default function DuelPage() {
                   const won = shown && round.winner === "me";
                   return (
                     <li key={i} className={`glass-card rounded-2xl p-2 ${shown ? "" : "opacity-40"} ${won ? "glow-gold shine" : ""}`}>
-                      <span className="block text-xs font-bold tracking-wider text-white/70 uppercase">{t("duel.round", { n: i + 1 })}</span>
-                      <span className="block font-display text-lg font-extrabold">{shown ? `${round.mine} – ${round.theirs}` : "…"}</span>
+                      <span className="block text-xs font-bold tracking-wider text-muted uppercase">{t("duel.round", { n: i + 1 })}</span>
+                      <span className="block font-display text-lg font-extrabold text-night">{shown ? `${round.mine} – ${round.theirs}` : "…"}</span>
                       <span aria-hidden className={`block h-8 text-2xl ${won ? "anim-drop-in" : ""}`}>
                         {shown ? (round.winner === "me" ? "👑" : round.winner === "them" ? "·" : "=") : ""}
                       </span>
@@ -447,14 +447,14 @@ export default function DuelPage() {
               </ol>
             </div>
           ) : null}
-          <p className="text-sm font-bold tracking-widest text-white/70 uppercase">{t("duel.yourScore")}</p>
+          <p className="text-sm font-bold tracking-widest text-muted uppercase">{t("duel.yourScore")}</p>
           <p className="text-glow-white font-display text-7xl font-extrabold">
             <Rolling value={score} />
           </p>
           {sendState === "sending" ? <Loading /> : null}
           {sendState === "failed" ? (
             <>
-              <p role="alert" className="font-bold text-[#ff8c9a]">
+              <p role="alert" className="font-bold text-berry">
                 {sendError && sendError !== t("duel.startFailed") ? sendError : t("duel.sendFailed")}
               </p>
               <button type="button" onClick={() => void submit(points)} className="btn-game rounded-2xl px-6 py-3 font-display font-extrabold">
@@ -464,28 +464,28 @@ export default function DuelPage() {
           ) : null}
           {outcome?.kind === "sent" ? (
             <>
-              <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-2xl font-extrabold text-[#ffd66b]">
+              <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-2xl font-extrabold text-clay">
                 🏆 {t("duel.trophies", { n: outcome.trophies })}
               </p>
-              <p className="text-sm text-white/75">{t("duel.trophiesHow")}</p>
-              <p className="text-lg text-white">{t("duel.sent", { name: setup.name })}</p>
+              <p className="text-sm text-muted">{t("duel.trophiesHow")}</p>
+              <p className="text-lg text-night">{t("duel.sent", { name: setup.name })}</p>
             </>
           ) : null}
           {r && allShown ? (
             <>
               {r.my_crowns != null && r.their_crowns != null ? (
-                <p className="font-bold text-white">{t("duel.crowns", { mine: r.my_crowns, name: setup.name, theirs: r.their_crowns })}</p>
+                <p className="font-bold text-night">{t("duel.crowns", { mine: r.my_crowns, name: setup.name, theirs: r.their_crowns })}</p>
               ) : (
-                <p className="text-white/80">{t("duel.scores", { mine: r.my_score, name: setup.name, theirs: r.their_score })}</p>
+                <p className="text-muted">{t("duel.scores", { mine: r.my_score, name: setup.name, theirs: r.their_score })}</p>
               )}
               {setup.mode === "bot" ? (
-                <p className="text-sm text-white/80">{t("bot.noTrophies")}</p>
+                <p className="text-sm text-muted">{t("bot.noTrophies")}</p>
               ) : (
                 <>
-                  <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-xl font-extrabold text-[#ffd66b]">
+                  <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-xl font-extrabold text-clay">
                     🏆 {t("duel.trophies", { n: r.trophies_won })}
                   </p>
-                  <p className="text-sm text-white/75">{t("duel.trophiesHow")}</p>
+                  <p className="text-sm text-muted">{t("duel.trophiesHow")}</p>
                 </>
               )}
               {setup.mode === "bot" ? (
@@ -503,12 +503,12 @@ export default function DuelPage() {
             </>
           ) : null}
           {sendState === "over" ? (
-            <p role="alert" className="font-bold text-[#ffd66b]">
+            <p role="alert" className="font-bold text-clay">
               {t("duel.over")}
             </p>
           ) : null}
           {outcome || sendState === "over" ? (
-            <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} className="mt-2 font-bold text-white/85 underline">
+            <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} className="mt-2 rounded-full bg-white/90 px-3 py-1 font-bold text-night underline">
               {setup.mode === "bot" ? t("practice.title") : t("duel.back")}
             </Link>
           ) : null}
@@ -523,7 +523,7 @@ export default function DuelPage() {
       {flash ? <div key={`${flash.kind}${flash.key}`} aria-hidden className={`pointer-events-none fixed inset-0 z-20 ${flash.kind === "red" ? "flash-red" : "flash-gold"}`} /> : null}
       <main ref={stage} className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
         <div className="flex items-center gap-3 pt-3">
-          <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} aria-label={t("common.close")} className="grid h-10 w-10 place-items-center rounded-full bg-white/10">
+          <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} aria-label={t("common.close")} className="grid h-10 w-10 place-items-center rounded-full bg-white/80">
             <IconClose />
           </Link>
           <span className="glass-card rounded-full px-3 py-1 text-xs font-extrabold tracking-wider uppercase">{t("duel.round", { n: roundOf(index) + 1 })}</span>
@@ -532,7 +532,7 @@ export default function DuelPage() {
           <span className="text-glow-white relative min-w-16 text-right font-display text-3xl font-extrabold">
             <Rolling value={score} />
             {floatPts ? (
-              <span key={floatPts.key} aria-hidden className="anim-float-up absolute -top-3 right-0 font-display text-base font-extrabold text-[#ffd66b]">
+              <span key={floatPts.key} aria-hidden className="anim-float-up absolute -top-3 right-0 font-display text-base font-extrabold text-clay">
                 +{floatPts.n}
               </span>
             ) : null}
@@ -545,21 +545,21 @@ export default function DuelPage() {
         />
         <div className="h-7 text-center">
           {streak >= 3 ? (
-            <span key={streak} className="anim-rise text-glow inline-block font-display text-xl font-extrabold text-[#ffd66b]">
+            <span key={streak} className="anim-rise text-glow inline-block font-display text-xl font-extrabold text-clay">
               🔥 {t("duel.streak", { n: streak })}
             </span>
           ) : null}
         </div>
 
         <div className="flex flex-1 flex-col justify-center">
-          <p className="mb-2 text-center text-sm font-bold tracking-wider text-white/75 uppercase">{t(`duel.ask.${q!.kind}`)}</p>
+          <p className="mb-2 text-center text-sm font-bold tracking-wider text-muted uppercase">{t(`duel.ask.${q!.kind}`)}</p>
           <div className="mb-4 flex min-h-28 items-center justify-center text-center">
             {q!.kind === "listen" ? (
               <button
                 type="button"
                 onClick={() => void playEntry(q!.entry)}
                 aria-label={t("ex.play")}
-                className="glass-card glow-gold grid h-24 w-24 place-items-center rounded-full text-[#ffd66b]"
+                className="glass-card glow-gold grid h-24 w-24 place-items-center rounded-full text-clay"
               >
                 <IconSpeaker size={40} />
               </button>
@@ -569,7 +569,7 @@ export default function DuelPage() {
               </p>
             )}
           </div>
-          <div className="mb-5 h-2 overflow-hidden rounded-full bg-white/10" role="presentation" title={t("duel.speed")}>
+          <div className="mb-5 h-2 overflow-hidden rounded-full bg-white/80" role="presentation" title={t("duel.speed")}>
             {picked === null ? <div key={index} className="timer-drain timer-glow h-full rounded-full" /> : null}
           </div>
           <div className="grid gap-3">
@@ -583,7 +583,7 @@ export default function DuelPage() {
                   disabled={picked !== null}
                   onClick={() => choose(i)}
                   lang={q!.kind === "meaning" ? undefined : "wo"}
-                  className={`glass-card min-h-14 rounded-2xl px-4 py-3 text-left text-lg font-bold text-white ${state}`}
+                  className={`glass-card min-h-14 rounded-2xl px-4 py-3 text-left text-lg font-bold text-night ${state}`}
                 >
                   {optionLabel(q!, o, lang)}
                 </button>

@@ -34,8 +34,8 @@ export function NudgeBanner() {
     };
   }, [user]);
   const turnBanner = turns.length ? (
-    <section role="status" className="duel-sky relative mb-4 flex items-center gap-3 overflow-hidden rounded-3xl p-4 text-white shadow-[0_10px_30px_rgba(10,17,49,0.35)]">
-      <span aria-hidden className="duel-glow absolute inset-x-0 -bottom-16 h-32" />
+    <section role="status" className="duel-sky relative mb-4 flex items-center gap-3 overflow-hidden rounded-3xl p-4 text-night shadow-card">
+      <span aria-hidden className="duel-glow absolute inset-0" />
       <span aria-hidden className="anim-bob relative shrink-0">
         <Pirogue hull="#c2502f" trim="#f2c14e" size={52} />
       </span>
