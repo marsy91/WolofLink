@@ -9,7 +9,7 @@ import { useFriendPushToggle } from "@/components/PushInit";
 import { Button, Dialog, Loading, TabScreen } from "@/components/ui";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
-import { duelState, duels, type DuelRow } from "@/lib/duels";
+import { duelState, duels, type DuelRow, type DuelWords } from "@/lib/duels";
 import { formatCode, friends, normaliseCode, ranks, type BoardRow, type FriendCard } from "@/lib/friends";
 import { SUPPORTER_ENABLED } from "@/lib/features";
 import { useSwitchOff } from "@/lib/notices";
@@ -32,6 +32,7 @@ export default function FriendsPage() {
   const [removing, setRemoving] = useState<BoardRow | null>(null);
   const [busy, setBusy] = useState(false);
   const [duelRows, setDuelRows] = useState<DuelRow[] | null>(null);
+  const [duelWords, setDuelWords] = useState<DuelWords | null>(null);
   const push = useFriendPushToggle();
   const { premium } = usePremium();
   const [pushDenied, setPushDenied] = useState(false);
@@ -48,6 +49,10 @@ export default function FriendsPage() {
       .list()
       .then(setDuelRows)
       .catch(() => setDuelRows([]));
+    duels
+      .myWords()
+      .then(setDuelWords)
+      .catch(() => setDuelWords(null));
   }, []);
 
   useEffect(() => {
@@ -200,7 +205,7 @@ export default function FriendsPage() {
         </section>
       ) : null}
 
-      {board ? <ArenaCard trophies={board.find((r) => r.is_me)?.trophies ?? 0} /> : null}
+      {board ? <ArenaCard trophies={board.find((r) => r.is_me)?.trophies ?? 0} words={duelWords} /> : null}
 
       <section className="mb-4 rounded-3xl bg-night p-5 text-sand">
         <p className="text-sm font-bold text-sand/80">{t("friends.yourCode")}</p>
@@ -266,7 +271,11 @@ export default function FriendsPage() {
                     <span className="block truncate font-bold text-night">{d.other_name}</span>
                     <span className="text-sm text-muted">
                       {t(`duel.state.${st}`)}
-                      {st === "won" || st === "lost" || st === "draw" ? ` · ${d.my_score} – ${d.their_score}` : ""}
+                      {st === "won" || st === "lost" || st === "draw"
+                        ? d.my_crowns != null && d.their_crowns != null
+                          ? ` · 👑 ${d.my_crowns} – ${d.their_crowns}`
+                          : ` · ${d.my_score} – ${d.their_score}`
+                        : ""}
                     </span>
                   </span>
                   {st === "your-turn" ? (
@@ -310,6 +319,7 @@ export default function FriendsPage() {
                   {t("friends.xp", { n: r.week_xp })}
                   {r.streak > 0 ? ` · 🔥 ${r.streak}` : ""}
                   {r.trophies ? ` · 🏆 ${r.trophies}` : ""}
+                  {r.week_crowns ? ` · 👑 ${r.week_crowns}` : ""}
                 </span>
               </span>
               {!r.is_me ? (

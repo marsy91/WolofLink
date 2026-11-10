@@ -29,14 +29,14 @@ begin
   select * into r from public.my_duels() x where x.id = d;
   assert r.their_score is null and r.status = 'waiting' and not r.i_challenged, 'score hidden until played';
   select * into r from public.play_duel(d, 1000);
-  assert r.result = 'won' and r.trophies_won = 30, 'win gives 30 trophies';
+  assert r.result = 'won' and r.trophies_won = 0, 'older apps still play but earn no trophies (see duel_trophies_test)';
   ok := false; begin perform public.play_duel(d, 1000); exception when object_not_in_prerequisite_state then ok := true; end;
   assert ok, 'cannot play twice';
-  select f.trophies into n from public.friends_board() f where f.is_me; assert n = 30, 'trophies on the board';
+  select f.trophies into n from public.friends_board() f where f.is_me; assert n = 0, 'no trophies from older apps';
 
   -- Moussa can't play his own challenge; a stranger can't see it.
   perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
-  select f.trophies into n from public.friends_board() f where f.is_me; assert n = 5, 'loser still gets 5';
+  select f.trophies into n from public.friends_board() f where f.is_me; assert n = 0, 'no trophies from older apps either way';
   perform set_config('request.jwt.claims', json_build_object('sub', c, 'role', 'authenticated')::text, true);
   select count(*) into n from public.my_duels(); assert n = 0, 'strangers see no duels';
 

@@ -95,7 +95,9 @@ export default function Privacy() {
           “nudge” reminder, at most once a day. You can remove a friend at any time; deleting your account removes your
           friends list and nudges. If you turn on friend notifications, your phone&apos;s notification token is stored
           so we can tell you when a friend challenges or nudges you (sent through Google&apos;s Firebase Cloud
-          Messaging); turning them off or deleting your account removes it.
+          Messaging); turning them off or deleting your account removes it. If you play word duels with a friend, we
+          keep your duel scores and crowns, and which Wolof words you have had in duels and whether you got them
+          right, so you never get the same word twice and earn each trophy once; deleting your account removes it.
           <br />
           <br />
           <strong>Friend requests, city leagues and blocking.</strong> If you choose a home city and confirm you are 18

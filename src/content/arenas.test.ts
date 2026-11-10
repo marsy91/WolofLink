@@ -1,7 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import { describe, expect, it } from "vitest";
 import audioManifest from "./audio-manifest.json";
-import { ARENAS, arenaFor } from "./arenas";
+import { ARENAS, arenaFor, TROPHY_MAX } from "./arenas";
 import { course } from "./course";
 import { UI_LANGS } from "./types";
 
@@ -18,11 +18,16 @@ describe("arenas", () => {
     }
   });
   it("places a learner by trophies", () => {
+    const thies = ARENAS[1]!.trophies;
     expect(arenaFor(0)).toMatchObject({ index: 0, toNext: 0 });
-    expect(arenaFor(30).arena.id).toBe("dakar");
-    expect(arenaFor(30).toNext).toBeCloseTo(0.5);
-    expect(arenaFor(60).arena.id).toBe("thies");
-    expect(arenaFor(5000)).toMatchObject({ next: null, toNext: 1 });
-    expect(arenaFor(5000).arena.id).toBe("casamance");
+    expect(arenaFor(thies - 1).arena.id).toBe("dakar");
+    expect(arenaFor(thies / 2).toNext).toBeCloseTo(0.5);
+    expect(arenaFor(thies).arena.id).toBe("thies");
+    expect(arenaFor(TROPHY_MAX)).toMatchObject({ next: null, toNext: 1 });
+    expect(arenaFor(TROPHY_MAX).arena.id).toBe("casamance");
+  });
+  it("tops out at one trophy per course entry, with the last arena reachable", () => {
+    expect(TROPHY_MAX).toBe(Object.keys(course.entries).length);
+    expect(ARENAS.at(-1)!.trophies).toBeLessThan(TROPHY_MAX);
   });
 });

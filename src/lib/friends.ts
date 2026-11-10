@@ -17,6 +17,8 @@ export interface BoardRow {
   is_me: boolean;
   /** Won in duels (older servers may not send it). */
   trophies?: number;
+  /** Crowns won in duels this week (newer servers only). */
+  week_crowns?: number;
 }
 
 function cloud() {
