@@ -71,6 +71,20 @@ export interface ReportRow {
   from_account: boolean;
 }
 
+export interface UserReportRow {
+  id: number;
+  created_at: string;
+  reason: string;
+  note: string | null;
+  status: "open" | "actioned" | "dismissed";
+  reported: string | null;
+  reported_name: string;
+  reporter_name: string;
+  reports_against: number;
+  /** Removed from the community by the owner (older servers may not send it). */
+  reported_restricted?: boolean;
+}
+
 export interface MissedRow {
   entry_id: string;
   learners: number;
@@ -206,6 +220,11 @@ export const owner = {
   audit: () => call<AuditRow[]>("owner_audit", { max_rows: 100 }),
   reports: (status: "open" | "all") => call<ReportRow[]>("owner_reports", { report_status: status, max_rows: 200 }),
   setReportStatus: (id: number, status: ReportRow["status"]) => call<void>("owner_set_report_status", { report: id, new_status: status }),
+  userReports: (status: "open" | "all") => call<UserReportRow[]>("owner_user_reports", { report_status: status, max_rows: 200 }),
+  setUserReportStatus: (id: number, status: UserReportRow["status"]) =>
+    call<void>("owner_set_user_report_status", { report: id, new_status: status }),
+  setCommunityRestriction: (user: string, restricted: boolean) =>
+    call<void>("owner_set_community_restriction", { target: user, restricted }),
   missedWords: (minAttempts: number) => call<MissedRow[]>("owner_missed_words", { min_attempts: minAttempts, max_rows: 50 }),
   grants: () => call<GrantRow[]>("owner_grants"),
   setGrants: (member: string, unlockAll: boolean, premium: boolean, premiumUntil: string | null, note: string | null) =>

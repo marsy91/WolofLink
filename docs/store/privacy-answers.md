@@ -157,3 +157,46 @@ Only when `NEXT_PUBLIC_SUPPORTER=on` ships (docs/sales/supporter-setup.md):
 - Play Console → App content → store listing: **In-app purchases: Yes.** Contains
   ads: No.
 - Payments are processed by Google Play; the app never sees card details.
+
+## Since 0.26.0 (community: friend requests, city leagues, blocking)
+
+The migration `20261111000000_community.sql` must be applied first. Nothing here
+uses location: learners pick a city (and, in phase 2, a neighbourhood) from a list.
+
+- **Personal info → Name** (already declared): the display name is now also shown
+  to other adult learners in the same city league, only if the learner chose a
+  city, confirmed 18+ and turned on "show my city". Purpose: App functionality.
+- **Personal info → Other info: Collected** (optional): home city, friend
+  requests, blocks, and user reports (who reported whom, reason, optional note).
+  Not shared. Purpose: App functionality; Fraud prevention, security, and
+  compliance (reports and blocks). Deleted with the account (reports keep the
+  text but lose the account link).
+- **Location: Not collected.** The city is chosen from a list; no GPS, no
+  coordinates, no IP-based location.
+- **Camera:** used only to scan a friend's QR code; frames are read on the phone
+  and never saved or uploaded, so Google counts this as **not collected**. The
+  `CAMERA` permission is declared as optional (`uses-feature required=false`).
+- **User-generated content / Social features:** Play Console → App content →
+  "Does your app allow users to interact?" **Yes** — users can see each other's
+  display names in city leagues and send friend requests. Block and report are in
+  the app; reports go to the owner console (Reports → Reports about people).
+- Leagues are for **18+ only** (self-confirmed); the target audience stays 18+
+  for these features.
+
+Child safety (migration `20261112000000_community_safety.sql`):
+
+- Friend requests only between adults who are both visible in a league or the
+  nearby list; under-18s add friends only in person (code or QR).
+- Handles are adults-only, and are never shown to a friend under 18.
+- Reported as under 18, or by 3 different people → hidden until reviewed; the
+  owner can remove anyone from the community.
+- Wrong friend codes are counted for a day (20 a day), to stop guessing. This is
+  a security log tied to the account: **Fraud prevention, security** purpose.
+
+Only when the owner switches on "nearby" in the console (phase 2; off by default,
+no new release needed — update Data safety **before** switching it on):
+
+- **Personal info → Other info** also covers the chosen neighbourhood (switches
+  off after 30 days) and social-media handles (Instagram, TikTok, X, Snapchat),
+  visible only to the learner's friends when marked visible. Not shared.
+  Optional; deleted with the account.

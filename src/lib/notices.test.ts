@@ -13,8 +13,14 @@ describe("parseNotices", () => {
   });
   it("treats junk as nothing announced and everything on", () => {
     for (const junk of [null, undefined, "x", 5, { announcements: "no", off: {} }]) {
-      expect(parseNotices(junk)).toEqual({ announcements: [], off: [] });
+      expect(parseNotices(junk)).toEqual({ announcements: [], off: [], on: [] });
     }
+  });
+  it("opt-in features are on only when the server says so", () => {
+    expect(parseNotices({ on: ["nearby", "everything"] }).on).toEqual(["nearby"]);
+    expect(parseNotices({ off: ["nearby"] }).on).toEqual([]);
+    expect(parseNotices({ off: ["nearby"] }).off).toEqual([]);
+    expect(parseNotices({}).on).toEqual([]);
   });
   it("shows at most three announcements", () => {
     const many = Array.from({ length: 6 }, (_, i) => ({ id: String(i), title: { en: "T" } }));

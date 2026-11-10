@@ -96,6 +96,26 @@ export default function Privacy() {
           friends list and nudges. If you turn on friend notifications, your phone&apos;s notification token is stored
           so we can tell you when a friend challenges or nudges you (sent through Google&apos;s Firebase Cloud
           Messaging); turning them off or deleting your account removes it.
+          <br />
+          <br />
+          <strong>Friend requests, city leagues and blocking.</strong> If you choose a home city and confirm you are 18
+          or over, you can join your city&apos;s weekly league, where other adult learners who opted in see your display
+          name and XP this week; showing your city is off until you turn it on. You pick the city from a list: the app
+          never reads your location or GPS. Friend requests only go between adults who are both in a league (or in
+          “Learners near you”); nobody can send a request to someone under 18, who can only add friends in person
+          with a code or QR code. You can block anyone (they can no longer find you, add you or see you in a league)
+          and report someone; a report stores who you reported, the reason and your optional note, and is read only by
+          the WolofLink owner and team members they authorise, to keep the community safe. Anyone reported as under 18,
+          or reported by several people, is hidden from leagues until we review it, and we can remove anyone from the
+          community. We also count wrong friend codes for a day to stop people guessing codes.
+          <br />
+          <br />
+          <strong>Learners near you and social handles (when we switch them on).</strong> If you turn on “Learners near
+          you”, you pick a neighbourhood from a list and adult learners in the same area who also turned it on can see
+          your display name and send you a friend request; it switches itself off after 30 days. Adults can add
+          Instagram, TikTok, X or Snapchat handles: only adult friends can see the ones marked as visible, never the
+          wider app, and never anyone under 18. Deleting your account removes your city, neighbourhood, requests,
+          handles and blocks, and unlinks your account from any report you made or that was made about you.
         </Section>
       ) : null}
 
@@ -138,7 +158,12 @@ export default function Privacy() {
             <strong>Microphone:</strong> only when you tap it. In speaking exercises you can record yourself to compare
             with the model voice: that recording stays on your phone, is never uploaded and is deleted when you move on.
             The recording screen for native speakers we invite is the only place where a recording is sent (see
-            “Voice recordings”). The app does not use your camera, contacts or location.
+            “Voice recordings”).
+          </li>
+          <li>
+            <strong>Camera:</strong> only when you tap “Scan” to add a friend in person. The picture is read on your
+            phone to find the friend code in the QR code; it is never saved or uploaded. The app does not use your
+            contacts or location.
           </li>
         </ul>
       </Section>

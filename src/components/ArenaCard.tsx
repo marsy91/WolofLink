@@ -66,7 +66,7 @@ export function ArenaCard({ trophies }: { trophies: number }) {
           <span>🏆 {trophies}</span>
           <span>{next ? t("arena.next", { n: next.trophies, name: next.name }) : t("arena.last")}</span>
         </div>
-        <div className="h-3 overflow-hidden rounded-full bg-white/25" role="progressbar" aria-valuenow={Math.round(toNext * 100)} aria-valuemin={0} aria-valuemax={100}>
+        <div className="h-3 overflow-hidden rounded-full bg-white/25" role="progressbar" aria-label={next ? t("arena.next", { n: next.trophies, name: next.name }) : t("arena.last")} aria-valuenow={Math.round(toNext * 100)} aria-valuemin={0} aria-valuemax={100}>
           <div className="h-full rounded-full bg-sun" style={{ width: `${toNext * 100}%` }} />
         </div>
       </div>

@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { ArenaCard } from "@/components/ArenaCard";
+import { QrFriend } from "@/components/QrFriend";
 import { useFriendPushToggle } from "@/components/PushInit";
 import { Button, Dialog, Loading, TabScreen } from "@/components/ui";
 import { useAccount } from "@/lib/account";
@@ -36,6 +37,7 @@ export default function FriendsPage() {
   const [pushDenied, setPushDenied] = useState(false);
   const friendsOff = useSwitchOff("friends");
   const duelsOff = useSwitchOff("duels");
+  const communityOff = useSwitchOff("community");
 
   const loadBoard = useCallback(() => {
     friends
@@ -72,7 +74,9 @@ export default function FriendsPage() {
         ? t("friends.unknownCode")
         : /own code/.test(msg)
           ? t("friends.ownCode")
-          : /already nudged/.test(msg)
+          : /too many attempts/.test(msg)
+            ? t("friends.tooManyCodes")
+            : /already nudged/.test(msg)
             ? t("friends.alreadyNudged")
             : /another name/.test(msg)
               ? t("friends.badName")
@@ -146,11 +150,11 @@ export default function FriendsPage() {
     }
   };
 
-  const add = async () => {
+  const add = async (fromQr?: string) => {
     setBusy(true);
     setMessage(null);
     try {
-      const friendName = await friends.add(code);
+      const friendName = await friends.add(fromQr ?? code);
       setMessage({ text: t("friends.added", { name: friendName }), ok: true });
       setCode("");
       loadBoard();
@@ -232,6 +236,18 @@ export default function FriendsPage() {
         </div>
       </section>
 
+      <QrFriend code={card.friend_code} onCode={(c) => void add(c)} />
+
+      {communityOff ? null : (
+        <Link href="/community/" className="mb-4 flex items-center gap-3 rounded-3xl border border-sand-3/60 bg-white p-4 shadow-card active:translate-y-[1px]">
+          <span className="min-w-0 flex-1">
+            <span className="block font-display text-lg font-extrabold text-night">{t("community.cardTitle")}</span>
+            <span className="text-sm text-muted">{t("community.card")}</span>
+          </span>
+          <span aria-hidden className="text-clay">→</span>
+        </Link>
+      )}
+
       {message ? (
         <p role={message.ok ? "status" : "alert"} className={`mb-4 rounded-2xl p-3 text-sm font-bold ${message.ok ? "bg-sea-soft text-sea" : "bg-berry-soft text-berry"}`}>
           {message.text}
@@ -282,7 +298,11 @@ export default function FriendsPage() {
               <span className="w-8 text-center font-display text-xl font-extrabold text-night">{MEDALS[places[i]! - 1] ?? places[i]}</span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate font-bold text-night">
-                  {r.display_name}
+                  {r.is_me ? r.display_name : (
+                    <Link href={`/friend/?id=${encodeURIComponent(r.user_id)}`} className="underline decoration-sand-3 underline-offset-4">
+                      {r.display_name}
+                    </Link>
+                  )}
                   {r.is_me ? ` (${t("friends.you")})` : ""}
                   {r.is_me && SUPPORTER_ENABLED && premium ? " 💛" : ""}
                 </span>
