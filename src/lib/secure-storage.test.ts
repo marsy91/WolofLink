@@ -54,6 +54,22 @@ describe("secure session storage", () => {
     expect(await store.getItem("woloflink.auth")).toBeNull();
   });
 
+  it("decrypts the session once, then answers from memory", async () => {
+    const s = secure();
+    let reads = 0;
+    const counting: SecureStore = { ...s, get: (o) => (reads++, s.get(o)) };
+    const store = secureAuthStorage(counting, plain());
+    await store.setItem("woloflink.auth", "session");
+    for (let i = 0; i < 10; i++) expect(await store.getItem("woloflink.auth")).toBe("session");
+    expect(reads).toBe(0);
+    const fresh = secureAuthStorage(counting, plain());
+    for (let i = 0; i < 10; i++) expect(await fresh.getItem("woloflink.auth")).toBe("session");
+    expect(reads).toBe(1);
+    await fresh.removeItem("woloflink.auth");
+    expect(await fresh.getItem("woloflink.auth")).toBeNull();
+    expect(reads).toBe(1);
+  });
+
   it("gives up on a secure store that never answers and uses plain storage", async () => {
     const stuck: SecureStore = { get: () => new Promise(() => {}), set: () => new Promise(() => {}), remove: () => new Promise(() => {}) };
     const p = plain();

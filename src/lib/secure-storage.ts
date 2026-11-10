@@ -63,6 +63,10 @@ export function plainAuthStorage(plain: PlainStore | null): AuthStorage {
  */
 export function secureAuthStorage(secure: SecureStore, plain: PlainStore | null): AuthStorage {
   const legacy = plainAuthStorage(plain);
+  // The sign-in library re-reads the session before every online request. Decrypting
+  // with the keystore each time would slow those requests, so keep what we've read
+  // or written in memory for the life of the app (this process is the only writer).
+  const cache = new Map<string, string | null>();
   const read = async (key: string): Promise<string | null> => {
     try {
       const { value } = await secure.get({ key });
@@ -71,21 +75,28 @@ export function secureAuthStorage(secure: SecureStore, plain: PlainStore | null)
       return null;
     }
   };
+  const load = async (key: string): Promise<string | null> => {
+    const found = await read(key);
+    if (found !== null) return found;
+    const old = await legacy.getItem(key);
+    if (old === null) return null;
+    try {
+      await secure.set({ key, value: old });
+      await legacy.removeItem(key);
+    } catch {
+      /* keep the old copy if the secure store is unavailable */
+    }
+    return old;
+  };
   return {
     async getItem(key) {
-      const found = await read(key);
-      if (found !== null) return found;
-      const old = await legacy.getItem(key);
-      if (old === null) return null;
-      try {
-        await secure.set({ key, value: old });
-        await legacy.removeItem(key);
-      } catch {
-        /* keep the old copy if the secure store is unavailable */
-      }
-      return old;
+      if (cache.has(key)) return cache.get(key) ?? null;
+      const value = await load(key);
+      cache.set(key, value);
+      return value;
     },
     async setItem(key, value) {
+      cache.set(key, value);
       try {
         await secure.set({ key, value });
         await legacy.removeItem(key);
@@ -94,6 +105,7 @@ export function secureAuthStorage(secure: SecureStore, plain: PlainStore | null)
       }
     },
     async removeItem(key) {
+      cache.set(key, null);
       try {
         await secure.remove({ key });
       } catch {
