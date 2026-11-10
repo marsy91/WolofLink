@@ -50,7 +50,7 @@ export function NudgeBanner() {
   return (
     <>
     {turnBanner}
-    <section role="status" className="mb-4 flex items-center gap-3 rounded-3xl border-2 border-sea/30 bg-sea-soft p-4">
+    <section role="status" className="mb-4 flex items-center gap-3 rounded-3xl border border-sea/30 bg-sea-soft p-4">
       <span aria-hidden className="text-3xl">
         👋
       </span>

@@ -46,7 +46,7 @@ function Circle() {
       <h2 className="mb-2 flex items-center gap-2 font-display text-lg font-extrabold text-night">
         <IconPodium size={22} className="text-clay" /> {t("league.week")}
       </h2>
-      <ol className="overflow-hidden rounded-3xl border-2 border-sand-3 bg-white">
+      <ol className="overflow-hidden rounded-3xl border border-sand-3 bg-white">
         {rows.map((r, i) => (
           <li
             key={r.name + i}

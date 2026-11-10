@@ -427,7 +427,7 @@ export function TypeView({ ex, locked, onChange }: ExerciseProps<TypeExercise>) 
           autoComplete="off"
           spellCheck={false}
           enterKeyHint="done"
-          className="w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-4 font-display text-xl font-extrabold text-night outline-none focus:border-clay disabled:opacity-80"
+          className="w-full rounded-2xl border border-sand-3 bg-white px-4 py-4 font-display text-xl font-extrabold text-night outline-none focus:border-clay disabled:opacity-80"
         />
       </label>
       <div role="group" aria-label={t("ex.keyboard")} className="mt-3 flex flex-wrap items-center gap-2">

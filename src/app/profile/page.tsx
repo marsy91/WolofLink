@@ -46,7 +46,7 @@ export default function Profile() {
         <Link
           href="/settings/"
           aria-label={t("nav.settings")}
-          className="grid h-12 w-12 place-items-center rounded-2xl border-2 border-sand-3 bg-white text-night"
+          className="grid h-12 w-12 place-items-center rounded-2xl border border-sand-3 bg-white text-night"
         >
           <IconSliders />
         </Link>
@@ -58,7 +58,7 @@ export default function Profile() {
           [t("profile.bestStreak"), Math.max(progress.streak.best, currentStreak(progress, now))],
           [t("profile.lessons"), Object.keys(progress.lessons).length],
         ].map(([label, value]) => (
-          <div key={String(label)} className="rounded-2xl border-2 border-sand-3 bg-white p-3 text-center">
+          <div key={String(label)} className="rounded-2xl border border-sand-3 bg-white p-3 text-center">
             <dd className="font-display text-2xl font-extrabold text-night">{value}</dd>
             <dt className="text-xs font-bold text-muted">{label}</dt>
           </div>
@@ -66,7 +66,7 @@ export default function Profile() {
       </dl>
 
       {!PREMIUM_ENABLED && (unlockAll || (premium && !SUPPORTER_ENABLED)) ? (
-        <p className="mb-4 flex items-start gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 text-sm font-bold text-night">
+        <p className="mb-4 flex items-start gap-3 rounded-2xl border border-dusk/30 bg-dusk-soft p-4 text-sm font-bold text-night">
           <IconGem size={24} className="shrink-0 text-dusk" />
           <span>
             {unlockAll ? <span className="block">{t("grant.unlockAll")}</span> : null}
@@ -93,7 +93,7 @@ export default function Profile() {
       {PREMIUM_ENABLED ? (
         <Link
           href="/premium/"
-          className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 active:translate-y-[2px]"
+          className="mb-4 flex items-center gap-3 rounded-2xl border border-dusk/30 bg-dusk-soft p-4 active:translate-y-[2px]"
         >
           <IconGem size={28} className="shrink-0 text-dusk" />
           <span className="flex-1">
@@ -103,7 +103,7 @@ export default function Profile() {
         </Link>
       ) : null}
 
-      <Link href="/progress/" className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sea/30 bg-white p-4 active:translate-y-[2px]">
+      <Link href="/progress/" className="mb-4 flex items-center gap-3 rounded-2xl border border-sea/30 bg-white p-4 active:translate-y-[2px]">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sea-soft text-sea">
           <IconChart size={22} />
         </span>
@@ -170,7 +170,7 @@ export default function Profile() {
         })}
       </ul>
 
-      <Link href="/friends/" className="mb-4 flex items-center gap-3 rounded-3xl border-2 border-sea/30 bg-white p-5 active:translate-y-[2px]">
+      <Link href="/friends/" className="mb-4 flex items-center gap-3 rounded-3xl border border-sea/30 bg-white p-5 active:translate-y-[2px]">
         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-sun-soft text-sun-deep">
           <IconTrophy size={24} />
         </span>
@@ -181,13 +181,13 @@ export default function Profile() {
       </Link>
 
       {recorder.isRecorder ? (
-        <Link href="/record/" className="mb-4 block rounded-3xl border-2 border-dusk/40 bg-white p-5 active:translate-y-[2px]">
+        <Link href="/record/" className="mb-4 block rounded-3xl border border-dusk/40 bg-white p-5 active:translate-y-[2px]">
           <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-dusk"><IconMic size={22} /> {t("rec.title")}</h2>
           <p className="text-sm text-muted">{t("rec.card")}</p>
         </Link>
       ) : null}
       {recorder.canApprove && !isOwner ? (
-        <Link href="/voice-review/" className="mb-4 block rounded-3xl border-2 border-dusk/40 bg-white p-5 active:translate-y-[2px]">
+        <Link href="/voice-review/" className="mb-4 block rounded-3xl border border-dusk/40 bg-white p-5 active:translate-y-[2px]">
           <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-dusk"><IconHeadphones size={22} /> {t("rec.review")}</h2>
         </Link>
       ) : null}

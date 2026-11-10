@@ -57,7 +57,7 @@ export default function AccountPage() {
 
   const back = () => (progress.profile ? router.replace("/profile/") : router.replace("/welcome/"));
   const field =
-    "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3.5 text-lg outline-none focus:border-clay disabled:opacity-60";
+    "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3.5 text-lg outline-none focus:border-clay disabled:opacity-60";
 
   const send = async () => {
     setError(null);

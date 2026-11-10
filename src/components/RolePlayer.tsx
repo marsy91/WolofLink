@@ -182,7 +182,7 @@ export function RolePlayer({ storyId }: { storyId: string }) {
                   lang="wo"
                   disabled={picked !== null}
                   onClick={() => choose(i)}
-                  className={`w-full rounded-2xl border-2 border-sand-3 px-4 py-3 text-left font-bold text-night ${state}`}
+                  className={`w-full rounded-2xl border border-sand-3 px-4 py-3 text-left font-bold text-night ${state}`}
                 >
                   {o.wo}
                 </button>

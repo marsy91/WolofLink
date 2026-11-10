@@ -13,7 +13,7 @@ export function WordOfTheDay() {
   const now = useNow(10 * 60_000);
   const e = wordOfTheDay(new Date(now));
   return (
-    <section className="mb-6 flex items-center gap-3 rounded-3xl border-2 border-sun/40 bg-sun-soft p-4" aria-labelledby="wotd-h">
+    <section className="mb-6 flex items-center gap-3 rounded-3xl border border-sand-3/70 bg-white p-4 shadow-card" aria-labelledby="wotd-h">
       <button
         type="button"
         onClick={() => void playEntry(e)}

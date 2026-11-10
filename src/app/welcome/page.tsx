@@ -182,7 +182,7 @@ export default function Welcome() {
                 maxLength={30}
                 autoComplete="given-name"
                 placeholder={t("onb.namePlaceholder")}
-                className="w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3.5 text-lg outline-none focus:border-clay"
+                className="w-full rounded-2xl border border-sand-3 bg-white px-4 py-3.5 text-lg outline-none focus:border-clay"
               />
             </label>
             <p className="mt-4 rounded-2xl bg-sea-soft p-4 text-sea">{t("onb.guestNote")}</p>

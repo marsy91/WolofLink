@@ -7,9 +7,9 @@
 @theme {
   --color-night: #1d2550;
   --color-night-2: #2c3672;
-  --color-sand: #fbf3e6;
-  --color-sand-2: #f3e5cf;
-  --color-sand-3: #e6d3b5;
+  --color-sand: #f8f6f2;
+  --color-sand-2: #f0ece5;
+  --color-sand-3: #e4ded4;
   --color-ink: #1b1a24;
   --color-muted: #5b5568;
   --color-clay: #a8421a;
@@ -29,7 +29,7 @@
   --color-dusk-soft: #f3e4ee;
 
   /* Soft, modern card shadow (replaces the old solid 3px bottom edge). */
-  --shadow-card: 0 1px 2px rgb(29 37 80 / 0.05), 0 4px 14px rgb(29 37 80 / 0.07);
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 6px 20px rgb(16 24 40 / 0.05);
 
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
@@ -45,6 +45,14 @@ body {
 
 body {
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tighter, modern headings. */
+.font-display {
+  letter-spacing: -0.015em;
 }
 
 /* Safe areas: Capacitor injects --safe-area-inset-*, browsers provide env(). */
@@ -64,8 +72,8 @@ body {
 /* Woven-band ornament used on unit banners (original geometric pattern). */
 .weave {
   background-image:
-    linear-gradient(135deg, rgb(255 255 255 / 0.14) 25%, transparent 25%),
-    linear-gradient(225deg, rgb(255 255 255 / 0.14) 25%, transparent 25%);
+    linear-gradient(135deg, rgb(255 255 255 / 0.07) 25%, transparent 25%),
+    linear-gradient(225deg, rgb(255 255 255 / 0.07) 25%, transparent 25%);
   background-size: 18px 18px;
   background-position: 0 0, 9px 0;
 }
@@ -346,6 +354,7 @@ body {
 :root[data-mode="dark"] { --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.06), 0 4px 14px rgb(0 0 0 / 0.25); }
 :root[data-mode="dark"] .bg-white\/50 { background-color: rgb(26 30 56 / 0.5); }
 :root[data-mode="dark"] .bg-white\/95 { background-color: rgb(26 30 56 / 0.95); }
+:root[data-mode="dark"] .bg-white\/80 { background-color: rgb(26 30 56 / 0.8); }
 :root[data-mode="dark"] .text-white { color: #ffffff; }
 /* Dark text where the background stays bright in both modes. */
 :root[data-mode="dark"] .bg-sun.text-night,
@@ -354,5 +363,5 @@ body {
 :root[data-mode="dark"] .bg-night.text-sun { color: #94600f; }
 :root[data-mode="dark"] .weave { filter: brightness(0.92); }
 /* The welcome splash stays dark navy in both modes. */
-:root[data-mode="dark"] .splash { --color-night: #1d2550; --color-sand: #fbf3e6; }
+:root[data-mode="dark"] .splash { --color-night: #1d2550; --color-sand: #f8f6f2; }
 :root[data-mode="dark"][data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }

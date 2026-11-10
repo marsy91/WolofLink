@@ -88,7 +88,7 @@ export default function ListenPage() {
       <label className="mb-4 block">
         <span className="mb-1 block text-sm font-bold text-muted">{t("listen.what")}</span>
         <select
-          className="w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base"
+          className="w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base"
           value={source}
           onChange={(e) => {
             stop();

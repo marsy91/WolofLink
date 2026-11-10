@@ -148,7 +148,7 @@ function BottomNav() {
     return () => window.clearTimeout(id);
   }, [router]);
   return (
-    <nav aria-label="Main" className="safe-bottom fixed inset-x-0 bottom-0 z-20 border-t border-sand-3/70 bg-white/95 backdrop-blur">
+    <nav aria-label="Main" className="safe-bottom fixed inset-x-0 bottom-0 z-20 border-t border-sand-3/60 bg-white/80 backdrop-blur-xl backdrop-saturate-150">
       <ul className="mx-auto flex max-w-lg">
         {TABS.map(({ href, key, Icon }) => {
           const active = pathname?.startsWith(href.slice(0, -1)) ?? false;

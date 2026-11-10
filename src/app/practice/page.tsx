@@ -77,7 +77,7 @@ export default function Practice() {
         </section>
       ) : null}
 
-      <section className="mb-5 rounded-3xl border-2 border-clay/30 bg-white p-5" aria-labelledby="survival-h">
+      <section className="mb-5 rounded-3xl border border-clay/30 bg-white p-5" aria-labelledby="survival-h">
         <h2 id="survival-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <IconLifebuoy size={22} className="text-clay" /> {translate(SURVIVAL_TITLE, lang)}
         </h2>
@@ -91,14 +91,14 @@ export default function Practice() {
           </Link>
           <Link
             href="/phrases/?show=survival"
-            className="flex min-h-12 flex-1 items-center justify-center rounded-2xl border-2 border-sand-3 bg-white font-display font-extrabold text-night"
+            className="flex min-h-12 flex-1 items-center justify-center rounded-2xl border border-sand-3 bg-white font-display font-extrabold text-night"
           >
             {t("survival.list")}
           </Link>
         </div>
       </section>
 
-      <section className="mb-5 rounded-3xl border-2 border-night/20 bg-white p-5" aria-labelledby="roleplay-h">
+      <section className="mb-5 rounded-3xl border border-night/20 bg-white p-5" aria-labelledby="roleplay-h">
         <h2 id="roleplay-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <IconDialogue size={22} className="text-dusk" /> {t("roleplay.cardTitle")}
         </h2>
@@ -109,7 +109,7 @@ export default function Practice() {
               <li key={story.id}>
                 <Link
                   href={`/roleplay/${story.id}/`}
-                  className="flex min-h-12 items-center justify-between rounded-2xl border-2 border-sand-3 bg-white px-4 font-bold text-night"
+                  className="flex min-h-12 items-center justify-between rounded-2xl border border-sand-3 bg-white px-4 font-bold text-night"
                 >
                   {translate(story.title, lang)} <span className="text-clay">{t("roleplay.start")} →</span>
                 </Link>
@@ -121,7 +121,7 @@ export default function Practice() {
         )}
       </section>
 
-      <section className="mb-5 rounded-3xl border-2 border-sun/50 bg-sun-soft p-5" aria-labelledby="listen-h">
+      <section className="mb-5 rounded-3xl border border-sun/50 bg-sun-soft p-5" aria-labelledby="listen-h">
         <h2 id="listen-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <IconHeadphones size={22} className="text-sun-deep" /> {t("listen.cardTitle")}
         </h2>
@@ -134,33 +134,33 @@ export default function Practice() {
         </Link>
       </section>
 
-      <section className="mb-5 rounded-3xl border-2 border-sea/30 bg-white p-5" aria-labelledby="guide-h">
+      <section className="mb-5 rounded-3xl border border-sea/30 bg-white p-5" aria-labelledby="guide-h">
         <h2 id="guide-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <IconBook size={22} className="text-sea" /> {t("guide.cardTitle")}
         </h2>
         <p className="mb-4 text-sm text-muted">{t("guide.card")}</p>
         <Link
           href="/guide/"
-          className="flex min-h-12 w-full items-center justify-center rounded-2xl border-2 border-sand-3 bg-white font-display font-extrabold text-night"
+          className="flex min-h-12 w-full items-center justify-center rounded-2xl border border-sand-3 bg-white font-display font-extrabold text-night"
         >
           {t("guide.open")}
         </Link>
       </section>
 
-      <section className="mb-5 rounded-3xl border-2 border-dusk/30 bg-white p-5" aria-labelledby="sounds-h">
+      <section className="mb-5 rounded-3xl border border-dusk/30 bg-white p-5" aria-labelledby="sounds-h">
         <h2 id="sounds-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <IconSpeaker size={22} className="text-dusk" /> {t("sounds.title")}
         </h2>
         <p className="mb-4 text-sm text-muted">{t("sounds.card")}</p>
         <Link
           href="/sounds/"
-          className="flex min-h-12 w-full items-center justify-center rounded-2xl border-2 border-sand-3 bg-white font-display font-extrabold text-night"
+          className="flex min-h-12 w-full items-center justify-center rounded-2xl border border-sand-3 bg-white font-display font-extrabold text-night"
         >
           {t("sounds.open")}
         </Link>
       </section>
 
-      <section className="mb-5 rounded-3xl border-2 border-sea/30 bg-white p-5" aria-labelledby="cal-h">
+      <section className="mb-5 rounded-3xl border border-sea/30 bg-white p-5" aria-labelledby="cal-h">
         <h2 id="cal-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
           <IconCalendar size={22} className="text-sea" /> {t("cal.title")}
         </h2>
@@ -179,7 +179,7 @@ export default function Practice() {
         <p className="mb-4 text-sm text-muted">{t("cal.card")}</p>
         <Link
           href="/calendar/"
-          className="flex min-h-12 w-full items-center justify-center rounded-2xl border-2 border-sand-3 bg-white font-display font-extrabold text-night"
+          className="flex min-h-12 w-full items-center justify-center rounded-2xl border border-sand-3 bg-white font-display font-extrabold text-night"
         >
           {t("cal.open")}
         </Link>
@@ -210,7 +210,7 @@ export default function Practice() {
               const entry = course.entries[id];
               if (!entry) return null;
               return (
-                <li key={id} className="rounded-2xl border-2 border-sand-3 bg-white p-3">
+                <li key={id} className="rounded-2xl border border-sand-3 bg-white p-3">
                   <span lang="wo" className="block font-display font-extrabold text-night">
                     {entry.wo}
                   </span>

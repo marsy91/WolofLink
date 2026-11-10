@@ -83,7 +83,7 @@ const NOTICES: Record<string, Record<NoticeKind, FeatureNotice>> = {
   },
   supporter: {
     back: {
-      title: tx(["Supporter is available again", "Le soutien est de nouveau disponible", "Ser socio vuelve a estar disponible", "Unterstützen ist wieder möglich", "Il sostegno è di nuovo disponibile"]),
+      title: tx(["Supporter is available again", "Le soutien est de nouveau disponible", "Ser colaborador vuelve a estar disponible", "Unterstützen ist wieder möglich", "Il sostegno è di nuovo disponibile"]),
       message: tx([
         "You can support WolofLink again from your profile. Thank you!",
         "Vous pouvez de nouveau soutenir WolofLink depuis votre profil. Merci !",
@@ -93,7 +93,7 @@ const NOTICES: Record<string, Record<NoticeKind, FeatureNotice>> = {
       ]),
     },
     paused: {
-      title: tx(["Supporter is paused for a moment", "Le soutien est en pause un instant", "Ser socio está en pausa un momento", "Unterstützen ist kurz pausiert", "Il sostegno è in pausa per un momento"]),
+      title: tx(["Supporter is paused for a moment", "Le soutien est en pause un instant", "Ser colaborador está en pausa un momento", "Unterstützen ist kurz pausiert", "Il sostegno è in pausa per un momento"]),
       message: tx([
         "New purchases are paused; anything you already have keeps working.",
         "Les nouveaux achats sont en pause ; ce que vous avez déjà continue de fonctionner.",

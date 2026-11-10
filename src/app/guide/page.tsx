@@ -27,7 +27,7 @@ export default function GuidePage() {
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t("guide.search")}
         aria-label={t("guide.search")}
-        className="mb-4 w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay"
+        className="mb-4 w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay"
       />
       {units.length === 0 ? <p className="rounded-2xl bg-white p-4 text-muted">{t("guide.none")}</p> : null}
       {units.map((u) => (
@@ -37,7 +37,7 @@ export default function GuidePage() {
           </h2>
           <ul className="space-y-2">
             {u.tips.map((tip) => (
-              <li key={tip.lessonId} className="rounded-2xl border-2 border-sand-3 bg-white p-4">
+              <li key={tip.lessonId} className="rounded-2xl border border-sand-3 bg-white p-4">
                 <p className="mb-1 flex items-center gap-2 text-sm font-bold text-clay">
                   <IconInfo size={16} /> {tip.lesson}
                 </p>

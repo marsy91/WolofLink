@@ -20,7 +20,7 @@ export function AnnouncementBanner() {
   return (
     <>
       {shown.map((a) => (
-        <section key={a.id} aria-label={t("notice.label")} className="mb-4 flex items-start gap-3 rounded-3xl border-2 border-sea/40 bg-sea-soft p-4">
+        <section key={a.id} aria-label={t("notice.label")} className="mb-4 flex items-start gap-3 rounded-3xl border border-sea/40 bg-sea-soft p-4">
           <span aria-hidden className="text-2xl leading-none">
             📣
           </span>
