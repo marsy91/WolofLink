@@ -11,6 +11,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Progress } from "./progress";
 import { ACCOUNTS_ENABLED } from "./features";
+import { authStorage } from "./secure-storage";
 
 export interface CloudUser {
   id: string;
@@ -123,7 +124,14 @@ function supabaseBackend(url: string, anonKey: string): CloudBackend {
   const sb = () =>
     (client ??= import("@supabase/supabase-js").then(({ createClient }) =>
       createClient(url, anonKey, {
-        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false, storageKey: "woloflink.auth" },
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: false,
+          storageKey: "woloflink.auth",
+          // Keystore-encrypted on Android; see secure-storage.ts.
+          storage: authStorage(),
+        },
       }),
     ));
 
