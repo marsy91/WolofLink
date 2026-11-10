@@ -110,7 +110,7 @@ export function VoiceReview({ say }: { say: Say }) {
       {rows?.map((r) => {
         const e = dictionaryById.get(r.entry_id);
         return (
-          <section key={r.id} className="mb-3 rounded-2xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+          <section key={r.id} className="mb-3 rounded-2xl bg-white p-4 shadow-card">
             <p lang="wo" className="font-display text-xl font-extrabold text-night">
               {e?.wo ?? r.entry_id}
             </p>

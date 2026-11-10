@@ -1,6 +1,8 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import { describe, expect, it } from "vitest";
 import {
+  ACHIEVEMENTS,
+  achievementProgress,
   applySession,
   applyTestOut,
   TEST_OUT_PASS,
@@ -193,5 +195,27 @@ describe("test out of a unit", () => {
   });
   it("asks about each word of the unit once", () => {
     expect(testOutEntries([{ entries: ["x", "y"] }, { entries: ["y", "z"] }])).toEqual(["x", "y", "z"]);
+  });
+});
+
+describe("achievement progress", () => {
+  it("counts towards countable badges and caps at the goal", () => {
+    let p = emptyProgress(day(1));
+    expect(achievementProgress("first", p, day(1))).toEqual({ done: 0, total: 1 });
+    expect(achievementProgress("sprout", p, day(1))).toEqual({ done: 0, total: 100 });
+    p = applySession(p, lesson(), day(1)).progress;
+    expect(achievementProgress("first", p, day(1))).toEqual({ done: 1, total: 1 });
+    p = { ...p, xpTotal: 250 };
+    expect(achievementProgress("sprout", p, day(1))).toEqual({ done: 100, total: 100 });
+  });
+
+  it("has no counter for one-off events, and every other badge has one", () => {
+    const p = emptyProgress(day(1));
+    expect(achievementProgress("clear", p, day(1))).toBeNull();
+    for (const a of ACHIEVEMENTS.filter((x) => x.id !== "clear")) {
+      const prog = achievementProgress(a.id, p, day(1));
+      expect(prog, a.id).not.toBeNull();
+      expect(prog!.total).toBeGreaterThan(0);
+    }
   });
 });

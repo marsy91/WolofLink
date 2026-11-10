@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { IconCap } from "@/components/icons";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import { course } from "@/content/course";
 import { translate } from "@/i18n";
@@ -100,7 +101,7 @@ export default function ProgressPage() {
       </section>
 
       <section className="mb-4 rounded-3xl border-2 border-sun/50 bg-sun-soft p-4" aria-labelledby="cert-h">
-        <h2 id="cert-h" className="mb-2 font-display text-lg font-extrabold text-night">🎓 {t("insights.certificates")}</h2>
+        <h2 id="cert-h" className="mb-2 flex items-center gap-2 font-display text-lg font-extrabold text-night"><IconCap size={22} className="text-sun-deep" /> {t("insights.certificates")}</h2>
         <ul className="space-y-2">
           {all.map((l) => (
             <li key={l.id} className="flex items-center justify-between gap-3">

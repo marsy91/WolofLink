@@ -333,6 +333,101 @@ export const GlyphRun = (p: IconProps) => (
     <path d="m6 10 3.5-2.5 4 .5 2 3.5 3.5 1M13.5 8l-2 5 3.5 2.5-1 5.5M11.5 13l-2.5 3.5-4.5.5" />
   </Svg>
 );
+/** Survival Wolof: a life ring. */
+export const IconLifebuoy = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="4" />
+    <path d="m5.6 5.6 3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6" />
+  </Svg>
+);
+/** Role-play: two speech bubbles in conversation. */
+export const IconDialogue = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3.5 5.5h10a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5H8l-3.5 3v-3h-1A1.5 1.5 0 0 1 2 12V7a1.5 1.5 0 0 1 1.5-1.5Z" />
+    <path d="M17.5 9.5h3A1.5 1.5 0 0 1 22 11v5a1.5 1.5 0 0 1-1.5 1.5h-1v3l-3.5-3h-4" />
+  </Svg>
+);
+/** Saved phrases: a star. */
+export const IconStar = ({ filled, ...p }: IconProps & { filled?: boolean }) => (
+  <Svg {...p}>
+    <path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.5Z" fill={filled ? "currentColor" : "none"} />
+  </Svg>
+);
+/** Taxi and transport: a car. */
+export const IconCar = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 16.5V12l2-5h12l2 5v4.5" />
+    <path d="M3 12h18v4.5H3zM7 19.5v-3M17 19.5v-3" />
+    <circle cx="7.5" cy="14.2" r=".6" />
+    <circle cx="16.5" cy="14.2" r=".6" />
+  </Svg>
+);
+/** Shopping: a bag. */
+export const IconBag = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M5 8h14l-1 12H6L5 8Z" />
+    <path d="M9 10V7a3 3 0 0 1 6 0v3" />
+  </Svg>
+);
+/** Health: a medical cross. */
+export const IconMedical = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3.5" y="3.5" width="17" height="17" rx="4" />
+    <path d="M12 8v8M8 12h8" />
+  </Svg>
+);
+/** Feelings: a smiling face. */
+export const IconSmile = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5v.1M15 9.5v.1" />
+  </Svg>
+);
+
+/** Hands-free listening: headphones. */
+export const IconHeadphones = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 15v-3a8 8 0 0 1 16 0v3" />
+    <rect x="3" y="14" width="4.5" height="6.5" rx="1.5" />
+    <rect x="16.5" y="14" width="4.5" height="6.5" rx="1.5" />
+  </Svg>
+);
+/** Calendar of holidays. */
+export const IconCalendar = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+    <path d="M3.5 10h17M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01" />
+  </Svg>
+);
+/** Progress: a rising line chart. */
+export const IconChart = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 4v16h16" />
+    <path d="m7.5 14.5 3.5-4 3 2.5 5-6" />
+  </Svg>
+);
+/** Friends and duels: a trophy. */
+export const IconTrophy = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M7.5 4h9v4.5a4.5 4.5 0 0 1-9 0V4Z" />
+    <path d="M7.5 6H4.5a3 3 0 0 0 3 4M16.5 6h3a3 3 0 0 1-3 4M12 13v3.5M8.5 20.5h7M9.5 20.5l.5-4h4l.5 4" />
+  </Svg>
+);
+/** Certificates: a graduation cap. */
+export const IconCap = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="m2.5 9.5 9.5-5 9.5 5-9.5 5-9.5-5Z" />
+    <path d="M6.5 11.7v4.3c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.3M21.5 9.5v5" />
+  </Svg>
+);
+/** Full-screen "show" card: four corners. */
+export const IconExpand = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" />
+  </Svg>
+);
+
 export const UNIT_GLYPHS = {
   wave: GlyphWave,
   family: GlyphFamily,
@@ -366,3 +461,24 @@ export const BADGE_GLYPHS = {
   ring: IconRings,
   book: IconBook,
 } as const;
+
+/** Line icons for the phrasebook sections and dictionary filters (replacing emoji). */
+export const SECTION_ICONS: Record<string, (p: IconProps) => ReactNode> = {
+  basics: GlyphChat,
+  greet: GlyphWave,
+  people: GlyphFamily,
+  courtesy: GlyphHeart,
+  directions: GlyphCompass,
+  transport: IconCar,
+  shopping: IconBag,
+  food: GlyphBowl,
+  money: GlyphCount,
+  time: GlyphClock,
+  health: IconMedical,
+  feelings: IconSmile,
+  home: GlyphHome,
+  faith: GlyphDrum,
+  survival: IconLifebuoy,
+  course: IconBook,
+  saved: IconStar,
+};

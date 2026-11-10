@@ -145,7 +145,7 @@ export default function RecordPage() {
       ) : !entry ? (
         <p className="rounded-2xl bg-white p-4 font-bold text-sea">{t("rec.allDone")}</p>
       ) : (
-        <section className="rounded-3xl bg-white p-5 text-center shadow-[0_3px_0_var(--color-sand-3)]">
+        <section className="rounded-3xl bg-white p-5 text-center shadow-card">
           <p lang="wo" className="font-display text-3xl leading-tight font-extrabold text-night">
             {entry.wo}
           </p>

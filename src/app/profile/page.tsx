@@ -2,8 +2,8 @@
 "use client";
 
 import Link from "next/link";
-import { BADGE_GLYPHS, IconGem, IconLock, IconProfile, IconRosette, IconShield, IconSliders } from "@/components/icons";
-import { TabScreen } from "@/components/ui";
+import { BADGE_GLYPHS, IconChart, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
+import { ProgressBar, TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
 import { useConsoleRole, useIsOwner } from "@/lib/owner";
@@ -11,7 +11,7 @@ import { useSwitchOff } from "@/lib/notices";
 import { PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { useRecorderStatus } from "@/lib/recorder";
-import { ACHIEVEMENTS, currentStreak, MAX_SHIELDS } from "@/lib/progress";
+import { ACHIEVEMENTS, achievementProgress, currentStreak, MAX_SHIELDS } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
 export default function Profile() {
@@ -104,8 +104,8 @@ export default function Profile() {
       ) : null}
 
       <Link href="/progress/" className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sea/30 bg-white p-4 active:translate-y-[2px]">
-        <span aria-hidden className="text-2xl">
-          📈
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sea-soft text-sea">
+          <IconChart size={22} />
         </span>
         <span className="min-w-0 flex-1">
           <span className="block font-display font-extrabold text-night">{t("insights.cardTitle")}</span>
@@ -133,38 +133,46 @@ export default function Profile() {
         {ACHIEVEMENTS.map((a) => {
           const unlocked = !!progress.achievements[a.id];
           const Glyph = BADGE_GLYPHS[a.glyph];
+          const goal = unlocked ? null : achievementProgress(a.id, progress, now);
           return (
             <li
               key={a.id}
-              className={`flex flex-col items-center gap-2 rounded-2xl border-2 p-4 text-center ${
-                unlocked ? "border-sun bg-sun-soft" : "border-dashed border-sand-3 bg-white/50"
+              className={`flex flex-col items-center gap-2 rounded-2xl border p-4 text-center ${
+                unlocked ? "border-sun bg-sun-soft shadow-card" : "border-sand-3/60 bg-white"
               }`}
             >
               <span
                 className={`relative grid h-14 w-14 place-items-center rounded-full ${
-                  unlocked ? "bg-night text-sun" : "bg-sand-3 text-muted"
+                  unlocked ? "bg-night text-sun" : "bg-sand-2 text-night/35"
                 }`}
               >
                 <Glyph size={28} />
                 {!unlocked ? (
-                  <span className="absolute -right-1 -bottom-1 grid h-6 w-6 place-items-center rounded-full bg-white text-muted">
-                    <IconLock size={14} />
+                  <span className="absolute -right-1 -bottom-1 grid h-6 w-6 place-items-center rounded-full bg-white text-muted shadow-card">
+                    <IconLock size={13} />
                   </span>
                 ) : null}
               </span>
-              <span className="font-display font-extrabold text-night">{t(`ach.${a.id}.name` as UiKey)}</span>
-              <span className="text-xs text-muted">
-                {t(`ach.${a.id}.desc` as UiKey)}
-                {unlocked ? "" : ` · ${t("profile.locked")}`}
-              </span>
+              <span className={`font-display font-extrabold ${unlocked ? "text-night" : "text-night/70"}`}>{t(`ach.${a.id}.name` as UiKey)}</span>
+              <span className="text-xs text-muted">{t(`ach.${a.id}.desc` as UiKey)}</span>
+              {goal && goal.total > 1 ? (
+                <span className="mt-auto w-full">
+                  <ProgressBar value={goal.done / goal.total} label={t(`ach.${a.id}.name` as UiKey)} />
+                  <span className="mt-1 block text-xs font-bold text-muted">
+                    {goal.done} / {goal.total}
+                  </span>
+                </span>
+              ) : !unlocked ? (
+                <span className="mt-auto text-xs font-bold text-muted">{t("profile.locked")}</span>
+              ) : null}
             </li>
           );
         })}
       </ul>
 
       <Link href="/friends/" className="mb-4 flex items-center gap-3 rounded-3xl border-2 border-sea/30 bg-white p-5 active:translate-y-[2px]">
-        <span aria-hidden className="text-3xl">
-          🏆
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-sun-soft text-sun-deep">
+          <IconTrophy size={24} />
         </span>
         <span>
           <span className="block font-display text-lg font-extrabold text-night">{t("friends.title")}</span>
@@ -174,13 +182,13 @@ export default function Profile() {
 
       {recorder.isRecorder ? (
         <Link href="/record/" className="mb-4 block rounded-3xl border-2 border-dusk/40 bg-white p-5 active:translate-y-[2px]">
-          <h2 className="mb-1 font-display text-lg font-extrabold text-dusk">🎙️ {t("rec.title")}</h2>
+          <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-dusk"><IconMic size={22} /> {t("rec.title")}</h2>
           <p className="text-sm text-muted">{t("rec.card")}</p>
         </Link>
       ) : null}
       {recorder.canApprove && !isOwner ? (
         <Link href="/voice-review/" className="mb-4 block rounded-3xl border-2 border-dusk/40 bg-white p-5 active:translate-y-[2px]">
-          <h2 className="mb-1 font-display text-lg font-extrabold text-dusk">🎧 {t("rec.review")}</h2>
+          <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-dusk"><IconHeadphones size={22} /> {t("rec.review")}</h2>
         </Link>
       ) : null}
 
@@ -204,7 +212,7 @@ export default function Profile() {
       {account.available ? (
         <Link
           href="/account/"
-          className="block rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)] active:translate-y-[2px] active:shadow-none"
+          className="block rounded-3xl bg-white p-5 shadow-card active:translate-y-[2px] active:shadow-none"
         >
           <h2 className="mb-1 font-display text-lg font-extrabold text-night">
             {account.user ? t("acct.title") : t("profile.account")}
@@ -214,7 +222,7 @@ export default function Profile() {
           </p>
         </Link>
       ) : (
-        <section className="rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]">
+        <section className="rounded-3xl bg-white p-5 shadow-card">
           <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("profile.account")}</h2>
           <p className="text-sm text-muted">{t("profile.accountSoon")}</p>
         </section>

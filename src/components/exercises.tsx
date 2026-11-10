@@ -50,7 +50,7 @@ export function AudioButtons({ entry, autoplay, big }: { entry: Entry; autoplay?
         type="button"
         onClick={() => void playEntry(entry)}
         aria-label={t("ex.play")}
-        className={`grid place-items-center rounded-2xl bg-night text-sun shadow-[0_4px_0_var(--color-night-3)] active:translate-y-[3px] active:shadow-none ${
+        className={`grid place-items-center rounded-2xl bg-night text-sun shadow-[0_2px_0_var(--color-night-3)] active:translate-y-[2px] active:shadow-none ${
           big ? "h-24 w-24" : "h-12 w-12"
         }`}
       >
@@ -120,7 +120,7 @@ export function ChoiceView({ ex, locked, onChange }: ExerciseProps<ChoiceExercis
             <AudioButtons entry={ex.entry} autoplay big />
           </div>
         ) : (
-          <div className="flex items-center gap-3 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+          <div className="flex items-center gap-3 rounded-3xl bg-white p-4 shadow-card">
             {ex.promptIsWolof ? <AudioButtons entry={ex.entry} autoplay /> : null}
             {ex.promptIsWolof ? (
               <WolofText className="text-2xl">{ex.prompt}</WolofText>
@@ -158,7 +158,7 @@ export function ChoiceView({ ex, locked, onChange }: ExerciseProps<ChoiceExercis
                     ? "anim-shake border-berry bg-berry-soft"
                     : selected
                       ? "border-clay bg-sun-soft"
-                      : "border-sand-3 shadow-[0_3px_0_var(--color-sand-3)] hover:border-night/30"
+                      : "border-sand-3 shadow-card hover:border-night/30"
               }`}
             >
               <kbd className="absolute top-2 left-2 hidden rounded-md border border-sand-3 px-1.5 text-xs text-muted sm:block">
@@ -197,7 +197,7 @@ export function BuildView({ ex, locked, onChange }: ExerciseProps<BuildExercise>
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="mb-5 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+      <div className="mb-5 rounded-3xl bg-white p-4 shadow-card">
         <span className="font-display text-2xl font-extrabold text-night">{ex.prompt}</span>
       </div>
 
@@ -213,7 +213,7 @@ export function BuildView({ ex, locked, onChange }: ExerciseProps<BuildExercise>
             disabled={locked}
             onClick={() => set(chosen.filter((c) => c !== id))}
             aria-label={t("ex.removeTile", { w: labelOf(id) })}
-            className="rounded-xl border-2 border-night/20 bg-white px-3 py-2 font-display text-lg font-extrabold text-night shadow-[0_3px_0_var(--color-sand-3)]"
+            className="rounded-xl border-2 border-night/20 bg-white px-3 py-2 font-display text-lg font-extrabold text-night shadow-card"
             lang="wo"
           >
             {labelOf(id)}
@@ -235,7 +235,7 @@ export function BuildView({ ex, locked, onChange }: ExerciseProps<BuildExercise>
               className={`rounded-xl border-2 px-3 py-2 font-display text-lg font-extrabold ${
                 used
                   ? "border-sand-3 bg-sand-3 text-transparent"
-                  : "border-sand-3 bg-white text-night shadow-[0_3px_0_var(--color-sand-3)]"
+                  : "border-sand-3 bg-white text-night shadow-card"
               }`}
             >
               {tile.label}
@@ -260,7 +260,7 @@ export function FillView({ ex, locked, onChange }: ExerciseProps<FillExercise>) 
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="mb-6 rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]">
+      <div className="mb-6 rounded-3xl bg-white p-5 shadow-card">
         <p className="mb-3 flex flex-wrap items-baseline gap-2 text-2xl" lang="wo">
           {ex.before.map((w, i) => (
             <WolofText key={`b${i}`}>{w}</WolofText>
@@ -289,7 +289,7 @@ export function FillView({ ex, locked, onChange }: ExerciseProps<FillExercise>) 
             disabled={locked}
             onClick={() => pick(c.id)}
             className={`min-w-24 rounded-2xl border-2 px-4 py-3 font-display text-lg font-extrabold ${
-              picked === c.id ? "border-clay bg-sun-soft text-night" : "border-sand-3 bg-white text-night shadow-[0_3px_0_var(--color-sand-3)]"
+              picked === c.id ? "border-clay bg-sun-soft text-night" : "border-sand-3 bg-white text-night shadow-card"
             }`}
           >
             {c.label}
@@ -352,7 +352,7 @@ export function MatchView({ ex, locked, onSubmit }: ExerciseProps<MatchExercise>
               ? "anim-shake border-berry bg-berry-soft"
               : selected
                 ? "border-clay bg-sun-soft"
-                : "border-sand-3 bg-white shadow-[0_3px_0_var(--color-sand-3)]"
+                : "border-sand-3 bg-white shadow-card"
         } ${side === "l" ? "font-display" : ""}`}
       >
         {label}
@@ -409,7 +409,7 @@ export function TypeView({ ex, locked, onChange }: ExerciseProps<TypeExercise>) 
           <TtsNote entry={ex.entry} />
         </div>
       ) : (
-        <div className="mb-5 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+        <div className="mb-5 rounded-3xl bg-white p-4 shadow-card">
           <span className="font-display text-2xl font-extrabold text-night">{ex.prompt}</span>
         </div>
       )}
@@ -439,7 +439,7 @@ export function TypeView({ ex, locked, onChange }: ExerciseProps<TypeExercise>) 
             disabled={locked}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => insert(ch)}
-            className="h-11 min-w-11 rounded-xl border-2 border-sand-3 bg-white font-display text-lg font-extrabold text-night shadow-[0_3px_0_var(--color-sand-3)] active:translate-y-[2px] active:shadow-none"
+            className="h-11 min-w-11 rounded-xl border-2 border-sand-3 bg-white font-display text-lg font-extrabold text-night shadow-card active:translate-y-[2px] active:shadow-none"
           >
             {ch}
           </button>
@@ -456,7 +456,7 @@ export function SpeakView({ ex, locked, onSubmit }: ExerciseProps<SpeakExercise>
   const checker = getSpeechChecker();
   return (
     <div className="flex flex-1 flex-col">
-      <div className="mb-4 flex items-center gap-3 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+      <div className="mb-4 flex items-center gap-3 rounded-3xl bg-white p-4 shadow-card">
         <AudioButtons entry={ex.entry} autoplay />
         <div>
           <WolofText className="block text-2xl">{ex.entry.wo}</WolofText>

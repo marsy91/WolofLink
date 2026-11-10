@@ -136,7 +136,7 @@ export default function AccountPage() {
       ) : account.user ? (
         /* ── Signed in ── */
         <div className="space-y-4">
-          <section className="flex items-center gap-3 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+          <section className="flex items-center gap-3 rounded-3xl bg-white p-4 shadow-card">
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-night text-sun">
               <IconProfile size={26} />
             </span>

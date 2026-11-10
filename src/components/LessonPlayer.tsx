@@ -232,7 +232,7 @@ export function LessonPlayer(props: Props) {
               {level > 1 ? <span className="font-normal text-muted">· {t("lesson.levelHint")}</span> : null}
             </p>
           ) : null}
-          <div className="flex gap-3 rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]">
+          <div className="flex gap-3 rounded-3xl bg-white p-5 shadow-card">
             <IconInfo className="mt-0.5 shrink-0 text-sea" />
             <p className="text-lg leading-relaxed">{tip}</p>
           </div>

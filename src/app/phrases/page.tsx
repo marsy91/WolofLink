@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { IconSnail, IconSpeaker } from "@/components/icons";
+import { IconExpand, IconSnail, IconSpeaker, IconStar, SECTION_ICONS } from "@/components/icons";
 import Link from "next/link";
 import { ReportProblem } from "@/components/ReportProblem";
 import { ShowCard } from "@/components/ShowCard";
@@ -63,12 +63,14 @@ export default function Phrases() {
   const sectionLabel = (id: string) => {
     const sec = sectionOfEntry.get(id);
     if (!sec) return "";
-    return sec.kind === "course" ? t("dict.unit", { n: sec.emoji, title: translate(sec.title, lang) }) : `${sec.emoji} ${translate(sec.title, lang)}`;
+    return sec.kind === "course" ? t("dict.unit", { n: sec.emoji, title: translate(sec.title, lang) }) : translate(sec.title, lang);
   };
   // Group into sections when browsing (not searching, not the saved list).
   const grouped = !searching && filter !== "saved";
 
-  const chip = (id: Filter, label: string, emoji?: string) => (
+  const chip = (id: Filter, label: string, withIcon = false) => {
+    const Icon = withIcon ? SECTION_ICONS[id] : undefined;
+    return (
     <button
       key={id}
       type="button"
@@ -78,17 +80,18 @@ export default function Phrases() {
         filter === id ? "border-clay bg-clay text-white" : "border-sand-3 bg-white text-night"
       }`}
     >
-      {emoji ? <span aria-hidden>{emoji}</span> : null}
+      {Icon ? <Icon size={16} /> : null}
       {label}
     </button>
-  );
+    );
+  };
 
   const row = (e: Entry) => {
     const isSaved = saved.includes(e.id);
     const expanded = open === e.id;
     return (
-      <li key={e.id} className="rounded-2xl border-2 border-sand-3 bg-white">
-        <div className="flex items-start gap-2 p-3">
+      <li key={e.id} className="rounded-2xl border border-sand-3/60 bg-white shadow-card">
+        <div className="flex items-center gap-2 py-2.5 pr-2 pl-3.5">
           <button
             type="button"
             onClick={() => {
@@ -98,16 +101,16 @@ export default function Phrases() {
             aria-expanded={expanded}
             className="min-w-0 flex-1 text-left"
           >
-            <span lang="wo" className="block font-display text-lg leading-snug font-extrabold text-night">
+            <span lang="wo" className="block font-display text-[1.05rem] leading-snug font-extrabold text-night">
               {e.wo}
             </span>
-            <span className="block text-muted">{translate(e.tr, lang)}</span>
+            <span className="block text-sm leading-snug text-muted">{translate(e.tr, lang)}</span>
             {searching || filter === "saved" ? (
               <span className="mt-0.5 block text-xs text-muted/80">{sectionLabel(e.id)}</span>
             ) : null}
             {expanded && e.note ? <span className="mt-1 block text-sm text-sea">{translate(e.note, lang)}</span> : null}
           </button>
-          <div className="flex shrink-0 flex-col items-center gap-1">
+          <div className="flex shrink-0 items-center gap-1">
             <button
               type="button"
               onClick={() => void playEntry(e)}
@@ -131,9 +134,9 @@ export default function Phrases() {
               onClick={() => update((p) => toggleSavedPhrase(p, e.id))}
               aria-pressed={isSaved}
               aria-label={isSaved ? t("phrases.unsave") : t("phrases.save")}
-              className={`grid h-10 w-10 place-items-center rounded-xl text-xl ${isSaved ? "text-sun" : "text-sand-3"}`}
+              className={`grid h-10 w-10 place-items-center rounded-xl ${isSaved ? "text-sun" : "text-muted/50"}`}
             >
-              <span aria-hidden>{isSaved ? "★" : "☆"}</span>
+              <IconStar size={20} filled={isSaved} />
             </button>
           </div>
         </div>
@@ -143,7 +146,7 @@ export default function Phrases() {
             onClick={() => setShowing(e)}
             className="mx-3 mb-2 flex items-center gap-2 rounded-xl bg-night px-3 py-2 text-sm font-extrabold text-sand"
           >
-            <span aria-hidden>⛶</span> {t("show.open")}
+            <IconExpand size={16} /> {t("show.open")}
           </button>
         ) : null}
         {expanded && soundsIn(e.wo).length ? (
@@ -185,10 +188,10 @@ export default function Phrases() {
       </label>
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1" role="toolbar" aria-label={t("phrases.title")}>
         {chip("all", t("phrases.all"))}
-        {chip("saved", `${t("phrases.saved")} (${saved.length})`, "★")}
-        {chip("survival", translate(survivalSection.title, lang), "🆘")}
-        {chip("course", t("dict.course"), "📚")}
-        {dictionarySections.filter((c) => c.kind === "phrasebook").map((c) => chip(c.id, translate(c.title, lang), c.emoji))}
+        {chip("saved", `${t("phrases.saved")} (${saved.length})`, true)}
+        {chip("survival", translate(survivalSection.title, lang), true)}
+        {chip("course", t("dict.course"), true)}
+        {dictionarySections.filter((c) => c.kind === "phrasebook").map((c) => chip(c.id, translate(c.title, lang), true))}
       </div>
 
       <p className="mb-2 text-sm font-bold text-muted" aria-live="polite">
@@ -207,7 +210,7 @@ export default function Phrases() {
                 {c.kind === "course" ? (
                   <span className="grid h-7 min-w-7 place-items-center rounded-lg bg-sand-2 px-1 text-sm">{c.emoji}</span>
                 ) : (
-                  <span aria-hidden>{c.emoji}</span>
+                  <SectionIcon id={c.id} />
                 )}{" "}
                 {c.kind === "course" ? t("dict.unit", { n: c.emoji, title: translate(c.title, lang) }) : translate(c.title, lang)}
               </h2>
@@ -222,6 +225,16 @@ export default function Phrases() {
       {showing ? <ShowCard entry={showing} onClose={() => setShowing(null)} /> : null}
     </TabScreen>
   );
+}
+
+/** Line icon for a phrasebook section (decorative). */
+function SectionIcon({ id }: { id: string }) {
+  const Icon = SECTION_ICONS[id];
+  return Icon ? (
+    <span className="grid h-7 w-7 place-items-center rounded-lg bg-sand-2 text-clay">
+      <Icon size={18} />
+    </span>
+  ) : null;
 }
 
 const FIRST_PAGE = 24;
