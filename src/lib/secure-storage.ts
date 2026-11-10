@@ -63,6 +63,10 @@ export function plainAuthStorage(plain: PlainStore | null): AuthStorage {
  */
 export function secureAuthStorage(secure: SecureStore, plain: PlainStore | null): AuthStorage {
   const legacy = plainAuthStorage(plain);
+  // The sign-in library re-reads the session before every online request. Decrypting
+  // with the keystore each time would slow those requests, so keep what we've read
+  // or written in memory for the life of the app (this process is the only writer).
+  const cache = new Map<string, string | null>();
   const read = async (key: string): Promise<string | null> => {
     try {
       const { value } = await secure.get({ key });
@@ -71,21 +75,28 @@ export function secureAuthStorage(secure: SecureStore, plain: PlainStore | null)
       return null;
     }
   };
+  const load = async (key: string): Promise<string | null> => {
+    const found = await read(key);
+    if (found !== null) return found;
+    const old = await legacy.getItem(key);
+    if (old === null) return null;
+    try {
+      await secure.set({ key, value: old });
+      await legacy.removeItem(key);
+    } catch {
+      /* keep the old copy if the secure store is unavailable */
+    }
+    return old;
+  };
   return {
     async getItem(key) {
-      const found = await read(key);
-      if (found !== null) return found;
-      const old = await legacy.getItem(key);
-      if (old === null) return null;
-      try {
-        await secure.set({ key, value: old });
-        await legacy.removeItem(key);
-      } catch {
-        /* keep the old copy if the secure store is unavailable */
-      }
-      return old;
+      if (cache.has(key)) return cache.get(key) ?? null;
+      const value = await load(key);
+      cache.set(key, value);
+      return value;
     },
     async setItem(key, value) {
+      cache.set(key, value);
       try {
         await secure.set({ key, value });
         await legacy.removeItem(key);
@@ -94,6 +105,7 @@ export function secureAuthStorage(secure: SecureStore, plain: PlainStore | null)
       }
     },
     async removeItem(key) {
+      cache.set(key, null);
       try {
         await secure.remove({ key });
       } catch {
@@ -104,20 +116,50 @@ export function secureAuthStorage(secure: SecureStore, plain: PlainStore | null)
   };
 }
 
+/**
+ * Safety net: a secure-store call that hasn't answered within `ms` fails, so the
+ * caller falls back to plain storage instead of leaving the app stuck on "Loading…".
+ */
+export function withTimeout(secure: SecureStore, ms: number): SecureStore {
+  const limit = <T>(p: Promise<T>): Promise<T> =>
+    new Promise<T>((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("secure storage timed out")), ms);
+      p.then(
+        (v) => {
+          clearTimeout(timer);
+          resolve(v);
+        },
+        (e) => {
+          clearTimeout(timer);
+          reject(e);
+        },
+      );
+    });
+  return {
+    get: (o) => limit(secure.get(o)),
+    set: (o) => limit(secure.set(o)),
+    remove: (o) => limit(secure.remove(o)),
+  };
+}
+
 const browserStore = (): PlainStore | null => (typeof window === "undefined" ? null : window.localStorage);
 
 /** The session store for this platform. */
 export function authStorage(): AuthStorage {
   if (Capacitor.isNativePlatform()) {
-    let plugin: Promise<SecureStore> | null = null;
+    // Keep the *module* in the promise, never the plugin itself: a Capacitor plugin
+    // proxy answers every property, including `then`, so resolving a promise with it
+    // makes the promise wait forever (the 0.25.4 "Loading…" bug on the sign-in screen).
+    let mod: Promise<PluginModule> | null = null;
     const secure: SecureStore = {
-      get: async (o) => (await (plugin ??= load())).get(o),
-      set: async (o) => (await (plugin ??= load())).set(o),
-      remove: async (o) => (await (plugin ??= load())).remove(o),
+      get: async (o) => (await (mod ??= loadModule())).SecureStoragePlugin.get(o),
+      set: async (o) => (await (mod ??= loadModule())).SecureStoragePlugin.set(o),
+      remove: async (o) => (await (mod ??= loadModule())).SecureStoragePlugin.remove(o),
     };
-    return secureAuthStorage(secure, browserStore());
+    return secureAuthStorage(withTimeout(secure, 4000), browserStore());
   }
   return plainAuthStorage(browserStore());
 }
 
-const load = () => import("capacitor-secure-storage-plugin").then((m) => m.SecureStoragePlugin as SecureStore);
+type PluginModule = { SecureStoragePlugin: SecureStore };
+const loadModule = (): Promise<PluginModule> => import("capacitor-secure-storage-plugin");
