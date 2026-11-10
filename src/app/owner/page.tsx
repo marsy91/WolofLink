@@ -36,6 +36,7 @@ import {
   type SwitchRow,
 } from "@/lib/owner";
 import { ROLE_HELP, STAFF_ROLES, mustRequest, tabsFor, type ConsoleRole, type RiskyAction, type StaffRole } from "@/lib/staff-roles";
+import { featureNotice } from "@/content/feature-notices";
 import { OPT_IN_KEYS, SWITCH_KEYS } from "@/lib/notices";
 
 /** The signed-in console role, for showing "Ask the owner" instead of risky buttons. */
@@ -1684,6 +1685,8 @@ function NoticesTab({ say }: { say: Say }) {
   const [switches, reloadSwitches] = useLoad<SwitchRow[]>(owner.switches, say);
   const [edit, setEdit] = useState<(Omit<AnnouncementRow, "id"> & { id: string | null }) | null>(null);
   const [busy, setBusy] = useState(false);
+  // Turning a switch on or off asks whether to tell learners with a ready-written notice.
+  const [flip, setFlip] = useState<{ key: string; enable: boolean; tell: boolean; days: number } | null>(null);
 
   const run = async (fn: () => Promise<unknown>, done: string, after: () => void) => {
     setBusy(true);
@@ -1711,6 +1714,24 @@ function NoticesTab({ say }: { say: Say }) {
       reload();
     });
   };
+  const confirmFlip = () => {
+    if (!flip) return;
+    const { key, enable, tell, days } = flip;
+    const notice = featureNotice(key, enable ? "back" : "paused");
+    const end = new Date(Date.now() + (days - 1) * 86_400_000).toISOString().slice(0, 10);
+    setFlip(null);
+    void run(
+      async () => {
+        await owner.setSwitch(key, !enable, null);
+        if (tell && notice) await owner.saveAnnouncement({ id: null, title: notice.title, message: notice.message, starts_on: todayIso(), ends_on: end });
+      },
+      `${enable ? "Switched on" : "Paused"}${tell && notice ? ` and learners will see a notice for ${days} day${days > 1 ? "s" : ""}` : ""}. Apps pick it up within an hour.`,
+      () => {
+        reloadSwitches();
+        reload();
+      },
+    );
+  };
   const isOff = (key: string) => !!switches?.find((s) => s.key === key)?.is_off;
   // Opt-in switches are off unless a row says otherwise.
   const isOn = (key: string) => switches?.find((s) => s.key === key)?.is_off === false;
@@ -1736,7 +1757,7 @@ function NoticesTab({ say }: { say: Say }) {
                 <Button
                   variant={isOn(key) ? "secondary" : "primary"}
                   disabled={busy}
-                  onClick={() => void run(() => owner.setSwitch(key, isOn(key), null), isOn(key) ? "Switched off." : "Switched on.", reloadSwitches)}
+                  onClick={() => setFlip({ key, enable: !isOn(key), tell: !isOn(key), days: 3 })}
                 >
                   {isOn(key) ? "Switch off" : "Switch on"}
                 </Button>
@@ -1763,7 +1784,7 @@ function NoticesTab({ say }: { say: Say }) {
                 <Button
                   variant={isOff(key) ? "primary" : "secondary"}
                   disabled={busy}
-                  onClick={() => void run(() => owner.setSwitch(key, !isOff(key), null), isOff(key) ? "Switched back on." : "Paused.", reloadSwitches)}
+                  onClick={() => setFlip({ key, enable: isOff(key), tell: isOff(key), days: 3 })}
                 >
                   {isOff(key) ? "Resume" : "Pause"}
                 </Button>
@@ -1771,6 +1792,46 @@ function NoticesTab({ say }: { say: Say }) {
             ))
           : null}
       </Card>
+
+      <Dialog open={!!flip} onClose={() => setFlip(null)} title={flip ? `${flip.enable ? "Switch on" : "Pause"} ${flip.key}?` : ""}>
+        {flip ? (
+          <>
+            <label className="mb-2 flex items-center gap-2 font-bold text-night">
+              <input type="checkbox" checked={flip.tell} onChange={(e) => setFlip({ ...flip, tell: e.target.checked })} />
+              Tell learners with a notice in the app
+            </label>
+            {flip.tell ? (
+              <>
+                <label className="mb-2 block text-sm text-muted">
+                  Show it for{" "}
+                  <select className="rounded-lg border border-sand-3 bg-white px-2 py-1 text-night" value={flip.days} onChange={(e) => setFlip({ ...flip, days: Number(e.target.value) })}>
+                    {[1, 3, 7, 14].map((d) => (
+                      <option key={d} value={d}>
+                        {d} day{d > 1 ? "s" : ""}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {featureNotice(flip.key, flip.enable ? "back" : "paused") ? (
+                  <div className="mb-2 rounded-xl bg-sand-2 p-3 text-sm">
+                    <p className="font-bold text-night">{featureNotice(flip.key, flip.enable ? "back" : "paused")!.title.en}</p>
+                    <p className="text-muted">{featureNotice(flip.key, flip.enable ? "back" : "paused")!.message.en}</p>
+                    <p className="mt-1 text-xs text-muted">Shown in each learner&apos;s language (English, French, Spanish, German, Italian). You can edit or delete it below under Announcements.</p>
+                  </div>
+                ) : null}
+              </>
+            ) : null}
+            <div className="flex gap-2">
+              <Button onClick={confirmFlip} disabled={busy}>
+                {flip.enable ? "Switch on" : "Pause"}
+              </Button>
+              <Button variant="ghost" onClick={() => setFlip(null)}>
+                Cancel
+              </Button>
+            </div>
+          </>
+        ) : null}
+      </Dialog>
 
       <div className="mb-3 flex items-center justify-between">
         <h2 className="font-display text-lg font-extrabold text-night">Announcements</h2>
