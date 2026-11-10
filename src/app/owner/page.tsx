@@ -28,6 +28,7 @@ import {
   type PersonRow,
   type RecorderRow,
   type ReportRow,
+  type UserReportRow,
   type SeasonRow,
   type AnnouncementRow,
   type RequestRow,
@@ -1068,6 +1069,8 @@ function ReportsTab({ say }: { say: Say }) {
           ))}
         </div>
       </Card>
+      <PeopleReports show={show} say={say} />
+      <h3 className="mt-2 font-display text-lg font-extrabold text-night">Word reports</h3>
       {!rows ? <Loading /> : null}
       {rows?.length === 0 ? <p className="text-muted">{show === "open" ? "No open reports." : "No reports yet."}</p> : null}
       {rows?.map((r) => (
@@ -1083,6 +1086,55 @@ function ReportsTab({ say }: { say: Say }) {
             {r.status === "open" ? (
               <>
                 <Button onClick={() => void setStatus(r, "fixed")}>Fixed</Button>
+                <Button variant="ghost" onClick={() => void setStatus(r, "dismissed")}>
+                  Dismiss
+                </Button>
+              </>
+            ) : (
+              <Button variant="ghost" onClick={() => void setStatus(r, "open")}>
+                Reopen
+              </Button>
+            )}
+          </div>
+        </Card>
+      ))}
+    </>
+  );
+}
+
+/** Reports about learners (community: names, handles, harassment). Block or suspend from People. */
+function PeopleReports({ show, say }: { show: "open" | "all"; say: Say }) {
+  const [rows, reload] = useLoad<UserReportRow[]>(() => owner.userReports(show), say);
+  useEffect(() => reload(), [show, reload]);
+  const setStatus = async (r: UserReportRow, status: UserReportRow["status"]) => {
+    try {
+      await owner.setUserReportStatus(r.id, status);
+      say(status === "open" ? "Report reopened." : `Report marked ${status}.`);
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
+  if (!rows?.length) return null;
+  return (
+    <>
+      <h3 className="mt-2 font-display text-lg font-extrabold text-night">Reports about people</h3>
+      <p className="text-sm text-muted">
+        Check the name or handle, then suspend the account in People if needed. Aim to act within 48 hours.
+      </p>
+      {rows.map((r) => (
+        <Card key={r.id}>
+          <p className="font-display font-extrabold text-night">
+            {r.reported_name} <span className="text-sm font-bold text-berry">· {r.reason}</span>
+          </p>
+          {r.note ? <p className="mt-1 whitespace-pre-wrap text-night">“{r.note}”</p> : null}
+          <p className="mt-1 text-xs text-muted">
+            {new Date(r.created_at).toLocaleString()} · from {r.reporter_name} · {r.reports_against} report(s) about this person · {r.status}
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {r.status === "open" ? (
+              <>
+                <Button onClick={() => void setStatus(r, "actioned")}>Actioned</Button>
                 <Button variant="ghost" onClick={() => void setStatus(r, "dismissed")}>
                   Dismiss
                 </Button>
@@ -1593,6 +1645,7 @@ const SWITCH_HELP: Record<string, string> = {
   voices: "The recording screen for invited speakers",
   supporter: "The Supporter purchase screen (when Supporter is on in the build)",
   reports: "The “Report a problem” button",
+  community: "City leagues, learners near you and friend requests",
 };
 
 const blankNotice = (): Omit<AnnouncementRow, "id"> & { id: string | null } => ({

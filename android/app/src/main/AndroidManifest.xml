@@ -38,6 +38,9 @@
     <!-- Only invited voice recorders are asked for the microphone (Profile → Record voices). -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- Scanning a friend's QR code (Friends → Add in person); asked only when the learner taps Scan. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
     <!-- Friend notifications (duels, nudges); asked only when the learner turns them on. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Daily reminders don't need exact timing; avoid the restricted exact-alarm permission. -->

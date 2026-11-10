@@ -157,3 +157,35 @@ Only when `NEXT_PUBLIC_SUPPORTER=on` ships (docs/sales/supporter-setup.md):
 - Play Console → App content → store listing: **In-app purchases: Yes.** Contains
   ads: No.
 - Payments are processed by Google Play; the app never sees card details.
+
+## Since 0.26.0 (community: friend requests, city leagues, blocking)
+
+The migration `20261111000000_community.sql` must be applied first. Nothing here
+uses location: learners pick a city (and, in phase 2, a neighbourhood) from a list.
+
+- **Personal info → Name** (already declared): the display name is now also shown
+  to other adult learners in the same city league, only if the learner chose a
+  city, confirmed 18+ and turned on "show my city". Purpose: App functionality.
+- **Personal info → Other info: Collected** (optional): home city, friend
+  requests, blocks, and user reports (who reported whom, reason, optional note).
+  Not shared. Purpose: App functionality; Fraud prevention, security, and
+  compliance (reports and blocks). Deleted with the account (reports keep the
+  text but lose the account link).
+- **Location: Not collected.** The city is chosen from a list; no GPS, no
+  coordinates, no IP-based location.
+- **Camera:** used only to scan a friend's QR code; frames are read on the phone
+  and never saved or uploaded, so Google counts this as **not collected**. The
+  `CAMERA` permission is declared as optional (`uses-feature required=false`).
+- **User-generated content / Social features:** Play Console → App content →
+  "Does your app allow users to interact?" **Yes** — users can see each other's
+  display names in city leagues and send friend requests. Block and report are in
+  the app; reports go to the owner console (Reports → Reports about people).
+- Leagues are for **18+ only** (self-confirmed); the target audience stays 18+
+  for these features.
+
+Only when `NEXT_PUBLIC_NEARBY=on` ships (phase 2):
+
+- **Personal info → Other info** also covers the chosen neighbourhood (switches
+  off after 30 days) and social-media handles (Instagram, TikTok, X, Snapchat),
+  visible only to the learner's friends when marked visible. Not shared.
+  Optional; deleted with the account.

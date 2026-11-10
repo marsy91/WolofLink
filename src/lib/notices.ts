@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import type { Translations } from "@/content/types";
 import { getCloud } from "./cloud";
 
-export const SWITCH_KEYS = ["friends", "duels", "voices", "supporter", "reports"] as const;
+export const SWITCH_KEYS = ["friends", "duels", "voices", "supporter", "reports", "community"] as const;
 export type SwitchKey = (typeof SWITCH_KEYS)[number];
 
 export interface Announcement {
