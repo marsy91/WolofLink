@@ -5,8 +5,24 @@ import { entry, line, question, tx } from "./helpers";
 export const entries = [
   // phone-1
   entry("i.allo", "Allo, kan la?", ["Hello, who is it?", "Allô, c'est qui ?", "¿Diga? ¿Quién es?", "Hallo, wer ist da?", "Pronto, chi è?"]),
-  entry("i.manla", "Man la", ["It's me", "C'est moi", "Soy yo", "Ich bin's", "Sono io"]),
-  entry("i.deggumala", "Dégguma la bu baax", ["I can't hear you well", "Je ne t'entends pas bien", "No te oigo bien", "Ich höre dich nicht gut", "Non ti sento bene"]),
+  entry("i.manla", "Man la", ["It's me", "C'est moi", "Soy yo", "Ich bin's", "Sono io"], {
+    note: [
+      "man is the strong form of “I / me”, used to point to yourself: Man la, “it's me”.",
+      "man est la forme forte de « je / moi », pour se désigner : Man la, « c'est moi ».",
+      "man es la forma fuerte de «yo», para señalarte a ti mismo: Man la, «soy yo».",
+      "man ist die betonte Form von „ich“, um auf sich selbst zu zeigen: Man la, „ich bin's“.",
+      "man è la forma forte di «io / me», per indicare te stesso: Man la, «sono io».",
+    ],
+  }),
+  entry("i.deggumala", "Dégguma la bu baax", ["I can't hear you well", "Je ne t'entends pas bien", "No te oigo bien", "Ich höre dich nicht gut", "Non ti sento bene"], {
+    note: [
+      "dégg is “to hear” (and “to understand”); bu baax means “well”.",
+      "dégg veut dire « entendre » (et « comprendre ») ; bu baax veut dire « bien ».",
+      "dégg es «oír» (y «entender»); bu baax significa «bien».",
+      "dégg heißt „hören“ (und „verstehen“); bu baax heißt „gut“.",
+      "dégg vuol dire «sentire» (e «capire»); bu baax vuol dire «bene».",
+    ],
+  }),
   entry("i.wooma", "Woo ma suba", ["Call me tomorrow", "Appelle-moi demain", "Llámame mañana", "Ruf mich morgen an", "Chiamami domani"]),
   entry("i.doonlawoo", "Dama la doon woo", ["I was trying to call you", "J'essayais de t'appeler", "Te estaba llamando", "Ich wollte dich gerade anrufen", "Ti stavo chiamando"]),
 

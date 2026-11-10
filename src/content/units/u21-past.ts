@@ -12,14 +12,22 @@ export const entries = [
 
   // past-2
   entry("y.demuma", "Demuma", ["I didn't go", "Je n'y suis pas allé", "No fui", "Ich bin nicht hingegangen", "Non ci sono andato"]),
-  entry("y.gisumako", "Gisuma ko", ["I didn't see him or her", "Je ne l'ai pas vu", "No lo vi", "Ich habe ihn oder sie nicht gesehen", "Non l'ho visto"]),
+  entry("y.gisumako", "Gisuma ko", ["I didn't see him or her", "Je ne l'ai pas vu", "No lo vi", "Ich habe ihn oder sie nicht gesehen", "Non l'ho visto"], {
+    note: [
+      "ko means “him”, “her” or “it” and comes after the verb, just like la “you” in Gis naa la.",
+      "ko veut dire « le », « la » ou « lui » et se place après le verbe, comme la « te » dans Gis naa la.",
+      "ko significa «lo», «la» o «le» y va después del verbo, igual que la «te» en Gis naa la.",
+      "ko heißt „ihn“, „sie“ oder „es“ und steht nach dem Verb, genau wie la „dich“ in Gis naa la.",
+      "ko vuol dire «lo», «la» o «gli» e va dopo il verbo, proprio come la «ti» in Gis naa la.",
+    ],
+  }),
   entry("y.amoonoto", "Am naa woon oto", ["I used to have a car", "J'avais une voiture", "Antes tenía coche", "Ich hatte früher ein Auto", "Avevo una macchina"], {
     note: [
-      "woon after the verb puts it further in the past: “used to”, “had”.",
-      "woon après le verbe place l'action plus loin dans le passé : « avant », « avais ».",
-      "woon después del verbo lo sitúa más atrás en el pasado: «antes», «tenía».",
-      "woon nach dem Verb verlegt es weiter in die Vergangenheit: „früher“, „hatte“.",
-      "woon dopo il verbo lo sposta più indietro nel passato: «prima», «avevo».",
+      "woon after the verb puts it further in the past: “used to”, “had”. It's the same past marker as -oon in Dama feebaroon, written as a separate word after naa.",
+      "woon après le verbe place l'action plus loin dans le passé : « avant », « avais ». C'est le même marqueur que -oon dans Dama feebaroon, écrit à part après naa.",
+      "woon después del verbo lo sitúa más atrás en el pasado: «antes», «tenía». Es el mismo marcador que -oon en Dama feebaroon, escrito aparte después de naa.",
+      "woon nach dem Verb verlegt es weiter in die Vergangenheit: „früher“, „hatte“. Es ist dasselbe Zeichen wie -oon in Dama feebaroon, nach naa getrennt geschrieben.",
+      "woon dopo il verbo lo sposta più indietro nel passato: «prima», «avevo». È lo stesso segno di -oon in Dama feebaroon, scritto staccato dopo naa.",
     ],
   }),
   entry("y.fandemoon", "Fan nga demoon?", ["Where have you been?", "Où étais-tu passé ?", "¿Dónde estabas?", "Wo warst du?", "Dove eri finito?"]),
@@ -62,11 +70,11 @@ export const unit: Unit = {
       id: "past-2",
       title: tx(["Didn't, used to, was doing", "Pas fait, avant, en train de", "No hice, antes, estaba", "Nicht, früher, gerade", "Non ho, prima, stavo"]),
       tip: tx([
-        "To say you didn't, add -uma to the verb: dem → demuma “I didn't go”. doon means “was …ing”: Dama doon liggéey.",
-        "Pour dire que vous ne l'avez pas fait, ajoutez -uma au verbe : dem → demuma « je n'y suis pas allé ». doon veut dire « étais en train de » : Dama doon liggéey.",
-        "Para decir que no lo hiciste, añade -uma al verbo: dem → demuma «no fui». doon significa «estaba …ando»: Dama doon liggéey.",
-        "Für „nicht“ hängst du -uma an das Verb: dem → demuma „ich bin nicht gegangen“. doon heißt „war gerade am …“: Dama doon liggéey.",
-        "Per dire che non l'hai fatto aggiungi -uma al verbo: dem → demuma «non ci sono andato». doon vuol dire «stavo …ando»: Dama doon liggéey.",
+        "To say you didn't, add -uma to the verb: dem → demuma “I didn't go”. -uma is only for “I”; you met -ul for others in Lu tax nga ñëwul? (unit 15). doon means “was …ing”: Dama doon liggéey.",
+        "Pour dire que vous ne l'avez pas fait, ajoutez -uma au verbe : dem → demuma « je n'y suis pas allé ». -uma ne sert que pour « je » ; pour les autres, vous avez vu -ul dans Lu tax nga ñëwul ? (unité 15). doon veut dire « étais en train de » : Dama doon liggéey.",
+        "Para decir que no lo hiciste, añade -uma al verbo: dem → demuma «no fui». -uma es solo para «yo»; para los demás viste -ul en Lu tax nga ñëwul? (unidad 15). doon significa «estaba …ando»: Dama doon liggéey.",
+        "Für „nicht“ hängst du -uma an das Verb: dem → demuma „ich bin nicht gegangen“. -uma gilt nur für „ich“; für andere kennst du -ul aus Lu tax nga ñëwul? (Einheit 15). doon heißt „war gerade am …“: Dama doon liggéey.",
+        "Per dire che non l'hai fatto aggiungi -uma al verbo: dem → demuma «non ci sono andato». -uma vale solo per «io»; per gli altri hai visto -ul in Lu tax nga ñëwul? (unità 15). doon vuol dire «stavo …ando»: Dama doon liggéey.",
       ]),
       entries: ["y.demuma", "y.gisumako", "y.amoonoto", "y.fandemoon", "y.doonligeey", "v.lekkuma"],
       exercises: [

@@ -4,14 +4,22 @@ import { entry, line, question, tx } from "./helpers";
 
 export const entries = [
   // compare-1
-  entry("z.liimoogen", "Lii moo gën", ["This one is better", "Celui-ci est mieux", "Este es mejor", "Das hier ist besser", "Questo è meglio"]),
+  entry("z.liimoogen", "Lii moo gën", ["This one is better", "Celui-ci est mieux", "Este es mejor", "Das hier ist besser", "Questo è meglio"], {
+    note: [
+      "lii means “this one” for a thing (kii for a person), and moo points it out: “this one, and not the other, is better”.",
+      "lii veut dire « celui-ci » pour une chose (kii pour une personne), et moo le met en avant : « c'est celui-ci, pas l'autre, qui est mieux ».",
+      "lii significa «este» para una cosa (kii para una persona), y moo lo destaca: «este, y no el otro, es mejor».",
+      "lii heißt „dieses hier“ bei einer Sache (kii bei einer Person), und moo hebt es hervor: „dieses, nicht das andere, ist besser“.",
+      "lii vuol dire «questo» per una cosa (kii per una persona), e moo lo mette in risalto: «questo, e non l'altro, è meglio».",
+    ],
+  }),
   entry("z.genamag", "Kii moo gën a mag", ["This person is older", "Celui-ci est plus âgé", "Esta persona es mayor", "Diese Person ist älter", "Questa persona è più grande"], {
     note: [
-      "gën a before an adjective means “more”: gën a mag “older”, gën a yomb “cheaper”. You'll also see it written gën a.",
-      "gën a devant un adjectif veut dire « plus » : gën a mag « plus âgé », gën a yomb « moins cher ». On l'écrit aussi gën a.",
-      "gën a delante de un adjetivo significa «más»: gën a mag «mayor», gën a yomb «más barato». También se escribe gën a.",
-      "gën a vor einem Adjektiv heißt „mehr“: gën a mag „älter“, gën a yomb „billiger“. Man schreibt es auch gën a.",
-      "gën a davanti a un aggettivo vuol dire «più»: gën a mag «più grande», gën a yomb «più economico». Si scrive anche gën a.",
+      "gën a before an adjective means “more”: gën a mag “older”, gën a yomb “cheaper”.",
+      "gën a devant un adjectif veut dire « plus » : gën a mag « plus âgé », gën a yomb « moins cher ».",
+      "gën a delante de un adjetivo significa «más»: gën a mag «mayor», gën a yomb «más barato».",
+      "gën a vor einem Adjektiv heißt „mehr“: gën a mag „älter“, gën a yomb „billiger“.",
+      "gën a davanti a un aggettivo vuol dire «più»: gën a mag «più grande», gën a yomb «più economico».",
     ],
   }),
   entry("z.gudd", "Dafa gudd", ["It's long", "C'est long", "Es largo", "Das ist lang", "È lungo"]),

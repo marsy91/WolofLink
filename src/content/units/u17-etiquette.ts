@@ -72,7 +72,15 @@ export const entries = [
 
   // etiquette-3
   entry("e.gan", "gan", ["guest", "invité, hôte", "invitado", "Gast", "ospite"], { pic: "🧳" }),
-  entry("e.toogalfii", "Toogal fii", ["Sit here", "Assieds-toi ici", "Siéntate aquí", "Setz dich hierhin", "Siediti qui"]),
+  entry("e.toogalfii", "Toogal fii", ["Sit here", "Assieds-toi ici", "Siéntate aquí", "Setz dich hierhin", "Siediti qui"], {
+    note: [
+      "toog is “to sit”, -al turns it into a request (Toogal!) and fii means “here”.",
+      "toog veut dire « s'asseoir », -al en fait une demande (Toogal !) et fii veut dire « ici ».",
+      "toog es «sentarse», -al lo convierte en una petición (¡Toogal!) y fii significa «aquí».",
+      "toog heißt „sitzen“, -al macht daraus eine Bitte (Toogal!) und fii heißt „hier“.",
+      "toog vuol dire «sedersi», -al lo trasforma in una richiesta (Toogal!) e fii vuol dire «qui».",
+    ],
+  }),
   entry("e.joxmandox", "Jox ma ndox, su la neexee", [
     "Give me some water, please",
     "Donne-moi de l'eau, s'il te plaît",

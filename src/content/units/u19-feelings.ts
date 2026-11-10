@@ -11,7 +11,15 @@ export const entries = [
   entry("m.jaaxle", "Dama jaaxle", ["I'm worried", "Je suis inquiet", "Estoy preocupado", "Ich mache mir Sorgen", "Sono preoccupato"], { pic: "😟" }),
 
   // feelings-2
-  entry("m.lulada", "Lu la dal?", ["What happened to you?", "Qu'est-ce qui t'arrive ?", "¿Qué te ha pasado?", "Was ist dir passiert?", "Cosa ti è successo?"]),
+  entry("m.lulada", "Lu la dal?", ["What happened to you?", "Qu'est-ce qui t'arrive ?", "¿Qué te ha pasado?", "Was ist dir passiert?", "Cosa ti è successo?"], {
+    note: [
+      "dal means “to land on, to fall on”: literally “what has landed on you?”.",
+      "dal veut dire « se poser, tomber sur » : littéralement « qu'est-ce qui t'est tombé dessus ? ».",
+      "dal significa «posarse, caer sobre»: literalmente «¿qué te ha caído encima?».",
+      "dal heißt „landen, fallen auf“: wörtlich „was ist auf dich gefallen?“.",
+      "dal vuol dire «posarsi, cadere su»: letteralmente «cosa ti è caduto addosso?».",
+    ],
+  }),
   entry("m.amuldara", "Amul dara", ["It's nothing / Never mind", "Ce n'est rien", "No es nada", "Es ist nichts", "Non è niente"]),
   entry("m.bulragal", "Bul ragal", ["Don't be afraid", "N'aie pas peur", "No tengas miedo", "Hab keine Angst", "Non avere paura"], {
     note: [
