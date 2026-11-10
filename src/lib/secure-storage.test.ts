@@ -1,6 +1,6 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import { describe, expect, it } from "vitest";
-import { plainAuthStorage, secureAuthStorage, type PlainStore, type SecureStore } from "./secure-storage";
+import { plainAuthStorage, secureAuthStorage, withTimeout, type PlainStore, type SecureStore } from "./secure-storage";
 
 function plain(initial: Record<string, string> = {}): PlainStore & { data: Record<string, string> } {
   const data = { ...initial };
@@ -32,7 +32,37 @@ function secure(fail = false): SecureStore & { data: Record<string, string> } {
   };
 }
 
+/** Like a Capacitor plugin proxy: every property, including `then`, is a method. */
+function thenableProxy(): SecureStore {
+  return new Proxy({} as SecureStore, {
+    get: (_t, prop) => (prop === "get" || prop === "set" || prop === "remove" ? async () => ({ value: "" }) : () => new Promise(() => {})),
+  });
+}
+
 describe("secure session storage", () => {
+  it("does not hang when the plugin object looks like a promise", async () => {
+    // Regression test for 0.25.4: resolving a promise with a Capacitor proxy never settles.
+    const mod = Promise.resolve({ SecureStoragePlugin: thenableProxy() });
+    const store = secureAuthStorage(
+      {
+        get: async (o) => (await mod).SecureStoragePlugin.get(o),
+        set: async (o) => (await mod).SecureStoragePlugin.set(o),
+        remove: async (o) => (await mod).SecureStoragePlugin.remove(o),
+      },
+      plain(),
+    );
+    expect(await store.getItem("woloflink.auth")).toBeNull();
+  });
+
+  it("gives up on a secure store that never answers and uses plain storage", async () => {
+    const stuck: SecureStore = { get: () => new Promise(() => {}), set: () => new Promise(() => {}), remove: () => new Promise(() => {}) };
+    const p = plain();
+    const store = secureAuthStorage(withTimeout(stuck, 20), p);
+    await store.setItem("woloflink.auth", "session");
+    expect(p.data["woloflink.auth"]).toBe("session");
+    expect(await store.getItem("woloflink.auth")).toBe("session");
+  });
+
   it("keeps the session only in the secure store", async () => {
     const p = plain();
     const s = secure();
