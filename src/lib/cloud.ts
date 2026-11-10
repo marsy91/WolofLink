@@ -60,7 +60,7 @@ export class CloudError extends Error {
 export interface CloudBackend {
   getUser(): Promise<CloudUser | null>;
   onAuthChange(cb: (user: CloudUser | null) => void): () => void;
-  /** Emails a one-time 6-digit code; creates the account on first use. */
+  /** Emails a one-time 8-digit code; creates the account on first use. */
   sendCode(email: string): Promise<void>;
   verifyCode(email: string, code: string): Promise<CloudUser>;
   signOut(): Promise<void>;
