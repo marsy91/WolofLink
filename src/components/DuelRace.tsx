@@ -1,24 +1,107 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
+import { useId, useMemo, type ReactNode } from "react";
+import { seeded } from "@/lib/engine";
 import { ROUNDS } from "@/lib/duels";
 
-/** A painted pirogue (fishing canoe), drawn inline so it costs nothing to load. */
-export function Pirogue({ hull, stripe, size = 56 }: { hull: string; stripe: string; size?: number }) {
+/**
+ * A painted Senegalese pirogue, shaded so it reads as a lit 3D boat: a curved hull
+ * with a highlight and shadow, painted triangles, a sail and a foam wake.
+ */
+export function Pirogue({ hull, trim, size = 64, wake = false }: { hull: string; trim: string; size?: number; wake?: boolean }) {
+  const id = useId().replace(/:/g, "");
   return (
-    <svg width={size} height={size * 0.55} viewBox="0 0 80 44" aria-hidden className="block">
-      <path d="M8 6 C14 30 28 34 40 34 C52 34 66 30 72 6 C60 20 20 20 8 6 Z" fill={hull} />
-      <path d="M14 15 C26 25 54 25 66 15" fill="none" stroke={stripe} strokeWidth="4" strokeLinecap="round" />
-      <path d="M20 23 C30 29 50 29 60 23" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" opacity="0.85" />
-      <path d="M40 30 L40 2 L60 22 Z" fill="var(--color-sun)" stroke="var(--color-night)" strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M40 34 L40 2" stroke="var(--color-night)" strokeWidth="2" />
+    <svg width={size} height={size * 0.62} viewBox="0 0 100 62" aria-hidden className="pirogue block overflow-visible">
+      <defs>
+        <linearGradient id={`h${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#fff" stopOpacity="0.55" />
+          <stop offset="0.25" stopColor={hull} />
+          <stop offset="1" stopColor="#000" stopOpacity="0.55" />
+        </linearGradient>
+        <linearGradient id={`b${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={hull} />
+          <stop offset="1" stopColor={hull} stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id={`s${id}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#fff7e0" />
+          <stop offset="1" stopColor="#e9c46a" />
+        </linearGradient>
+      </defs>
+      {wake ? (
+        <g className="wake" opacity="0.8">
+          <ellipse cx="6" cy="52" rx="10" ry="2.2" fill="#e8fbff" />
+          <ellipse cx="-12" cy="54" rx="8" ry="1.6" fill="#e8fbff" opacity="0.6" />
+          <ellipse cx="-26" cy="55" rx="6" ry="1.2" fill="#e8fbff" opacity="0.35" />
+        </g>
+      ) : null}
+      {/* Reflection */}
+      <path d="M12 50 C24 58 76 58 88 50 Z" fill={`url(#b${id})`} opacity="0.35" />
+      {/* Sail and mast */}
+      <path d="M50 44 L50 4 L76 34 Z" fill={`url(#s${id})`} />
+      <path d="M50 46 L50 2" stroke="#2b1d12" strokeWidth="2.2" strokeLinecap="round" />
+      {/* Hull */}
+      <path d="M4 26 C10 44 28 50 50 50 C72 50 90 44 96 26 C80 38 20 38 4 26 Z" fill={`url(#h${id})`} />
+      <path d="M8 30 C24 41 76 41 92 30" fill="none" stroke={trim} strokeWidth="3.5" strokeLinecap="round" />
+      {/* Painted triangles along the side */}
+      <path d="M24 40 l5 -6 l5 6 Z M40 42 l5 -6 l5 6 Z M56 42 l5 -6 l5 6 Z M72 40 l5 -6 l5 6 Z" fill="#fff" opacity="0.85" />
+      <path d="M4 26 C20 36 80 36 96 26" fill="none" stroke="#fff" strokeOpacity="0.6" strokeWidth="1.2" />
     </svg>
   );
 }
 
+/** The night sea behind every duel screen: sky, glowing horizon, stars, moving waves and spray. */
+export function DuelScene({ children, lowEnd = false }: { children: ReactNode; lowEnd?: boolean }) {
+  const sparks = useMemo(() => {
+    const rng = seeded(11);
+    return Array.from({ length: lowEnd ? 6 : 16 }, () => ({
+      left: rng() * 100,
+      bottom: 10 + rng() * 40,
+      delay: rng() * 6,
+      duration: 5 + rng() * 5,
+      size: 2 + rng() * 3,
+    }));
+  }, [lowEnd]);
+  return (
+    <div className="duel-scene relative min-h-dvh overflow-hidden text-white">
+      <div aria-hidden className="duel-sky absolute inset-0" />
+      <div aria-hidden className={`duel-stars absolute inset-x-0 top-0 h-1/2 ${lowEnd ? "" : "anim-twinkle"}`} />
+      <div aria-hidden className="duel-glow absolute inset-x-0 top-[38%] h-64" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-[34%]">
+        {[
+          { cls: "wave-far", d: 22, fill: "#123a5c" },
+          { cls: "wave-mid", d: 14, fill: "#0d2f4d" },
+          { cls: "wave-near", d: 9, fill: "#08233b" },
+        ].map((w, i) => (
+          <svg
+            key={w.cls}
+            className={`duel-wave absolute left-0 h-24 w-[200%] ${lowEnd && i < 2 ? "" : "anim-wave"}`}
+            style={{ bottom: `${(2 - i) * 18}%`, animationDuration: `${w.d}s` }}
+            viewBox="0 0 400 40"
+            preserveAspectRatio="none"
+          >
+            <path d="M0 20 Q25 8 50 20 T100 20 T150 20 T200 20 T250 20 T300 20 T350 20 T400 20 V40 H0 Z" fill={w.fill} />
+            <path d="M0 20 Q25 8 50 20 T100 20 T150 20 T200 20 T250 20 T300 20 T350 20 T400 20" fill="none" stroke="#5fd0e6" strokeOpacity={0.25 + i * 0.1} strokeWidth="1" />
+          </svg>
+        ))}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-[#061a2d]" />
+      </div>
+      {sparks.map((s, i) => (
+        <span
+          key={i}
+          aria-hidden
+          className="duel-spark absolute rounded-full"
+          style={{ left: `${s.left}%`, bottom: `${s.bottom}%`, width: s.size, height: s.size, animationDelay: `${s.delay}s`, animationDuration: `${s.duration}s` }}
+        />
+      ))}
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+}
+
 /**
- * The race along the waves: your pirogue moves with each answer (further for faster
- * right answers); the friend's appears for the results. Round markers sit between rounds.
+ * The race: your pirogue sails with each answer (further for faster right answers);
+ * the friend's appears for the results. Buoys mark the end of each round.
  */
 export function DuelRace({
   mine,
@@ -31,24 +114,22 @@ export function DuelRace({
   theirs: number | null;
   label: string;
 }) {
-  const pos = (x: number) => `calc(${Math.min(1, Math.max(0, x)) * 100}% - ${Math.min(1, Math.max(0, x)) * 56}px)`;
+  const clamp = (x: number) => Math.min(1, Math.max(0, x));
+  const pos = (x: number, w: number) => `calc(${clamp(x) * 100}% - ${clamp(x) * w}px)`;
   return (
-    <div className="relative h-20 w-full" role="img" aria-label={label}>
-      <svg className="absolute inset-x-0 bottom-1 h-5 w-full" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden>
-        <path d="M0 10 Q 12.5 2 25 10 T 50 10 T 75 10 T 100 10 T 125 10 T 150 10 T 175 10 T 200 10 V20 H0 Z" fill="var(--color-sea)" opacity="0.25" />
-        <path d="M0 10 Q 12.5 2 25 10 T 50 10 T 75 10 T 100 10 T 125 10 T 150 10 T 175 10 T 200 10" fill="none" stroke="var(--color-sea)" strokeWidth="1.5" />
-      </svg>
+    <div className="relative h-24 w-full" role="img" aria-label={label}>
+      <div aria-hidden className="race-lane absolute inset-x-0 bottom-3 h-1.5 rounded-full" />
       {ROUNDS.slice(1).map(([start]) => (
-        <span key={start} aria-hidden className="absolute bottom-1 h-6 w-0.5 rounded bg-sand-3" style={{ left: `${(start / 10) * 100}%` }} />
+        <span key={start} aria-hidden className="race-buoy absolute bottom-2 h-4 w-4 -translate-x-1/2 rounded-full" style={{ left: `${(start / 10) * 100}%` }} />
       ))}
-      <span aria-hidden className="absolute right-0 bottom-1 h-8 w-1 rounded bg-night" />
+      <span aria-hidden className="race-finish absolute right-0 bottom-1 h-10 w-2 rounded-sm" />
       {theirs !== null ? (
-        <span aria-hidden className="race-boat anim-bob absolute bottom-7 opacity-85" style={{ left: pos(theirs) }}>
-          <Pirogue hull="var(--color-dusk)" stripe="var(--color-sea)" size={50} />
+        <span aria-hidden className="race-boat anim-bob absolute bottom-9 opacity-90" style={{ left: pos(theirs, 54) }}>
+          <Pirogue hull="#7b3f8c" trim="#f2c14e" size={54} wake />
         </span>
       ) : null}
-      <span aria-hidden className="race-boat anim-bob absolute bottom-2" style={{ left: pos(mine) }}>
-        <Pirogue hull="var(--color-clay)" stripe="var(--color-sun)" />
+      <span aria-hidden className="race-boat anim-bob absolute bottom-3" style={{ left: pos(mine, 64) }}>
+        <Pirogue hull="#c2502f" trim="#f2c14e" wake />
       </span>
     </div>
   );
