@@ -16,7 +16,15 @@ export const entries = [
   }),
   entry("q.ban", "Ban?", ["Which?", "Lequel ?", "¿Cuál?", "Welcher?", "Quale?"]),
   entry("q.naka", "Naka?", ["How?", "Comment ?", "¿Cómo?", "Wie?", "Come?"]),
-  entry("q.kiikanla", "Kii kan la?", ["Who is this?", "Qui est-ce ?", "¿Quién es?", "Wer ist das?", "Chi è?"]),
+  entry("q.kiikanla", "Kii kan la?", ["Who is this?", "Qui est-ce ?", "¿Quién es?", "Wer ist das?", "Chi è?"], {
+    note: [
+      "Kii means “this one” for a person; for a thing it's lii, as in Lii moo gën.",
+      "Kii veut dire « celui-ci » pour une personne ; pour une chose, c'est lii, comme dans Lii moo gën.",
+      "Kii significa «este» hablando de una persona; para una cosa es lii, como en Lii moo gën.",
+      "Kii heißt „dieser hier“ bei einer Person; bei einer Sache sagt man lii, wie in Lii moo gën.",
+      "Kii vuol dire «questo» per una persona; per una cosa si dice lii, come in Lii moo gën.",
+    ],
+  }),
   entry("q.lannga", "Lan nga bëgg?", ["What do you want?", "Qu'est-ce que tu veux ?", "¿Qué quieres?", "Was möchtest du?", "Cosa vuoi?"]),
   entry("q.banngabegg", "Ban nga bëgg?", ["Which one do you want?", "Lequel veux-tu ?", "¿Cuál quieres?", "Welchen möchtest du?", "Quale vuoi?"]),
 
@@ -35,20 +43,20 @@ export const entries = [
   }),
   entry("q.lutaxnga", "Lu tax nga ñëwul?", ["Why didn't you come?", "Pourquoi tu n'es pas venu ?", "¿Por qué no viniste?", "Warum bist du nicht gekommen?", "Perché non sei venuto?"], {
     note: [
-      "-ul makes a verb negative: ñëw “come”, ñëwul “didn't come”.",
-      "-ul met un verbe à la forme négative : ñëw « venir », ñëwul « n'est pas venu ».",
-      "-ul niega un verbo: ñëw «venir», ñëwul «no vino».",
-      "-ul verneint ein Verb: ñëw „kommen“, ñëwul „ist nicht gekommen“.",
-      "-ul rende negativo un verbo: ñëw «venire», ñëwul «non è venuto».",
+      "-ul makes a verb negative: ñëw “come”, ñëwul “not come”. When you talk about yourself it's -uma instead: Demuma, “I didn't go” (unit 21).",
+      "-ul met un verbe à la forme négative : ñëw « venir », ñëwul « ne pas venir ». Quand on parle de soi, c'est -uma : Demuma, « je n'y suis pas allé » (unité 21).",
+      "-ul niega un verbo: ñëw «venir», ñëwul «no venir». Cuando hablas de ti, es -uma: Demuma, «no fui» (unidad 21).",
+      "-ul verneint ein Verb: ñëw „kommen“, ñëwul „nicht kommen“. Wenn du von dir sprichst, heißt es -uma: Demuma, „ich bin nicht gegangen“ (Einheit 21).",
+      "-ul rende negativo un verbo: ñëw «venire», ñëwul «non venire». Quando parli di te è -uma: Demuma, «non ci sono andato» (unità 21).",
     ],
   }),
   entry("q.feebaroon", "Dama feebaroon", ["I was ill", "J'étais malade", "Estaba enfermo", "Ich war krank", "Ero malato"], {
     note: [
-      "-oon puts a sentence in the past: Dama feebar “I'm ill”, Dama feebaroon “I was ill”.",
-      "-oon met la phrase au passé : Dama feebar « je suis malade », Dama feebaroon « j'étais malade ».",
-      "-oon pone la frase en pasado: Dama feebar «estoy enfermo», Dama feebaroon «estaba enfermo».",
-      "-oon setzt den Satz in die Vergangenheit: Dama feebar „ich bin krank“, Dama feebaroon „ich war krank“.",
-      "-oon mette la frase al passato: Dama feebar «sono malato», Dama feebaroon «ero malato».",
+      "-oon puts a sentence in the past: Dama feebar “I'm ill”, Dama feebaroon “I was ill”. After naa or nga it's written as a separate word, woon (unit 21).",
+      "-oon met la phrase au passé : Dama feebar « je suis malade », Dama feebaroon « j'étais malade ». Après naa ou nga, il s'écrit à part : woon (unité 21).",
+      "-oon pone la frase en pasado: Dama feebar «estoy enfermo», Dama feebaroon «estaba enfermo». Después de naa o nga se escribe aparte: woon (unidad 21).",
+      "-oon setzt den Satz in die Vergangenheit: Dama feebar „ich bin krank“, Dama feebaroon „ich war krank“. Nach naa oder nga schreibt man es getrennt: woon (Einheit 21).",
+      "-oon mette la frase al passato: Dama feebar «sono malato», Dama feebaroon «ero malato». Dopo naa o nga si scrive staccato: woon (unità 21).",
     ],
   }),
 
@@ -124,11 +132,11 @@ export const unit: Unit = {
       id: "questions-3",
       title: tx(["Making plans", "Faire des projets", "Hacer planes", "Pläne machen", "Fare programmi"]),
       tip: tx([
-        "Di- marks the future: dinaa “I will”, dinga “you will”. Ndax at the start turns a sentence into a yes/no question.",
-        "Di- marque le futur : dinaa « je vais », dinga « tu vas ». Ndax au début transforme une phrase en question fermée.",
-        "Di- marca el futuro: dinaa «yo iré / haré», dinga «tú…». Ndax al principio convierte la frase en una pregunta de sí o no.",
-        "Di- zeigt die Zukunft an: dinaa „ich werde“, dinga „du wirst“. Ndax am Anfang macht aus einem Satz eine Ja-/Nein-Frage.",
-        "Di- indica il futuro: dinaa «io farò», dinga «tu farai». Ndax all'inizio trasforma la frase in una domanda sì/no.",
+        "Di- in front of naa or nga marks the future: dinaa “I will”, dinga “you will” (the same di as in Dafay taw, “it's raining”, for things not finished). Ndax at the start turns a sentence into a yes/no question.",
+        "Di- devant naa ou nga marque le futur : dinaa « je vais », dinga « tu vas » (le même di que dans Dafay taw, « il pleut », pour ce qui n'est pas fini). Ndax au début transforme une phrase en question fermée.",
+        "Di- delante de naa o nga marca el futuro: dinaa «yo iré / haré», dinga «tú…» (el mismo di de Dafay taw, «está lloviendo», para lo que no ha terminado). Ndax al principio convierte la frase en una pregunta de sí o no.",
+        "Di- vor naa oder nga zeigt die Zukunft an: dinaa „ich werde“, dinga „du wirst“ (dasselbe di wie in Dafay taw, „es regnet“, für Unabgeschlossenes). Ndax am Anfang macht aus einem Satz eine Ja-/Nein-Frage.",
+        "Di- davanti a naa o nga indica il futuro: dinaa «io farò», dinga «tu farai» (lo stesso di di Dafay taw, «piove», per ciò che non è finito). Ndax all'inizio trasforma la frase in una domanda sì/no.",
       ]),
       entries: ["q.ndaxdinga", "q.waawdinaa", "q.menngasuba", "q.menuma", "q.banwaxtu", "q.baaxna", "q.nudem"],
       exercises: [

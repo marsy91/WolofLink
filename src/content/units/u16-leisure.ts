@@ -42,7 +42,16 @@ export const entries = [
   entry("s.maangidaw", "Maa ngi daw", ["I'm running", "Je cours", "Estoy corriendo", "Ich laufe gerade", "Sto correndo"]),
 
   // leisure-3
-  entry("s.saxaar", "saxaar", ["train", "train", "tren", "Zug", "treno"], { pic: "🚆" }),
+  entry("s.saxaar", "saxaar", ["train", "train", "tren", "Zug", "treno"], {
+    pic: "🚆",
+    note: [
+      "From saxar, “to give off smoke”: the first trains and boats ran on steam.",
+      "De saxar, « fumer, dégager de la fumée » : les premiers trains et bateaux marchaient à la vapeur.",
+      "De saxar, «echar humo»: los primeros trenes y barcos iban a vapor.",
+      "Von saxar, „rauchen, qualmen“: die ersten Züge und Schiffe fuhren mit Dampf.",
+      "Da saxar, «fare fumo»: i primi treni e battelli andavano a vapore.",
+    ],
+  }),
   entry("s.fanngaytukki", "Fan ngay tukki?", ["Where are you travelling to?", "Où vas-tu en voyage ?", "¿Adónde viajas?", "Wohin reist du?", "Dove vai in viaggio?"]),
   entry("s.dinaatukki", "Dinaa tukki suba", ["I'm travelling tomorrow", "Je pars en voyage demain", "Me voy de viaje mañana", "Ich reise morgen ab", "Parto domani"]),
   entry("s.jelsaxaar", "Dama bëgg jël saxaar", ["I want to take the train", "Je veux prendre le train", "Quiero coger el tren", "Ich möchte den Zug nehmen", "Voglio prendere il treno"]),

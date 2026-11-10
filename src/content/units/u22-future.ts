@@ -21,7 +21,15 @@ export const entries = [
       "Si sente dopo quasi ogni progetto. Molti dicono anche Inshallah.",
     ],
   }),
-  entry("u.yaakaar", "Yaakaar naa ne dinga ñëw", ["I hope you'll come", "J'espère que tu viendras", "Espero que vengas", "Ich hoffe, du kommst", "Spero che verrai"]),
+  entry("u.yaakaar", "Yaakaar naa ne dinga ñëw", ["I hope you'll come", "J'espère que tu viendras", "Espero que vengas", "Ich hoffe, du kommst", "Spero che verrai"], {
+    note: [
+      "yaakaar means “to hope”; ne (“to say”) introduces what you hope, like “that”: Yaakaar naa ne… “I hope that…”.",
+      "yaakaar veut dire « espérer » ; ne (« dire ») introduit ce qu'on espère, comme « que » : Yaakaar naa ne… « j'espère que… ».",
+      "yaakaar significa «esperar»; ne («decir») introduce lo que esperas, como «que»: Yaakaar naa ne… «espero que…».",
+      "yaakaar heißt „hoffen“; ne („sagen“) leitet ein, was man hofft, wie „dass“: Yaakaar naa ne… „ich hoffe, dass…“.",
+      "yaakaar vuol dire «sperare»; ne («dire») introduce ciò che speri, come «che»: Yaakaar naa ne… «spero che…».",
+    ],
+  }),
   entry("u.menumatey", "Mënuma tey, waaye suba mën naa", ["I can't today, but tomorrow I can", "Je ne peux pas aujourd'hui, mais demain je peux", "Hoy no puedo, pero mañana sí", "Heute kann ich nicht, aber morgen schon", "Oggi non posso, ma domani sì"]),
   entry("u.dumanew", "Duma ñëw tey", ["I won't come today", "Je ne viendrai pas aujourd'hui", "Hoy no vendré", "Ich komme heute nicht", "Oggi non vengo"]),
 ];

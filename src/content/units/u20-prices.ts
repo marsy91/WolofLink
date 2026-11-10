@@ -23,7 +23,15 @@ export const entries = [
   entry("b.its2000", "Ñaari junni la", ["It's two thousand", "C'est deux mille", "Son dos mil", "Das macht zweitausend", "Sono duemila"]),
   entry("b.yomb", "Dafa yomb", ["It's cheap", "C'est bon marché", "Es barato", "Das ist billig", "È economico"]),
   entry("b.seerlool", "Dafa seer lool", ["It's very expensive", "C'est très cher", "Es muy caro", "Das ist sehr teuer", "È molto caro"]),
-  entry("b.wanni", "Mën nga ko wàññi?", ["Can you lower the price?", "Tu peux baisser le prix ?", "¿Puedes bajar el precio?", "Kannst du mit dem Preis runtergehen?", "Puoi abbassare il prezzo?"]),
+  entry("b.wanni", "Mën nga ko wàññi?", ["Can you lower the price?", "Tu peux baisser le prix ?", "¿Puedes bajar el precio?", "Kannst du mit dem Preis runtergehen?", "Puoi abbassare il prezzo?"], {
+    note: [
+      "ko is “it” (the price here) and comes before wàññi because of mën nga: Mën nga ko…? “Can you … it?”.",
+      "ko veut dire « le » (ici le prix) et se place avant wàññi à cause de mën nga : Mën nga ko… ? « Tu peux le… ? ».",
+      "ko significa «lo» (aquí el precio) y va antes de wàññi por mën nga: Mën nga ko…? «¿Puedes …lo?».",
+      "ko heißt „es“ (hier den Preis) und steht wegen mën nga vor wàññi: Mën nga ko…? „Kannst du es …?“.",
+      "ko vuol dire «lo» (qui il prezzo) e va prima di wàññi per via di mën nga: Mën nga ko…? «Puoi …lo?».",
+    ],
+  }),
 ];
 
 export const unit: Unit = {
