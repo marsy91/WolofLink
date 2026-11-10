@@ -122,7 +122,100 @@ body {
 .race-boat { transition: left 600ms cubic-bezier(0.3, 0.7, 0.3, 1); }
 .timer-drain { animation: drain 7.5s linear both; }
 
+/* Duel scene: a lit night sea in the style of a console game (CSS only, no engine). */
+.duel-sky { background: radial-gradient(120% 70% at 50% 42%, #2a3f7a 0%, #16224f 38%, #0a1131 70%, #060a1f 100%); }
+.duel-stars {
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 28% 8%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 46% 22%, #fff, transparent), radial-gradient(1px 1px at 63% 12%, #fff, transparent),
+    radial-gradient(2px 2px at 78% 26%, #ffe9b0, transparent), radial-gradient(1px 1px at 88% 6%, #fff, transparent),
+    radial-gradient(1px 1px at 8% 34%, #fff, transparent), radial-gradient(1.5px 1.5px at 92% 38%, #fff, transparent);
+}
+.duel-glow { background: radial-gradient(60% 50% at 50% 50%, rgba(255, 168, 76, 0.45), rgba(255, 120, 60, 0.12) 55%, transparent 75%); filter: blur(2px); }
+.duel-spark { background: #ffe7a8; box-shadow: 0 0 8px 2px rgba(255, 210, 120, 0.7); animation: spark-rise linear infinite; opacity: 0; }
+.race-lane { background: linear-gradient(90deg, rgba(95, 208, 230, 0.15), rgba(95, 208, 230, 0.55)); box-shadow: 0 0 12px rgba(95, 208, 230, 0.6); }
+.race-buoy { background: radial-gradient(circle at 35% 35%, #fff 0 15%, #f2c14e 30%, #c2502f 100%); box-shadow: 0 0 10px rgba(242, 193, 78, 0.8); }
+.race-finish { background: repeating-linear-gradient(0deg, #fff 0 5px, #0a1131 5px 10px); box-shadow: 0 0 14px rgba(255, 255, 255, 0.6); }
+.pirogue { filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45)); }
+.wake { animation: wake 900ms ease-out infinite; }
+
+.glass-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 10px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 120ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+.glass-card:active { transform: scale(0.98); }
+.glow-right { background: rgba(46, 204, 133, 0.28); border-color: #48e59c; box-shadow: 0 0 0 2px #48e59c, 0 0 32px rgba(72, 229, 156, 0.65); }
+.glow-wrong { background: rgba(255, 82, 102, 0.26); border-color: #ff5a6e; box-shadow: 0 0 0 2px #ff5a6e, 0 0 28px rgba(255, 90, 110, 0.6); }
+.glow-gold { box-shadow: 0 0 0 2px #f2c14e, 0 0 30px rgba(242, 193, 78, 0.55); }
+.btn-game {
+  background: linear-gradient(180deg, #ffd66b, #f2a33a 55%, #d9792a);
+  color: #2a1606;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6), inset 0 -4px 0 rgba(0, 0, 0, 0.2), 0 10px 26px rgba(242, 163, 58, 0.45);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.text-glow { text-shadow: 0 0 18px rgba(255, 214, 107, 0.85), 0 2px 0 rgba(0, 0, 0, 0.35); }
+.text-glow-white { text-shadow: 0 0 20px rgba(160, 220, 255, 0.6), 0 2px 0 rgba(0, 0, 0, 0.4); }
+.timer-glow { background: linear-gradient(90deg, #ffd66b, #ff8a3d); box-shadow: 0 0 12px rgba(255, 170, 70, 0.9); }
+.shine { position: relative; overflow: hidden; }
+.shine::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  transform: translateX(-120%); animation: shine 1.6s ease-out 0.2s both;
+}
+.flash-red { background: radial-gradient(circle, transparent 40%, rgba(255, 60, 80, 0.45)); animation: flash 420ms ease-out both; }
+.flash-gold { background: radial-gradient(circle, rgba(255, 214, 107, 0.35), transparent 60%); animation: flash 520ms ease-out both; }
+
+@keyframes wave-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+@keyframes spark-rise {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: translateY(-160px) translateX(20px); opacity: 0; }
+}
+@keyframes wake { 0% { transform: translateX(0); opacity: 0.9; } 100% { transform: translateX(-8px); opacity: 0.3; } }
+@keyframes slam {
+  0% { transform: scale(3); opacity: 0; filter: blur(8px); }
+  60% { transform: scale(0.92); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1); }
+}
+@keyframes ring {
+  from { transform: translate(-50%, -50%) scale(0.3); opacity: 0.9; }
+  to { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
+}
+@keyframes cam-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-6px, 3px); }
+  40% { transform: translate(5px, -4px); }
+  60% { transform: translate(-4px, 2px); }
+  80% { transform: translate(3px, -1px); }
+}
+@keyframes shine { to { transform: translateX(120%); } }
+@keyframes flash { from { opacity: 1; } to { opacity: 0; } }
+@keyframes drop-in {
+  0% { transform: translateY(-60px) scale(1.6) rotate(-12deg); opacity: 0; }
+  70% { transform: translateY(4px) scale(0.95) rotate(3deg); opacity: 1; }
+  100% { transform: translateY(0) scale(1) rotate(0); }
+}
+@keyframes panel-left { from { transform: translateX(-110%) skewX(-8deg); } to { transform: translateX(0) skewX(-8deg); } }
+@keyframes panel-right { from { transform: translateX(110%) skewX(-8deg); } to { transform: translateX(0) skewX(-8deg); } }
+@keyframes pulse-glow { 0%, 100% { box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -4px 0 rgba(0,0,0,.2), 0 10px 26px rgba(242,163,58,.45); } 50% { box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -4px 0 rgba(0,0,0,.2), 0 10px 40px rgba(242,163,58,.85); } }
+.anim-wave { animation: wave-slide linear infinite; }
+.anim-twinkle { animation: twinkle 4s ease-in-out infinite; }
+.anim-slam { animation: slam 520ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.anim-ring { animation: ring 700ms ease-out both; }
+.anim-cam-shake { animation: cam-shake 380ms ease-out both; }
+.anim-drop-in { animation: drop-in 600ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.anim-panel-left { animation: panel-left 500ms cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+.anim-panel-right { animation: panel-right 500ms cubic-bezier(0.2, 0.8, 0.3, 1) both; }
+.anim-pulse-glow { animation: pulse-glow 1.8s ease-in-out infinite; }
+
 @media (prefers-reduced-motion: reduce) {
+  .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark { animation: none; }
+  .anim-panel-left, .anim-panel-right { transform: skewX(-8deg); }
+  .duel-spark { display: none; }
+  .shine::after, .flash-red, .flash-gold { display: none; }
   .anim-pop, .anim-slide-up, .anim-shake { animation: none; }
   .anim-from-left, .anim-from-right, .anim-stamp, .anim-float-up, .anim-bob { animation: none; }
   .timer-drain { animation: none; width: 100%; }
