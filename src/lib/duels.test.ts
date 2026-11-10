@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { course } from "@/content/course";
 import { UI_LANGS } from "@/content/types";
-import { buildDuel, crownsFor, duelState, optionLabel, pickDuelEntries, pointsFor, roundOf, type DuelRow } from "./duels";
+import { buildDuel, crownsFor, duelProblem, duelState, optionLabel, pickDuelEntries, pointsFor, roundOf, type DuelRow } from "./duels";
 import { normalize } from "./engine";
 import { emptyProgress } from "./progress";
 
@@ -87,5 +87,16 @@ describe("duels", () => {
     // New units need a migration adding their entries: insert into private.duel_entries (id) values (...).
     expect(missing, "add these to private.duel_entries in a new migration").toEqual([]);
     expect([...known].filter((id) => !course.entries[id])).toEqual([]);
+  });
+
+  it("turns duel errors into something to tell the player", () => {
+    expect(duelProblem(new Error("no new words"))).toBe("noNewWords");
+    expect(duelProblem({ message: "paused" })).toBe("paused");
+    expect(duelProblem({ message: "too many duels today" })).toBe("tooMany");
+    expect(duelProblem({ message: "this duel is over" })).toBe("over");
+    expect(duelProblem({ kind: "network", message: "Failed to fetch" })).toBe("offline");
+    expect(duelProblem({ message: "Could not find the function public.start_duel(friend) in the schema cache", code: "PGRST202" })).toBe("updating");
+    expect(duelProblem({ message: "boom", status: 503 })).toBe("updating");
+    expect(duelProblem(null)).toBe("failed");
   });
 });

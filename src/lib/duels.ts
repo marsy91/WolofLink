@@ -116,6 +116,22 @@ export function roundOf(index: number): number {
   return ROUNDS.findIndex(([a, b]) => index >= a && index < b);
 }
 
+/** What went wrong with a duel call, so the screen can say something useful. */
+export type DuelProblem = "noNewWords" | "paused" | "tooMany" | "offline" | "over" | "updating" | "failed";
+
+export function duelProblem(e: unknown): DuelProblem {
+  const err = e as { kind?: string; message?: string; code?: string; status?: number } | null;
+  const msg = `${err?.message ?? ""} ${err?.code ?? ""}`;
+  if (/no new words/i.test(msg)) return "noNewWords";
+  if (/paused/i.test(msg)) return "paused";
+  if (/too many/i.test(msg)) return "tooMany";
+  if (/duel is over|duel not found/i.test(msg)) return "over";
+  if (err?.kind === "network" || /failed to fetch|network/i.test(msg)) return "offline";
+  // The server doesn't have the duel functions yet (or is being updated).
+  if (/could not find the function|PGRST202|schema cache|does not exist/i.test(msg) || (err?.status ?? 0) >= 500) return "updating";
+  return "failed";
+}
+
 export interface DuelResult {
   my_score: number;
   their_score: number;
