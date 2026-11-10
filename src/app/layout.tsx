@@ -7,6 +7,7 @@ import { PushInit } from "@/components/PushInit";
 import { ThemeApplier } from "@/components/ThemeApplier";
 import { VoicesLoader } from "@/lib/voices";
 import { StoreProvider } from "@/lib/store";
+import { contentSecurityPolicy } from "@/lib/csp";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({ subsets: ["latin", "latin-ext"], variable: "--font-bricolage", weight: ["600", "800"] });
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
+        <meta httpEquiv="Content-Security-Policy" content={contentSecurityPolicy(process.env.NEXT_PUBLIC_SUPABASE_URL)} />
         {/* Apply the saved theme and dark mode before the first paint, so the app doesn't flash light. */}
         <script dangerouslySetInnerHTML={{ __html: EARLY_THEME }} />
       </head>
