@@ -222,7 +222,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
                         ? "anim-shake border-berry bg-berry-soft"
                         : selected
                           ? "border-clay bg-sun-soft"
-                          : "border-sand-3 shadow-[0_3px_0_var(--color-sand-3)]"
+                          : "border-sand-3 shadow-card"
                   }`}
                 >
                   {translate(question.options[oi]!, lang)}
@@ -287,7 +287,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
                 <button
                   type="button"
                   onClick={() => void playEntry({ id: lineId(story.id, i), wo: l.wo, tr: l.tr })}
-                  className={`max-w-[80%] rounded-3xl border-2 border-sand-3 bg-white px-4 py-3 text-left shadow-[0_3px_0_var(--color-sand-3)] ${
+                  className={`max-w-[80%] rounded-3xl border-2 border-sand-3 bg-white px-4 py-3 text-left shadow-card ${
                     right ? "rounded-br-md" : "rounded-bl-md"
                   }`}
                 >

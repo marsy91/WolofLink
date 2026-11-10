@@ -39,7 +39,7 @@ export default function Learn() {
       <AnnouncementBanner />
       <SeasonBanner />
       <NudgeBanner />
-      <section className="mb-6 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+      <section className="mb-6 rounded-3xl bg-white p-4 shadow-card">
         <h1 className="mb-1 font-display text-xl font-extrabold text-night">
           {name ? `Salaam aleekum, ${name}!` : "Salaam aleekum!"}
         </h1>
@@ -107,7 +107,7 @@ export default function Learn() {
                         {unlocked ? (
                           <Link
                             href={paywalled ? "/premium/" : `/lesson/${lesson.id}/`}
-                            className="flex items-center gap-3 rounded-2xl border-2 border-sand-3 bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)] transition active:translate-y-[2px] active:shadow-none"
+                            className="flex items-center gap-3 rounded-2xl border border-sand-3/60 bg-white p-4 shadow-card transition active:translate-y-[2px] active:shadow-none"
                           >
                             <div className="flex-1">
                               <h3 className="font-display text-lg font-extrabold text-night">{translate(lesson.title, lang)}</h3>
@@ -179,7 +179,7 @@ export default function Learn() {
                             {storyOpen ? (
                               <Link
                                 href={storyPaywalled ? "/premium/" : `/dialogue/${unit.story.id}/`}
-                                className="flex items-center gap-3 rounded-2xl border-2 border-dusk/30 bg-dusk-soft p-4 shadow-[0_3px_0_var(--color-sand-3)] transition active:translate-y-[2px] active:shadow-none"
+                                className="flex items-center gap-3 rounded-2xl border border-dusk/25 bg-dusk-soft p-4 shadow-card transition active:translate-y-[2px] active:shadow-none"
                               >
                                 <IconBook size={28} className="shrink-0 text-dusk" />
                                 <div className="flex-1">

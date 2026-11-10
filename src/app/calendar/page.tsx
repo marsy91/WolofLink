@@ -43,7 +43,7 @@ export default function CalendarPage() {
   return (
     <TabScreen title={t("cal.title")}>
       {remindersSupported() ? (
-        <section className="mb-4 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]">
+        <section className="mb-4 rounded-3xl bg-white p-4 shadow-card">
           <label className="flex items-center justify-between gap-4">
             <span className="font-bold">{t("cal.remind")}</span>
             <button

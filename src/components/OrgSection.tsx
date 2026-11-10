@@ -96,7 +96,7 @@ export function OrgSection({ defaultName }: { defaultName: string }) {
     "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-lg outline-none focus:border-clay disabled:opacity-60";
 
   return (
-    <section className="space-y-3 rounded-3xl bg-white p-4 shadow-[0_3px_0_var(--color-sand-3)]" aria-labelledby="org-h">
+    <section className="space-y-3 rounded-3xl bg-white p-4 shadow-card" aria-labelledby="org-h">
       <h2 id="org-h" className="font-display text-lg font-extrabold text-night">
         {t("org.title")}
       </h2>

@@ -213,6 +213,38 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: "reader", glyph: "book", test: (p) => Object.keys(p.stories).length >= 1 },
 ];
 
+/** How far a learner is towards a countable achievement (null for one-off events like a perfect lesson). */
+export function achievementProgress(id: string, p: Progress, now: number): { done: number; total: number } | null {
+  const lessons = Object.keys(p.lessons).length;
+  const cap = (done: number, total: number) => ({ done: Math.min(done, total), total });
+  switch (id) {
+    case "first":
+      return cap(lessons, 1);
+    case "greeter":
+      return cap(p.lessons["greetings-1"] ? 1 : 0, 1);
+    case "counter":
+      return cap(p.lessons["numbers-1"] ? 1 : 0, 1);
+    case "chef":
+      return cap(p.lessons["food-1"] ? 1 : 0, 1);
+    case "sunrise":
+      return cap(currentStreak(p, now), 3);
+    case "sprout":
+      return cap(p.xpTotal, 100);
+    case "second":
+      return cap(p.reviews, 1);
+    case "road":
+      return cap(lessons, 8);
+    case "teraanga":
+      return cap(allLessons.filter((l) => p.lessons[l.id]).length, allLessons.length);
+    case "ring":
+      return cap(Math.max(0, ...Object.values(p.lessons).map((l) => l.times)), 3);
+    case "reader":
+      return cap(Object.keys(p.stories).length, 1);
+    default:
+      return null;
+  }
+}
+
 export interface ApplyOutcome {
   progress: Progress;
   newAchievements: string[];

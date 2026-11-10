@@ -7,17 +7,17 @@ import { useEffect, useRef, type ButtonHTMLAttributes, type ReactNode } from "re
 import { CIRCLE_ENABLED } from "@/lib/features";
 import { currentStreak, dailyGoal, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
+import { LogoMark } from "./Logo";
 import { GlyphChat, IconDrop, IconLoop, IconPath, IconPodium, IconProfile, IconSpark, IconSun } from "./icons";
 
 type Variant = "primary" | "secondary" | "ghost" | "correct" | "wrong";
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-clay text-white shadow-[0_4px_0_var(--color-clay-2)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-clay-2)]",
-  secondary:
-    "bg-white text-night border-2 border-sand-3 shadow-[0_4px_0_var(--color-sand-3)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-sand-3)]",
+  primary: "bg-clay text-white shadow-[0_2px_0_var(--color-clay-2)] active:translate-y-[2px] active:shadow-none",
+  secondary: "bg-white text-night border border-sand-3 shadow-card active:translate-y-[1px] active:shadow-none",
   ghost: "bg-transparent text-night underline-offset-4 hover:underline",
-  correct: "bg-sea text-white shadow-[0_4px_0_var(--color-sea-2)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-sea-2)]",
-  wrong: "bg-berry text-white shadow-[0_4px_0_var(--color-berry-2)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-berry-2)]",
+  correct: "bg-sea text-white shadow-[0_2px_0_var(--color-sea-2)] active:translate-y-[2px] active:shadow-none",
+  wrong: "bg-berry text-white shadow-[0_2px_0_var(--color-berry-2)] active:translate-y-[2px] active:shadow-none",
 };
 
 export function Button({
@@ -98,34 +98,28 @@ function StatusBar() {
   const streak = currentStreak(progress, now);
   const today = xpToday(progress, now);
   const goal = dailyGoal(progress);
+  // One compact pill instead of three separate badges: streak · today's goal · drops.
+  const item = "flex items-center gap-1 px-3 py-1.5 font-display text-[0.95rem] font-extrabold";
   return (
-    <div className="flex items-center justify-between gap-2 px-4 py-2.5">
-      <Link
-        href="/learn/"
-        className="flex items-center gap-1.5 rounded-full bg-sun-soft px-3 py-1.5 font-display font-extrabold text-night"
-        aria-label={t("stats.streak", { n: streak })}
-      >
-        <IconSun size={20} className={streak > 0 ? "text-clay" : "text-muted"} />
-        {streak}
-      </Link>
-      <div
-        className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-display font-extrabold text-night"
-        aria-label={t("goal.progress", { x: today, y: goal })}
-      >
-        <IconSpark size={20} className="text-dusk" />
-        <span>
-          {today}
-          <span className="text-muted">/{goal}</span>
-        </span>
+    <div className="flex items-center justify-between gap-2 px-4 py-2">
+      <LogoMark size={30} />
+      <div className="flex items-center divide-x divide-sand-3/70 rounded-full border border-sand-3/60 bg-white shadow-card">
+        <Link href="/learn/" className={`${item} text-night`} aria-label={t("stats.streak", { n: streak })}>
+          <IconSun size={18} className={streak > 0 ? "text-clay" : "text-muted"} />
+          {streak}
+        </Link>
+        <div className={`${item} text-night`} aria-label={t("goal.progress", { x: today, y: goal })}>
+          <IconSpark size={18} className="text-dusk" />
+          <span>
+            {today}
+            <span className="text-muted">/{goal}</span>
+          </span>
+        </div>
+        <Link href="/practice/" className={`${item} text-sea`} aria-label={t("stats.drops", { n: progress.drops.count })}>
+          <IconDrop size={18} filled />
+          {progress.drops.count}
+        </Link>
       </div>
-      <Link
-        href="/practice/"
-        className="flex items-center gap-1.5 rounded-full bg-sea-soft px-3 py-1.5 font-display font-extrabold text-sea"
-        aria-label={t("stats.drops", { n: progress.drops.count })}
-      >
-        <IconDrop size={20} filled />
-        {progress.drops.count}
-      </Link>
     </div>
   );
 }
@@ -154,7 +148,7 @@ function BottomNav() {
     return () => window.clearTimeout(id);
   }, [router]);
   return (
-    <nav aria-label="Main" className="safe-bottom fixed inset-x-0 bottom-0 z-20 border-t-2 border-sand-3 bg-white">
+    <nav aria-label="Main" className="safe-bottom fixed inset-x-0 bottom-0 z-20 border-t border-sand-3/70 bg-white/95 backdrop-blur">
       <ul className="mx-auto flex max-w-lg">
         {TABS.map(({ href, key, Icon }) => {
           const active = pathname?.startsWith(href.slice(0, -1)) ?? false;

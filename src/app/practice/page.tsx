@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { IconDrop, IconLoop } from "@/components/icons";
+import { IconBook, IconCalendar, IconDialogue, IconDrop, IconHeadphones, IconLifebuoy, IconLoop, IconSpeaker } from "@/components/icons";
 import { TabScreen } from "@/components/ui";
 import { allStories, course } from "@/content/course";
 import { upcoming } from "@/content/calendar";
@@ -43,7 +43,7 @@ export default function Practice() {
         {canReview ? (
           <Link
             href="/review/"
-            className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-sun font-display font-extrabold text-night shadow-[0_4px_0_var(--color-sun-2)] active:translate-y-[3px] active:shadow-none"
+            className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-sun font-display font-extrabold text-night shadow-[0_2px_0_var(--color-sun-2)] active:translate-y-[2px] active:shadow-none"
           >
             {t("practice.start")}
           </Link>
@@ -53,13 +53,13 @@ export default function Practice() {
 
       <section className="mb-5 rounded-3xl border-2 border-clay/30 bg-white p-5" aria-labelledby="survival-h">
         <h2 id="survival-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
-          <span aria-hidden>🆘</span> {translate(SURVIVAL_TITLE, lang)}
+          <IconLifebuoy size={22} className="text-clay" /> {translate(SURVIVAL_TITLE, lang)}
         </h2>
         <p className="mb-4 text-sm text-muted">{t("survival.body", { n: SURVIVAL_IDS.length })}</p>
         <div className="flex gap-2">
           <Link
             href="/survival/"
-            className="flex min-h-12 flex-1 items-center justify-center rounded-2xl bg-clay font-display font-extrabold text-white shadow-[0_4px_0_var(--color-clay-2)] active:translate-y-[3px] active:shadow-none"
+            className="flex min-h-12 flex-1 items-center justify-center rounded-2xl bg-clay font-display font-extrabold text-white shadow-[0_2px_0_var(--color-clay-2)] active:translate-y-[2px] active:shadow-none"
           >
             {t("survival.practise")}
           </Link>
@@ -74,7 +74,7 @@ export default function Practice() {
 
       <section className="mb-5 rounded-3xl border-2 border-night/20 bg-white p-5" aria-labelledby="roleplay-h">
         <h2 id="roleplay-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
-          <span aria-hidden>🎭</span> {t("roleplay.cardTitle")}
+          <IconDialogue size={22} className="text-dusk" /> {t("roleplay.cardTitle")}
         </h2>
         <p className="mb-3 text-sm text-muted">{t("roleplay.card")}</p>
         {openStories.length ? (
@@ -97,7 +97,7 @@ export default function Practice() {
 
       <section className="mb-5 rounded-3xl border-2 border-sun/50 bg-sun-soft p-5" aria-labelledby="listen-h">
         <h2 id="listen-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
-          <span aria-hidden>🎧</span> {t("listen.cardTitle")}
+          <IconHeadphones size={22} className="text-sun-deep" /> {t("listen.cardTitle")}
         </h2>
         <p className="mb-4 text-sm text-night/80">{t("listen.card")}</p>
         <Link
@@ -110,7 +110,7 @@ export default function Practice() {
 
       <section className="mb-5 rounded-3xl border-2 border-sea/30 bg-white p-5" aria-labelledby="guide-h">
         <h2 id="guide-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
-          <span aria-hidden>📘</span> {t("guide.cardTitle")}
+          <IconBook size={22} className="text-sea" /> {t("guide.cardTitle")}
         </h2>
         <p className="mb-4 text-sm text-muted">{t("guide.card")}</p>
         <Link
@@ -123,7 +123,7 @@ export default function Practice() {
 
       <section className="mb-5 rounded-3xl border-2 border-dusk/30 bg-white p-5" aria-labelledby="sounds-h">
         <h2 id="sounds-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
-          <span aria-hidden>🗣️</span> {t("sounds.title")}
+          <IconSpeaker size={22} className="text-dusk" /> {t("sounds.title")}
         </h2>
         <p className="mb-4 text-sm text-muted">{t("sounds.card")}</p>
         <Link
@@ -136,7 +136,7 @@ export default function Practice() {
 
       <section className="mb-5 rounded-3xl border-2 border-sea/30 bg-white p-5" aria-labelledby="cal-h">
         <h2 id="cal-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">
-          <span aria-hidden>📅</span> {t("cal.title")}
+          <IconCalendar size={22} className="text-sea" /> {t("cal.title")}
         </h2>
         {nextHoliday ? (
           <p className="mb-1 font-bold text-sea">
@@ -159,7 +159,7 @@ export default function Practice() {
         </Link>
       </section>
 
-      <section className="mb-5 rounded-3xl bg-white p-5 shadow-[0_3px_0_var(--color-sand-3)]" aria-labelledby="drops-h">
+      <section className="mb-5 rounded-3xl bg-white p-5 shadow-card" aria-labelledby="drops-h">
         <h2 id="drops-h" className="mb-2 font-display text-lg font-extrabold text-night">
           {t("drops.title")}
         </h2>

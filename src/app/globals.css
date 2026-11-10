@@ -28,6 +28,9 @@
   --color-dusk: #7a3b69;
   --color-dusk-soft: #f3e4ee;
 
+  /* Soft, modern card shadow (replaces the old solid 3px bottom edge). */
+  --shadow-card: 0 1px 2px rgb(29 37 80 / 0.05), 0 4px 14px rgb(29 37 80 / 0.07);
+
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
 }
@@ -205,7 +208,9 @@ body {
 :root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-sea { color: #52c7ca; }
 :root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-berry { color: #f58e84; }
 :root[data-mode="dark"] .bg-white { background-color: #1a1e38; }
+:root[data-mode="dark"] { --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.06), 0 4px 14px rgb(0 0 0 / 0.25); }
 :root[data-mode="dark"] .bg-white\/50 { background-color: rgb(26 30 56 / 0.5); }
+:root[data-mode="dark"] .bg-white\/95 { background-color: rgb(26 30 56 / 0.95); }
 :root[data-mode="dark"] .text-white { color: #ffffff; }
 /* Dark text where the background stays bright in both modes. */
 :root[data-mode="dark"] .bg-sun.text-night,
