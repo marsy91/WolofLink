@@ -147,6 +147,28 @@ const NOTICES: Record<string, Record<NoticeKind, FeatureNotice>> = {
       ]),
     },
   },
+  bot_duels: {
+    back: {
+      title: tx(["New: duel the computer", "Nouveau : duel contre l'ordinateur", "Novedad: duelo contra el ordenador", "Neu: Duell gegen den Computer", "Novità: sfida il computer"]),
+      message: tx([
+        "Practise duels on your own, at three levels, from the Practice tab.",
+        "Entraînez-vous aux duels seul, à trois niveaux, dans l'onglet Réviser.",
+        "Practica duelos tú solo, en tres niveles, desde la pestaña Repasar.",
+        "Übe Duelle allein, in drei Stufen, im Tab Üben.",
+        "Allenati alle sfide da solo, su tre livelli, dalla scheda Ripassa.",
+      ]),
+    },
+    paused: {
+      title: tx(["Duel the computer is paused", "Le duel contre l'ordinateur est en pause", "El duelo contra el ordenador está en pausa", "Duell gegen den Computer ist pausiert", "Sfida il computer è in pausa"]),
+      message: tx([
+        "You can still duel your friends.",
+        "Vous pouvez toujours défier vos amis.",
+        "Todavía puedes retar a tus amigos.",
+        "Du kannst weiterhin deine Freunde herausfordern.",
+        "Puoi ancora sfidare i tuoi amici.",
+      ]),
+    },
+  },
   nearby: {
     back: {
       title: tx(["New: learners near you", "Nouveau : apprenants près de chez vous", "Novedad: estudiantes cerca de ti", "Neu: Lernende in deiner Nähe", "Novità: studenti vicino a te"]),

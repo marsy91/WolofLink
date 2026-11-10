@@ -14,7 +14,7 @@ import { getCloud } from "./cloud";
 
 export const SWITCH_KEYS = ["friends", "duels", "voices", "supporter", "reports", "community"] as const;
 export type SwitchKey = (typeof SWITCH_KEYS)[number];
-export const OPT_IN_KEYS = ["nearby"] as const;
+export const OPT_IN_KEYS = ["nearby", "bot_duels"] as const;
 export type OptInKey = (typeof OPT_IN_KEYS)[number];
 
 export interface Announcement {
@@ -89,7 +89,12 @@ export function resetNoticesForTests() {
 }
 
 export function useNotices(): Notices {
-  const [notices, setNotices] = useState<Notices>(EMPTY);
+  return useNoticesState() ?? EMPTY;
+}
+
+/** Like useNotices, but undefined until the notices have been read (cache or server). */
+export function useNoticesState(): Notices | undefined {
+  const [notices, setNotices] = useState<Notices | undefined>(undefined);
   useEffect(() => {
     let alive = true;
     void load().then((n) => alive && setNotices(n));

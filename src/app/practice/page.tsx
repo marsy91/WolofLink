@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { IconBook, IconCalendar, IconDialogue, IconDrop, IconHeadphones, IconLifebuoy, IconLoop, IconSpeaker } from "@/components/icons";
+import { Pirogue } from "@/components/DuelRace";
 import { TabScreen } from "@/components/ui";
 import { allStories, course } from "@/content/course";
 import { upcoming } from "@/content/calendar";
@@ -10,6 +11,8 @@ import { SURVIVAL_IDS, SURVIVAL_TITLE } from "@/content/survival";
 import { translate } from "@/i18n";
 import { useDateOverrides } from "@/lib/holidays";
 import { dueEntries, MAX_DROPS, minutesToNextDrop, refreshDrops } from "@/lib/progress";
+import { BOT_LEVELS } from "@/lib/duel-bot";
+import { useSwitchOn } from "@/lib/notices";
 import { usePremium } from "@/lib/premium-context";
 import { useNow, useStore } from "@/lib/store";
 
@@ -26,6 +29,7 @@ export default function Practice() {
   const overrides = useDateOverrides();
   const nextHoliday = upcoming(new Date(now), overrides)[0];
   const { unlockAll } = usePremium();
+  const botOn = useSwitchOn("bot_duels");
   const openStories = allStories.filter(({ unit }) => unlockAll || unit.lessons.every((l) => progress.lessons[l.id]));
 
   return (
@@ -50,6 +54,28 @@ export default function Practice() {
         ) : null}
         <p className="mt-3 text-sm text-sand/75">{t("practice.refill")}</p>
       </section>
+
+      {botOn ? (
+        <section className="duel-sky relative mb-5 overflow-hidden rounded-3xl p-5 text-white" aria-labelledby="bot-h">
+          <span aria-hidden className="duel-glow absolute inset-x-0 -bottom-16 h-32" />
+          <div className="relative mb-2 flex items-center gap-3">
+            <span aria-hidden className="anim-bob shrink-0">
+              <Pirogue hull="#c2502f" trim="#f2c14e" size={56} />
+            </span>
+            <h2 id="bot-h" className="text-glow-white font-display text-xl font-extrabold">
+              {t("bot.title")}
+            </h2>
+          </div>
+          <p className="relative mb-4 text-sm text-white/85">{t("bot.card")}</p>
+          <div className="relative grid grid-cols-3 gap-2">
+            {BOT_LEVELS.map((level) => (
+              <Link key={level} href={`/duel/?bot=${level}`} className="btn-game rounded-xl px-2 py-2 text-center font-display text-sm font-extrabold uppercase">
+                {t(`bot.level.${level}`)}
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="mb-5 rounded-3xl border-2 border-clay/30 bg-white p-5" aria-labelledby="survival-h">
         <h2 id="survival-h" className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold text-night">

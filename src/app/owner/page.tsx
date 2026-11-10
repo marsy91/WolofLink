@@ -1670,6 +1670,7 @@ const SWITCH_HELP: Record<string, string> = {
 
 const OPT_IN_HELP: Record<string, string> = {
   nearby: "Learners near you (adults pick a neighbourhood) and friends-only social handles. Check the privacy page and Play Data safety first.",
+  bot_duels: "Duel the computer: a practice duel against a computer opponent (easy, medium, hard), on the Practice tab. Played on the phone, no trophies. You can try it any time with the links below.",
 };
 
 const blankNotice = (): Omit<AnnouncementRow, "id"> & { id: string | null } => ({
@@ -1753,6 +1754,16 @@ function NoticesTab({ say }: { say: Say }) {
                     {key} {isOn(key) ? <span className="rounded-full bg-sea-soft px-2 text-xs text-night">on</span> : <span className="rounded-full bg-sand-2 px-2 text-xs text-muted">off</span>}
                   </p>
                   <p className="text-xs text-muted">{OPT_IN_HELP[key]}</p>
+                  {key === "bot_duels" ? (
+                    <p className="mt-1 flex flex-wrap gap-2 text-xs font-bold">
+                      Try it:
+                      {(["easy", "medium", "hard"] as const).map((level) => (
+                        <a key={level} href={`/duel/?bot=${level}`} className="text-clay underline">
+                          {level}
+                        </a>
+                      ))}
+                    </p>
+                  ) : null}
                 </div>
                 <Button
                   variant={isOn(key) ? "secondary" : "primary"}
