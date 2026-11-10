@@ -18,9 +18,8 @@ import {
   type Network,
   type NearbyRow,
 } from "@/lib/community";
-import { NEARBY_ENABLED } from "@/lib/features";
 import { friends } from "@/lib/friends";
-import { useSwitchOff } from "@/lib/notices";
+import { useSwitchOff, useSwitchOn } from "@/lib/notices";
 import { useStore } from "@/lib/store";
 
 const field = "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
@@ -51,6 +50,7 @@ export default function CommunityPage() {
   const { user } = useAccount();
   const communityOff = useSwitchOff("community");
   const friendsOff = useSwitchOff("friends");
+  const nearbyOn = useSwitchOn("nearby");
   const [me, setMe] = useState<CommunityMe | null | undefined>(undefined);
   const [league, setLeague] = useState<LeagueRow[]>([]);
   const [nearby, setNearby] = useState<NearbyRow[]>([]);
@@ -80,7 +80,7 @@ export default function CommunityPage() {
       setLeague(l);
       setRequests(r);
       setBlocks(b);
-      if (NEARBY_ENABLED) {
+      if (nearbyOn) {
         const [n, h] = await Promise.all([community.nearby(), community.myHandles()]);
         setNearby(n);
         setHandles(Object.fromEntries(h.map((x) => [x.network, x])));
@@ -88,7 +88,7 @@ export default function CommunityPage() {
     } catch {
       setMe(null);
     }
-  }, []);
+  }, [nearbyOn]);
 
   useEffect(() => {
     if (user) void Promise.resolve().then(load);
@@ -97,7 +97,13 @@ export default function CommunityPage() {
   const fail = (e: unknown) => {
     const msg = (e as Error)?.message ?? "";
     setMessage({
-      text: /too many/.test(msg) ? t("community.tooMany") : /paused/.test(msg) ? t("community.paused") : t("community.error"),
+      text: /too many/.test(msg)
+        ? t("community.tooMany")
+        : /paused/.test(msg)
+          ? t("community.paused")
+          : /adults only/.test(msg)
+            ? t("community.adultsOnly")
+            : t("community.error"),
       ok: false,
     });
   };
@@ -107,7 +113,7 @@ export default function CommunityPage() {
     setMessage(null);
     try {
       await community.setCommunity(draft.city || null, draft.showCity, draft.adult);
-      if (NEARBY_ENABLED) {
+      if (nearbyOn) {
         const area = draft.city && draft.area.startsWith(`${draft.city}/`) ? draft.area : null;
         await community.setNearby(area, !!area && draft.adult && draft.showNearby);
       }
@@ -247,7 +253,7 @@ export default function CommunityPage() {
         ) : null}
       </section>
 
-      {NEARBY_ENABLED ? (
+      {nearbyOn ? (
         <section className="mb-5" aria-labelledby="near-h">
           <h2 id="near-h" className="mb-1 font-display text-xl font-extrabold text-night">
             {t("community.nearbyTitle")}
@@ -284,14 +290,19 @@ export default function CommunityPage() {
           checked={draft.adult}
           onChange={(v) => setDraft((d) => ({ ...d, adult: v, showCity: v && d.showCity, showNearby: v && d.showNearby }))}
         />
-        {!draft.adult ? <p className="mb-1 text-xs text-muted">{t("community.adultNeeded")}</p> : null}
+        {!draft.adult ? (
+          <>
+            <p className="mb-1 text-xs text-muted">{t("community.adultNeeded")}</p>
+            <p className="mb-2 rounded-xl bg-sand-2 p-3 text-sm font-bold text-night">{t("community.kidsSafety")}</p>
+          </>
+        ) : null}
         <Switch
           label={t("community.showCity")}
           checked={draft.showCity}
           disabled={!draft.city || !draft.adult}
           onChange={(v) => setDraft((d) => ({ ...d, showCity: v }))}
         />
-        {NEARBY_ENABLED ? (
+        {nearbyOn ? (
           <>
             <label className="mt-2 mb-2 block">
               <span className="mb-1 block text-sm font-bold text-muted">{t("community.area")}</span>
@@ -317,7 +328,7 @@ export default function CommunityPage() {
         </Button>
       </section>
 
-      {NEARBY_ENABLED ? (
+      {nearbyOn && me?.adult_confirmed ? (
         <section className="mb-5 rounded-3xl border border-sand-3/60 bg-white p-5 shadow-card" aria-labelledby="handles-h">
           <h2 id="handles-h" className="mb-1 font-display text-lg font-extrabold text-night">
             {t("community.handlesTitle")}

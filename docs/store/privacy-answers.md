@@ -183,7 +183,18 @@ uses location: learners pick a city (and, in phase 2, a neighbourhood) from a li
 - Leagues are for **18+ only** (self-confirmed); the target audience stays 18+
   for these features.
 
-Only when `NEXT_PUBLIC_NEARBY=on` ships (phase 2):
+Child safety (migration `20261112000000_community_safety.sql`):
+
+- Friend requests only between adults who are both visible in a league or the
+  nearby list; under-18s add friends only in person (code or QR).
+- Handles are adults-only, and are never shown to a friend under 18.
+- Reported as under 18, or by 3 different people → hidden until reviewed; the
+  owner can remove anyone from the community.
+- Wrong friend codes are counted for a day (20 a day), to stop guessing. This is
+  a security log tied to the account: **Fraud prevention, security** purpose.
+
+Only when the owner switches on "nearby" in the console (phase 2; off by default,
+no new release needed — update Data safety **before** switching it on):
 
 - **Personal info → Other info** also covers the chosen neighbourhood (switches
   off after 30 days) and social-media handles (Instagram, TikTok, X, Snapchat),

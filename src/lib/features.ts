@@ -35,10 +35,3 @@ export const CIRCLE_ENABLED = process.env.NEXT_PUBLIC_CIRCLE === "on";
  * Android would crash on registration. Off by default.
  */
 export const PUSH_ENABLED = process.env.NEXT_PUBLIC_PUSH === "on";
-
-/**
- * Phase 2 of the community features: "learners near you" (by neighbourhood picked from
- * a list, never GPS) and friends-only social handles. Needs the community migration
- * applied. Off by default; the remote switch "community" pauses it too.
- */
-export const NEARBY_ENABLED = process.env.NEXT_PUBLIC_NEARBY === "on";

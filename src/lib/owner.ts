@@ -81,6 +81,8 @@ export interface UserReportRow {
   reported_name: string;
   reporter_name: string;
   reports_against: number;
+  /** Removed from the community by the owner (older servers may not send it). */
+  reported_restricted?: boolean;
 }
 
 export interface MissedRow {
@@ -221,6 +223,8 @@ export const owner = {
   userReports: (status: "open" | "all") => call<UserReportRow[]>("owner_user_reports", { report_status: status, max_rows: 200 }),
   setUserReportStatus: (id: number, status: UserReportRow["status"]) =>
     call<void>("owner_set_user_report_status", { report: id, new_status: status }),
+  setCommunityRestriction: (user: string, restricted: boolean) =>
+    call<void>("owner_set_community_restriction", { target: user, restricted }),
   missedWords: (minAttempts: number) => call<MissedRow[]>("owner_missed_words", { min_attempts: minAttempts, max_rows: 50 }),
   grants: () => call<GrantRow[]>("owner_grants"),
   setGrants: (member: string, unlockAll: boolean, premium: boolean, premiumUntil: string | null, note: string | null) =>

@@ -36,7 +36,7 @@ import {
   type SwitchRow,
 } from "@/lib/owner";
 import { ROLE_HELP, STAFF_ROLES, mustRequest, tabsFor, type ConsoleRole, type RiskyAction, type StaffRole } from "@/lib/staff-roles";
-import { SWITCH_KEYS } from "@/lib/notices";
+import { OPT_IN_KEYS, SWITCH_KEYS } from "@/lib/notices";
 
 /** The signed-in console role, for showing "Ask the owner" instead of risky buttons. */
 const RoleCtx = createContext<ConsoleRole>("owner");
@@ -1115,17 +1115,31 @@ function PeopleReports({ show, say }: { show: "open" | "all"; say: Say }) {
       say(errText(e), false);
     }
   };
+  const restrict = async (r: UserReportRow, restricted: boolean) => {
+    if (!r.reported) return;
+    if (restricted && !window.confirm(`Remove ${r.reported_name} from the community? They disappear from leagues and the nearby list, lose their handles and cannot add new friends.`)) return;
+    try {
+      await owner.setCommunityRestriction(r.reported, restricted);
+      say(restricted ? "Removed from the community." : "Allowed back into the community.");
+      reload();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
   if (!rows?.length) return null;
   return (
     <>
       <h3 className="mt-2 font-display text-lg font-extrabold text-night">Reports about people</h3>
       <p className="text-sm text-muted">
-        Check the name or handle, then suspend the account in People if needed. Aim to act within 48 hours.
+        Check the name or handle. “Remove from community” stops them being found or adding anyone; suspend the
+        account in People for anything serious. Anyone reported as under 18, or by 3 different people, is already
+        hidden from leagues and the nearby list until you mark the reports. Aim to act within 24 hours.
       </p>
       {rows.map((r) => (
         <Card key={r.id}>
           <p className="font-display font-extrabold text-night">
             {r.reported_name} <span className="text-sm font-bold text-berry">· {r.reason}</span>
+            {r.reported_restricted ? <span className="ml-2 rounded-full bg-berry-soft px-2 text-xs text-berry">removed</span> : null}
           </p>
           {r.note ? <p className="mt-1 whitespace-pre-wrap text-night">“{r.note}”</p> : null}
           <p className="mt-1 text-xs text-muted">
@@ -1144,6 +1158,11 @@ function PeopleReports({ show, say }: { show: "open" | "all"; say: Say }) {
                 Reopen
               </Button>
             )}
+            {r.reported ? (
+              <Button variant="secondary" onClick={() => void restrict(r, !r.reported_restricted)}>
+                {r.reported_restricted ? "Allow back" : "Remove from community"}
+              </Button>
+            ) : null}
           </div>
         </Card>
       ))}
@@ -1648,6 +1667,10 @@ const SWITCH_HELP: Record<string, string> = {
   community: "City leagues, learners near you and friend requests",
 };
 
+const OPT_IN_HELP: Record<string, string> = {
+  nearby: "Learners near you (adults pick a neighbourhood) and friends-only social handles. Check the privacy page and Play Data safety first.",
+};
+
 const blankNotice = (): Omit<AnnouncementRow, "id"> & { id: string | null } => ({
   id: null,
   starts_on: todayIso(),
@@ -1689,9 +1712,38 @@ function NoticesTab({ say }: { say: Say }) {
     });
   };
   const isOff = (key: string) => !!switches?.find((s) => s.key === key)?.is_off;
+  // Opt-in switches are off unless a row says otherwise.
+  const isOn = (key: string) => switches?.find((s) => s.key === key)?.is_off === false;
 
   return (
     <>
+      <Card>
+        <h2 className="mb-1 font-display text-lg font-extrabold text-night">Switch on a feature</h2>
+        <p className="mb-3 text-sm text-muted">
+          Built into the app but off until you switch it on. Apps pick it up within an hour; switching it off hides it
+          again. Only adults (18+) can ever use these.
+        </p>
+        {!switches ? <Loading /> : null}
+        {switches
+          ? OPT_IN_KEYS.map((key) => (
+              <div key={key} className="flex items-center gap-3 border-t border-sand-3 py-2">
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-night">
+                    {key} {isOn(key) ? <span className="rounded-full bg-sea-soft px-2 text-xs text-night">on</span> : <span className="rounded-full bg-sand-2 px-2 text-xs text-muted">off</span>}
+                  </p>
+                  <p className="text-xs text-muted">{OPT_IN_HELP[key]}</p>
+                </div>
+                <Button
+                  variant={isOn(key) ? "secondary" : "primary"}
+                  disabled={busy}
+                  onClick={() => void run(() => owner.setSwitch(key, isOn(key), null), isOn(key) ? "Switched off." : "Switched on.", reloadSwitches)}
+                >
+                  {isOn(key) ? "Switch off" : "Switch on"}
+                </Button>
+              </div>
+            ))
+          : null}
+      </Card>
       <Card>
         <h2 className="mb-1 font-display text-lg font-extrabold text-night">Pause a feature</h2>
         <p className="mb-3 text-sm text-muted">

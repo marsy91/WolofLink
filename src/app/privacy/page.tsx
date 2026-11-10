@@ -1,7 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ACCOUNTS_ENABLED, NEARBY_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
+import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
@@ -98,24 +98,24 @@ export default function Privacy() {
           Messaging); turning them off or deleting your account removes it.
           <br />
           <br />
-          <strong>Friend requests, city leagues and blocking.</strong> You can also send a friend request from a
-          league; the other person sees your display name and decides. If you choose a home city and confirm you are 18
+          <strong>Friend requests, city leagues and blocking.</strong> If you choose a home city and confirm you are 18
           or over, you can join your city&apos;s weekly league, where other adult learners who opted in see your display
           name and XP this week; showing your city is off until you turn it on. You pick the city from a list: the app
-          never reads your location or GPS. You can block anyone (they can no longer find you, add you or see you in a
-          league) and report someone; a report stores who you reported, the reason and your optional note, and is
-          read only by the WolofLink owner and team members they authorise, to keep the community safe.
-          {NEARBY_ENABLED ? (
-            <>
-              {" "}
-              If you turn on “Learners near you”, you pick a neighbourhood from a list and adult learners in the same
-              area who also turned it on can see your display name and send you a friend request; it switches itself
-              off after 30 days. You can add Instagram, TikTok, X or Snapchat handles to your profile: only your friends can see
-              the ones you mark as visible, never the wider app.
-            </>
-          ) : null}{" "}
-          Deleting your account removes your city, neighbourhood, requests, handles and blocks, and unlinks your
-          account from any report you made or that was made about you.
+          never reads your location or GPS. Friend requests only go between adults who are both in a league (or in
+          “Learners near you”); nobody can send a request to someone under 18, who can only add friends in person
+          with a code or QR code. You can block anyone (they can no longer find you, add you or see you in a league)
+          and report someone; a report stores who you reported, the reason and your optional note, and is read only by
+          the WolofLink owner and team members they authorise, to keep the community safe. Anyone reported as under 18,
+          or reported by several people, is hidden from leagues until we review it, and we can remove anyone from the
+          community. We also count wrong friend codes for a day to stop people guessing codes.
+          <br />
+          <br />
+          <strong>Learners near you and social handles (when we switch them on).</strong> If you turn on “Learners near
+          you”, you pick a neighbourhood from a list and adult learners in the same area who also turned it on can see
+          your display name and send you a friend request; it switches itself off after 30 days. Adults can add
+          Instagram, TikTok, X or Snapchat handles: only adult friends can see the ones marked as visible, never the
+          wider app, and never anyone under 18. Deleting your account removes your city, neighbourhood, requests,
+          handles and blocks, and unlinks your account from any report you made or that was made about you.
         </Section>
       ) : null}
 

@@ -6,7 +6,7 @@ do $$
 declare
   boss uuid := gen_random_uuid(); a uuid := gen_random_uuid(); b uuid := gen_random_uuid();
   c uuid := gen_random_uuid(); kid uuid := gen_random_uuid();
-  ok boolean; n int; req bigint; h jsonb; city text;
+  ok boolean; n int; req bigint; h jsonb; city text; bcode text;
 begin
   insert into private.owners (email) values ('t-cboss@example.invalid');
   insert into auth.users (id, email, aud, role, email_confirmed_at) values
@@ -18,6 +18,8 @@ begin
   insert into public.progress (user_id, data) values
     (a, jsonb_build_object('xpByDay', jsonb_build_object(to_char(now() at time zone 'utc', 'YYYY-MM-DD'), 50), 'xpTotal', 300)),
     (b, jsonb_build_object('xpByDay', jsonb_build_object(to_char(now() at time zone 'utc', 'YYYY-MM-DD'), 80)));
+  -- "Learners near you" starts off; the owner switches it on (community_safety_test checks the off state).
+  update public.remote_switches set is_off = false where key = 'nearby';
   set local role authenticated;
 
   -- Everyone picks a name; everything community-related starts off.
@@ -30,6 +32,7 @@ begin
 
   perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
   perform public.set_friend_name('Moussa');
+  select x.friend_code into bcode from public.my_friend_card() x;
   select x.show_city into ok from public.community_me() x; assert not ok, 'city hidden by default';
   ok := false; begin perform public.set_community('atlantis', true, true); exception when invalid_parameter_value then ok := true; end;
   assert ok, 'unknown city refused';
@@ -81,8 +84,7 @@ begin
   assert ok, 'blocked: no profile';
   ok := false; begin perform public.send_friend_request(b); exception when no_data_found then ok := true; end;
   assert ok, 'blocked: cannot request';
-  ok := false; begin perform public.add_friend((select p.friend_code from public.friend_profiles p where p.user_id = b)); exception when others then ok := true; end;
-  assert ok, 'blocked: cannot add by code';
+  assert public.add_friend(bcode) is null, 'blocked: cannot add by code';
 
   -- Reports reach the owner console only; rate-limited.
   perform public.report_user(b, 'harassment', 'test');

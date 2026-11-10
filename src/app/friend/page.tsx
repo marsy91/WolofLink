@@ -8,7 +8,7 @@ import { Loading, TabScreen } from "@/components/ui";
 import { cityById } from "@/content/places";
 import { useAccount } from "@/lib/account";
 import { community, handleUrl, type FriendProfile } from "@/lib/community";
-import { NEARBY_ENABLED } from "@/lib/features";
+import { useSwitchOn } from "@/lib/notices";
 import { useStore } from "@/lib/store";
 
 const NETWORK_LABEL = { instagram: "Instagram", tiktok: "TikTok", x: "X", snapchat: "Snapchat" } as const;
@@ -20,6 +20,7 @@ export default function FriendProfilePage() {
   const [id, setId] = useState<string | null>(null);
   const [profile, setProfile] = useState<FriendProfile | null | undefined>(undefined);
   const [blocked, setBlocked] = useState(false);
+  const nearbyOn = useSwitchOn("nearby");
 
   useEffect(() => {
     void Promise.resolve().then(() => setId(new URLSearchParams(window.location.search).get("id")));
@@ -67,7 +68,7 @@ export default function FriendProfilePage() {
         ))}
       </ul>
 
-      {NEARBY_ENABLED ? (
+      {nearbyOn && profile.handles.length ? (
         <section className="mb-5 rounded-3xl border border-sand-3/60 bg-white p-5 shadow-card">
           <h2 className="mb-2 font-display text-lg font-extrabold text-night">{t("friend.handles", { name: profile.display_name })}</h2>
           {profile.handles.length ? (
