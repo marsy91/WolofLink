@@ -200,3 +200,13 @@ no new release needed — update Data safety **before** switching it on):
   off after 30 days) and social-media handles (Instagram, TikTok, X, Snapchat),
   visible only to the learner's friends when marked visible. Not shared.
   Optional; deleted with the account.
+
+## Since 0.26.0 (duel trophies and crowns)
+
+Migration `20261113000000_duel_trophies.sql`. Nothing new is shown to anyone:
+
+- **App activity → Other user-generated content / in-app activity** (already
+  declared for progress and duels): the server also keeps which course entries a
+  learner has had in duels and whether they answered right, plus crowns per duel.
+  Purpose: App functionality (no word repeats; one trophy per word). Not shared.
+  Deleted with the account.

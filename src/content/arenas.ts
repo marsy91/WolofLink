@@ -1,9 +1,11 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 /**
- * Arenas: a journey through Senegal unlocked with duel trophies, from Dakar to
+ * Arenas: a journey through Senegal unlocked with duel trophies (one per entry answered
+ * right, so the last arena means nearly every word), from Dakar to
  * Casamance. Each place has its own colours, a short fact and a few course words
  * (existing entries with audio, so nothing new needs reviewing). Pure, tested.
  */
+import { course } from "./course";
 import { tx } from "./units/helpers";
 import type { Translations } from "./types";
 
@@ -11,20 +13,22 @@ export interface Arena {
   id: string;
   emoji: string;
   name: string;
-  /** Trophies needed to reach it. */
+  /** Trophies needed to reach it (from share × TROPHY_MAX). */
   trophies: number;
+  /** Trophies needed to reach it, as a share of all course entries (one trophy per entry). */
+  share: number;
   /** Two colours for the card gradient. */
   colors: [string, string];
   fact: Translations;
   words: string[];
 }
 
-export const ARENAS: Arena[] = [
+const ARENA_LIST: Omit<Arena, "trophies">[] = [
   {
     id: "dakar",
     emoji: "🌊",
     name: "Dakar",
-    trophies: 0,
+    share: 0,
     colors: ["#1d2550", "#0f6e72"],
     fact: tx([
       "The capital sits on the Cap-Vert peninsula, the westernmost point of mainland Africa.",
@@ -39,7 +43,7 @@ export const ARENAS: Arena[] = [
     id: "thies",
     emoji: "🚂",
     name: "Thiès",
-    trophies: 60,
+    share: 0.07,
     colors: ["#7a3b69", "#b9481f"],
     fact: tx([
       "A railway town, also known for its tapestry workshops.",
@@ -54,7 +58,7 @@ export const ARENAS: Arena[] = [
     id: "touba",
     emoji: "🕌",
     name: "Touba",
-    trophies: 150,
+    share: 0.15,
     colors: ["#0a4c4f", "#2c3672"],
     fact: tx([
       "The holy city of the Mouride brotherhood, founded by Cheikh Ahmadou Bamba, with its great mosque.",
@@ -69,7 +73,7 @@ export const ARENAS: Arena[] = [
     id: "saint-louis",
     emoji: "🌉",
     name: "Saint-Louis",
-    trophies: 270,
+    share: 0.25,
     colors: ["#2c3672", "#c7891d"],
     fact: tx([
       "An island city on the Senegal River and a UNESCO World Heritage site; it was the capital of Senegal until 1957.",
@@ -84,7 +88,7 @@ export const ARENAS: Arena[] = [
     id: "saloum",
     emoji: "🛶",
     name: "Sine-Saloum",
-    trophies: 420,
+    share: 0.37,
     colors: ["#0b4a2b", "#0f6e72"],
     fact: tx([
       "A delta of mangroves and islands, explored by pirogue, and a UNESCO World Heritage site.",
@@ -99,7 +103,7 @@ export const ARENAS: Arena[] = [
     id: "tambacounda",
     emoji: "🦁",
     name: "Tambacounda",
-    trophies: 600,
+    share: 0.5,
     colors: ["#94600f", "#b9481f"],
     fact: tx([
       "The gateway to Niokolo-Koba National Park, home to lions, hippos and chimpanzees.",
@@ -114,7 +118,7 @@ export const ARENAS: Arena[] = [
     id: "kedougou",
     emoji: "⛰️",
     name: "Kédougou",
-    trophies: 800,
+    share: 0.67,
     colors: ["#5b3a1a", "#0b4a2b"],
     fact: tx([
       "Hills, waterfalls and the Bassari Country, whose villages are a UNESCO World Heritage site.",
@@ -129,7 +133,7 @@ export const ARENAS: Arena[] = [
     id: "casamance",
     emoji: "🌴",
     name: "Casamance",
-    trophies: 1050,
+    share: 0.89,
     colors: ["#00853f", "#c7891d"],
     fact: tx([
       "The green south: rice fields, palm groves, the Casamance River and long beaches.",
@@ -141,6 +145,12 @@ export const ARENAS: Arena[] = [
     words: ["f.ceeb", "f.mango"],
   },
 ];
+
+/** The most trophies anyone can have: one per course entry answered right in a duel. */
+export const TROPHY_MAX = Object.keys(course.entries).length;
+
+/** Arenas with their trophy thresholds; they stretch as new units add entries. */
+export const ARENAS: Arena[] = ARENA_LIST.map((a) => ({ ...a, trophies: Math.round(a.share * TROPHY_MAX) }));
 
 export interface ArenaProgress {
   arena: Arena;

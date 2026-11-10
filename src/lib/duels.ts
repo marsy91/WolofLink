@@ -4,6 +4,10 @@
  * the same 10 questions: the challenger picks 10 entries and a seed, and the
  * questions (type, distractors, order) are derived from them deterministically,
  * so the opponent rebuilds exactly the same duel. Pure parts are tested in duels.test.ts.
+ *
+ * Rules (supabase/migrations/*_duel_trophies.sql): the server picks entries neither
+ * player has duelled before; each entry answered right earns 1 trophy, once; the
+ * questions are 3 rounds and each round won earns a crown; more crowns wins.
  */
 import { course } from "@/content/course";
 import type { Entry, UiLang } from "@/content/types";
@@ -33,7 +37,10 @@ for (const unit of course.units) {
 }
 const ALL_IDS = Object.keys(course.entries).sort();
 
-/** 10 entries for a new duel: words the challenger has practised if enough, else the first units. */
+/**
+ * 10 entries for a practice duel (older flow). Real duels get their entries from the
+ * server (start_duel), which never repeats an entry for either player.
+ */
 export function pickDuelEntries(progress: Progress, seed: number): string[] {
   const rng = seeded(seed);
   const learned = Object.keys(progress.srs).filter((id) => course.entries[id]);
@@ -78,6 +85,55 @@ export function pointsFor(correct: boolean, ms: number): number {
   return 100 + bonus;
 }
 
+/** The three rounds: questions 1–3, 4–6 and 7–10 (start inclusive, end exclusive). */
+export const ROUNDS: [number, number][] = [
+  [0, 3],
+  [3, 6],
+  [6, 10],
+];
+
+export interface RoundResult {
+  mine: number;
+  theirs: number;
+  /** Who takes the crown; a tied round gives none. */
+  winner: "me" | "them" | null;
+}
+
+const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
+
+/** Round-by-round points and crowns, the same way the server counts them. */
+export function crownsFor(mine: number[], theirs: number[]): { rounds: RoundResult[]; mine: number; theirs: number } {
+  const rounds = ROUNDS.map(([a, b]): RoundResult => {
+    const m = sum(mine.slice(a, b));
+    const t = sum(theirs.slice(a, b));
+    return { mine: m, theirs: t, winner: m > t ? "me" : t > m ? "them" : null };
+  });
+  return { rounds, mine: rounds.filter((r) => r.winner === "me").length, theirs: rounds.filter((r) => r.winner === "them").length };
+}
+
+/** Which round a question belongs to (0–2). */
+export function roundOf(index: number): number {
+  return ROUNDS.findIndex(([a, b]) => index >= a && index < b);
+}
+
+export interface DuelResult {
+  my_score: number;
+  their_score: number;
+  my_crowns: number | null;
+  their_crowns: number | null;
+  result: "won" | "lost" | "draw";
+  trophies_won: number;
+  my_points: number[];
+  their_points: number[] | null;
+}
+
+export interface DuelWords {
+  trophies: number;
+  total: number;
+  unseen: number;
+  second_chance: number;
+}
+
 export interface DuelRow {
   id: string;
   other_name: string;
@@ -88,6 +144,10 @@ export interface DuelRow {
   seed: number;
   entries: string[];
   created_at: string;
+  /** Newer servers only. */
+  other_id?: string;
+  my_crowns?: number | null;
+  their_crowns?: number | null;
 }
 
 export type DuelState = "your-turn" | "waiting" | "won" | "lost" | "draw" | "expired" | "declined";
@@ -96,6 +156,9 @@ export function duelState(d: DuelRow): DuelState {
   if (d.status === "expired") return "expired";
   if (d.status === "declined") return "declined";
   if (d.status === "waiting") return d.i_challenged ? "waiting" : "your-turn";
+  const mc = d.my_crowns ?? null;
+  const tc = d.their_crowns ?? null;
+  if (mc !== null && tc !== null && mc !== tc) return mc > tc ? "won" : "lost";
   const me = d.my_score ?? 0;
   const them = d.their_score ?? 0;
   return me > them ? "won" : me < them ? "lost" : "draw";
@@ -109,6 +172,26 @@ function cloud() {
 
 export const duels = {
   list: async () => (await cloud().rpc<DuelRow[]>("my_duels")) ?? [],
+  /** Starts a duel: the server picks 10 entries new to both players. */
+  start: async (friend: string) => {
+    const rows = await cloud().rpc<{ duel: string; seed: number; entries: string[] }[]>("start_duel", { friend });
+    const r = rows?.[0];
+    if (!r) throw new Error("no duel");
+    return r;
+  },
+  /** The challenger sends their points per question; returns the trophies earned. */
+  finish: async (id: string, points: number[]) => {
+    const trophies = await cloud().rpc<number>("finish_duel", { duel: id, points });
+    notifyFriend("duel", { id });
+    return trophies ?? 0;
+  },
+  /** The friend sends their points; returns crowns, the result and trophies earned. */
+  answer: async (id: string, points: number[]) => {
+    const rows = await cloud().rpc<DuelResult[]>("answer_duel", { duel: id, points });
+    notifyFriend("result", { id });
+    return rows?.[0] ?? null;
+  },
+  myWords: async () => (await cloud().rpc<DuelWords[]>("my_duel_words"))?.[0] ?? null,
   create: async (friend: string, seed: number, entries: string[], score: number) => {
     const id = await cloud().rpc<string>("create_duel", { friend, duel_seed: seed, duel_entries: entries, score });
     notifyFriend("duel", { id });

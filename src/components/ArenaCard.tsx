@@ -2,10 +2,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ARENAS, arenaFor } from "@/content/arenas";
+import { ARENAS, arenaFor, TROPHY_MAX } from "@/content/arenas";
 import { course } from "@/content/course";
 import { translate } from "@/i18n";
 import { playEntry } from "@/lib/audio";
+import type { DuelWords } from "@/lib/duels";
 import { useStore } from "@/lib/store";
 import { Confetti } from "./Confetti";
 import { IconSpeaker } from "./icons";
@@ -13,7 +14,7 @@ import { IconSpeaker } from "./icons";
 const SEEN_KEY = "woloflink.arena.seen";
 
 /** The learner's arena on the journey through Senegal, unlocked with duel trophies. */
-export function ArenaCard({ trophies }: { trophies: number }) {
+export function ArenaCard({ trophies, words: duelWords }: { trophies: number; words?: DuelWords | null }) {
   const { lang, t } = useStore();
   const { arena, index, next, toNext } = arenaFor(trophies);
   const [open, setOpen] = useState(false);
@@ -84,7 +85,12 @@ export function ArenaCard({ trophies }: { trophies: number }) {
           ))}
         </ol>
       ) : null}
-      <p className="mt-2 text-xs opacity-80">{t("arena.how")}</p>
+      {duelWords ? (
+        <p className="mt-2 text-sm font-bold">
+          {duelWords.unseen > 0 ? t("duel.wordsLeft", { n: duelWords.unseen }) : t("duel.secondChance")}
+        </p>
+      ) : null}
+      <p className="mt-2 text-xs opacity-80">{t("arena.how", { total: TROPHY_MAX })}</p>
     </section>
   );
 }
