@@ -12,7 +12,9 @@ import { haptic } from "@/lib/native";
 import { applySession } from "@/lib/progress";
 import { buildRoleplay, playableSpeakers } from "@/lib/roleplay";
 import { useNow, useStore } from "@/lib/store";
+import { Character } from "./Character";
 import { Confetti } from "./Confetti";
+import { StoryScene } from "./StoryScene";
 import { IconClose } from "./icons";
 import { Button, Loading, ProgressBar, useRequireProfile } from "./ui";
 
@@ -32,7 +34,7 @@ export function RolePlayer({ storyId }: { storyId: string }) {
   const [right, setRight] = useState(0);
   const [done, setDone] = useState(false);
   const saved = useRef(false);
-  const endRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLLIElement>(null);
   const { sound, haptics } = progress.settings;
 
   const turns = useMemo(() => (story && role ? buildRoleplay(story, role, seeded(now)) : []), [story, role]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -95,11 +97,19 @@ export function RolePlayer({ storyId }: { storyId: string }) {
         <p className="text-sm font-bold tracking-widest text-clay uppercase">{t("roleplay.title")}</p>
         <h1 className="font-display text-3xl font-extrabold text-night">{translate(story.title, lang)}</h1>
         <p className="text-muted">{t("roleplay.choose")}</p>
-        {playableSpeakers(story).map((s) => (
-          <Button key={s} block onClick={() => setRole(s)}>
-            {t("roleplay.as", { name: s })}
-          </Button>
-        ))}
+        <div className="grid grid-cols-2 gap-3">
+          {playableSpeakers(story).map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setRole(s)}
+              className="flex flex-col items-center gap-2 rounded-3xl border border-sand-3 bg-white p-4 shadow-card transition active:translate-y-[2px]"
+            >
+              <Character name={s} mood="wave" size={88} />
+              <span className="font-display font-extrabold text-night">{t("roleplay.as", { name: s })}</span>
+            </button>
+          ))}
+        </div>
         <Button block variant="ghost" onClick={exit}>
           {t("common.cancel")}
         </Button>
@@ -111,6 +121,11 @@ export function RolePlayer({ storyId }: { storyId: string }) {
     return (
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 px-6 text-center">
         <Confetti />
+        <div className="flex items-end gap-2">
+          {[...new Set(story.lines.map((l) => l.speaker))].slice(0, 2).map((s, i) => (
+            <Character key={s} name={s} mood={i === 0 ? "happy" : "wave"} size={96} />
+          ))}
+        </div>
         <h1 className="font-display text-4xl font-extrabold text-night">{t("roleplay.done")}</h1>
         <p className="text-lg text-muted">{t("roleplay.score", { n: right, total: mineCount })}</p>
         <p className="font-bold text-dusk">+{ROLEPLAY_XP} XP</p>
@@ -140,6 +155,12 @@ export function RolePlayer({ storyId }: { storyId: string }) {
     setAt((n) => n + 1);
   };
 
+  // The two people on stage: the partner talks during their line; both react to your answer.
+  const partner = story.lines.find((l) => l.speaker !== role)?.speaker ?? "";
+  const pickedOk = picked !== null && turn?.mine ? turn.options[picked]!.correct : null;
+  const partnerMood = turn && !turn.mine ? "talking" : pickedOk ? "happy" : "idle";
+  const myMood = pickedOk === true ? "happy" : pickedOk === false ? "sad" : "idle";
+
   return (
     <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col">
       <div className="flex items-center gap-3 px-4 py-3">
@@ -148,6 +169,18 @@ export function RolePlayer({ storyId }: { storyId: string }) {
         </button>
         <ProgressBar value={at / turns.length} label={translate(story.title, lang)} />
       </div>
+      <StoryScene className="mx-4 mb-3 rounded-3xl shadow-card">
+        <div className="flex items-end justify-around px-6 pt-6 pb-2" aria-hidden>
+          <div className="flex flex-col items-center">
+            <Character name={partner} mood={partnerMood} size={128} />
+            <span className="rounded-full bg-white/80 px-2 text-xs font-bold text-night">{partner}</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Character name={role} mood={myMood} size={128} />
+            <span className="rounded-full bg-white/80 px-2 text-xs font-bold text-night">{role}</span>
+          </div>
+        </div>
+      </StoryScene>
       <ol className="flex-1 space-y-3 overflow-y-auto px-4 pb-4">
         {story.lines.slice(0, at).map((l, i) => (
           <li key={i} className={`flex ${l.speaker === role ? "justify-end" : ""}`}>
@@ -166,7 +199,7 @@ export function RolePlayer({ storyId }: { storyId: string }) {
             </div>
           </li>
         ) : null}
-        <div ref={endRef} />
+        <li ref={endRef} aria-hidden />
       </ol>
       {turn && turn.mine ? (
         <section className="border-t border-sand-3 bg-white px-4 pt-4 pb-6">
