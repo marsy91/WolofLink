@@ -15,6 +15,7 @@ import {
   isThemeId,
   resolvedPalette,
   themeFor,
+  type ThemeId,
   type Token,
 } from "./themes";
 
@@ -176,4 +177,28 @@ describe("themes", () => {
       expect(() => run("{not json")).not.toThrow();
     });
   });
+});
+
+describe("themes look different from each other", () => {
+  // The colours that fill the most screen: the page, the cards and the unit banners.
+  const VISIBLE: Token[] = ["sand", "card", "sun-deep", "clay", "sea", "dusk"];
+  const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const dist = (a: string, b: string) => Math.hypot(...rgb(a).map((v, i) => v - rgb(b)[i]!));
+  // Senegal's colours live in globals.css (the flag stripe and green banners), not here.
+  const ids = THEME_IDS.filter((id) => id !== "senegal");
+  const shown = (id: ThemeId, darkSetting: boolean) => resolvedPalette(THEMES[id], THEMES[id].dark || darkSetting);
+
+  for (const darkSetting of [false, true]) {
+    it(`every pair of themes differs in at least 3 big colours (${darkSetting ? "dark" : "light"} mode)`, () => {
+      const tooClose: string[] = [];
+      for (let i = 0; i < ids.length; i++)
+        for (let j = i + 1; j < ids.length; j++) {
+          const a = shown(ids[i]!, darkSetting);
+          const b = shown(ids[j]!, darkSetting);
+          const different = VISIBLE.filter((t) => dist(a[t], b[t]) > 40).length;
+          if (different < 3) tooClose.push(`${ids[i]} ~ ${ids[j]} (${different})`);
+        }
+      expect(tooClose).toEqual([]);
+    });
+  }
 });
