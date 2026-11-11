@@ -16,7 +16,7 @@ export default function SoundsPage() {
       <p className="mb-4 text-muted">{t("sounds.intro")}</p>
       <ul className="space-y-3">
         {SOUNDS.map((s) => (
-          <li key={s.id} id={`sound-${s.id}`} className="scroll-mt-24 rounded-3xl border-2 border-sand-3 bg-white p-4">
+          <li key={s.id} id={`sound-${s.id}`} className="scroll-mt-24 rounded-3xl border border-sand-3 bg-white p-4">
             <p lang="wo" className="font-display text-2xl font-extrabold text-clay">
               {s.label}
             </p>

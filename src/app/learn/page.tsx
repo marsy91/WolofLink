@@ -131,7 +131,7 @@ export default function Learn() {
                                   : mastered
                                     ? "bg-sea-soft text-sea"
                                     : done
-                                      ? "bg-dusk text-white"
+                                      ? "bg-dusk-soft text-dusk"
                                       : "bg-clay text-white"
                               }`}
                             >

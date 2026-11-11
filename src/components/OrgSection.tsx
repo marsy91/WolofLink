@@ -93,7 +93,7 @@ export function OrgSection({ defaultName }: { defaultName: string }) {
   };
 
   const field =
-    "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-lg outline-none focus:border-clay disabled:opacity-60";
+    "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-lg outline-none focus:border-clay disabled:opacity-60";
 
   return (
     <section className="space-y-3 rounded-3xl bg-white p-4 shadow-card" aria-labelledby="org-h">
@@ -114,7 +114,7 @@ export function OrgSection({ defaultName }: { defaultName: string }) {
       {orgs && orgs.length > 0 ? (
         <ul className="space-y-2">
           {orgs.map((m) => (
-            <li key={m.orgId} className="flex items-center justify-between gap-3 rounded-2xl border-2 border-sand-3 p-3">
+            <li key={m.orgId} className="flex items-center justify-between gap-3 rounded-2xl border border-sand-3 p-3">
               <span className="min-w-0">
                 <span className="block truncate font-bold text-night">
                   {m.role === "admin" ? t("org.adminOf", { org: m.orgName }) : t("org.memberOf", { org: m.orgName })}

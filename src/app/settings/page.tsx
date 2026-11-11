@@ -68,7 +68,7 @@ export default function Settings() {
     setReminderState(result);
   };
 
-  const field = "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
+  const field = "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
 
   return (
     <TabScreen title={t("settings.title")}>
@@ -114,13 +114,13 @@ export default function Settings() {
           </select>
         </label>
 
-        <div className="divide-y-2 divide-sand-2 rounded-2xl border-2 border-sand-3 bg-white px-4">
+        <div className="divide-y-2 divide-sand-2 rounded-2xl border border-sand-3 bg-white px-4">
           <Toggle label={t("settings.sound")} checked={progress.settings.sound} onChange={(v) => setSettings({ sound: v })} />
           <Toggle label={t("settings.audio")} checked={progress.settings.autoplay} onChange={(v) => setSettings({ autoplay: v })} />
           <Toggle label={t("settings.haptics")} checked={progress.settings.haptics} onChange={(v) => setSettings({ haptics: v })} />
         </div>
 
-        <fieldset className="rounded-2xl border-2 border-sand-3 bg-white px-4 py-3">
+        <fieldset className="rounded-2xl border border-sand-3 bg-white px-4 py-3">
           <legend className="px-1 font-display text-lg font-extrabold text-night">{t("settings.theme")}</legend>
           <div className="grid grid-cols-2 gap-3 pt-1">
             {(
@@ -176,7 +176,7 @@ export default function Settings() {
           />
         </fieldset>
 
-        <section className="rounded-2xl border-2 border-sand-3 bg-white px-4 py-2" aria-labelledby="remind-h">
+        <section className="rounded-2xl border border-sand-3 bg-white px-4 py-2" aria-labelledby="remind-h">
           <h2 id="remind-h" className="flex items-center gap-2 pt-2 font-display text-lg font-extrabold text-night">
             <IconBell size={22} className="text-clay" />
             {t("remind.title")}

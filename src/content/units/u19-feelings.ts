@@ -31,7 +31,7 @@ export const entries = [
     ],
   }),
   entry("m.bulmer", "Bul mer", ["Don't be angry", "Ne te fâche pas", "No te enfades", "Sei nicht böse", "Non arrabbiarti"]),
-  entry("m.mungibeg", "Mu ngi bég", ["He / she is happy", "Il / elle est content", "Está contento", "Er / sie freut sich", "È contento"]),
+  entry("m.mungibeg", "Mu ngi bég", ["He / she is happy", "Il / elle est content(e)", "Está contento/a", "Er / sie freut sich", "È contento/a"]),
 ];
 
 export const unit: Unit = {

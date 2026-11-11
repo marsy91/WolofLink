@@ -183,7 +183,7 @@ export default function Phrases() {
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck={false}
-          className="w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay"
+          className="w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay"
         />
       </label>
       <div className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1" role="toolbar" aria-label={t("phrases.title")}>

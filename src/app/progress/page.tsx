@@ -39,14 +39,14 @@ export default function ProgressPage() {
             [t("insights.streak"), currentStreak(progress, now)],
           ] as const
         ).map(([label, n]) => (
-          <div key={label} className="rounded-2xl border-2 border-sand-3 bg-white p-3 text-center">
+          <div key={label} className="rounded-2xl border border-sand-3 bg-white p-3 text-center">
             <p className="font-display text-2xl font-extrabold text-night">{n}</p>
             <p className="text-xs font-bold text-muted">{label}</p>
           </div>
         ))}
       </div>
 
-      <section className="mb-4 rounded-3xl border-2 border-sand-3 bg-white p-4" aria-labelledby="week-h">
+      <section className="mb-4 rounded-3xl border border-sand-3 bg-white p-4" aria-labelledby="week-h">
         <h2 id="week-h" className="mb-3 font-display text-lg font-extrabold text-night">{t("insights.week")}</h2>
         <div className="flex h-28 items-end gap-2" role="img" aria-label={t("insights.weekLabel", { n: week.reduce((s, d) => s + d.xp, 0) })}>
           {week.map((d) => (
@@ -82,7 +82,7 @@ export default function ProgressPage() {
         </section>
       ) : null}
 
-      <section className="mb-4 rounded-3xl border-2 border-sand-3 bg-white p-4" aria-labelledby="cando-h">
+      <section className="mb-4 rounded-3xl border border-sand-3 bg-white p-4" aria-labelledby="cando-h">
         <h2 id="cando-h" className="mb-2 font-display text-lg font-extrabold text-night">{t("insights.canDo")}</h2>
         {done.length ? (
           <ul className="space-y-1">
@@ -100,7 +100,7 @@ export default function ProgressPage() {
         )}
       </section>
 
-      <section className="mb-4 rounded-3xl border-2 border-sun/50 bg-sun-soft p-4" aria-labelledby="cert-h">
+      <section className="mb-4 rounded-3xl border border-sun/50 bg-sun-soft p-4" aria-labelledby="cert-h">
         <h2 id="cert-h" className="mb-2 flex items-center gap-2 font-display text-lg font-extrabold text-night"><IconCap size={22} className="text-sun-deep" /> {t("insights.certificates")}</h2>
         <ul className="space-y-2">
           {all.map((l) => (

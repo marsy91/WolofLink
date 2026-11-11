@@ -343,7 +343,7 @@ export function LessonPlayer(props: Props) {
                 m.entryIds.map((id) => {
                   const entry = course.entries[id]!;
                   return (
-                    <li key={`${m.key}-${id}`} className="rounded-2xl border-2 border-sand-3 bg-white p-3">
+                    <li key={`${m.key}-${id}`} className="rounded-2xl border border-sand-3 bg-white p-3">
                       <span lang="wo" className="block font-display font-extrabold text-night">
                         {entry.wo}
                       </span>
@@ -474,7 +474,7 @@ function Banner({ icon, children }: { icon: React.ReactNode; children: React.Rea
 
 function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex flex-col items-center gap-1 rounded-2xl border-2 border-sand-3 bg-white p-3">
+    <div className="flex flex-col items-center gap-1 rounded-2xl border border-sand-3 bg-white p-3">
       {icon}
       <span className="font-display text-2xl font-extrabold text-night">{value}</span>
       <span className="text-xs font-bold text-muted">{label}</span>

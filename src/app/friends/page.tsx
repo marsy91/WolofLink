@@ -17,7 +17,7 @@ import { Paused } from "@/components/Paused";
 import { usePremium } from "@/lib/premium-context";
 import { useStore } from "@/lib/store";
 
-const field = "w-full rounded-2xl border-2 border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
+const field = "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
 const MEDALS = ["🥇", "🥈", "🥉"];
 
 export default function FriendsPage() {
@@ -194,7 +194,7 @@ export default function FriendsPage() {
   return (
     <TabScreen title={t("friends.title")}>
       {push.supported && !push.on ? (
-        <section className="mb-4 flex items-center gap-3 rounded-3xl border-2 border-sun/50 bg-sun-soft p-4">
+        <section className="mb-4 flex items-center gap-3 rounded-3xl border border-sun/50 bg-sun-soft p-4">
           <span aria-hidden className="text-2xl">
             🔔
           </span>
@@ -266,7 +266,7 @@ export default function FriendsPage() {
             {duelRows.slice(0, 8).map((d) => {
               const st = duelState(d);
               return (
-                <li key={d.id} className="flex items-center gap-3 rounded-2xl border-2 border-sand-3 bg-white p-3">
+                <li key={d.id} className="flex items-center gap-3 rounded-2xl border border-sand-3 bg-white p-3">
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-bold text-night">{d.other_name}</span>
                     <span className="text-sm text-muted">

@@ -66,7 +66,7 @@ export default function CalendarPage() {
           const expanded = open === key;
           const words = o.holiday.words.map((id) => course.entries[id]).filter((e) => !!e);
           return (
-            <li key={key} className="rounded-3xl border-2 border-sand-3 bg-white">
+            <li key={key} className="rounded-3xl border border-sand-3 bg-white">
               <button
                 type="button"
                 aria-expanded={expanded}
