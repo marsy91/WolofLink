@@ -56,8 +56,8 @@ export default function Practice() {
       </section>
 
       {botOn ? (
-        <section className="duel-sky relative mb-5 overflow-hidden rounded-3xl p-5 text-white" aria-labelledby="bot-h">
-          <span aria-hidden className="duel-glow absolute inset-x-0 -bottom-16 h-32" />
+        <section className="duel-sky relative mb-5 overflow-hidden rounded-3xl p-5 text-night" aria-labelledby="bot-h">
+          <span aria-hidden className="duel-glow absolute inset-0" />
           <div className="relative mb-2 flex items-center gap-3">
             <span aria-hidden className="anim-bob shrink-0">
               <Pirogue hull="#c2502f" trim="#f2c14e" size={56} />
@@ -66,7 +66,7 @@ export default function Practice() {
               {t("bot.title")}
             </h2>
           </div>
-          <p className="relative mb-4 text-sm text-white/85">{t("bot.card")}</p>
+          <p className="relative mb-4 text-sm text-night/85">{t("bot.card")}</p>
           <div className="relative grid grid-cols-3 gap-2">
             {BOT_LEVELS.map((level) => (
               <Link key={level} href={`/duel/?bot=${level}`} className="btn-game rounded-xl px-2 py-2 text-center font-display text-sm font-extrabold uppercase">
