@@ -13,6 +13,7 @@ import { usePremium } from "@/lib/premium-context";
 import { useRecorderStatus } from "@/lib/recorder";
 import { ACHIEVEMENTS, achievementProgress, currentStreak, MAX_SHIELDS } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
+import { themeFor } from "@/lib/themes";
 
 export default function Profile() {
   const { progress, lang, t } = useStore();
@@ -103,6 +104,18 @@ export default function Profile() {
           </span>
         </Link>
       ) : null}
+
+      <Link href="/settings/#theme" className="mb-4 flex items-center gap-3 rounded-2xl border border-dusk/30 bg-white p-4 active:translate-y-[2px]">
+        <span className="flex h-10 w-10 shrink-0 overflow-hidden rounded-xl" aria-hidden>
+          {themeFor(progress.settings.theme).swatch.map((c) => (
+            <span key={c} className="flex-1" style={{ background: c }} />
+          ))}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-display font-extrabold text-night">{t("profile.themeTitle")}</span>
+          <span className="text-sm text-muted">{t(`theme.${themeFor(progress.settings.theme).id}`)}</span>
+        </span>
+      </Link>
 
       <Link href="/progress/" className="mb-4 flex items-center gap-3 rounded-2xl border border-sea/30 bg-white p-4 active:translate-y-[2px]">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sea-soft text-sea">

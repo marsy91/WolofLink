@@ -174,6 +174,12 @@ describe("levels and stories", () => {
     expect(p.streak.shields).toBe(0);
     expect(p.stories).toEqual({});
   });
+
+  it("keeps the classic theme for older learners and gives new ones the default", () => {
+    expect(migrate({ version: 1, settings: { sound: true } }).settings.theme).toBe("classic");
+    expect(migrate({ version: 1, settings: { theme: "senegal" } }).settings.theme).toBe("senegal");
+    expect(emptyProgress(0).settings.theme).toBe("lacrose");
+  });
 });
 
 describe("test out of a unit", () => {
