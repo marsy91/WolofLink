@@ -7,6 +7,7 @@
  */
 import { allLessons } from "@/content/course";
 import type { UiLang } from "@/content/types";
+import { DEFAULT_THEME, type ThemeId } from "@/lib/themes";
 
 export const GOALS = { casual: 10, regular: 20, serious: 30, intense: 50 } as const;
 export type GoalId = keyof typeof GOALS;
@@ -62,8 +63,8 @@ export interface Progress {
     autoplay: boolean;
     haptics: boolean;
     reminder: { enabled: boolean; hour: number; minute: number };
-    /** Colour theme: the classic WolofLink palette or the colours of the Senegalese flag. */
-    theme?: "classic" | "senegal";
+    /** Colour theme (src/lib/themes.ts). Missing means "classic" (saved before themes existed). */
+    theme?: ThemeId;
     /** Notify the evening before holidays and important dates (Holidays screen). */
     holidayReminders?: boolean;
     /** Seasonal themes for holidays and special events (on unless switched off). */
@@ -91,7 +92,13 @@ export function emptyProgress(now = Date.now()): Progress {
     reviews: 0,
     stories: {},
     savedPhrases: [],
-    settings: { sound: true, autoplay: true, haptics: true, reminder: { enabled: false, hour: 19, minute: 0 } },
+    settings: {
+      sound: true,
+      autoplay: true,
+      haptics: true,
+      theme: DEFAULT_THEME,
+      reminder: { enabled: false, hour: 19, minute: 0 },
+    },
   };
 }
 
@@ -390,6 +397,12 @@ export function migrate(raw: unknown, now = Date.now()): Progress {
     ...r,
     streak: { ...base.streak, ...r.streak },
     drops: { ...base.drops, ...r.drops },
-    settings: { ...base.settings, ...r.settings, reminder: { ...base.settings.reminder, ...r.settings?.reminder } },
+    settings: {
+      ...base.settings,
+      ...r.settings,
+      // Learners from before themes existed keep the classic look; new ones get the default.
+      theme: r.settings?.theme ?? "classic",
+      reminder: { ...base.settings.reminder, ...r.settings?.reminder },
+    },
   };
 }

@@ -4,14 +4,18 @@
 import { useEffect, useState } from "react";
 import { useSeason } from "@/lib/seasons";
 import { useStore } from "@/lib/store";
+import { THEME_TOKENS, themeFor } from "@/lib/themes";
 
-const BAR = { classic: "#1d2550", senegal: "#0b4a2b" } as const;
 const DARK_BAR = "#121527";
 
-/** Applies the chosen colour theme (Settings → Theme) and any seasonal theme to the whole app. */
+/**
+ * Applies the chosen colour theme (Settings → Theme) and any seasonal theme to the whole app.
+ * Light themes apply in light mode (dark mode keeps its own palette); dark themes always
+ * switch the app to dark mode. The Senegal flag season keeps its own colours.
+ */
 export function ThemeApplier() {
   const { progress } = useStore();
-  const theme = progress.settings.theme ?? "classic";
+  const def = themeFor(progress.settings.theme);
   const look = useSeason()?.look;
   const mode = progress.settings.mode ?? "system";
   const [systemDark, setSystemDark] = useState(false);
@@ -23,7 +27,7 @@ export function ThemeApplier() {
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
   }, []);
-  const dark = mode === "dark" || (mode === "system" && systemDark);
+  const dark = def.dark || mode === "dark" || (mode === "system" && systemDark);
   useEffect(() => {
     const root = document.documentElement;
     if (dark) root.dataset.mode = "dark";
@@ -36,9 +40,14 @@ export function ThemeApplier() {
   }, [look]);
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === "senegal") root.dataset.theme = "senegal";
-    else delete root.dataset.theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? DARK_BAR : BAR[theme]);
-  }, [theme, dark]);
+    root.dataset.theme = def.id;
+    for (const token of THEME_TOKENS) root.style.removeProperty(`--color-${token}`);
+    const usePalette = look !== "flag" && (def.dark || !dark);
+    if (usePalette) {
+      for (const [token, value] of Object.entries(def.colors)) root.style.setProperty(`--color-${token}`, value);
+    }
+    const bar = dark && !def.dark ? DARK_BAR : def.bar;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", bar);
+  }, [def, dark, look]);
   return null;
 }
