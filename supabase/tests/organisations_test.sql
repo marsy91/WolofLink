@@ -16,11 +16,13 @@ begin
     (b, 'test-member@example.invalid', 'authenticated', 'authenticated'),
     (c, 'test-outsider@example.invalid', 'authenticated', 'authenticated');
   insert into public.progress (user_id, data) values (b, '{"xpTotal": 120, "lessons": {"greetings-1": {}, "greetings-2": {}}, "streak": {"count": 4}}');
-  set local role authenticated;
-  -- An admin creates an organisation and gets a team code.
-  perform set_config('request.jwt.claims', json_build_object('sub', a, 'role', 'authenticated')::text, true);
-  select o.org_id, o.join_code into org, code from public.create_organisation('Test NGO', 'Admin A') o;
+  -- The owner creates an organisation (owner console) with A as its admin.
+  -- Learners can no longer create organisations themselves (20261116000000_org_team_plan.sql).
+  insert into public.organisations (name, join_code, created_by, plan)
+    values ('Test NGO', private.new_join_code(), a, 'paid') returning id, join_code into org, code;
+  insert into public.memberships (org_id, user_id, role, display_name) values (org, a, 'admin', 'Admin A');
   assert code ~ '^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{8}$', 'code format';
+  set local role authenticated;
   -- A member joins, typing the code in lower case with spaces.
   perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
   perform public.join_organisation(lower(substr(code,1,4)) || ' - ' || substr(code,5), 'Member B');

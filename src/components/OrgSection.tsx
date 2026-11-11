@@ -6,6 +6,7 @@
  * organisations you belong to, and leave them. The server
  * (supabase/migrations/*_organisations.sql) enforces every rule.
  */
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Dialog } from "@/components/ui";
 import type { UiKey } from "@/i18n";
@@ -120,6 +121,11 @@ export function OrgSection({ defaultName }: { defaultName: string }) {
                   {m.role === "admin" ? t("org.adminOf", { org: m.orgName }) : t("org.memberOf", { org: m.orgName })}
                 </span>
                 <span className="text-sm text-muted">{m.displayName}</span>
+                {m.role === "admin" ? (
+                  <Link href="/team/" className="mt-1 block text-sm font-bold text-clay underline">
+                    {t("team.open")}
+                  </Link>
+                ) : null}
               </span>
               <Button variant="secondary" disabled={busy} onClick={() => setLeaving(m)}>
                 {t("org.leave")}
