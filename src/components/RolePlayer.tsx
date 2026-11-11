@@ -34,7 +34,7 @@ export function RolePlayer({ storyId }: { storyId: string }) {
   const [right, setRight] = useState(0);
   const [done, setDone] = useState(false);
   const saved = useRef(false);
-  const endRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLLIElement>(null);
   const { sound, haptics } = progress.settings;
 
   const turns = useMemo(() => (story && role ? buildRoleplay(story, role, seeded(now)) : []), [story, role]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -199,7 +199,7 @@ export function RolePlayer({ storyId }: { storyId: string }) {
             </div>
           </li>
         ) : null}
-        <div ref={endRef} />
+        <li ref={endRef} aria-hidden />
       </ol>
       {turn && turn.mine ? (
         <section className="border-t border-sand-3 bg-white px-4 pt-4 pb-6">

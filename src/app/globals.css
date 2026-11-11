@@ -244,6 +244,14 @@ body {
 /* Secondary motion: hair and headwraps follow the head a moment later. */
 @keyframes hair-follow { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2.5deg) translateY(0.6px); } }
 .character .hair-follow { animation: hair-follow 3.2s ease-in-out infinite; animation-delay: 0.25s; }
+/* 3D feel and touch (lib/tilt.ts sets --px / --py from the finger or the phone's tilt). */
+.character { cursor: pointer; touch-action: manipulation; }
+.character .tilt3d { transform: perspective(520px) rotateY(calc(var(--px, 0) * 18deg)) rotateX(calc(var(--py, 0) * -12deg)); transition: transform 160ms ease-out; will-change: transform; }
+.character .par-head { transform: translate(calc(var(--px, 0) * 3.5px), calc(var(--py, 0) * 2.5px)); transition: transform 160ms ease-out; }
+.character .par-eyes { transform: translate(calc(var(--px, 0) * 2px), calc(var(--py, 0) * 1.6px)); transition: transform 120ms ease-out; }
+.story-scene .ss-far { transform: translate(calc(var(--px, 0) * -5px), calc(var(--py, 0) * -3px)); transition: transform 200ms ease-out; }
+.story-scene .ss-mid { transform: translate(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -4px)); transition: transform 200ms ease-out; }
+.story-scene .ss-near { transform: translate(calc(var(--px, 0) * -18px), calc(var(--py, 0) * -6px)); transition: transform 200ms ease-out; }
 /* Painted dialogue backdrop (components/StoryScene.tsx). */
 @keyframes ss-drift { from { transform: translateX(0); } to { transform: translateX(-30px); } }
 @keyframes ss-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }

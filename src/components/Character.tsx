@@ -1,7 +1,8 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { useTilt } from "@/lib/tilt";
 
 /**
  * Friendly animated people for dialogues and lessons, in an original soft
@@ -9,7 +10,9 @@ import { useId } from "react";
  * Drawn inline as SVG (no image files). They blink, breathe, tilt their head and
  * move their mouth while talking, wave hello, nod and hop when an answer is right
  * and shake their head when it's wrong; hair and headwraps follow a moment later
- * (secondary motion). All motion stops when the phone asks for reduced motion.
+ * (secondary motion). They also feel 3D and alive: they turn in perspective and
+ * their eyes follow your finger (or the tilt of the phone), and a tap makes them
+ * wave and hop. All motion stops when the phone asks for reduced motion.
  */
 
 export type Mood = "idle" | "talking" | "happy" | "sad" | "wave";
@@ -51,14 +54,33 @@ export function lookFor(name: string): Look {
 
 const LINE = "#3b2416";
 
-export function Character({ name, mood = "idle", size = 96, className = "" }: { name: string; mood?: Mood; size?: number; className?: string }) {
+export function Character({ name, mood: asked = "idle", size = 96, className = "" }: { name: string; mood?: Mood; size?: number; className?: string }) {
   const look = lookFor(name);
   const id = useId().replace(/:/g, "");
+  const root = useRef<HTMLSpanElement>(null);
+  useTilt(root);
+  // A tap says hello: wave and hop for a moment.
+  const [poked, setPoked] = useState(false);
+  const timer = useRef(0);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+  const poke = () => {
+    setPoked(true);
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setPoked(false), 1100);
+  };
+  const mood: Mood = poked ? "wave" : asked;
   const happy = mood === "happy" || mood === "wave";
   const sad = mood === "sad";
   const ink = { stroke: LINE, strokeWidth: 1.6, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
   return (
-    <span className={`character inline-block ${mood === "happy" ? "anim-hop" : "anim-breathe"} ${className}`} style={{ width: size, height: size }} aria-hidden>
+    <span
+      ref={root}
+      onPointerDown={poke}
+      className={`character inline-block ${mood === "happy" || poked ? "anim-hop" : "anim-breathe"} ${className}`}
+      style={{ width: size, height: size }}
+      aria-hidden
+    >
+      <span className="tilt3d block">
       <svg viewBox="0 0 120 120" width={size} height={size} className="block overflow-visible">
         <defs>
           <radialGradient id={`face${id}`} cx="42%" cy="34%" r="70%">
@@ -98,6 +120,7 @@ export function Character({ name, mood = "idle", size = 96, className = "" }: { 
         <path d="M34 108 C40 104 44 104 48 108" stroke={look.shirtShade} strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.7" />
         <path d="M47 89 L60 100 L73 89" fill={look.skinShade} {...ink} />
 
+        <g className="par-head">
         <g className={`head head-${mood}`} style={{ transformOrigin: "60px 84px", transformBox: "view-box" }}>
           {/* Neck */}
           <path d="M52 74 L52 90 Q60 94 68 90 L68 74 Z" fill={look.skinShade} />
@@ -158,12 +181,14 @@ export function Character({ name, mood = "idle", size = 96, className = "" }: { 
             <g className="blink" style={{ transformOrigin: "60px 53px", transformBox: "view-box" }}>
               <ellipse cx="47.5" cy="53" rx="5.8" ry="6.8" fill="#ffffff" {...ink} />
               <ellipse cx="72.5" cy="53" rx="5.8" ry="6.8" fill="#ffffff" {...ink} />
-              <ellipse cx="48.2" cy="54" rx="4" ry="4.6" fill="#3a2214" />
-              <ellipse cx="73.2" cy="54" rx="4" ry="4.6" fill="#3a2214" />
-              <circle cx="49.8" cy="52" r="1.6" fill="#ffffff" />
-              <circle cx="74.8" cy="52" r="1.6" fill="#ffffff" />
-              <circle cx="46.8" cy="56" r="0.8" fill="#ffffff" opacity="0.8" />
-              <circle cx="71.8" cy="56" r="0.8" fill="#ffffff" opacity="0.8" />
+              <g className="par-eyes">
+                <ellipse cx="48.2" cy="54" rx="4" ry="4.6" fill="#3a2214" />
+                <ellipse cx="73.2" cy="54" rx="4" ry="4.6" fill="#3a2214" />
+                <circle cx="49.8" cy="52" r="1.6" fill="#ffffff" />
+                <circle cx="74.8" cy="52" r="1.6" fill="#ffffff" />
+                <circle cx="46.8" cy="56" r="0.8" fill="#ffffff" opacity="0.8" />
+                <circle cx="71.8" cy="56" r="0.8" fill="#ffffff" opacity="0.8" />
+              </g>
             </g>
           )}
 
@@ -194,7 +219,9 @@ export function Character({ name, mood = "idle", size = 96, className = "" }: { 
             <path d="M52 66 Q60 72 68 66" stroke={LINE} strokeWidth="2.6" strokeLinecap="round" fill="none" />
           )}
         </g>
+        </g>
       </svg>
+      </span>
     </span>
   );
 }
