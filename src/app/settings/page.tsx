@@ -14,6 +14,7 @@ import { hasAiClips } from "@/lib/audio";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
+import { DEFAULT_THEME, THEME_IDS, THEMES, themeFor } from "@/lib/themes";
 import { credits, loadVoices } from "@/lib/voices";
 
 import { APP_VERSION as VERSION } from "@/lib/version";
@@ -37,6 +38,7 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
 
 export default function Settings() {
   const { progress, update, reset, t } = useStore();
+  const theme = themeFor(progress.settings.theme);
   const account = useAccount();
   const router = useRouter();
   const [confirm, setConfirm] = useState(false);
@@ -120,16 +122,12 @@ export default function Settings() {
           <Toggle label={t("settings.haptics")} checked={progress.settings.haptics} onChange={(v) => setSettings({ haptics: v })} />
         </div>
 
-        <fieldset className="rounded-2xl border border-sand-3 bg-white px-4 py-3">
+        <fieldset id="theme" className="scroll-mt-20 rounded-2xl border border-sand-3 bg-white px-4 py-3">
           <legend className="px-1 font-display text-lg font-extrabold text-night">{t("settings.theme")}</legend>
-          <div className="grid grid-cols-2 gap-3 pt-1">
-            {(
-              [
-                ["classic", t("theme.classic"), ["#1d2550", "#b9481f", "#f2a93b"]],
-                ["senegal", t("theme.senegal"), ["#00853f", "#fdef42", "#e31b23"]],
-              ] as const
-            ).map(([id, label, colours]) => {
-              const on = (progress.settings.theme ?? "classic") === id;
+          <div className="grid grid-cols-2 gap-3 pt-1" role="radiogroup" aria-label={t("settings.theme")}>
+            {THEME_IDS.map((id) => {
+              const def = THEMES[id];
+              const on = theme.id === id;
               return (
                 <button
                   key={id}
@@ -137,20 +135,25 @@ export default function Settings() {
                   role="radio"
                   aria-checked={on}
                   onClick={() => setSettings({ theme: id })}
-                  className={`rounded-2xl border-2 p-3 text-left font-bold ${on ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
+                  className={`flex flex-col rounded-2xl border-2 p-3 text-left ${on ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
                 >
-                  <span className="mb-2 flex h-6 overflow-hidden rounded-lg" aria-hidden>
-                    {colours.map((c) => (
+                  <span className="mb-2 flex h-8 overflow-hidden rounded-lg" aria-hidden>
+                    {def.swatch.map((c) => (
                       <span key={c} className="flex-1" style={{ background: c }} />
                     ))}
                   </span>
-                  {label}
+                  <span className="font-bold">
+                    {t(`theme.${id}`)}
+                    {id === DEFAULT_THEME ? <span className="ml-1 text-xs font-normal text-muted">· {t("theme.default")}</span> : null}
+                  </span>
+                  <span className="text-xs leading-snug text-muted">{t(`theme.${id}.about`)}</span>
                 </button>
               );
             })}
           </div>
           <div className="pt-3" role="radiogroup" aria-label={t("settings.mode")}>
             <p className="mb-1 font-bold">{t("settings.mode")}</p>
+            {theme.dark ? <p className="mb-2 text-sm text-muted">{t("settings.modeByTheme")}</p> : null}
             <div className="grid grid-cols-3 gap-2">
               {(["system", "light", "dark"] as const).map((m) => {
                 const on = (progress.settings.mode ?? "system") === m;

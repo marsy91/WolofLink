@@ -388,7 +388,8 @@ body {
 :root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-dusk { color: #d6a3ca; }
 :root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-sea { color: #52c7ca; }
 :root[data-mode="dark"]:not([data-theme="senegal"]):not([data-season="flag"]) .text-berry { color: #f58e84; }
-:root[data-mode="dark"] .bg-white { background-color: #1a1e38; }
+/* Cards; dark themes (src/lib/themes.ts) may set --color-card to match their background. */
+:root[data-mode="dark"] .bg-white { background-color: var(--color-card, #1a1e38); }
 :root[data-mode="dark"] { --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.06), 0 4px 14px rgb(0 0 0 / 0.25); }
 :root[data-mode="dark"] .bg-white\/50 { background-color: rgb(26 30 56 / 0.5); }
 :root[data-mode="dark"] .bg-white\/95 { background-color: rgb(26 30 56 / 0.95); }
