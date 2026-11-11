@@ -9,6 +9,7 @@ import {
   DEFAULT_THEME,
   THEME_IDS,
   THEMES,
+  THEME_TOKENS,
   contrast,
   earlyThemeScript,
   isThemeId,
@@ -63,6 +64,39 @@ describe("themes", () => {
       .filter((r) => r.ratio < r.min)
       .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
     expect(failures).toEqual([]);
+  });
+
+  // Every background/text pair found in the screens' class names (bg first, text second).
+  const SCREEN_PAIRS = (
+    "white night|night sand|sea-soft sea|berry-soft berry|white muted|clay white|night sun|sun night|sand-2 night|" +
+    "dusk white|sand-3 muted|berry white|sand-3 night|sun-soft night|sun-soft sea|sea white|white sea|sand-2 muted|" +
+    "sun-soft sun-2|sun-soft sun-deep|sun-soft clay-2|white berry|white ink|sun-soft clay|sand-2 clay|dusk-soft night|" +
+    "dusk-soft dusk|sea-soft night|white dusk|white clay|night-2 white|sun-soft dusk|sand ink|sand muted|sand night|sand clay"
+  )
+    .split("|")
+    .map((p) => p.split(" ") as [Token | "white", Token | "white"]);
+
+  it.each(THEME_IDS.filter((id) => !THEMES[id].dark && id !== "senegal"))(
+    "%s is never harder to read than Classic on any screen",
+    (id) => {
+      const classic = resolvedPalette(THEMES.classic);
+      const p = resolvedPalette(THEMES[id]);
+      const pick = (pal: Record<Token, string>, t: Token | "white") => (t === "white" ? WHITE : pal[t]);
+      const worse = SCREEN_PAIRS.filter(([bg, text]) => {
+        const base = contrast(pick(classic, text), pick(classic, bg));
+        return contrast(pick(p, text), pick(p, bg)) < Math.min(4.5, base) - 0.01;
+      }).map(([bg, text]) => `${text} on ${bg}`);
+      expect(worse).toEqual([]);
+    },
+  );
+
+  it("only changes colours, never sizes, spacing or fonts", () => {
+    for (const id of THEME_IDS) {
+      for (const [token, value] of Object.entries(THEMES[id].colors)) {
+        expect(THEME_TOKENS).toContain(token);
+        expect(value).toMatch(/^#[0-9a-f]{6}$/);
+      }
+    }
   });
 
   it("has a name and description in the dictionary for every theme", () => {
