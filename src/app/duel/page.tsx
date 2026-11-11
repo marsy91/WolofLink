@@ -10,15 +10,20 @@ import { Paused } from "@/components/Paused";
 import { Loading } from "@/components/ui";
 import { translate } from "@/i18n";
 import { playEntry, playTone } from "@/lib/audio";
-import { buildDuel, crownsFor, duelProblem, duels, optionLabel, pointsFor, roundOf, DUEL_LENGTH, type DuelQuestion, type DuelResult } from "@/lib/duels";
+import { buildDuel, crownsFor, duelProblem, duels, optionLabel, pickDuelEntries, pointsFor, roundOf, DUEL_LENGTH, type DuelQuestion, type DuelResult } from "@/lib/duels";
 import { friends } from "@/lib/friends";
 import { haptic } from "@/lib/native";
-import { useSwitchOff } from "@/lib/notices";
+import { botPoints, isBotLevel, BOT_LEVELS, type BotLevel } from "@/lib/duel-bot";
+import { useConsoleRole } from "@/lib/owner";
+import { useNoticesState, useSwitchOff } from "@/lib/notices";
 import { isLowEnd, playSfx, type Sfx } from "@/lib/sfx";
 import { useStore } from "@/lib/store";
 
 interface Setup {
-  mode: "challenge" | "reply";
+  mode: "challenge" | "reply" | "bot";
+  /** Duel the computer: its level and its points for each question. */
+  level?: BotLevel;
+  botPts?: number[];
   /** The friend's account id (for a rematch). */
   friendId?: string;
   duelId?: string;
@@ -85,6 +90,8 @@ export default function DuelPage() {
   const shownAt = useRef(0);
   const duelsOff = useSwitchOff("duels");
   const friendsOff = useSwitchOff("friends");
+  const notices = useNoticesState();
+  const role = useConsoleRole();
   const paused = duelsOff || friendsOff;
   const sound = progress.settings.sound;
   const score = points.reduce((a, b) => a + b, 0);
@@ -111,7 +118,10 @@ export default function DuelPage() {
       .myCard()
       .then((c) => setMyName(c?.display_name ?? ""))
       .catch(() => undefined);
-    if (friend) {
+    const bot = q.get("bot");
+    if (isBotLevel(bot)) {
+      void Promise.resolve().then(() => setSetup({ mode: "bot", level: bot, name: t("bot.name") }));
+    } else if (friend) {
       void Promise.resolve().then(() => setSetup({ mode: "challenge", friendId: friend, name: q.get("name") ?? "" }));
     } else if (id) {
       duels
@@ -122,6 +132,8 @@ export default function DuelPage() {
         })
         .catch(() => setSetup("missing"));
     } else void Promise.resolve().then(() => setSetup("missing"));
+    // Only on first load: the duel must not change while it's being played.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // The VS slams in: a clang and a camera shake.
@@ -170,8 +182,12 @@ export default function DuelPage() {
     return () => window.clearTimeout(id);
   }, [outcome, revealed, progress.settings.sound]);
 
-  if (paused) return <Paused back="/friends/" />;
-  if (setup === null) return <Loading />;
+  const isBot = setup !== null && setup !== "missing" && setup.mode === "bot";
+  // Duel the computer: learners once the owner switches it on; the owner can always try it.
+  const botAllowed = !!notices?.on.includes("bot_duels") || role === "owner";
+  if (paused && !isBot) return <Paused back="/friends/" />;
+  if (setup === null || (isBot && !botAllowed && (notices === undefined || role === undefined))) return <Loading />;
+  if (isBot && !botAllowed) return <Paused back="/practice/" />;
   if (setup === "missing") {
     return (
       <DuelScene lowEnd>
@@ -232,6 +248,11 @@ export default function DuelPage() {
   const start = async () => {
     setStartError(null);
     if (setup.mode === "reply") return begin(setup);
+    if (setup.mode === "bot") {
+      const seed = Math.floor(Math.random() * 2_000_000_000);
+      const level = setup.level ?? "medium";
+      return begin({ ...setup, level, seed, entries: pickDuelEntries(progress, seed), botPts: botPoints(seed, level) });
+    }
     setPhase("starting");
     try {
       const r = await duels.start(setup.friendId!);
@@ -243,6 +264,16 @@ export default function DuelPage() {
   };
 
   const submit = async (all: number[]) => {
+    if (setup.mode === "bot") {
+      // Played on the phone: work out the crowns here, nothing is sent.
+      const theirs = setup.botPts ?? [];
+      const c = crownsFor(all, theirs);
+      const mine = all.reduce((a, b) => a + b, 0);
+      const other = theirs.reduce((a, b) => a + b, 0);
+      const result = c.mine !== c.theirs ? (c.mine > c.theirs ? "won" : "lost") : mine !== other ? (mine > other ? "won" : "lost") : "draw";
+      setOutcome({ kind: "result", r: { my_score: mine, their_score: other, my_crowns: c.mine, their_crowns: c.theirs, result, trophies_won: 0, my_points: all, their_points: theirs } });
+      return;
+    }
     setSendState("sending");
     try {
       if (setup.mode === "challenge") {
@@ -305,7 +336,7 @@ export default function DuelPage() {
             </div>
             <div className="anim-panel-right absolute top-4 right-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#9a5ab8] to-[#3b1a52] shadow-[0_0_40px_rgba(154,90,184,0.55)]">
               <span className="grid h-24 w-24 skew-x-[8deg] place-items-center rounded-full bg-white/15 font-display text-5xl font-extrabold text-white ring-4 ring-white/60">
-                {initial(setup.name)}
+                {setup.mode === "bot" ? "🤖" : initial(setup.name)}
               </span>
             </div>
             <span className="anim-ring absolute top-1/2 left-1/2 h-24 w-24 rounded-full border-4 border-[#ffd66b]" style={{ animationDelay: "480ms" }} />
@@ -315,7 +346,30 @@ export default function DuelPage() {
           </div>
           <div className="flex flex-1 flex-col items-center justify-center gap-4">
             <h1 className="text-glow-white font-display text-3xl font-extrabold">{t("duel.title", { name: setup.name })}</h1>
-            <p className="text-white/85">{t(setup.mode === "challenge" ? "duel.introChallenge" : "duel.introReply", { n: DUEL_LENGTH, name: setup.name })}</p>
+            <p className="text-white/85">
+              {setup.mode === "bot"
+                ? t("bot.intro", { n: DUEL_LENGTH })
+                : t(setup.mode === "challenge" ? "duel.introChallenge" : "duel.introReply", { n: DUEL_LENGTH, name: setup.name })}
+            </p>
+            {setup.mode === "bot" ? (
+              <div className="w-full">
+                <p className="mb-2 text-sm font-bold text-white/80">{t("bot.pickLevel")}</p>
+                <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label={t("bot.pickLevel")}>
+                  {BOT_LEVELS.map((level) => (
+                    <button
+                      key={level}
+                      type="button"
+                      role="radio"
+                      aria-checked={setup.level === level}
+                      onClick={() => setSetup({ ...setup, level })}
+                      className={`glass-card rounded-xl px-2 py-2 font-display font-extrabold ${setup.level === level ? "glow-gold text-[#ffd66b]" : "text-white"}`}
+                    >
+                      {t(`bot.level.${level}`)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
             {startError ? (
               <p role="alert" className="rounded-2xl bg-white/10 p-3 font-bold text-[#ffd66b]">
                 {startError}
@@ -330,7 +384,7 @@ export default function DuelPage() {
             </button>
           )}
           <div className="mt-4 flex items-center justify-between">
-            <Link href="/friends/" className="font-bold text-white/80 underline">
+            <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} className="font-bold text-white/80 underline">
               {t("common.cancel")}
             </Link>
             {soundToggle}
@@ -366,7 +420,7 @@ export default function DuelPage() {
           {r && allShown && r.result === "won" ? <Confetti pieces={lowEnd ? 24 : 48} /> : null}
           {r && allShown ? (
             <p className={`anim-slam font-display text-5xl font-extrabold italic ${r.result === "lost" ? "text-glow-white text-white" : "text-glow text-[#ffd66b]"}`}>
-              {r.result === "won" ? t("duel.won") : r.result === "draw" ? t("duel.draw") : t("duel.lost")}
+              {r.result === "won" ? t("duel.won") : r.result === "draw" ? t("duel.draw") : setup.mode === "bot" ? t("bot.lost") : t("duel.lost")}
             </p>
           ) : null}
           {rounds ? (
@@ -424,11 +478,21 @@ export default function DuelPage() {
               ) : (
                 <p className="text-white/80">{t("duel.scores", { mine: r.my_score, name: setup.name, theirs: r.their_score })}</p>
               )}
-              <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-xl font-extrabold text-[#ffd66b]">
-                🏆 {t("duel.trophies", { n: r.trophies_won })}
-              </p>
-              <p className="text-sm text-white/75">{t("duel.trophiesHow")}</p>
-              {setup.friendId ? (
+              {setup.mode === "bot" ? (
+                <p className="text-sm text-white/80">{t("bot.noTrophies")}</p>
+              ) : (
+                <>
+                  <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-xl font-extrabold text-[#ffd66b]">
+                    🏆 {t("duel.trophies", { n: r.trophies_won })}
+                  </p>
+                  <p className="text-sm text-white/75">{t("duel.trophiesHow")}</p>
+                </>
+              )}
+              {setup.mode === "bot" ? (
+                <a href={`/duel/?bot=${setup.level ?? "medium"}`} className="btn-game anim-pulse-glow mt-2 rounded-2xl px-8 py-3 font-display text-lg font-extrabold uppercase">
+                  {t("duel.rematch")}
+                </a>
+              ) : setup.friendId ? (
                 <a
                   href={`/duel/?friend=${encodeURIComponent(setup.friendId)}&name=${encodeURIComponent(setup.name)}`}
                   className="btn-game anim-pulse-glow mt-2 rounded-2xl px-8 py-3 font-display text-lg font-extrabold uppercase"
@@ -444,8 +508,8 @@ export default function DuelPage() {
             </p>
           ) : null}
           {outcome || sendState === "over" ? (
-            <Link href="/friends/" className="mt-2 font-bold text-white/85 underline">
-              {t("duel.back")}
+            <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} className="mt-2 font-bold text-white/85 underline">
+              {setup.mode === "bot" ? t("practice.title") : t("duel.back")}
             </Link>
           ) : null}
         </main>
@@ -459,7 +523,7 @@ export default function DuelPage() {
       {flash ? <div key={`${flash.kind}${flash.key}`} aria-hidden className={`pointer-events-none fixed inset-0 z-20 ${flash.kind === "red" ? "flash-red" : "flash-gold"}`} /> : null}
       <main ref={stage} className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
         <div className="flex items-center gap-3 pt-3">
-          <Link href="/friends/" aria-label={t("common.close")} className="grid h-10 w-10 place-items-center rounded-full bg-white/10">
+          <Link href={setup.mode === "bot" ? "/practice/" : "/friends/"} aria-label={t("common.close")} className="grid h-10 w-10 place-items-center rounded-full bg-white/10">
             <IconClose />
           </Link>
           <span className="glass-card rounded-full px-3 py-1 text-xs font-extrabold tracking-wider uppercase">{t("duel.round", { n: roundOf(index) + 1 })}</span>
@@ -474,7 +538,11 @@ export default function DuelPage() {
             ) : null}
           </span>
         </div>
-        <DuelRace mine={sailed(points)} theirs={null} label={t("duel.race", { n: index + 1, total: questions.length })} />
+        <DuelRace
+          mine={sailed(points)}
+          theirs={setup.mode === "bot" ? sailed((setup.botPts ?? []).slice(0, points.length)) : null}
+          label={t("duel.race", { n: index + 1, total: questions.length })}
+        />
         <div className="h-7 text-center">
           {streak >= 3 ? (
             <span key={streak} className="anim-slam text-glow inline-block font-display text-xl font-extrabold text-[#ffd66b] italic">
