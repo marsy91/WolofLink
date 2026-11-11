@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import type { Translations } from "@/content/types";
 import { getCloud } from "./cloud";
 
-export const SWITCH_KEYS = ["friends", "duels", "voices", "supporter", "reports", "community"] as const;
+export const SWITCH_KEYS = ["friends", "duels", "voices", "supporter", "reports", "community", "feedback"] as const;
 export type SwitchKey = (typeof SWITCH_KEYS)[number];
 export const OPT_IN_KEYS = ["nearby", "bot_duels"] as const;
 export type OptInKey = (typeof OPT_IN_KEYS)[number];

@@ -71,6 +71,26 @@ export interface ReportRow {
   from_account: boolean;
 }
 
+export interface FeedbackRow {
+  id: number;
+  created_at: string;
+  kind: "idea" | "bug" | "wolof" | "other";
+  rating: number | null;
+  message: string;
+  status: "open" | "read" | "done";
+  app_version: string | null;
+  lang: string | null;
+  screen: string | null;
+  reply_to: string | null;
+}
+
+export interface FeedbackSummary {
+  total: number;
+  open_count: number;
+  rated: number;
+  average: number | null;
+}
+
 export interface UserReportRow {
   id: number;
   created_at: string;
@@ -220,6 +240,9 @@ export const owner = {
   audit: () => call<AuditRow[]>("owner_audit", { max_rows: 100 }),
   reports: (status: "open" | "all") => call<ReportRow[]>("owner_reports", { report_status: status, max_rows: 200 }),
   setReportStatus: (id: number, status: ReportRow["status"]) => call<void>("owner_set_report_status", { report: id, new_status: status }),
+  feedback: (status: "open" | "all") => call<FeedbackRow[]>("owner_feedback", { fb_status: status, max_rows: 200 }),
+  feedbackSummary: () => call<FeedbackSummary[]>("owner_feedback_summary"),
+  setFeedbackStatus: (id: number, status: FeedbackRow["status"]) => call<void>("owner_set_feedback_status", { item: id, new_status: status }),
   userReports: (status: "open" | "all") => call<UserReportRow[]>("owner_user_reports", { report_status: status, max_rows: 200 }),
   setUserReportStatus: (id: number, status: UserReportRow["status"]) =>
     call<void>("owner_set_user_report_status", { report: id, new_status: status }),

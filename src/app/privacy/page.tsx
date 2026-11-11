@@ -5,7 +5,7 @@ import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/feature
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
-const UPDATED = "31 October 2026";
+const UPDATED = "11 November 2026";
 
 /**
  * Public privacy policy (also needed as a URL for Google Play and the App
@@ -86,6 +86,16 @@ export default function Privacy() {
           we can find and fix difficult or mistaken content. Those totals never identify anyone.
         </Section>
       ) : null}
+
+      <Section title="Feedback">
+        If you use “Send feedback”, we receive the kind of feedback you picked, your optional star rating, your message,
+        the app version, the app language and which screen you came from. You can send it without an account. If you
+        are signed in, it is linked to your account to limit abuse, and we see your account email only if you tick “you
+        can reply to me”. Please don&apos;t put personal details in the message. Feedback is read only by the WolofLink
+        owner and team members they authorise, to improve the app. If you are offline, the message waits on your phone
+        until it can be sent. Deleting your account removes the link between your feedback and your account; contact us
+        to have a message deleted.
+      </Section>
 
       {ACCOUNTS_ENABLED ? (
         <Section title="Friends">

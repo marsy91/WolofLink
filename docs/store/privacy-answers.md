@@ -210,3 +210,21 @@ Migration `20261113000000_duel_trophies.sql`. Nothing new is shown to anyone:
   learner has had in duels and whether they answered right, plus crowns per duel.
   Purpose: App functionality (no word repeats; one trophy per word). Not shared.
   Deleted with the account.
+
+## Since 0.26.4 (in-app feedback)
+
+Migration `20261115000000_feedback.sql`. Profile → Send feedback, and a link at
+the end of each lesson. Works without an account. Add to Data safety:
+
+- **App activity → Other user-generated content** (already declared for problem
+  report notes): also the feedback message and the optional 1–5 star rating.
+  Optional, not shared, purpose: App functionality.
+- **App info and performance → Other app performance data** (already declared):
+  app version, app language and the screen the feedback came from.
+- **Personal info → Email address** (already declared for accounts): shown to the
+  owner only when a signed-in learner ticks "you can reply to me", so the owner
+  can answer. Purpose: Developer communications. Optional.
+- Linked to the account when signed in (to limit abuse: 5 a day); the link is
+  cleared when the account is deleted. Without an account there is a shared cap
+  of 300 an hour. The owner can pause it with the "feedback" switch.
+- Offline, up to 5 messages wait on the phone (local storage) and are sent later.
