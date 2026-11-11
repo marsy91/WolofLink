@@ -744,6 +744,17 @@ export const en = {
   "premium.manageButton": "Manage subscription",
   "premium.renews": "renews on {date}",
   "premium.ends": "ends on {date}",
+  "welcome.choiceTitle": "How would you like to start?",
+  "welcome.choiceHint": "With an account, your progress is saved and follows you to any phone.",
+  "welcome.register": "Create an account",
+  "welcome.signIn": "Sign in",
+  "welcome.guest": "Continue as guest",
+  "welcome.guestNote": "No email needed. You can create an account later in Profile.",
+  "welcome.registerNext": "Next, enter your email to create your account and save your progress.",
+  "welcome.registerContinue": "Continue to create account",
+  "welcome.registerTitle": "Create your account",
+  "welcome.signInTitle": "Sign in",
+  "welcome.skip": "Not now, start learning",
 };
 
 export type UiKey = keyof typeof en;

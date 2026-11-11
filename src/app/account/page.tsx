@@ -45,6 +45,12 @@ export default function AccountPage() {
    * cloud had no profile either. Learners signing in from Profile stay here.
    */
   const [restoreFrom, setRestoreFrom] = useState<number | null>(null);
+  // From the welcome screen: "register" (after setup) or "signin" changes the wording.
+  const [mode, setMode] = useState<"register" | "signin" | null>(null);
+  useEffect(() => {
+    const m = new URLSearchParams(window.location.search).get("mode");
+    if (m === "register" || m === "signin") void Promise.resolve().then(() => setMode(m));
+  }, []);
 
   // After signing in from onboarding: continue once the first sync has finished.
   useEffect(() => {
@@ -76,7 +82,7 @@ export default function AccountPage() {
     const err = await account.verifyCode(email, code);
     setBusy(false);
     if (err) return setError(ERRORS[err]);
-    if (!progress.profile) setRestoreFrom(Date.now());
+    if (!progress.profile || mode === "register") setRestoreFrom(Date.now());
   };
 
   /** Back to a clean email form after leaving the account. */
@@ -118,7 +124,16 @@ export default function AccountPage() {
           <IconArrowLeft />
         </button>
       </div>
-      <h1 className="mb-2 font-display text-3xl font-extrabold text-night">{t("acct.title")}</h1>
+      <h1 className="mb-2 font-display text-3xl font-extrabold text-night">
+        {t(mode === "register" && !account.user ? "welcome.registerTitle" : mode === "signin" && !account.user ? "welcome.signInTitle" : "acct.title")}
+      </h1>
+      {mode === "register" && !account.user ? (
+        <p className="mb-2">
+          <button type="button" onClick={() => router.replace("/learn/")} className="font-bold text-clay underline">
+            {t("welcome.skip")}
+          </button>
+        </p>
+      ) : null}
 
       {notice ? (
         <p role="status" className="mb-4 rounded-2xl bg-sea-soft p-4 text-sea">
