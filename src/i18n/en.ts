@@ -661,6 +661,15 @@ export const en = {
   "feedback.cardTitle": "Send feedback",
   "feedback.card": "Ideas, problems or Wolof corrections",
   "feedback.afterLesson": "Something wrong in this lesson? Tell us",
+  "premium.seePlans": "See plans",
+  "premium.pending": "Your payment is waiting for approval. Pro will switch on as soon as the store confirms it.",
+  "premium.err.network": "No connection. Check your internet and try again. You haven't been charged.",
+  "premium.err.alreadyOwned": "You already own this. Tap “Restore purchases” to switch it on.",
+  "premium.err.notAllowed": "Purchases aren't allowed on this device or account (for example, parental controls).",
+  "premium.err.store": "The store had a problem. Please try again in a moment. You haven't been charged.",
+  "premium.manageButton": "Manage subscription",
+  "premium.renews": "renews on {date}",
+  "premium.ends": "ends on {date}",
 };
 
 export type UiKey = keyof typeof en;

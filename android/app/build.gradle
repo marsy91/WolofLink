@@ -63,6 +63,11 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+    // RevenueCat native SDK, pinned to a newer patch than the Capacitor plugins bring in
+    // (they compile against 11.0.x; Gradle picks the higher 11.x). The plugins
+    // (@revenuecat/purchases-capacitor and -ui) configure and call it from the app.
+    implementation "com.revenuecat.purchases:purchases:11.2.1"
+    implementation "com.revenuecat.purchases:purchases-ui:11.2.1"
 }
 
 apply from: 'capacitor.build.gradle'
