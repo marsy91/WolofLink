@@ -14,6 +14,7 @@ import { buildRoleplay, playableSpeakers } from "@/lib/roleplay";
 import { useNow, useStore } from "@/lib/store";
 import { Character } from "./Character";
 import { Confetti } from "./Confetti";
+import { StoryScene } from "./StoryScene";
 import { IconClose } from "./icons";
 import { Button, Loading, ProgressBar, useRequireProfile } from "./ui";
 
@@ -168,16 +169,18 @@ export function RolePlayer({ storyId }: { storyId: string }) {
         </button>
         <ProgressBar value={at / turns.length} label={translate(story.title, lang)} />
       </div>
-      <div className="mx-4 mb-3 flex items-end justify-around rounded-3xl bg-gradient-to-b from-sea-soft to-white px-6 pt-5 pb-2 shadow-card" aria-hidden>
-        <div className="flex flex-col items-center">
-          <Character name={partner} mood={partnerMood} size={124} />
-          <span className="text-xs font-bold text-muted">{partner}</span>
+      <StoryScene className="mx-4 mb-3 rounded-3xl shadow-card">
+        <div className="flex items-end justify-around px-6 pt-6 pb-2" aria-hidden>
+          <div className="flex flex-col items-center">
+            <Character name={partner} mood={partnerMood} size={128} />
+            <span className="rounded-full bg-white/80 px-2 text-xs font-bold text-night">{partner}</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Character name={role} mood={myMood} size={128} />
+            <span className="rounded-full bg-white/80 px-2 text-xs font-bold text-night">{role}</span>
+          </div>
         </div>
-        <div className="flex flex-col items-center">
-          <Character name={role} mood={myMood} size={124} />
-          <span className="text-xs font-bold text-muted">{role}</span>
-        </div>
-      </div>
+      </StoryScene>
       <ol className="flex-1 space-y-3 overflow-y-auto px-4 pb-4">
         {story.lines.slice(0, at).map((l, i) => (
           <li key={i} className={`flex ${l.speaker === role ? "justify-end" : ""}`}>

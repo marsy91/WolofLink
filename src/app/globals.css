@@ -230,7 +230,7 @@ body {
 @keyframes hop { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-10px); } 55% { transform: translateY(0); } 70% { transform: translateY(-4px); } }
 .character .blink { animation: blink 4.2s ease-in-out infinite; }
 .character .talk { animation: talk 260ms ease-in-out infinite; }
-.anim-breathe { animation: breathe 3.2s ease-in-out infinite; }
+.anim-breathe { animation: breathe 3.6s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
 .anim-hop { animation: hop 900ms cubic-bezier(0.3, 0.7, 0.3, 1) 2; }
 @keyframes nod { 0%, 100% { transform: rotate(0) translateY(0); } 25% { transform: rotate(0) translateY(3px); } 50% { transform: translateY(0); } 75% { transform: translateY(3px); } }
 @keyframes head-shake { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-7deg); } 40% { transform: rotate(6deg); } 60% { transform: rotate(-5deg); } 80% { transform: rotate(3deg); } }
@@ -241,9 +241,20 @@ body {
 .character .head-talking { animation: head-tilt 1.4s ease-in-out infinite; }
 .character .head-wave { animation: head-tilt 2.4s ease-in-out infinite; }
 .character .wave-arm { animation: wave-arm 520ms ease-in-out infinite; }
+/* Secondary motion: hair and headwraps follow the head a moment later. */
+@keyframes hair-follow { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2.5deg) translateY(0.6px); } }
+.character .hair-follow { animation: hair-follow 3.2s ease-in-out infinite; animation-delay: 0.25s; }
+/* Painted dialogue backdrop (components/StoryScene.tsx). */
+@keyframes ss-drift { from { transform: translateX(0); } to { transform: translateX(-30px); } }
+@keyframes ss-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }
+@keyframes ss-float { 0% { transform: translate(0, 0); opacity: 0; } 20% { opacity: 0.9; } 100% { transform: translate(24px, -60px); opacity: 0; } }
+.story-scene .ss-clouds { animation: ss-drift 18s ease-in-out infinite alternate; }
+.story-scene .ss-grass { animation: ss-sway 3.4s ease-in-out infinite; }
+.story-scene .ss-seed { animation: ss-float 7s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .character .blink, .character .talk, .anim-breathe, .anim-hop, .character .head, .character .wave-arm,
+  .character .blink, .character .talk, .anim-breathe, .anim-hop, .character .head, .character .wave-arm, .character .hair-follow,
+  .story-scene .ss-clouds, .story-scene .ss-grass, .story-scene .ss-seed,
   .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark { animation: none; }
   .anim-panel-left, .anim-panel-right { transform: skewX(-8deg); }
   .duel-spark { display: none; }
