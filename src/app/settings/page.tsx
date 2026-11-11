@@ -14,6 +14,7 @@ import { hasAiClips } from "@/lib/audio";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
+import { THEMES, THEME_SWATCH, themeOf } from "@/lib/theme";
 import { credits, loadVoices } from "@/lib/voices";
 
 import { APP_VERSION as VERSION } from "@/lib/version";
@@ -122,14 +123,11 @@ export default function Settings() {
 
         <fieldset className="rounded-2xl border border-sand-3 bg-white px-4 py-3">
           <legend className="px-1 font-display text-lg font-extrabold text-night">{t("settings.theme")}</legend>
-          <div className="grid grid-cols-2 gap-3 pt-1">
-            {(
-              [
-                ["classic", t("theme.classic"), ["#1d2550", "#b9481f", "#f2a93b"]],
-                ["senegal", t("theme.senegal"), ["#00853f", "#fdef42", "#e31b23"]],
-              ] as const
-            ).map(([id, label, colours]) => {
-              const on = (progress.settings.theme ?? "classic") === id;
+          <div className="grid grid-cols-3 gap-2 pt-1">
+            {THEMES.map((id) => {
+              const label = t(`theme.${id}`);
+              const colours = THEME_SWATCH[id];
+              const on = themeOf(progress.settings.theme) === id;
               return (
                 <button
                   key={id}

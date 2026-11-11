@@ -544,6 +544,7 @@ export const de: Dictionary = {
   "remind.nBody": "Ein paar Minuten heute halten deine Serie am Leben.",
   "settings.haptics": "Vibration",
   "settings.theme": "Farbschema",
+  "theme.lacrose": "Lac Rose",
   "theme.classic": "Klassisch",
   "theme.senegal": "Senegal 🇸🇳",
   "story.label": "Dialog",

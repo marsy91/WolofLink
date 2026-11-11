@@ -27,7 +27,7 @@ export const viewport: Viewport = {
   themeColor: "#1d2550",
 };
 
-const EARLY_THEME = `try{var s=(JSON.parse(localStorage.getItem("woloflink.progress.v1")||"{}").settings)||{},r=document.documentElement,m=s.mode||"system";if(m==="dark"||(m==="system"&&matchMedia("(prefers-color-scheme: dark)").matches))r.dataset.mode="dark";if(s.theme==="senegal")r.dataset.theme="senegal"}catch(e){}`;
+const EARLY_THEME = `try{var s=(JSON.parse(localStorage.getItem("woloflink.progress.v1")||"{}").settings)||{},r=document.documentElement,m=s.mode||"system";if(m==="dark"||(m==="system"&&matchMedia("(prefers-color-scheme: dark)").matches))r.dataset.mode="dark";if(s.theme!=="classic")r.dataset.theme=s.theme==="senegal"?"senegal":"lacrose"}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -342,6 +342,20 @@ body {
 .season-sport { background: linear-gradient(135deg, #0b4a2b, #00853f 60%, #c8102e); color: #fff; }
 .season-nature { background: linear-gradient(135deg, #2f7d32, #4c9a50); color: #fff; }
 
+/* Lac Rose theme (the default, Settings → Theme): a soft rose ground with a plum accent,
+   after Senegal's pink lake. Navy stays the ink; plum replaces clay for buttons and links.
+   All text colours keep at least 4.5:1 contrast on the rose ground and on white cards. */
+:root[data-theme="lacrose"]:not([data-season="flag"]) {
+  --color-sand: #f6f1f4;
+  --color-sand-2: #efe4ea;
+  --color-sand-3: #e3d3dd;
+  --color-clay: #7a3b69;
+  --color-clay-2: #5e2d51;
+  --color-sun-soft: #f6e3ec;
+  --color-dusk: #7a3b69;
+  --color-dusk-soft: #f3e4ee;
+}
+
 /* Dark mode (Settings → Appearance, or the phone's setting). Neutrals turn dark; the
    "night" colour flips to a light ink, so headings stay readable and the dark cards
    (bg-night + text-sand) become light cards with dark text. Brand colours are a
@@ -403,3 +417,17 @@ body {
 /* The welcome splash stays dark navy in both modes. */
 :root[data-mode="dark"] .splash { --color-night: #1d2550; --color-sand: #f8f6f2; }
 :root[data-mode="dark"][data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }
+
+/* Lac Rose in dark mode: deep plum-navy surfaces, rose text accents. */
+:root[data-mode="dark"][data-theme="lacrose"]:not([data-season="flag"]) {
+  --color-sand: #151224;
+  --color-sand-2: #221a35;
+  --color-sand-3: #3a2d50;
+  --color-clay: #9a4f89;
+  --color-clay-2: #7a3b69;
+  --color-dusk: #9a4f89;
+  --color-sun-soft: #3a2236;
+  --color-dusk-soft: #33213a;
+}
+:root[data-mode="dark"][data-theme="lacrose"]:not([data-season="flag"]):not([data-theme="senegal"]) .text-clay,
+:root[data-mode="dark"][data-theme="lacrose"]:not([data-season="flag"]):not([data-theme="senegal"]) .text-dusk { color: #e3a9d4; }

@@ -542,6 +542,7 @@ export const es: Dictionary = {
   "remind.nBody": "Unos minutos hoy mantienen viva tu racha.",
   "settings.haptics": "Vibración",
   "settings.theme": "Tema",
+  "theme.lacrose": "Lac Rose",
   "theme.classic": "Clásico",
   "theme.senegal": "Senegal 🇸🇳",
   "story.label": "Diálogo",

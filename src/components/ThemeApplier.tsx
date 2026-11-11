@@ -4,14 +4,14 @@
 import { useEffect, useState } from "react";
 import { useSeason } from "@/lib/seasons";
 import { useStore } from "@/lib/store";
+import { THEME_BAR, themeOf } from "@/lib/theme";
 
-const BAR = { classic: "#1d2550", senegal: "#0b4a2b" } as const;
 const DARK_BAR = "#121527";
 
 /** Applies the chosen colour theme (Settings → Theme) and any seasonal theme to the whole app. */
 export function ThemeApplier() {
   const { progress } = useStore();
-  const theme = progress.settings.theme ?? "classic";
+  const theme = themeOf(progress.settings.theme);
   const look = useSeason()?.look;
   const mode = progress.settings.mode ?? "system";
   const [systemDark, setSystemDark] = useState(false);
@@ -36,9 +36,9 @@ export function ThemeApplier() {
   }, [look]);
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === "senegal") root.dataset.theme = "senegal";
-    else delete root.dataset.theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? DARK_BAR : BAR[theme]);
+    if (theme === "classic") delete root.dataset.theme;
+    else root.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? DARK_BAR : THEME_BAR[theme]);
   }, [theme, dark]);
   return null;
 }

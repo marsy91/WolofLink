@@ -62,8 +62,8 @@ export interface Progress {
     autoplay: boolean;
     haptics: boolean;
     reminder: { enabled: boolean; hour: number; minute: number };
-    /** Colour theme: the classic WolofLink palette or the colours of the Senegalese flag. */
-    theme?: "classic" | "senegal";
+    /** Colour theme: Lac Rose (the default), the classic WolofLink palette or the Senegalese flag (src/lib/theme.ts). */
+    theme?: "lacrose" | "classic" | "senegal";
     /** Notify the evening before holidays and important dates (Holidays screen). */
     holidayReminders?: boolean;
     /** Seasonal themes for holidays and special events (on unless switched off). */

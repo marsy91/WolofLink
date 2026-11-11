@@ -538,6 +538,7 @@ export const en = {
   "remind.nBody": "A few minutes today keeps your streak alive.",
   "settings.haptics": "Vibration",
   "settings.theme": "Theme",
+  "theme.lacrose": "Lac Rose",
   "theme.classic": "Classic",
   "theme.senegal": "Senegal 🇸🇳",
   "story.label": "Dialogue",
