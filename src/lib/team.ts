@@ -157,3 +157,64 @@ export function csvFileName(orgName: string, now: number): string {
 export function certificateMembers(members: TeamMember[], min = 1): TeamMember[] {
   return sortTeam(members.filter((m) => m.lessons >= min), "name");
 }
+
+export type SaveResult = "shared" | "downloaded" | "copied" | "failed";
+
+interface SaveEnv {
+  share?: (data: { files: File[]; title: string }) => Promise<void>;
+  canShare?: (data: { files: File[] }) => boolean;
+  native: boolean;
+  download?: (blob: Blob, name: string) => void;
+  copy?: (text: string) => Promise<void>;
+}
+
+function browserEnv(): SaveEnv {
+  const nav = typeof navigator !== "undefined" ? navigator : undefined;
+  const w = typeof window !== "undefined" ? (window as { Capacitor?: { isNativePlatform?: () => boolean } }) : undefined;
+  return {
+    share: nav?.share ? (d) => nav.share(d) : undefined,
+    canShare: nav?.canShare ? (d) => nav.canShare(d) : undefined,
+    native: !!w?.Capacitor?.isNativePlatform?.(),
+    download: (blob, name) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    },
+    copy: nav?.clipboard ? (text) => nav.clipboard.writeText(text) : undefined,
+  };
+}
+
+/**
+ * Saves the CSV the best way the phone or browser allows: the share sheet (to email,
+ * WhatsApp or Drive), a download in a browser, or the clipboard as a last resort.
+ */
+export async function saveCsv(csv: string, name: string, env: SaveEnv = browserEnv()): Promise<SaveResult> {
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  if (env.share && typeof File !== "undefined") {
+    const file = new File([blob], name, { type: "text/csv" });
+    if (!env.canShare || env.canShare({ files: [file] })) {
+      try {
+        await env.share({ files: [file], title: name });
+        return "shared";
+      } catch (e) {
+        if (e instanceof DOMException && e.name === "AbortError") return "failed";
+      }
+    }
+  }
+  if (!env.native && env.download) {
+    env.download(blob, name);
+    return "downloaded";
+  }
+  if (env.copy) {
+    try {
+      await env.copy(csv.replace(/^﻿/, ""));
+      return "copied";
+    } catch {
+      // fall through
+    }
+  }
+  return "failed";
+}

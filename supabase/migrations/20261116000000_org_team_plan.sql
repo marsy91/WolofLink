@@ -6,7 +6,9 @@
 --    in it). The app no longer uses that function: organisations are created in the owner console
 --    (owner_create_organisation). It is now owner-only.
 -- 2. Members could read every column of their organisation, including the owner's private notes,
---    plan and paid-until date. They can now read only its id and name.
+--    plan and paid-until date. They can now read only its id, name, team code, status and seats.
+--    (The website's organisation dashboard, woloflink.com/org, reads those five; members already
+--    know the team code because they joined with it.)
 -- 3. org_admin_summary(): the organisations the caller administers, with the team code, plan,
 --    seats, member count and whether the Team plan is active (shown on the dashboard).
 -- 4. organisation_report() now needs an active Team plan (pilot or paid, not suspended, not past
@@ -17,9 +19,9 @@
 -- ── 1. Close the create_organisation loophole ───────────────────────────────
 revoke execute on function public.create_organisation(text, text) from authenticated;
 
--- ── 2. Members see only the organisation's id and name ──────────────────────
+-- ── 2. Members see only the organisation's id, name, team code, status and seats ──
 revoke select on public.organisations from authenticated;
-grant select (id, name) on public.organisations to authenticated;
+grant select (id, name, join_code, status, seats) on public.organisations to authenticated;
 
 -- ── Helper: is the organisation's Team plan active today? ───────────────────
 create or replace function private.team_plan_active(org uuid) returns boolean

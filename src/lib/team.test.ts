@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   activeWithin,
   certificateMembers,
+  saveCsv,
   csvCell,
   csvFileName,
   sortTeam,
@@ -34,8 +35,8 @@ describe("team dashboard", () => {
 
   it("counts who practised this week", () => {
     const team = [member({ lastActive: day(1), lessons: 4 }), member({ lastActive: day(9), lessons: 1 }), member({ lessons: 0 })];
-    expect(activeWithin(team[0], NOW)).toBe(true);
-    expect(activeWithin(team[1], NOW)).toBe(false);
+    expect(activeWithin(team[0]!, NOW)).toBe(true);
+    expect(activeWithin(team[1]!, NOW)).toBe(false);
     expect(teamStats(team, NOW)).toEqual({ members: 3, activeThisWeek: 1, totalLessons: 5, averageLessons: 1.7 });
     expect(teamStats([], NOW).averageLessons).toBe(0);
   });
@@ -72,5 +73,34 @@ describe("team dashboard", () => {
   it("gives certificates only to members who finished a lesson", () => {
     const team = [member({ name: "Zed", lessons: 3 }), member({ name: "Amy", lessons: 0 }), member({ name: "Bo", lessons: 1 })];
     expect(certificateMembers(team).map((m) => m.name)).toEqual(["Bo", "Zed"]);
+  });
+});
+
+describe("saving the CSV", () => {
+  const csv = "﻿Name\r\nAwa\r\n";
+  it("uses the share sheet when files can be shared", async () => {
+    const shared: string[] = [];
+    const r = await saveCsv(csv, "t.csv", { native: true, share: async (d) => void shared.push(d.files[0]!.name), canShare: () => true });
+    expect(r).toBe("shared");
+    expect(shared).toEqual(["t.csv"]);
+  });
+  it("downloads in a browser that can't share files", async () => {
+    const names: string[] = [];
+    const r = await saveCsv(csv, "t.csv", { native: false, canShare: () => false, share: async () => {}, download: (_b, n) => void names.push(n) });
+    expect(r).toBe("downloaded");
+    expect(names).toEqual(["t.csv"]);
+  });
+  it("copies the text on a phone with no share sheet, without the byte-order mark", async () => {
+    let copied = "";
+    const r = await saveCsv(csv, "t.csv", { native: true, copy: async (t) => void (copied = t) });
+    expect(r).toBe("copied");
+    expect(copied).toBe("Name\r\nAwa\r\n");
+  });
+  it("reports failure when nothing works, and stops if the learner cancels sharing", async () => {
+    expect(await saveCsv(csv, "t.csv", { native: true })).toBe("failed");
+    const cancel = async () => {
+      throw new DOMException("cancelled", "AbortError");
+    };
+    expect(await saveCsv(csv, "t.csv", { native: false, share: cancel, download: () => {} })).toBe("failed");
   });
 });

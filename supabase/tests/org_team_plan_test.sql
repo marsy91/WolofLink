@@ -23,12 +23,17 @@ begin
   perform set_config('request.jwt.claims', json_build_object('sub', b, 'role', 'authenticated')::text, true);
   ok := false; begin perform public.create_organisation('Free for all', 'B'); exception when insufficient_privilege then ok := true; end;
   assert ok, 'learners cannot call create_organisation';
-  -- Members see the organisation's name, not the owner's notes or the plan.
+  -- Members see the name, team code, status and seats, not the owner's notes, the plan or the paid-until date.
   select count(*) into n from public.organisations where name = 'Test NGO'; assert n = 1, 'member sees the name';
   ok := false; begin perform (select o.notes from public.organisations o limit 1); exception when insufficient_privilege then ok := true; end;
   assert ok, 'member cannot read notes';
-  ok := false; begin perform (select o.join_code from public.organisations o limit 1); exception when insufficient_privilege then ok := true; end;
-  assert ok, 'member cannot read the team code column directly';
+  ok := false; begin perform (select o.plan from public.organisations o limit 1); exception when insufficient_privilege then ok := true; end;
+  assert ok, 'member cannot read the plan';
+  ok := false; begin perform (select o.paid_until from public.organisations o limit 1); exception when insufficient_privilege then ok := true; end;
+  assert ok, 'member cannot read the paid-until date';
+  -- What the website dashboard reads still works.
+  select count(*) into n from public.organisations o where o.join_code = code and o.status = 'active' and o.seats = 10;
+  assert n = 1, 'member can read the team code, status and seats';
   -- A plain member is not an admin of anything.
   select count(*) into n from public.org_admin_summary(); assert n = 0, 'member has no admin summary';
 

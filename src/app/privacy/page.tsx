@@ -68,8 +68,9 @@ export default function Privacy() {
         <Section title="Organisations (team codes)">
           If you join an organisation (for example your NGO, school or employer) with a team code, its administrators
           can see the name you chose, your XP, the number of lessons completed, your streak and when you last practised.
-          They never see your email address or anything else. You can leave an organisation at any time in Profile →
-          Account, and they stop seeing your progress straight away. The WolofLink owner can manage organisations and
+          They never see your email address or anything else. Administrators can download that summary as a spreadsheet
+          or print certificates with your chosen name and number of lessons. You can leave an organisation at any time in
+          Profile → Account, and they stop seeing your progress straight away. The WolofLink owner can manage organisations and
           accounts to run the service, for example to remove abuse. The owner may give a small number of WolofLink team
           members limited access for support (for example to look up an account by email when you write to us). They
           are bound by confidentiality, every action is logged, and deleting an account always needs the owner&apos;s
