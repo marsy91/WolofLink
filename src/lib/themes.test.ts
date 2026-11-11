@@ -52,7 +52,7 @@ describe("themes", () => {
 
   it("keeps the dark base in step with globals.css", () => {
     const fromCss = block(':root[data-mode="dark"] {');
-    for (const [token, hex] of Object.entries(fromCss)) expect([token, DARK_BASE[token as Token]]).toEqual([token, hex]);
+    for (const [token, hex] of Object.entries(fromCss)) expect([token, DARK_BASE[token as Exclude<Token, "card">]]).toEqual([token, hex]);
   });
 
   it.each(THEME_IDS.filter((id) => id !== "senegal"))("%s meets WCAG AA for every text colour", (id) => {
@@ -132,7 +132,7 @@ describe("themes", () => {
       const root = { dataset: {} as Record<string, string>, style: { setProperty: (k: string, v: string) => (props[k] = v) } };
       const fn = new Function("localStorage", "document", "matchMedia", earlyThemeScript("k"));
       fn({ getItem: () => stored }, { documentElement: root }, () => ({ matches: prefersDark }));
-      return { ...root.dataset, props };
+      return { theme: root.dataset.theme, mode: root.dataset.mode, props };
     }
 
     it("gives a brand-new learner the default theme", () => {
