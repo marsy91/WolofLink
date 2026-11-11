@@ -28,6 +28,8 @@ import {
   type Overview,
   type PersonRow,
   type RecorderRow,
+  type FeedbackRow,
+  type FeedbackSummary,
   type ReportRow,
   type UserReportRow,
   type SeasonRow,
@@ -1095,6 +1097,7 @@ function ReportsTab({ say }: { say: Say }) {
           ))}
         </div>
       </Card>
+      <FeedbackInbox show={show} say={say} />
       <PeopleReports show={show} say={say} />
       <h3 className="mt-2 font-display text-lg font-extrabold text-night">Word reports</h3>
       {!rows ? <Loading /> : null}
@@ -1116,6 +1119,84 @@ function ReportsTab({ say }: { say: Say }) {
                   Dismiss
                 </Button>
               </>
+            ) : (
+              <Button variant="ghost" onClick={() => void setStatus(r, "open")}>
+                Reopen
+              </Button>
+            )}
+          </div>
+        </Card>
+      ))}
+    </>
+  );
+}
+
+const FEEDBACK_LABEL: Record<FeedbackRow["kind"], string> = { idea: "Idea", bug: "Something's broken", wolof: "Wolof correction", other: "Other" };
+
+/** Feedback from Profile → Send feedback and the end of lessons. */
+function FeedbackInbox({ show, say }: { show: "open" | "all"; say: Say }) {
+  const [kind, setKind] = useState<FeedbackRow["kind"] | "any">("any");
+  const [rows, reload] = useLoad<FeedbackRow[]>(() => owner.feedback(show), say);
+  const [summary, reloadSummary] = useLoad<FeedbackSummary[]>(() => owner.feedbackSummary(), say);
+  useEffect(() => reload(), [show, reload]);
+  const setStatus = async (r: FeedbackRow, status: FeedbackRow["status"]) => {
+    try {
+      await owner.setFeedbackStatus(r.id, status);
+      say(status === "open" ? "Feedback reopened." : `Feedback marked ${status}.`);
+      reload();
+      reloadSummary();
+    } catch (e) {
+      say(errText(e), false);
+    }
+  };
+  const s = summary?.[0];
+  const shown = (rows ?? []).filter((r) => kind === "any" || r.kind === kind);
+  return (
+    <>
+      <h3 className="mt-2 font-display text-lg font-extrabold text-night">Feedback</h3>
+      <Card>
+        <p className="text-sm text-muted">
+          Last 30 days: {s?.total ?? 0} message(s), {s?.open_count ?? 0} open
+          {s?.rated ? ` · average ${s.average} ★ from ${s.rated} rating(s)` : ""}. An email shows only when the learner
+          ticked “you can reply to me”. Pause it in Settings → Switches (“feedback”).
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {(["any", "idea", "bug", "wolof", "other"] as const).map((v) => (
+            <button
+              key={v}
+              type="button"
+              aria-pressed={kind === v}
+              onClick={() => setKind(v)}
+              className={`rounded-full border-2 px-3 py-1 text-sm font-bold ${kind === v ? "border-night bg-night text-sand" : "border-sand-3 bg-white text-night"}`}
+            >
+              {v === "any" ? "All kinds" : FEEDBACK_LABEL[v]}
+            </button>
+          ))}
+        </div>
+      </Card>
+      {!rows ? <Loading /> : null}
+      {rows && shown.length === 0 ? <p className="text-muted">{show === "open" ? "No open feedback." : "No feedback yet."}</p> : null}
+      {shown.map((r) => (
+        <Card key={r.id}>
+          <p className="font-display font-extrabold text-night">
+            {FEEDBACK_LABEL[r.kind]}
+            {r.rating ? <span className="ml-2 text-sun-2">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span> : null}
+          </p>
+          <p className="mt-1 whitespace-pre-wrap text-night">“{r.message}”</p>
+          <p className="mt-1 text-xs text-muted">
+            {new Date(r.created_at).toLocaleString()} · {r.lang ?? "?"} · app {r.app_version ?? "?"} · from {r.screen ?? "?"} · {r.status}
+          </p>
+          {r.reply_to ? (
+            <p className="mt-1 text-sm">
+              Reply to: <a className="font-bold text-clay underline" href={`mailto:${r.reply_to}`}>{r.reply_to}</a>
+            </p>
+          ) : null}
+          <div className="mt-2 flex flex-wrap gap-2">
+            {r.status !== "done" ? <Button onClick={() => void setStatus(r, "done")}>Done</Button> : null}
+            {r.status === "open" ? (
+              <Button variant="ghost" onClick={() => void setStatus(r, "read")}>
+                Mark read
+              </Button>
             ) : (
               <Button variant="ghost" onClick={() => void setStatus(r, "open")}>
                 Reopen
@@ -1691,6 +1772,7 @@ const SWITCH_HELP: Record<string, string> = {
   supporter: "The Supporter purchase screen (when Supporter is on in the build)",
   reports: "The “Report a problem” button",
   community: "City leagues, learners near you and friend requests",
+  feedback: "Profile → Send feedback (ideas, bugs, Wolof corrections, star ratings)",
 };
 
 const OPT_IN_HELP: Record<string, string> = {

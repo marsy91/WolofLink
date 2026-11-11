@@ -147,6 +147,28 @@ const NOTICES: Record<string, Record<NoticeKind, FeatureNotice>> = {
       ]),
     },
   },
+  feedback: {
+    back: {
+      title: tx(["Feedback is open again", "L'envoi d'avis est rouvert", "Los comentarios vuelven a estar abiertos", "Feedback ist wieder möglich", "I commenti sono di nuovo aperti"]),
+      message: tx([
+        "Tell us what you think from Profile → Send feedback. We read every message.",
+        "Donnez votre avis depuis Profil → Donner votre avis. Nous lisons chaque message.",
+        "Cuéntanos qué piensas en Perfil → Enviar comentarios. Leemos todos los mensajes.",
+        "Sag uns deine Meinung unter Profil → Feedback senden. Wir lesen jede Nachricht.",
+        "Dicci cosa ne pensi da Profilo → Invia un commento. Leggiamo ogni messaggio.",
+      ]),
+    },
+    paused: {
+      title: tx(["Feedback is paused for a moment", "L'envoi d'avis est en pause un instant", "Los comentarios están en pausa un momento", "Feedback ist kurz pausiert", "I commenti sono in pausa per un momento"]),
+      message: tx([
+        "We'll switch it back on soon.",
+        "Nous le réactiverons bientôt.",
+        "Lo volveremos a activar pronto.",
+        "Wir schalten es bald wieder ein.",
+        "Lo riattiveremo presto.",
+      ]),
+    },
+  },
   bot_duels: {
     back: {
       title: tx(["New: duel the computer", "Nouveau : duel contre l'ordinateur", "Novedad: duelo contra el ordenador", "Neu: Duell gegen den Computer", "Novità: sfida il computer"]),

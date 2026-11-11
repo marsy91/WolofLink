@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { BADGE_GLYPHS, IconChart, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
+import { BADGE_GLYPHS, IconChart, IconDialogue, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
@@ -20,6 +20,7 @@ export default function Profile() {
   const isOwner = useIsOwner();
   const consoleRole = useConsoleRole();
   const supporterOff = useSwitchOff("supporter");
+  const feedbackPaused = useSwitchOff("feedback");
   const [recorder] = useRecorderStatus();
   const { premium, unlockAll, available } = usePremium();
   const now = useNow();
@@ -112,6 +113,18 @@ export default function Profile() {
           <span className="text-sm text-muted">{t("insights.card")}</span>
         </span>
       </Link>
+
+      {feedbackPaused ? null : (
+        <Link href="/feedback/?from=/profile/" className="mb-4 flex items-center gap-3 rounded-2xl border border-sun/40 bg-white p-4 active:translate-y-[2px]">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sun-soft text-sun-2">
+            <IconDialogue size={22} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-display font-extrabold text-night">{t("feedback.cardTitle")}</span>
+            <span className="text-sm text-muted">{t("feedback.card")}</span>
+          </span>
+        </Link>
+      )}
 
       <section className="mb-6 flex gap-3 rounded-2xl bg-night p-4 text-sand" aria-labelledby="shield-h">
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-sun">

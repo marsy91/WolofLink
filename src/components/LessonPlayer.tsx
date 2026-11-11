@@ -21,6 +21,7 @@ import {
 } from "@/lib/engine";
 import { haptic } from "@/lib/native";
 import { goTo } from "@/lib/nav";
+import { useSwitchOff } from "@/lib/notices";
 import { canOpenLesson, isPremiumUnit } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
 import {
@@ -63,6 +64,7 @@ type Props = { mode: "lesson"; lessonId: string } | { mode: "review"; drill?: re
 export function LessonPlayer(props: Props) {
   const allowed = useRequireProfile();
   const { progress, lang, update, t } = useStore();
+  const feedbackPaused = useSwitchOff("feedback");
   const router = useRouter();
   const now = useNow();
 
@@ -361,6 +363,14 @@ export function LessonPlayer(props: Props) {
           <Button block onClick={exit} autoFocus>
             {t("common.continue")}
           </Button>
+          {props.mode === "lesson" && !feedbackPaused ? (
+            <Link
+              href={`/feedback/?from=/lesson/${props.lessonId}/`}
+              className="mt-4 block text-center text-sm font-bold text-muted underline"
+            >
+              {t("feedback.afterLesson")}
+            </Link>
+          ) : null}
         </div>
       </main>
     );
