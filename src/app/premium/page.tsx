@@ -8,7 +8,7 @@ import { IconCheck, IconClose, IconGem } from "@/components/icons";
 import { Button, Loading, RedirectTo, useRequireProfile } from "@/components/ui";
 import { course } from "@/content/course";
 import type { UiKey } from "@/i18n";
-import type { PlanKind } from "@/lib/billing";
+import type { BillingProblem, PlanKind, ProStatus } from "@/lib/billing";
 import { PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { useSwitchOff } from "@/lib/notices";
 import { Paused } from "@/components/Paused";
@@ -23,6 +23,14 @@ const PLAN_LABEL: Record<PlanKind, UiKey> = {
   other: "premium.title",
 };
 const ORDER: PlanKind[] = ["annual", "monthly", "lifetime", "other"];
+const PROBLEM: Record<BillingProblem, UiKey> = {
+  network: "premium.err.network",
+  pending: "premium.pending",
+  alreadyOwned: "premium.err.alreadyOwned",
+  notAllowed: "premium.err.notAllowed",
+  store: "premium.err.store",
+  unknown: "premium.failed",
+};
 
 /** Neither Premium nor Supporter is on in free builds (src/lib/features.ts): send old links to the path. */
 export default function PremiumRoute() {
@@ -33,17 +41,28 @@ export default function PremiumRoute() {
 
 function PremiumPage() {
   const allowed = useRequireProfile();
-  const { t } = useStore();
+  const { t, lang } = useStore();
   const p = usePremium();
   const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ key: UiKey; ok: boolean } | null>(null);
+  // The RevenueCat paywall is the main way to buy; the plan list below is the fallback if it can't open.
+  const [fallback, setFallback] = useState(false);
+  const [status, setStatus] = useState<ProStatus | null>(null);
   const { available, premium, loadPlans } = p;
 
   useEffect(() => {
-    if (available && !premium) void loadPlans();
-  }, [available, premium, loadPlans]);
+    if (available && !premium && fallback) void loadPlans();
+  }, [available, premium, fallback, loadPlans]);
+
+  useEffect(() => {
+    let alive = true;
+    if (available && premium) void p.status().then((s) => alive && setStatus(s));
+    return () => {
+      alive = false;
+    };
+  }, [available, premium]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!allowed) return <Loading />;
 
@@ -56,15 +75,35 @@ function PremiumPage() {
     setMessage(null);
     const result = await p.purchase(chosen);
     setBusy(false);
-    if (result === "failed") setMessage({ key: "premium.failed", ok: false });
+    if (result === "pending") setMessage({ key: "premium.pending", ok: true });
+    if (result === "failed") setMessage({ key: PROBLEM[p.problem() ?? "unknown"], ok: false });
+  };
+
+  const openPaywall = async () => {
+    setBusy(true);
+    setMessage(null);
+    const outcome = await p.paywall();
+    setBusy(false);
+    if (outcome === "restored") setMessage({ key: SUPPORTER_ENABLED ? "supporter.restored" : "premium.restored", ok: true });
+    if (outcome === "error") setFallback(true);
+  };
+
+  const manage = async () => {
+    setBusy(true);
+    const opened = await p.customerCenter();
+    setBusy(false);
+    if (!opened) setMessage({ key: "premium.manage", ok: false });
   };
 
   const restore = async () => {
     setBusy(true);
     const on = await p.restore();
     setBusy(false);
+    const problem = on ? null : p.problem();
     setMessage(
-      on ? { key: SUPPORTER_ENABLED ? "supporter.restored" : "premium.restored", ok: true } : { key: "premium.nothingToRestore", ok: false },
+      on
+        ? { key: SUPPORTER_ENABLED ? "supporter.restored" : "premium.restored", ok: true }
+        : { key: problem ? PROBLEM[problem] : "premium.nothingToRestore", ok: false },
     );
   };
 
@@ -126,10 +165,28 @@ function PremiumPage() {
       {premium ? (
         <div className="rounded-3xl bg-sun-soft p-5 text-center">
           <p className="font-display text-xl font-extrabold text-night">{t(supporter ? "supporter.thanks" : "premium.thanks")}</p>
-          <p className="mt-2 text-sm text-muted">{t("premium.manage")}</p>
+          {status?.active ? (
+            <p className="mt-2 text-sm font-bold text-night">
+              {t(PLAN_LABEL[status.kind ?? "other"])}
+              {status.expires
+                ? ` · ${t(status.willRenew ? "premium.renews" : "premium.ends", { date: new Date(status.expires).toLocaleDateString(lang, { dateStyle: "medium" }) })}`
+                : ""}
+            </p>
+          ) : null}
+          {status?.active ? (
+            <Button block variant="secondary" className="mt-4" disabled={busy} onClick={() => void manage()}>
+              {t("premium.manageButton")}
+            </Button>
+          ) : (
+            <p className="mt-2 text-sm text-muted">{t("premium.manage")}</p>
+          )}
         </div>
       ) : !available ? (
         <p className="rounded-2xl bg-white p-4 text-muted">{t(supporter ? "supporter.unavailable" : "premium.unavailable")}</p>
+      ) : !fallback ? (
+        <Button block disabled={busy} onClick={() => void openPaywall()}>
+          {t("premium.seePlans")}
+        </Button>
       ) : p.loadingPlans ? (
         <p className="text-muted" role="status">
           {t("premium.loading")}

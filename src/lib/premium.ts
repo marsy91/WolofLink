@@ -14,7 +14,7 @@ import { PREMIUM_ENABLED } from "./features";
  * Both are fixed at build time.
  */
 export const FREE_UNITS = PREMIUM_ENABLED ? Number(process.env.NEXT_PUBLIC_FREE_UNITS) || 3 : course.units.length;
-export const ENTITLEMENT = "premium";
+export const ENTITLEMENT = "woloflink_pro";
 
 const unitIndexOfLesson = new Map(course.units.flatMap((u, i) => u.lessons.map((l) => [l.id, i] as const)));
 const unitIndexOfStory = new Map(course.units.flatMap((u, i) => (u.story ? [[u.story.id, i] as const] : [])));

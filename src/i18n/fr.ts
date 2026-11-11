@@ -668,4 +668,13 @@ export const fr: Dictionary = {
   "feedback.cardTitle": "Donner votre avis",
   "feedback.card": "Idées, problèmes ou corrections de wolof",
   "feedback.afterLesson": "Un souci dans cette leçon ? Dites-le-nous",
+  "premium.seePlans": "Voir les offres",
+  "premium.pending": "Votre paiement est en attente de validation. Pro s'activera dès que la boutique l'aura confirmé.",
+  "premium.err.network": "Pas de connexion. Vérifiez votre accès à Internet et réessayez. Vous n'avez pas été débité.",
+  "premium.err.alreadyOwned": "Vous possédez déjà cet achat. Touchez « Restaurer les achats » pour l'activer.",
+  "premium.err.notAllowed": "Les achats ne sont pas autorisés sur cet appareil ou ce compte (par exemple, contrôle parental).",
+  "premium.err.store": "La boutique a rencontré un problème. Réessayez dans un instant. Vous n'avez pas été débité.",
+  "premium.manageButton": "Gérer l'abonnement",
+  "premium.renews": "se renouvelle le {date}",
+  "premium.ends": "se termine le {date}",
 };
