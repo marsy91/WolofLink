@@ -690,4 +690,13 @@ export const it: Dictionary = {
   "feedback.cardTitle": "Invia un commento",
   "feedback.card": "Idee, problemi o correzioni di wolof",
   "feedback.afterLesson": "Qualcosa non va in questa lezione? Diccelo",
+  "premium.seePlans": "Vedi i piani",
+  "premium.pending": "Il tuo pagamento è in attesa di approvazione. Pro si attiverà appena lo store lo conferma.",
+  "premium.err.network": "Nessuna connessione. Controlla internet e riprova. Non ti è stato addebitato nulla.",
+  "premium.err.alreadyOwned": "Lo possiedi già. Tocca «Ripristina acquisti» per attivarlo.",
+  "premium.err.notAllowed": "Gli acquisti non sono consentiti su questo dispositivo o account (ad esempio, controllo genitori).",
+  "premium.err.store": "Lo store ha avuto un problema. Riprova tra poco. Non ti è stato addebitato nulla.",
+  "premium.manageButton": "Gestisci l'abbonamento",
+  "premium.renews": "si rinnova il {date}",
+  "premium.ends": "termina il {date}",
 };

@@ -692,4 +692,13 @@ export const de: Dictionary = {
   "feedback.cardTitle": "Feedback senden",
   "feedback.card": "Ideen, Probleme oder Wolof-Korrekturen",
   "feedback.afterLesson": "Stimmt etwas in dieser Lektion nicht? Sag es uns",
+  "premium.seePlans": "Tarife ansehen",
+  "premium.pending": "Deine Zahlung wartet auf Bestätigung. Pro wird aktiviert, sobald der Store sie bestätigt.",
+  "premium.err.network": "Keine Verbindung. Prüfe dein Internet und versuch es erneut. Es wurde nichts abgebucht.",
+  "premium.err.alreadyOwned": "Du besitzt das bereits. Tippe auf „Käufe wiederherstellen“, um es zu aktivieren.",
+  "premium.err.notAllowed": "Käufe sind auf diesem Gerät oder Konto nicht erlaubt (zum Beispiel Jugendschutz).",
+  "premium.err.store": "Der Store hatte ein Problem. Bitte versuch es gleich noch einmal. Es wurde nichts abgebucht.",
+  "premium.manageButton": "Abo verwalten",
+  "premium.renews": "verlängert sich am {date}",
+  "premium.ends": "endet am {date}",
 };

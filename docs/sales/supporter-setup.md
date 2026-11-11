@@ -1,5 +1,9 @@
 # Supporter option: setup (about 45 minutes, one time)
 
+> **Updated November 2026:** the products are now `monthly`, `yearly` and `lifetime` with the
+> entitlement **`woloflink_pro`**, sold through the RevenueCat paywall. Follow
+> **`docs/sales/revenuecat-setup.md`**; the product IDs and entitlement name below are out of date.
+
 Everything in WolofLink stays free. **Supporters** pay an optional subscription and get a
 💛 badge, unlimited drops, and the good feeling of paying for native-speaker recordings and
 new content. The code is built and switched **off** until the steps below are done.
