@@ -717,4 +717,13 @@ export const fr: Dictionary = {
   "team.certHeading": "Certificat de participation",
   "team.certFor": "a terminé {n} leçons de wolof avec WolofLink, au sein de {org}",
   "team.certNote": "Délivré via le tableau de bord d'équipe WolofLink. Ce n'est pas un diplôme de langue officiel.",
+  "premium.seePlans": "Voir les offres",
+  "premium.pending": "Votre paiement est en attente de validation. Pro s'activera dès que la boutique l'aura confirmé.",
+  "premium.err.network": "Pas de connexion. Vérifiez votre accès à Internet et réessayez. Vous n'avez pas été débité.",
+  "premium.err.alreadyOwned": "Vous possédez déjà cet achat. Touchez « Restaurer les achats » pour l'activer.",
+  "premium.err.notAllowed": "Les achats ne sont pas autorisés sur cet appareil ou ce compte (par exemple, contrôle parental).",
+  "premium.err.store": "La boutique a rencontré un problème. Réessayez dans un instant. Vous n'avez pas été débité.",
+  "premium.manageButton": "Gérer l'abonnement",
+  "premium.renews": "se renouvelle le {date}",
+  "premium.ends": "se termine le {date}",
 };

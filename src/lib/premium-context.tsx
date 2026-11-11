@@ -9,7 +9,7 @@
  */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { useAccount } from "./account";
-import { getBilling, type Plan, type PurchaseResult } from "./billing";
+import { getBilling, lastBillingProblem, type BillingProblem, type PaywallOutcome, type Plan, type ProStatus, type PurchaseResult } from "./billing";
 import { useGrants } from "./grants";
 
 interface Premium {
@@ -24,6 +24,14 @@ interface Premium {
   loadPlans: () => Promise<void>;
   purchase: (planId: string) => Promise<PurchaseResult>;
   restore: () => Promise<boolean>;
+  /** Why the last purchase or restore failed, if it did. */
+  problem: () => BillingProblem | null;
+  /** The store plan behind Pro (null when Pro comes from the owner or there is no store). */
+  status: () => Promise<ProStatus | null>;
+  /** The RevenueCat paywall; "error" means fall back to the plan list in the app. */
+  paywall: () => Promise<PaywallOutcome>;
+  /** RevenueCat Customer Center (manage or cancel); false if it couldn't open. */
+  customerCenter: () => Promise<boolean>;
 }
 
 const PremiumContext = createContext<Premium | null>(null);
@@ -116,6 +124,37 @@ export function PremiumProvider({ children }: { children: ReactNode }) {
           const on = await billing.restore();
           setPremium(on);
           return on;
+        } catch {
+          return false;
+        }
+      },
+      problem: lastBillingProblem,
+      async status() {
+        if (!billing) return null;
+        try {
+          return await billing.status();
+        } catch {
+          return null;
+        }
+      },
+      async paywall() {
+        if (!billing) return "error";
+        const outcome = await billing.paywall();
+        if (outcome === "purchased" || outcome === "restored" || outcome === "notPresented") {
+          try {
+            setPremium(await billing.isPremium());
+          } catch {
+            // Offline: the update listener catches up later.
+          }
+        }
+        return outcome;
+      },
+      async customerCenter() {
+        if (!billing) return false;
+        try {
+          await billing.customerCenter();
+          setPremium(await billing.isPremium());
+          return true;
         } catch {
           return false;
         }
