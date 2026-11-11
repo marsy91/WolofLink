@@ -1,8 +1,10 @@
-# Google Play Console: answer sheet (WolofLink 0.22.0)
+# Google Play Console: answer sheet (WolofLink 0.26.4)
 
 Follow it top to bottom. Screen names can differ slightly from what Google shows today; the
-meaning is the same. Everything below matches the app as built (Supporter switched off).
-If you later switch Supporter on, use the "Since 0.23.0" part of `privacy-answers.md`.
+meaning is the same. Everything below matches the 0.26.4 build: accounts **on**, friend notifications **on**,
+Supporter and Premium **off**, "nearby" **off** in the owner console. If you switch Supporter
+or "nearby" on later, use the matching part of `privacy-answers.md` and update Data safety
+**before** switching it on.
 
 Do this on a **laptop**: Play Console is awkward on a phone.
 
@@ -15,7 +17,7 @@ Do this on a **laptop**: Play Console is awkward on a phone.
   usually skips that. Pick personal unless you have a registered company. The console shows
   the current number, which Google may change.
 - Have ready: a government ID, a card for the one-off $25 fee, a phone and an email you can
-  verify, and the file **WolofLink-0.22.0.aab**.
+  verify, and the file **WolofLink-0.26.4.aab**.
 - Developer name shown on the store: **WolofLink** (or your name).
 
 ## 1. Create the app (Home → Create app)
@@ -32,24 +34,32 @@ Do this on a **laptop**: Play Console is awkward on a phone.
 
 1. **Privacy policy:** `https://woloflink.com/privacy`
 2. **App access:** choose **"All or some functionality is restricted"**, then add one instruction:
-   > The whole learning experience (lessons, dialogues, dictionary, practice, Survival Wolof,
-   > holidays calendar) works with no account and no login. Optional features use an optional
-   > account with an emailed one-time code: Friends, duels, team codes for organisations, and
-   > voice recording for native speakers we invite. They are not needed to review the app.
+   > The whole learning experience (lessons, dialogues, role-play, dictionary, practice,
+   > hands-free listening, Survival Wolof, holidays calendar, feedback form) works with no
+   > account and no login. Optional features use an optional account with an emailed one-time
+   > code: friends, duels, city leagues for adults, team codes for organisations, and voice
+   > recording for native speakers we invite. They are not needed to review the app.
 
    If Google asks for test login details, send me what it says and we'll work out the right way.
 3. **Ads:** **No**, the app contains no ads.
 4. **Content rating:** start the questionnaire, email `support@woloflink.com`, category
    **"Reference, news or educational"**. Answers:
    - Violence, sexual content, profanity, drugs, gambling, fear: **No** to everything.
-   - Users can interact or exchange content: **Yes** (friend codes, duels and 👋 nudges; names
-     chosen by users; no free-text chat). Shares location: **No**. Digital purchases: **No** (for now).
-   - Expected result: Everyone / PEGI 3 with a "users interact" note.
+   - Users can interact or exchange content: **Yes**. Friend codes and QR codes, friend
+     requests, duels and 👋 nudges, display names chosen by users, and city leagues where
+     **adults** (self-confirmed 18+) see each other's display names. No free-text chat
+     between users. Block and report are in the app; reports reach the owner console.
+   - Shares the user's location: **No** (a city is picked from a list; no GPS).
+   - Digital purchases: **No** (for now). Unrestricted internet access: **No**.
+   - Expected result: Everyone / PEGI 3 with a "Users interact" note.
 5. **Target audience and content:**
    - Age groups: **13–15, 16–17, 18 and over**. Do not tick anything under 13.
    - "Does your app appeal to children?": **No**.
    - Ticking under-13 would trigger the Families policy, which the app isn't built for
-     (accounts, friends and recordings).
+     (accounts, friends, leagues and recordings). Teenagers can use the app; the safety
+     rules already in place: leagues and friend requests between strangers are adults-only,
+     under-18s add friends only in person (code or QR), social handles are adults-only and
+     never shown to under-18s, and anyone reported as under 18 is hidden until reviewed.
 6. **Data safety:** see section 4.
 7. **Government apps:** No. **Financial features:** none. **Health:** none of the options. **News app:** No.
 8. **Advertising ID:** the app does **not** use it. Answer **No**.
@@ -70,30 +80,48 @@ German and Italian under "Translations"; they fit the length limits).
 ## 4. Data safety (App content → Data safety)
 
 **Does your app collect or share any of the required user data types?** → **Yes**
-**Is all of the user data collected by your app encrypted in transit?** → **Yes**
+**Is all of the user data collected by your app encrypted in transit?** → **Yes** (HTTPS)
 **Do you provide a way for users to request that their data is deleted?** → **Yes**
-**Account deletion link:** `https://woloflink.com/delete-account` (also in the app: Profile → Account → Delete account)
+**Account deletion link:** `https://woloflink.com/delete-account` (also in the app: Profile → Account → Delete account).
+⚠️ That web page must be live before you submit; Google opens it.
 **Account creation:** users can create an account → method **email with a one-time code**.
 
 For every row: **Shared: No** (Supabase and Firebase work on our behalf as service providers,
-which Google does not count as sharing) · **Processed ephemerally: No**.
+which Google does not count as sharing) · **Processed ephemerally: No** · **Optional**
+(nothing below is required to use the app).
 
-| Category → type | Optional? | Why |
+| Category → data type | What it is in WolofLink | Purposes to tick |
 |---|---|---|
-| Personal info → **Email address** | Optional (only with an account) | Account management |
-| Personal info → **Name** (display name shown to friends and team admins, and credit name for voice contributors) | Optional | App functionality |
-| App activity → **App interactions** (progress, XP, streak, duels, trophies) | Optional (only with an account) | App functionality |
-| App activity → **Other user-generated content** (notes in problem reports) | Optional | App functionality |
-| App info and performance → **Other app performance data** (which word was reported, app version and language) | Optional | App functionality |
-| Audio → **Voice or sound recordings** (only native speakers we invite; learners are never recorded) | Optional | App functionality |
-| Device or other IDs (the push token, only if friend notifications are turned on) | Optional | App functionality |
+| Personal info → **Name** | Display name shown to friends, team admins and (adults only) city leagues; credit name for voice contributors | App functionality |
+| Personal info → **Email address** | Account email; shown to the owner with feedback only if the learner ticks "you can reply to me" | Account management, Developer communications |
+| Personal info → **Other info** | Home city picked from a list, friend requests, blocks, reports about other users | App functionality; Fraud prevention, security, and compliance |
+| App activity → **App interactions** | Progress, XP, streak, duels, crowns and trophies, words seen in duels | App functionality |
+| App activity → **Other user-generated content** | Notes in problem reports; feedback messages and star ratings | App functionality |
+| App info and performance → **Other app performance data** | App version, app language, which word was reported, which screen feedback came from | App functionality |
+| Audio → **Voice or sound recordings** | Only native speakers we invite who accept the recording terms; learners are never recorded | App functionality |
+| Device or other IDs | Push token, only if friend notifications are turned on | App functionality |
+| App activity → **Other actions** *(only if the form asks separately)* | Wrong friend-code attempts, counted for one day to stop guessing | Fraud prevention, security, and compliance |
 
-Not collected: location, contacts, photos, files, calendar, messages, health, web browsing,
-financial info, advertising data. **Do not** tick "Financial info → Purchase history" until
-Supporter is switched on.
+**Not collected:** location (the city is chosen from a list), contacts, photos and videos, files,
+calendar, messages, health, web browsing, financial info, advertising ID.
 
-Security practices: encrypted in transit **Yes**; deletion **Yes**; independent security
-review **No**; committed to the Families policy **No**.
+Things that stay on the phone and are therefore **not collected** in Google's sense:
+- **Camera:** only used to scan a friend's QR code; frames are never saved or uploaded.
+- **Microphone in speaking exercises:** the learner's voice is played back on the phone next to
+  the model and then thrown away; it is never uploaded.
+- **Offline feedback queue:** messages wait in local storage until they can be sent.
+
+**Do not** tick "Financial info → Purchase history" until Supporter is switched on.
+
+Security practices: encrypted in transit **Yes**; users can request deletion **Yes**;
+independent security review **No**; committed to the Families policy **No**.
+
+### Permissions Google will ask about
+| Permission | Answer |
+|---|---|
+| Microphone (`RECORD_AUDIO`) | Speaking exercises (on-device only) and recording by invited voice contributors |
+| Camera | Scanning a friend's QR code; optional, asked only when tapping Scan |
+| Notifications | Friend notifications (duels, nudges); asked only when turned on |
 
 ## 5. Create the closed test (Test and release → Testing → Closed testing)
 
@@ -104,19 +132,19 @@ review **No**; committed to the Families policy **No**.
 4. Note the **opt-in link** (Testers tab → "Copy link"). Send it to every tester. **Each one must
    open it, tap "Become a tester", and install the app from the Play Store.** The 14-day clock needs
    them opted in and staying opted in.
-5. **Create new release** → accept **Play App Signing** → upload **WolofLink-0.22.0.aab**.
-6. Release name: `0.22.0`. Release notes (paste):
+5. **Create new release** → accept **Play App Signing** → upload **WolofLink-0.26.4.aab**.
+6. Release name: `0.26.4`. Release notes (paste):
 
    ```
    <en-GB>
-   First test release of WolofLink: 20 units of Wolof, audio for every line, dictionary,
-   Survival Wolof, Senegal holidays, friends and duels. Please try it and tell us what
-   to fix: use "Report a problem" on any word.
+   First test release of WolofLink: Wolof lessons with audio, dialogues and role-play,
+   dictionary, Survival Wolof, Senegal holidays, friends and duels. Please tell us what
+   to fix: Profile → Send feedback, or "Report a problem" on any word.
    </en-GB>
    <fr-FR>
-   Première version de test de WolofLink : 20 unités de wolof, audio pour chaque phrase,
-   dictionnaire, Wolof de survie, fêtes du Sénégal, amis et duels. Dites-nous ce qu'il faut
-   corriger avec « Signaler un problème » sur n'importe quel mot.
+   Première version de test de WolofLink : leçons de wolof avec audio, dialogues et jeux de
+   rôle, dictionnaire, Wolof de survie, fêtes du Sénégal, amis et duels. Dites-nous ce qu'il
+   faut corriger : Profil → Donner votre avis, ou « Signaler un problème » sur un mot.
    </fr-FR>
    ```
 7. **Review release → Start rollout to closed testing.** Google reviews it first (hours to a
@@ -142,7 +170,10 @@ countries, and roll out. Free apps are available in Senegal automatically if you
 ## 7. Things Google often rejects
 
 - A **privacy policy** that doesn't match Data safety. Yours is aligned; keep both in step.
-- A **missing account-deletion link**. Provided.
-- **Screenshots that aren't of the app.** All 8 are real screens.
+- A **missing account-deletion link**. The address is in section 4; make sure the page is live.
+- **Data safety that misses a feature.** Before switching on "nearby", Supporter or anything
+  new in the owner console, update section 4 first.
+- **Screenshots that aren't of the app.** All 8 are real screens. Retake them if the design
+  changes before production, so the store matches the app.
 - **Claims** such as "native-speaker audio" before it's true. The listing says it isn't, and the
   voices only become real recordings as invited speakers record them.
