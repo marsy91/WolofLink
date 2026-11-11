@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Confetti } from "@/components/Confetti";
 import { DuelRace, DuelScene } from "@/components/DuelRace";
@@ -15,6 +16,7 @@ import { friends } from "@/lib/friends";
 import { haptic } from "@/lib/native";
 import { botPoints, isBotLevel, BOT_LEVELS, type BotLevel } from "@/lib/duel-bot";
 import { useConsoleRole } from "@/lib/owner";
+import { goTo, useRestartKey } from "@/lib/nav";
 import { useNoticesState, useSwitchOff } from "@/lib/notices";
 import { isLowEnd, playSfx, type Sfx } from "@/lib/sfx";
 import { useStore } from "@/lib/store";
@@ -68,7 +70,14 @@ function Rolling({ value }: { value: number }) {
   return <>{n}</>;
 }
 
+/** Remounts the duel when a rematch is asked for (same screen, new address). */
 export default function DuelPage() {
+  const run = useRestartKey();
+  return <Duel key={run} />;
+}
+
+function Duel() {
+  const router = useRouter();
   const { lang, t, progress, update } = useStore();
   const [setup, setSetup] = useState<Setup | null | "missing">(null);
   const [phase, setPhase] = useState<Phase>("intro");
@@ -489,16 +498,21 @@ export default function DuelPage() {
                 </>
               )}
               {setup.mode === "bot" ? (
-                <a href={`/duel/?bot=${setup.level ?? "medium"}`} className="btn-game anim-pulse-glow mt-2 rounded-2xl px-8 py-3 font-display text-lg font-extrabold uppercase">
-                  {t("duel.rematch")}
-                </a>
-              ) : setup.friendId ? (
-                <a
-                  href={`/duel/?friend=${encodeURIComponent(setup.friendId)}&name=${encodeURIComponent(setup.name)}`}
+                <button
+                  type="button"
+                  onClick={() => goTo(router, `/duel/?bot=${setup.level ?? "medium"}`)}
                   className="btn-game anim-pulse-glow mt-2 rounded-2xl px-8 py-3 font-display text-lg font-extrabold uppercase"
                 >
                   {t("duel.rematch")}
-                </a>
+                </button>
+              ) : setup.friendId ? (
+                <button
+                  type="button"
+                  onClick={() => goTo(router, `/duel/?friend=${encodeURIComponent(setup.friendId!)}&name=${encodeURIComponent(setup.name)}`)}
+                  className="btn-game anim-pulse-glow mt-2 rounded-2xl px-8 py-3 font-display text-lg font-extrabold uppercase"
+                >
+                  {t("duel.rematch")}
+                </button>
               ) : null}
             </>
           ) : null}
