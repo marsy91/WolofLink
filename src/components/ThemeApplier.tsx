@@ -10,7 +10,7 @@ const DARK_BAR = "#121527";
 
 /**
  * Applies the chosen colour theme (Settings → Theme) and any seasonal theme to the whole app.
- * Light themes apply in light mode (dark mode keeps its own palette); dark themes always
+ * Light themes apply in light mode and their own dark palette (darkColors) in dark mode; dark themes always
  * switch the app to dark mode. The Senegal flag season keeps its own colours.
  */
 export function ThemeApplier() {
@@ -42,11 +42,10 @@ export function ThemeApplier() {
     const root = document.documentElement;
     root.dataset.theme = def.id;
     for (const token of THEME_TOKENS) root.style.removeProperty(`--color-${token}`);
-    const usePalette = look !== "flag" && (def.dark || !dark);
-    if (usePalette) {
-      for (const [token, value] of Object.entries(def.colors)) root.style.setProperty(`--color-${token}`, value);
-    }
-    const bar = dark && !def.dark ? DARK_BAR : def.bar;
+    // Light mode or an always-dark theme: its colours. Dark mode: the theme's own dark palette.
+    const palette = look === "flag" ? {} : def.dark || !dark ? def.colors : (def.darkColors ?? {});
+    for (const [token, value] of Object.entries(palette)) root.style.setProperty(`--color-${token}`, value);
+    const bar = dark && !def.dark ? (def.darkColors?.sand ?? DARK_BAR) : def.bar;
     document.querySelector('meta[name="theme-color"]')?.setAttribute("content", bar);
   }, [def, dark, look]);
   return null;

@@ -373,12 +373,14 @@ body {
   --color-night: #e3f1e8;
   --color-night-2: #c2e3cf;
   --color-night-3: #f2f9f4;
-  --color-clay: #1f9d55;
-  --color-clay-2: #157a40;
-  --color-sea: #2fae67;
-  --color-sea-2: #208a4f;
-  --color-berry: #ef4b5f;
-  --color-dusk: #e2545b;
+  /* Backgrounds behind white text: deep enough for 4.5:1. Text in these colours on dark
+     surfaces uses the lighter shades below. */
+  --color-clay: #157a40;
+  --color-clay-2: #0f5c30;
+  --color-sea: #187a44;
+  --color-sea-2: #106035;
+  --color-berry: #b8162c;
+  --color-dusk: #a8202a;
   --color-sun-soft: #37361a;
   --color-sea-soft: #12301f;
 }
@@ -391,9 +393,9 @@ body {
 /* Cards; dark themes (src/lib/themes.ts) may set --color-card to match their background. */
 :root[data-mode="dark"] .bg-white { background-color: var(--color-card, #1a1e38); }
 :root[data-mode="dark"] { --shadow-card: 0 0 0 1px rgb(255 255 255 / 0.06), 0 4px 14px rgb(0 0 0 / 0.25); }
-:root[data-mode="dark"] .bg-white\/50 { background-color: rgb(26 30 56 / 0.5); }
-:root[data-mode="dark"] .bg-white\/95 { background-color: rgb(26 30 56 / 0.95); }
-:root[data-mode="dark"] .bg-white\/80 { background-color: rgb(26 30 56 / 0.8); }
+:root[data-mode="dark"] .bg-white\/50 { background-color: color-mix(in srgb, var(--color-card, #1a1e38) 50%, transparent); }
+:root[data-mode="dark"] .bg-white\/95 { background-color: color-mix(in srgb, var(--color-card, #1a1e38) 95%, transparent); }
+:root[data-mode="dark"] .bg-white\/80 { background-color: color-mix(in srgb, var(--color-card, #1a1e38) 80%, transparent); }
 :root[data-mode="dark"] .text-white { color: #ffffff; }
 /* Dark text where the background stays bright in both modes. */
 :root[data-mode="dark"] .bg-sun.text-night,
@@ -410,3 +412,16 @@ body {
    card uses its own colours there. */
 .feed-card { background-color: var(--color-night); color: var(--color-sand); }
 :root[data-mode="dark"] .feed-card { background-color: #2a2142; color: #f5f4fb; }
+
+/* Senegal flag theme in dark mode: text in the flag colours on dark surfaces. */
+:root[data-mode="dark"][data-theme="senegal"] .text-clay,
+:root[data-mode="dark"][data-season="flag"] .text-clay,
+:root[data-mode="dark"][data-theme="senegal"] .text-sea,
+:root[data-mode="dark"][data-season="flag"] .text-sea { color: #5fd08f; }
+:root[data-mode="dark"][data-theme="senegal"] .text-dusk,
+:root[data-mode="dark"][data-season="flag"] .text-dusk { color: #f2878c; }
+:root[data-mode="dark"][data-theme="senegal"] .text-berry,
+:root[data-mode="dark"][data-season="flag"] .text-berry { color: #f58e98; }
+:root[data-mode="dark"][data-theme="senegal"] .border-clay,
+:root[data-mode="dark"][data-season="flag"] .border-clay { border-color: #5fd08f; }
+

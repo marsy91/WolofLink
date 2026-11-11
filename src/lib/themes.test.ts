@@ -66,6 +66,22 @@ describe("themes", () => {
     expect(failures).toEqual([]);
   });
 
+  it.each(THEME_IDS.filter((id) => !THEMES[id].dark && id !== "classic" && id !== "senegal"))(
+    "%s has its own dark palette that meets WCAG AA",
+    (id) => {
+      const def = THEMES[id];
+      expect(def.darkColors?.sand).toBeTruthy();
+      const p = resolvedPalette(def, true);
+      const pick = (t: Token | "white") => (t === "white" ? WHITE : p[t]);
+      const failures = [...DARK_PAIRS, ["white", "clay"] as Pair, ...(def.darkColors?.sea ? [["white", "sea"] as Pair] : [])]
+        .map(([text, bg, min = 4.5]) => ({ pair: `${text} on ${bg}`, ratio: contrast(pick(text), pick(bg)), min }))
+        .filter((r) => r.ratio < r.min)
+        .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
+      expect(failures).toEqual([]);
+      for (const value of Object.values(def.darkColors!)) expect(value).toMatch(/^#[0-9a-f]{6}$/);
+    },
+  );
+
   // Every background/text pair found in the screens' class names (bg first, text second).
   const SCREEN_PAIRS = (
     "white night|night sand|sea-soft sea|berry-soft berry|white muted|clay white|night sun|sun night|sand-2 night|" +
@@ -147,11 +163,13 @@ describe("themes", () => {
       expect(r.props).toEqual({});
     });
 
-    it("forces dark mode for a dark theme and skips light palettes in dark mode", () => {
+    it("forces dark mode for a dark theme and uses a light theme's own dark palette in dark mode", () => {
       expect(run(JSON.stringify({ settings: { theme: "saloum", mode: "light" } })).mode).toBe("dark");
       const r = run(JSON.stringify({ settings: { theme: "lompoul" } }), true);
       expect(r.mode).toBe("dark");
-      expect(r.props).toEqual({});
+      expect(r.props["--color-sand"]).toBe(THEMES.lompoul.darkColors!.sand);
+      expect(r.props["--color-night"]).toBeUndefined();
+      expect(run(JSON.stringify({ settings: { theme: "classic" } }), true).props).toEqual({});
     });
 
     it("survives broken storage", () => {

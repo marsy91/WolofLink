@@ -53,6 +53,11 @@ export interface ThemeDef {
   bar: string;
   /** Tokens this theme changes (the rest come from globals.css). */
   colors: Partial<Record<Token, string>>;
+  /**
+   * Light themes only: the colours to use when the phone (or Settings) is in dark mode, on top
+   * of the dark palette, so each theme keeps its own look at night. Missing: plain dark palette.
+   */
+  darkColors?: Partial<Record<Token, string>>;
   /** Learn screen layout: the lesson path (default) or the phrase feed (src/lib/feed.ts). */
   layout?: "path" | "feed";
 }
@@ -126,6 +131,15 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       "clay-2": "#82264a",
       "dusk-soft": "#f1e0ec",
     },
+    darkColors: {
+      sand: "#1b1020",
+      "sand-2": "#2b1a33",
+      "sand-3": "#4a3052",
+      card: "#26162d",
+      muted: "#cdb6c8",
+      clay: "#a3315a",
+      "dusk-soft": "#3d2346",
+    },
   },
   lompoul: {
     id: "lompoul",
@@ -140,6 +154,14 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       "sand-2": "#f3eadb",
       "sand-3": "#e6d8c0",
       muted: "#655642",
+    },
+    darkColors: {
+      sand: "#18120a",
+      "sand-2": "#2a2013",
+      "sand-3": "#4a3a22",
+      card: "#221a0f",
+      muted: "#cdbd9f",
+      clay: "#a3561c",
     },
   },
   casamance: {
@@ -157,6 +179,14 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       muted: "#4d5f57",
       clay: "#1b6e45",
       "clay-2": "#145536",
+    },
+    darkColors: {
+      sand: "#0b1a14",
+      "sand-2": "#142a21",
+      "sand-3": "#24493a",
+      card: "#10231b",
+      muted: "#a9c4b8",
+      clay: "#1b6e45",
     },
   },
   goree: {
@@ -177,6 +207,15 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       "sea-2": "#084d61",
       "sea-soft": "#e2f1f6",
     },
+    darkColors: {
+      sand: "#11132e",
+      "sand-2": "#1c2047",
+      "sand-3": "#333a75",
+      card: "#181b3d",
+      muted: "#b8bce0",
+      clay: "#ad3f1c",
+      sea: "#0b6782",
+    },
   },
   capskirring: {
     id: "capskirring",
@@ -193,6 +232,14 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       muted: "#475f61",
       clay: "#ad4716",
       "clay-2": "#8c3911",
+    },
+    darkColors: {
+      sand: "#081a1b",
+      "sand-2": "#102c2e",
+      "sand-3": "#1f4c4f",
+      card: "#0d2425",
+      muted: "#a7c7c8",
+      clay: "#ad4716",
     },
   },
   niokolo: {
@@ -215,6 +262,14 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       "sea-soft": "#e7f0e0",
       sun: "#e0a526",
     },
+    darkColors: {
+      sand: "#12160b",
+      "sand-2": "#1f2613",
+      "sand-3": "#374225",
+      card: "#191e10",
+      muted: "#bdbf9f",
+      clay: "#94460f",
+    },
   },
   calao: {
     id: "calao",
@@ -231,6 +286,14 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       clay: "#b0301d",
       "clay-2": "#8c2617",
       sun: "#f2b632",
+    },
+    darkColors: {
+      sand: "#121117",
+      "sand-2": "#1f1d27",
+      "sand-3": "#393644",
+      card: "#1a1820",
+      muted: "#bdbac8",
+      clay: "#b0301d",
     },
   },
   baobab: {
@@ -250,6 +313,14 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
       "clay-2": "#433424",
       "sun-soft": "#f4efe6",
       "dusk-soft": "#f1eef0",
+    },
+    darkColors: {
+      sand: "#111111",
+      "sand-2": "#1e1d1c",
+      "sand-3": "#3a3835",
+      card: "#191817",
+      muted: "#c2beb8",
+      clay: "#6b5540",
     },
   },
   dakarnight: {
@@ -317,9 +388,10 @@ export function themeFor(v: unknown): ThemeDef {
 }
 
 /** The full palette a theme produces (light or dark), for contrast checks and previews. */
-export function resolvedPalette(def: ThemeDef): Record<Token, string> {
-  const base = def.dark ? DARK_BASE : CLASSIC;
-  return { card: def.dark ? "#1a1e38" : "#ffffff", ...base, ...def.colors } as Record<Token, string>;
+export function resolvedPalette(def: ThemeDef, dark: boolean = def.dark): Record<Token, string> {
+  const base = dark ? DARK_BASE : CLASSIC;
+  const colors = def.dark || !dark ? def.colors : (def.darkColors ?? {});
+  return { card: dark ? "#1a1e38" : "#ffffff", ...base, ...colors } as Record<Token, string>;
 }
 
 /** WCAG relative luminance of a #rrggbb colour. */
@@ -344,8 +416,8 @@ export function contrast(a: string, b: string): number {
  * first paint, so the app doesn't flash the wrong colours. It mirrors ThemeApplier.
  */
 export function earlyThemeScript(storageKey: string): string {
-  const table: Record<string, { d: 1 | 0; c: Partial<Record<Token, string>> }> = {};
-  for (const id of THEME_IDS) table[id] = { d: THEMES[id].dark ? 1 : 0, c: THEMES[id].colors };
+  const table: Record<string, { d: 1 | 0; c: Partial<Record<Token, string>>; k?: Partial<Record<Token, string>> }> = {};
+  for (const id of THEME_IDS) table[id] = { d: THEMES[id].dark ? 1 : 0, c: THEMES[id].colors, k: THEMES[id].darkColors };
   return (
     `try{var raw=localStorage.getItem(${JSON.stringify(storageKey)}),` +
     `s=raw?(JSON.parse(raw).settings||{}):null,T=${JSON.stringify(table)},` +
@@ -353,6 +425,6 @@ export function earlyThemeScript(storageKey: string): string {
     `r=document.documentElement,m=(s&&s.mode)||"system",` +
     `dk=t.d||m==="dark"||(m==="system"&&matchMedia("(prefers-color-scheme: dark)").matches);` +
     `if(dk)r.dataset.mode="dark";r.dataset.theme=T[id]?id:"classic";` +
-    `if(t.d||!dk)for(var k in t.c)r.style.setProperty("--color-"+k,t.c[k])}catch(e){}`
+    `var P=t.d||!dk?t.c:(t.k||{});for(var k in P)r.style.setProperty("--color-"+k,P[k])}catch(e){}`
   );
 }

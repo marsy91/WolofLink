@@ -179,7 +179,7 @@ export default function Profile() {
                   </span>
                 ) : null}
               </span>
-              <span className={`font-display font-extrabold ${unlocked ? "text-night" : "text-night/70"}`}>{t(`ach.${a.id}.name` as UiKey)}</span>
+              <span className={`font-display font-extrabold ${unlocked ? "text-night" : "text-night/80"}`}>{t(`ach.${a.id}.name` as UiKey)}</span>
               <span className="text-xs text-muted">{t(`ach.${a.id}.desc` as UiKey)}</span>
               {goal && goal.total > 1 ? (
                 <span className="mt-auto w-full">
