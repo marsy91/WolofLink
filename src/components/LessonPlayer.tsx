@@ -20,6 +20,7 @@ import {
   type TypedGrade,
 } from "@/lib/engine";
 import { haptic } from "@/lib/native";
+import { goTo } from "@/lib/nav";
 import { canOpenLesson, isPremiumUnit } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
 import {
@@ -241,7 +242,7 @@ export function LessonPlayer(props: Props) {
         </div>
         <div className="py-6">
           {outOfDrops ? (
-            <Button block onClick={() => router.replace("/review/")}>
+            <Button block onClick={() => goTo(router, "/review/")}>
               {t("fail.practice")}
             </Button>
           ) : (
@@ -264,7 +265,7 @@ export function LessonPlayer(props: Props) {
         <h1 className="font-display text-3xl font-extrabold text-night">{t("fail.title")}</h1>
         <p className="text-lg text-muted">{t("fail.body")}</p>
         <div className="flex w-full flex-col gap-3">
-          <Button block onClick={() => router.replace("/review/")}>
+          <Button block onClick={() => goTo(router, "/review/")}>
             {t("fail.practice")}
           </Button>
           <Button block variant="secondary" onClick={exit}>

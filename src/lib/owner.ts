@@ -265,6 +265,8 @@ export function useConsoleRole(): ConsoleRole | null | undefined {
   const userId = user?.id ?? null;
   useEffect(() => {
     let alive = true;
+    // Still finding out who is signed in: stay "loading" instead of saying "nobody".
+    if (user === undefined) return;
     if (!userId) {
       void Promise.resolve().then(() => alive && setRole(null));
       return;
@@ -275,7 +277,7 @@ export function useConsoleRole(): ConsoleRole | null | undefined {
     return () => {
       alive = false;
     };
-  }, [userId]);
+  }, [userId, user === undefined]); // eslint-disable-line react-hooks/exhaustive-deps
   return role;
 }
 

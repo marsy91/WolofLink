@@ -9,6 +9,7 @@ import { translate } from "@/i18n";
 import { playEntry, playTone, stopAudio, waitForClip } from "@/lib/audio";
 import { seeded } from "@/lib/engine";
 import { haptic } from "@/lib/native";
+import { goTo, useRestartKey } from "@/lib/nav";
 import { applySession } from "@/lib/progress";
 import { buildRoleplay, playableSpeakers } from "@/lib/roleplay";
 import { useNow, useStore } from "@/lib/store";
@@ -22,6 +23,12 @@ export const ROLEPLAY_XP = 15;
 
 /** Take a part in a dialogue: the partner speaks, you choose your reply. */
 export function RolePlayer({ storyId }: { storyId: string }) {
+  // "Play again" restarts this same screen.
+  const run = useRestartKey();
+  return <RolePlay key={run} storyId={storyId} />;
+}
+
+function RolePlay({ storyId }: { storyId: string }) {
   const allowed = useRequireProfile();
   const { progress, lang, update, t } = useStore();
   const router = useRouter();
@@ -129,7 +136,7 @@ export function RolePlayer({ storyId }: { storyId: string }) {
         <h1 className="font-display text-4xl font-extrabold text-night">{t("roleplay.done")}</h1>
         <p className="text-lg text-muted">{t("roleplay.score", { n: right, total: mineCount })}</p>
         <p className="font-bold text-dusk">+{ROLEPLAY_XP} XP</p>
-        <Button block onClick={() => router.replace(`/roleplay/${story.id}/`)}>
+        <Button block onClick={() => goTo(router, `/roleplay/${story.id}/`)}>
           {t("roleplay.again")}
         </Button>
         <Button block variant="secondary" onClick={exit}>

@@ -6,6 +6,7 @@
  * the owner account; every action is checked and logged by the server
  * (src/lib/owner.ts).
  */
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createContext, useCallback, useContext, useEffect, useState, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { IconArrowLeft, IconBook, IconPodium, IconProfile, IconShield } from "@/components/icons";
@@ -371,9 +372,9 @@ function PlayComputerCard() {
       </div>
       <div className="relative mt-3 grid grid-cols-3 gap-2">
         {(["easy", "medium", "hard"] as const).map((level) => (
-          <a key={level} href={`/duel/?bot=${level}`} className="btn-game rounded-xl px-2 py-2 text-center font-display text-sm font-extrabold capitalize">
+          <Link key={level} href={`/duel/?bot=${level}`} className="btn-game rounded-xl px-2 py-2 text-center font-display text-sm font-extrabold capitalize">
             {level}
-          </a>
+          </Link>
         ))}
       </div>
     </section>
@@ -1782,9 +1783,9 @@ function NoticesTab({ say }: { say: Say }) {
                     <p className="mt-1 flex flex-wrap gap-2 text-xs font-bold">
                       Try it:
                       {(["easy", "medium", "hard"] as const).map((level) => (
-                        <a key={level} href={`/duel/?bot=${level}`} className="text-clay underline">
+                        <Link key={level} href={`/duel/?bot=${level}`} className="text-clay underline">
                           {level}
-                        </a>
+                        </Link>
                       ))}
                     </p>
                   ) : null}
