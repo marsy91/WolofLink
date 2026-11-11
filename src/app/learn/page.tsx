@@ -2,7 +2,16 @@
 "use client";
 
 import Link from "next/link";
-import { IconBook, IconCheck, IconGem, IconLock, UNIT_GLYPHS } from "@/components/icons";
+import { useEffect, useState } from "react";
+import { LearnFeed } from "@/components/LearnFeed";
+import { layoutFor } from "@/lib/themes";
+import {
+  IconBook,
+  IconCheck,
+  IconGem,
+  IconLock,
+  UNIT_GLYPHS,
+} from "@/components/icons";
 import { MAX_LEVEL } from "@/lib/engine";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import { allLessons, course } from "@/content/course";
@@ -25,6 +34,30 @@ const TONES: Record<Unit["tone"], string> = {
 };
 
 const order = allLessons.map((l) => l.id);
+const VIEW_KEY = "woloflink.learnView";
+
+/** Feed themes show the feed first; the learner can switch to the path and back (remembered on this phone). */
+function useLearnView(): ["feed" | "path", (v: "feed" | "path") => void] {
+  const [view, setView] = useState<"feed" | "path">("feed");
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(VIEW_KEY) === "path")
+        void Promise.resolve().then(() => setView("path"));
+    } catch {
+      // Storage blocked: start on the feed.
+    }
+  }, []);
+  const choose = (v: "feed" | "path") => {
+    setView(v);
+    try {
+      window.localStorage.setItem(VIEW_KEY, v);
+    } catch {
+      // Not remembered.
+    }
+    window.scrollTo({ top: 0 });
+  };
+  return [view, choose];
+}
 
 export default function Learn() {
   const { progress, lang, t } = useStore();
@@ -33,184 +66,288 @@ export default function Learn() {
   const today = xpToday(progress, now);
   const goal = dailyGoal(progress);
   const name = progress.profile?.name;
+  const feedTheme = layoutFor(progress.settings.theme) === "feed";
+  const [view, setView] = useLearnView();
+  const showFeed = feedTheme && view === "feed";
 
   return (
     <TabScreen>
       <AnnouncementBanner />
       <SeasonBanner />
       <NudgeBanner />
+      {feedTheme && !showFeed ? (
+        <button
+          type="button"
+          onClick={() => setView("feed")}
+          className="mb-4 min-h-11 font-bold text-clay underline"
+        >
+          {t("feed.backToFeed")}
+        </button>
+      ) : null}
       <section className="mb-6 rounded-3xl bg-white p-4 shadow-card">
         <h1 className="mb-1 font-display text-xl font-extrabold text-night">
           {name ? `Salaam aleekum, ${name}!` : "Salaam aleekum!"}
         </h1>
         <p className="mb-3 text-sm text-muted">
-          {today >= goal ? t("goal.met") : t("goal.progress", { x: today, y: goal })}
+          {today >= goal
+            ? t("goal.met")
+            : t("goal.progress", { x: today, y: goal })}
         </p>
-        <ProgressBar value={today / goal} label={t("goal.progress", { x: today, y: goal })} />
+        <ProgressBar
+          value={today / goal}
+          label={t("goal.progress", { x: today, y: goal })}
+        />
       </section>
 
-      <WordOfTheDay />
+      {showFeed ? (
+        <LearnFeed onShowPath={() => setView("path")} />
+      ) : (
+        <>
+          <WordOfTheDay />
 
-      <ol className="space-y-6">
-        {course.units.map((unit, ui) => {
-          const Glyph = UNIT_GLYPHS[unit.glyph];
-          const planned = unit.lessons.length === 0;
-          return (
-            <li key={unit.id}>
-              <div
-                className={`weave relative mb-3 flex items-center gap-3 overflow-hidden rounded-3xl p-4 ${
-                  planned ? "bg-sand-3 text-muted" : TONES[unit.tone]
-                }`}
-              >
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/20">
-                  <Glyph size={28} />
-                </span>
-                <div>
-                  <p className="text-xs font-bold tracking-widest uppercase opacity-90">{t("path.unit", { n: ui + 1 })}</p>
-                  <h2 className="font-display text-xl leading-tight font-extrabold">{translate(unit.title, lang)}</h2>
-                  {planned ? <p className="text-sm font-bold">{t("path.comingSoon")}</p> : null}
-                  {!planned && ui > 0 && !unlockAll && !(isPremiumUnit(ui) && !premium) && !unit.lessons.every((l) => progress.lessons[l.id]) ? (
-                    <Link
-                      href={`/review/?testout=${unit.id}`}
-                      className="mt-1 inline-block rounded-full bg-white/90 px-3 py-1 text-xs font-extrabold text-night"
-                    >
-                      {t("testout.button")}
-                    </Link>
-                  ) : null}
-                </div>
-                {isPremiumUnit(ui) && !premium ? (
-                  <span className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-extrabold text-dusk">
-                    <IconGem size={14} /> {t("premium.badge")}
-                  </span>
-                ) : null}
-              </div>
-
-              {!planned && (
-                <ol className="relative ml-6 space-y-3 border-l-4 border-dashed border-sand-3 pl-6">
-                  {unit.lessons.map((lesson) => {
-                    const record = progress.lessons[lesson.id];
-                    const unlocked = unlockAll || isUnlocked(order, lesson.id, progress);
-                    const done = !!record;
-                    const levels = Math.min(MAX_LEVEL, record?.times ?? 0);
-                    const mastered = levels >= MAX_LEVEL;
-                    const paywalled = !canOpenLesson(lesson.id, premium);
-                    return (
-                      <li key={lesson.id} className="relative">
-                        <span
-                          aria-hidden
-                          className={`absolute top-1/2 -left-[2.4rem] grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full border-4 border-sand ${
-                            done ? "bg-sea text-white" : unlocked ? "bg-sun text-night" : "bg-sand-3 text-muted"
-                          }`}
+          <ol className="space-y-6">
+            {course.units.map((unit, ui) => {
+              const Glyph = UNIT_GLYPHS[unit.glyph];
+              const planned = unit.lessons.length === 0;
+              return (
+                <li key={unit.id}>
+                  <div
+                    className={`weave relative mb-3 flex items-center gap-3 overflow-hidden rounded-3xl p-4 ${
+                      planned ? "bg-sand-3 text-muted" : TONES[unit.tone]
+                    }`}
+                  >
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/20">
+                      <Glyph size={28} />
+                    </span>
+                    <div>
+                      <p className="text-xs font-bold tracking-widest uppercase opacity-90">
+                        {t("path.unit", { n: ui + 1 })}
+                      </p>
+                      <h2 className="font-display text-xl leading-tight font-extrabold">
+                        {translate(unit.title, lang)}
+                      </h2>
+                      {planned ? (
+                        <p className="text-sm font-bold">
+                          {t("path.comingSoon")}
+                        </p>
+                      ) : null}
+                      {!planned &&
+                      ui > 0 &&
+                      !unlockAll &&
+                      !(isPremiumUnit(ui) && !premium) &&
+                      !unit.lessons.every((l) => progress.lessons[l.id]) ? (
+                        <Link
+                          href={`/review/?testout=${unit.id}`}
+                          className="mt-1 inline-block rounded-full bg-white/90 px-3 py-1 text-xs font-extrabold text-night"
                         >
-                          {done ? <IconCheck size={14} /> : !unlocked ? <IconLock size={12} /> : null}
-                        </span>
-                        {unlocked ? (
-                          <Link
-                            href={paywalled ? "/premium/" : `/lesson/${lesson.id}/`}
-                            className="flex items-center gap-3 rounded-2xl border border-sand-3/60 bg-white p-4 shadow-card transition active:translate-y-[2px] active:shadow-none"
-                          >
-                            <div className="flex-1">
-                              <h3 className="font-display text-lg font-extrabold text-night">{translate(lesson.title, lang)}</h3>
-                              <p className="text-sm text-muted">
-                                {mastered
-                                  ? `${t("path.mastered")} · ${Math.round(record!.bestAccuracy * 100)}%`
-                                  : done
-                                    ? t("path.level", { n: levels, total: MAX_LEVEL })
-                                    : t("path.exercises", { n: lesson.exercises.length })}
-                              </p>
-                              <span className="mt-1.5 flex gap-1" aria-hidden>
-                                {Array.from({ length: MAX_LEVEL }, (_, i) => (
-                                  <span key={i} className={`h-2 w-6 rounded-full ${i < levels ? "bg-dusk" : "bg-sand-3"}`} />
-                                ))}
-                              </span>
-                            </div>
-                            <span
-                              className={`flex items-center gap-1 rounded-xl px-3 py-2 font-display text-sm font-extrabold ${
-                                paywalled
-                                  ? "bg-sun-soft text-dusk"
-                                  : mastered
-                                    ? "bg-sea-soft text-sea"
-                                    : done
-                                      ? "bg-dusk-soft text-dusk"
-                                      : "bg-clay text-white"
-                              }`}
-                            >
-                              {paywalled ? (
-                                <>
-                                  <IconGem size={14} /> {t("premium.badge")}
-                                </>
-                              ) : mastered ? (
-                                t("path.again")
-                              ) : done ? (
-                                t("path.levelUp", { n: levels + 1 })
-                              ) : (
-                                t("path.start")
-                              )}
-                            </span>
-                          </Link>
-                        ) : (
-                          <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-sand-3 p-4 text-muted">
-                            <div className="flex-1">
-                              <h3 className="font-display text-lg font-extrabold">{translate(lesson.title, lang)}</h3>
-                              <p className="text-sm">{t("path.locked")}</p>
-                            </div>
-                            <IconLock />
-                          </div>
-                        )}
-                      </li>
-                    );
-                  })}
-                  {unit.story ? (
-                    <li className="relative">
-                      {(() => {
-                        const storyOpen = unlockAll || unit.lessons.every((l) => progress.lessons[l.id]);
-                        const read = !!progress.stories[unit.story.id];
-                        const storyPaywalled = !canOpenStory(unit.story.id, premium);
+                          {t("testout.button")}
+                        </Link>
+                      ) : null}
+                    </div>
+                    {isPremiumUnit(ui) && !premium ? (
+                      <span className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-extrabold text-dusk">
+                        <IconGem size={14} /> {t("premium.badge")}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  {!planned && (
+                    <ol className="relative ml-6 space-y-3 border-l-4 border-dashed border-sand-3 pl-6">
+                      {unit.lessons.map((lesson) => {
+                        const record = progress.lessons[lesson.id];
+                        const unlocked =
+                          unlockAll || isUnlocked(order, lesson.id, progress);
+                        const done = !!record;
+                        const levels = Math.min(MAX_LEVEL, record?.times ?? 0);
+                        const mastered = levels >= MAX_LEVEL;
+                        const paywalled = !canOpenLesson(lesson.id, premium);
                         return (
-                          <>
+                          <li key={lesson.id} className="relative">
                             <span
                               aria-hidden
                               className={`absolute top-1/2 -left-[2.4rem] grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full border-4 border-sand ${
-                                read ? "bg-sea text-white" : storyOpen ? "bg-dusk text-white" : "bg-sand-3 text-muted"
+                                done
+                                  ? "bg-sea text-white"
+                                  : unlocked
+                                  ? "bg-sun text-night"
+                                  : "bg-sand-3 text-muted"
                               }`}
                             >
-                              {read ? <IconCheck size={14} /> : <IconBook size={12} />}
+                              {done ? (
+                                <IconCheck size={14} />
+                              ) : !unlocked ? (
+                                <IconLock size={12} />
+                              ) : null}
                             </span>
-                            {storyOpen ? (
+                            {unlocked ? (
                               <Link
-                                href={storyPaywalled ? "/premium/" : `/dialogue/${unit.story.id}/`}
-                                className="flex items-center gap-3 rounded-2xl border border-dusk/25 bg-dusk-soft p-4 shadow-card transition active:translate-y-[2px] active:shadow-none"
+                                href={
+                                  paywalled
+                                    ? "/premium/"
+                                    : `/lesson/${lesson.id}/`
+                                }
+                                className="flex items-center gap-3 rounded-2xl border border-sand-3/60 bg-white p-4 shadow-card transition active:translate-y-[2px] active:shadow-none"
                               >
-                                <IconBook size={28} className="shrink-0 text-dusk" />
                                 <div className="flex-1">
-                                  <p className="text-xs font-bold tracking-widest text-dusk uppercase">{t("story.label")}</p>
-                                  <h3 className="font-display text-lg font-extrabold text-night">{translate(unit.story.title, lang)}</h3>
+                                  <h3 className="font-display text-lg font-extrabold text-night">
+                                    {translate(lesson.title, lang)}
+                                  </h3>
+                                  <p className="text-sm text-muted">
+                                    {mastered
+                                      ? `${t("path.mastered")} · ${Math.round(
+                                          record!.bestAccuracy * 100
+                                        )}%`
+                                      : done
+                                      ? t("path.level", {
+                                          n: levels,
+                                          total: MAX_LEVEL,
+                                        })
+                                      : t("path.exercises", {
+                                          n: lesson.exercises.length,
+                                        })}
+                                  </p>
+                                  <span
+                                    className="mt-1.5 flex gap-1"
+                                    aria-hidden
+                                  >
+                                    {Array.from(
+                                      { length: MAX_LEVEL },
+                                      (_, i) => (
+                                        <span
+                                          key={i}
+                                          className={`h-2 w-6 rounded-full ${
+                                            i < levels ? "bg-dusk" : "bg-sand-3"
+                                          }`}
+                                        />
+                                      )
+                                    )}
+                                  </span>
                                 </div>
-                                <span className="rounded-xl bg-dusk px-3 py-2 font-display text-sm font-extrabold text-white">
-                                  {storyPaywalled ? t("premium.badge") : read ? t("path.again") : t("story.start")}
+                                <span
+                                  className={`flex items-center gap-1 rounded-xl px-3 py-2 font-display text-sm font-extrabold ${
+                                    paywalled
+                                      ? "bg-sun-soft text-dusk"
+                                      : mastered
+                                      ? "bg-sea-soft text-sea"
+                                      : done
+                                      ? "bg-dusk-soft text-dusk"
+                                      : "bg-clay text-white"
+                                  }`}
+                                >
+                                  {paywalled ? (
+                                    <>
+                                      <IconGem size={14} /> {t("premium.badge")}
+                                    </>
+                                  ) : mastered ? (
+                                    t("path.again")
+                                  ) : done ? (
+                                    t("path.levelUp", { n: levels + 1 })
+                                  ) : (
+                                    t("path.start")
+                                  )}
                                 </span>
                               </Link>
                             ) : (
                               <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-sand-3 p-4 text-muted">
-                                <IconBook size={28} className="shrink-0" />
                                 <div className="flex-1">
-                                  <p className="text-xs font-bold tracking-widest uppercase">{t("story.label")}</p>
-                                  <h3 className="font-display text-lg font-extrabold">{translate(unit.story.title, lang)}</h3>
-                                  <p className="text-sm">{t("story.locked")}</p>
+                                  <h3 className="font-display text-lg font-extrabold">
+                                    {translate(lesson.title, lang)}
+                                  </h3>
+                                  <p className="text-sm">{t("path.locked")}</p>
                                 </div>
+                                <IconLock />
                               </div>
                             )}
-                          </>
+                          </li>
                         );
-                      })()}
-                    </li>
-                  ) : null}
-                </ol>
-              )}
-            </li>
-          );
-        })}
-      </ol>
+                      })}
+                      {unit.story ? (
+                        <li className="relative">
+                          {(() => {
+                            const storyOpen =
+                              unlockAll ||
+                              unit.lessons.every((l) => progress.lessons[l.id]);
+                            const read = !!progress.stories[unit.story.id];
+                            const storyPaywalled = !canOpenStory(
+                              unit.story.id,
+                              premium
+                            );
+                            return (
+                              <>
+                                <span
+                                  aria-hidden
+                                  className={`absolute top-1/2 -left-[2.4rem] grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full border-4 border-sand ${
+                                    read
+                                      ? "bg-sea text-white"
+                                      : storyOpen
+                                      ? "bg-dusk text-white"
+                                      : "bg-sand-3 text-muted"
+                                  }`}
+                                >
+                                  {read ? (
+                                    <IconCheck size={14} />
+                                  ) : (
+                                    <IconBook size={12} />
+                                  )}
+                                </span>
+                                {storyOpen ? (
+                                  <Link
+                                    href={
+                                      storyPaywalled
+                                        ? "/premium/"
+                                        : `/dialogue/${unit.story.id}/`
+                                    }
+                                    className="flex items-center gap-3 rounded-2xl border border-dusk/25 bg-dusk-soft p-4 shadow-card transition active:translate-y-[2px] active:shadow-none"
+                                  >
+                                    <IconBook
+                                      size={28}
+                                      className="shrink-0 text-dusk"
+                                    />
+                                    <div className="flex-1">
+                                      <p className="text-xs font-bold tracking-widest text-dusk uppercase">
+                                        {t("story.label")}
+                                      </p>
+                                      <h3 className="font-display text-lg font-extrabold text-night">
+                                        {translate(unit.story.title, lang)}
+                                      </h3>
+                                    </div>
+                                    <span className="rounded-xl bg-dusk px-3 py-2 font-display text-sm font-extrabold text-white">
+                                      {storyPaywalled
+                                        ? t("premium.badge")
+                                        : read
+                                        ? t("path.again")
+                                        : t("story.start")}
+                                    </span>
+                                  </Link>
+                                ) : (
+                                  <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-sand-3 p-4 text-muted">
+                                    <IconBook size={28} className="shrink-0" />
+                                    <div className="flex-1">
+                                      <p className="text-xs font-bold tracking-widest uppercase">
+                                        {t("story.label")}
+                                      </p>
+                                      <h3 className="font-display text-lg font-extrabold">
+                                        {translate(unit.story.title, lang)}
+                                      </h3>
+                                      <p className="text-sm">
+                                        {t("story.locked")}
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })()}
+                        </li>
+                      ) : null}
+                    </ol>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </>
+      )}
     </TabScreen>
   );
 }

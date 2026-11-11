@@ -404,3 +404,9 @@ body {
 /* The welcome splash stays dark navy in both modes. */
 :root[data-mode="dark"] .splash { --color-night: #1d2550; --color-sand: #f8f6f2; }
 :root[data-mode="dark"][data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }
+
+/* Feed layout cards (src/components/LearnFeed.tsx): always a deep card with light text, in
+   light and dark mode, like the design. In dark mode "night" flips to a light ink, so the
+   card uses its own colours there. */
+.feed-card { background-color: var(--color-night); color: var(--color-sand); }
+:root[data-mode="dark"] .feed-card { background-color: #2a2142; color: #f5f4fb; }

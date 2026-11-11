@@ -53,6 +53,8 @@ export interface ThemeDef {
   bar: string;
   /** Tokens this theme changes (the rest come from globals.css). */
   colors: Partial<Record<Token, string>>;
+  /** Learn screen layout: the lesson path (default) or the phrase feed (src/lib/feed.ts). */
+  layout?: "path" | "feed";
 }
 
 /** The classic palette, exactly as in the @theme block of globals.css (checked by a test). */
@@ -109,6 +111,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   lacrose: {
     id: "lacrose",
     dark: false,
+    layout: "feed",
     swatch: ["#f3d6e4", "#7a3b69", "#3b1d4a"],
     bar: "#3b1d4a",
     colors: {
@@ -159,6 +162,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   goree: {
     id: "goree",
     dark: false,
+    layout: "feed",
     swatch: ["#f2a93b", "#b8431f", "#0b6782"],
     bar: "#252a6e",
     colors: {
@@ -297,6 +301,11 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
 
 /** Every token a theme may set, so ThemeApplier can clear the previous theme's values. */
 export const THEME_TOKENS: readonly Token[] = [...(Object.keys(CLASSIC) as Token[]), "card"];
+
+/** The Learn screen layout a saved theme setting uses. */
+export function layoutFor(v: unknown): "path" | "feed" {
+  return themeFor(v).layout ?? "path";
+}
 
 export function isThemeId(v: unknown): v is ThemeId {
   return typeof v === "string" && (THEME_IDS as readonly string[]).includes(v);
