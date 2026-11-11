@@ -10,7 +10,7 @@ import { Paused } from "@/components/Paused";
 import { Loading } from "@/components/ui";
 import { translate } from "@/i18n";
 import { playEntry, playTone } from "@/lib/audio";
-import { buildDuel, crownsFor, duels, optionLabel, pointsFor, roundOf, DUEL_LENGTH, type DuelQuestion, type DuelResult } from "@/lib/duels";
+import { buildDuel, crownsFor, duelProblem, duels, optionLabel, pointsFor, roundOf, DUEL_LENGTH, type DuelQuestion, type DuelResult } from "@/lib/duels";
 import { friends } from "@/lib/friends";
 import { haptic } from "@/lib/native";
 import { useSwitchOff } from "@/lib/notices";
@@ -79,8 +79,9 @@ export default function DuelPage() {
   const [flash, setFlash] = useState<{ kind: "red" | "gold"; key: number } | null>(null);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [revealed, setRevealed] = useState(0);
-  const [sendState, setSendState] = useState<"idle" | "sending" | "failed">("idle");
+  const [sendState, setSendState] = useState<"idle" | "sending" | "failed" | "over">("idle");
   const [lowEnd, setLowEnd] = useState(false);
+  const [sendError, setSendError] = useState("");
   const shownAt = useRef(0);
   const duelsOff = useSwitchOff("duels");
   const friendsOff = useSwitchOff("friends");
@@ -196,6 +197,21 @@ export default function DuelPage() {
     </button>
   );
 
+  const problemText = (p: ReturnType<typeof duelProblem>) =>
+    p === "noNewWords"
+      ? t("duel.noNewWords", { name: (setup as Setup).name })
+      : p === "paused"
+        ? t("community.paused")
+        : p === "tooMany"
+          ? t("duel.tooMany")
+          : p === "offline"
+            ? t("friends.offline")
+            : p === "over"
+              ? t("duel.over")
+              : p === "updating"
+                ? t("duel.updating")
+                : t("duel.startFailed");
+
   const begin = (s: Setup) => {
     try {
       setQuestions(buildDuel(s.seed!, s.entries!));
@@ -221,8 +237,7 @@ export default function DuelPage() {
       const r = await duels.start(setup.friendId!);
       begin({ ...setup, duelId: r.duel, seed: r.seed, entries: r.entries });
     } catch (e) {
-      const msg = (e as Error)?.message ?? "";
-      setStartError(/no new words/.test(msg) ? t("duel.noNewWords", { name: setup.name }) : /paused/.test(msg) ? t("community.paused") : t("duel.startFailed"));
+      setStartError(problemText(duelProblem(e)));
       setPhase("intro");
     }
   };
@@ -239,8 +254,10 @@ export default function DuelPage() {
         if (r) setOutcome({ kind: "result", r });
       }
       setSendState("idle");
-    } catch {
-      setSendState("failed");
+    } catch (e) {
+      const problem = duelProblem(e);
+      setSendState(problem === "over" ? "over" : "failed");
+      setSendError(problemText(problem));
     }
   };
 
@@ -384,7 +401,7 @@ export default function DuelPage() {
           {sendState === "failed" ? (
             <>
               <p role="alert" className="font-bold text-[#ff8c9a]">
-                {t("duel.sendFailed")}
+                {sendError && sendError !== t("duel.startFailed") ? sendError : t("duel.sendFailed")}
               </p>
               <button type="button" onClick={() => void submit(points)} className="btn-game rounded-2xl px-6 py-3 font-display font-extrabold">
                 {t("duel.retry")}
@@ -421,7 +438,12 @@ export default function DuelPage() {
               ) : null}
             </>
           ) : null}
-          {outcome ? (
+          {sendState === "over" ? (
+            <p role="alert" className="font-bold text-[#ffd66b]">
+              {t("duel.over")}
+            </p>
+          ) : null}
+          {outcome || sendState === "over" ? (
             <Link href="/friends/" className="mt-2 font-bold text-white/85 underline">
               {t("duel.back")}
             </Link>

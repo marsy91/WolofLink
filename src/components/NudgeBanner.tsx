@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Pirogue } from "@/components/DuelRace";
 import { useAccount } from "@/lib/account";
 import { duelState, duels } from "@/lib/duels";
 import { friends } from "@/lib/friends";
@@ -33,12 +34,13 @@ export function NudgeBanner() {
     };
   }, [user]);
   const turnBanner = turns.length ? (
-    <section role="status" className="mb-4 flex items-center gap-3 rounded-3xl bg-night p-4 text-sand">
-      <span aria-hidden className="text-3xl">
-        ⚔️
+    <section role="status" className="duel-sky relative mb-4 flex items-center gap-3 overflow-hidden rounded-3xl p-4 text-white shadow-[0_10px_30px_rgba(10,17,49,0.35)]">
+      <span aria-hidden className="duel-glow absolute inset-x-0 -bottom-16 h-32" />
+      <span aria-hidden className="anim-bob relative shrink-0">
+        <Pirogue hull="#c2502f" trim="#f2c14e" size={52} />
       </span>
-      <p className="min-w-0 flex-1 font-bold">{t("duel.yourTurnBanner", { name: turns[0]!.name, n: turns.length })}</p>
-      <Link href={`/duel/?id=${encodeURIComponent(turns[0]!.id)}`} className="rounded-xl bg-sun px-3 py-2 text-sm font-extrabold text-night">
+      <p className="text-glow-white relative min-w-0 flex-1 font-display font-extrabold">{t("duel.yourTurnBanner", { name: turns[0]!.name, n: turns.length })}</p>
+      <Link href={`/duel/?id=${encodeURIComponent(turns[0]!.id)}`} className="btn-game relative shrink-0 rounded-xl px-4 py-2 text-sm font-extrabold uppercase">
         {t("duel.play")}
       </Link>
     </section>
