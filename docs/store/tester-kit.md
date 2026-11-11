@@ -48,9 +48,12 @@ Copy the **opt-in link** (Testers tab → "Copy link") into this message.
 7. **Profile → My progress**, and **Settings → Appearance** (try dark mode).
 8. Turn off the internet and open the app: it should still work.
 9. If you speak Wolof: look at 10 words and tell us anything that sounds or reads wrong.
+10. **Profile → Send feedback**: tell us one thing you liked and one thing to improve (it also works offline).
+11. If friends and duels are switched on: add another tester as a friend (Friends → Add in person, QR code) and play a duel.
 
 ## 5. How they report problems
-- **In the app:** tap *Report a problem* on a word (spelling, translation, audio).
+- **In the app:** tap *Report a problem* on a word (spelling, translation, audio), or use
+  **Profile → Send feedback** for anything else. Both arrive in the owner console (Reports).
 - **Anything else:** reply to your message or email support@woloflink.com.
 - Useful details: phone model, what they tapped, what they expected, a screenshot.
 
