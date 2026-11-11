@@ -13,6 +13,7 @@ import { canOpenStory } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
 import { ACHIEVEMENTS, applySession, type ApplyOutcome } from "@/lib/progress";
 import { useStore } from "@/lib/store";
+import { Character } from "./Character";
 import { Confetti } from "./Confetti";
 import { BADGE_GLYPHS, IconBook, IconClose, IconGem, IconSpark, IconSpeaker } from "./icons";
 import { Button, Loading, ProgressBar, useRequireProfile } from "./ui";
@@ -276,13 +277,8 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
             const right = speakers.indexOf(l.speaker) % 2 === 1;
             return (
               <li key={i} className={`anim-pop flex items-end gap-2 ${right ? "flex-row-reverse" : ""}`}>
-                <span
-                  aria-hidden
-                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-full font-display font-extrabold text-white ${
-                    right ? "bg-sea" : "bg-clay"
-                  }`}
-                >
-                  {l.speaker.slice(0, 1)}
+                <span aria-hidden className={`grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full ${right ? "bg-sea-soft" : "bg-sun-soft"}`}>
+                  <Character name={l.speaker} mood={i === shown - 1 && !allShown ? "talking" : "idle"} size={60} className="translate-y-1.5" />
                 </span>
                 <button
                   type="button"

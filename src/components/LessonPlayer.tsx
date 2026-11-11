@@ -52,6 +52,7 @@ import { useNow, useStore } from "@/lib/store";
 import { ExerciseView } from "./exercises";
 import { Confetti } from "./Confetti";
 import { BADGE_GLYPHS, IconClose, IconDrop, IconGem, IconInfo, IconRings, IconShield, IconSpark, IconSun } from "./icons";
+import { Character } from "./Character";
 import { ReportProblem } from "./ReportProblem";
 import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 
@@ -415,9 +416,12 @@ export function LessonPlayer(props: Props) {
         <div className="mx-auto max-w-lg px-5 py-4">
           {feedback ? (
             <div role="status">
-              <p className={`font-display text-2xl font-extrabold ${feedback.correct ? "text-sea" : "text-berry"}`}>
-                {feedback.correct ? t("ex.correct") : t("ex.incorrect")}
-              </p>
+              <div className="flex items-center gap-3">
+                <Character name={feedback.correct ? "Awa" : "Lamine"} mood={feedback.correct ? "happy" : "sad"} size={56} className="shrink-0" />
+                <p className={`font-display text-2xl font-extrabold ${feedback.correct ? "text-sea" : "text-berry"}`}>
+                  {feedback.correct ? t("ex.correct") : t("ex.incorrect")}
+                </p>
+              </div>
               {feedback.correct && typed && typed !== "exact" ? (
                 <p className="mt-1 text-ink">
                   <span className="font-bold">{t(typed === "accents" ? "ex.accents" : "ex.typo")}</span>{" "}

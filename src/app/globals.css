@@ -223,7 +223,18 @@ body {
 .anim-panel-right { animation: panel-right 500ms cubic-bezier(0.2, 0.8, 0.3, 1) both; }
 .anim-pulse-glow { animation: pulse-glow 1.6s ease-in-out infinite; }
 
+/* Animated characters (components/Character.tsx). */
+@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes talk { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+@keyframes breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes hop { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-10px); } 55% { transform: translateY(0); } 70% { transform: translateY(-4px); } }
+.character .blink { animation: blink 4.2s ease-in-out infinite; }
+.character .talk { animation: talk 260ms ease-in-out infinite; }
+.anim-breathe { animation: breathe 3.2s ease-in-out infinite; }
+.anim-hop { animation: hop 900ms cubic-bezier(0.3, 0.7, 0.3, 1) 2; }
+
 @media (prefers-reduced-motion: reduce) {
+  .character .blink, .character .talk, .anim-breathe, .anim-hop,
   .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark { animation: none; }
   .anim-panel-left, .anim-panel-right { transform: skewX(-8deg); }
   .duel-spark { display: none; }
