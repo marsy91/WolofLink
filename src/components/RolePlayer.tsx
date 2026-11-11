@@ -104,7 +104,7 @@ export function RolePlayer({ storyId }: { storyId: string }) {
               onClick={() => setRole(s)}
               className="flex flex-col items-center gap-2 rounded-3xl border border-sand-3 bg-white p-4 shadow-card transition active:translate-y-[2px]"
             >
-              <Character name={s} size={88} />
+              <Character name={s} mood="wave" size={88} />
               <span className="font-display font-extrabold text-night">{t("roleplay.as", { name: s })}</span>
             </button>
           ))}
@@ -121,8 +121,8 @@ export function RolePlayer({ storyId }: { storyId: string }) {
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 px-6 text-center">
         <Confetti />
         <div className="flex items-end gap-2">
-          {[...new Set(story.lines.map((l) => l.speaker))].slice(0, 2).map((s) => (
-            <Character key={s} name={s} mood="happy" size={96} />
+          {[...new Set(story.lines.map((l) => l.speaker))].slice(0, 2).map((s, i) => (
+            <Character key={s} name={s} mood={i === 0 ? "happy" : "wave"} size={96} />
           ))}
         </div>
         <h1 className="font-display text-4xl font-extrabold text-night">{t("roleplay.done")}</h1>

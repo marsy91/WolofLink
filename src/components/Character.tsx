@@ -6,11 +6,11 @@ import { useId } from "react";
 /**
  * Friendly animated people for dialogues and lessons: original drawings (inline SVG,
  * no image files) of the course's speakers. They blink, bob gently, move their mouth
- * while their line plays, smile and hop when an answer is right, and look sorry when
- * it's wrong. All motion stops when the phone asks for reduced motion.
+ * while their line plays (tilting their head), wave hello, nod and hop when an answer
+ * is right, and shake their head when it's wrong. All motion stops when the phone asks for reduced motion.
  */
 
-export type Mood = "idle" | "talking" | "happy" | "sad";
+export type Mood = "idle" | "talking" | "happy" | "sad" | "wave";
 
 interface Look {
   skin: string;
@@ -46,10 +46,10 @@ export function lookFor(name: string): Look {
 export function Character({ name, mood = "idle", size = 96, className = "" }: { name: string; mood?: Mood; size?: number; className?: string }) {
   const look = lookFor(name);
   const id = useId().replace(/:/g, "");
-  const happy = mood === "happy";
+  const happy = mood === "happy" || mood === "wave";
   const sad = mood === "sad";
   return (
-    <span className={`character inline-block ${happy ? "anim-hop" : "anim-breathe"} ${className}`} style={{ width: size, height: size }} aria-hidden>
+    <span className={`character inline-block ${mood === "happy" ? "anim-hop" : "anim-breathe"} ${className}`} style={{ width: size, height: size }} aria-hidden>
       <svg viewBox="0 0 120 120" width={size} height={size} className="block overflow-visible">
         <defs>
           <radialGradient id={`face${id}`} cx="45%" cy="38%" r="65%">
@@ -60,6 +60,15 @@ export function Character({ name, mood = "idle", size = 96, className = "" }: { 
         {/* Shoulders and shirt */}
         <path d="M22 120 C24 96 40 88 60 88 C80 88 96 96 98 120 Z" fill={look.shirt} />
         <path d="M48 89 L60 101 L72 89" fill="none" stroke="#ffffff" strokeOpacity="0.55" strokeWidth="3" strokeLinejoin="round" />
+        {/* Waving arm (behind the head) */}
+        {mood === "wave" ? (
+          <g className="wave-arm" style={{ transformOrigin: "92px 100px", transformBox: "view-box" }}>
+            <path d="M88 102 C96 92 100 80 102 70" stroke={look.shirt} strokeWidth="11" strokeLinecap="round" fill="none" />
+            <circle cx="103" cy="64" r="7.5" fill={look.skin} />
+            <path d="M98 59 L97 54 M102 57 L102 51 M106 58 L107 53" stroke={look.skin} strokeWidth="3" strokeLinecap="round" />
+          </g>
+        ) : null}
+        <g className={`head head-${mood}`} style={{ transformOrigin: "60px 82px", transformBox: "view-box" }}>
         {/* Neck */}
         <rect x="52" y="76" width="16" height="14" rx="6" fill={look.skinShade} />
         {/* Back hair / wrap */}
@@ -129,6 +138,7 @@ export function Character({ name, mood = "idle", size = 96, className = "" }: { 
           <path d="M51 66 Q60 73 69 66" stroke="#5a1f1a" strokeWidth="3" strokeLinecap="round" fill="none" />
         )}
         {happy ? <path d="M53 67 H67" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" /> : null}
+        </g>
       </svg>
     </span>
   );

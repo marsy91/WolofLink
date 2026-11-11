@@ -232,9 +232,18 @@ body {
 .character .talk { animation: talk 260ms ease-in-out infinite; }
 .anim-breathe { animation: breathe 3.2s ease-in-out infinite; }
 .anim-hop { animation: hop 900ms cubic-bezier(0.3, 0.7, 0.3, 1) 2; }
+@keyframes nod { 0%, 100% { transform: rotate(0) translateY(0); } 25% { transform: rotate(0) translateY(3px); } 50% { transform: translateY(0); } 75% { transform: translateY(3px); } }
+@keyframes head-shake { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-7deg); } 40% { transform: rotate(6deg); } 60% { transform: rotate(-5deg); } 80% { transform: rotate(3deg); } }
+@keyframes head-tilt { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+@keyframes wave-arm { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(18deg); } }
+.character .head-happy { animation: nod 800ms ease-in-out 2; }
+.character .head-sad { animation: head-shake 700ms ease-in-out 1; }
+.character .head-talking { animation: head-tilt 1.4s ease-in-out infinite; }
+.character .head-wave { animation: head-tilt 2.4s ease-in-out infinite; }
+.character .wave-arm { animation: wave-arm 520ms ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .character .blink, .character .talk, .anim-breathe, .anim-hop,
+  .character .blink, .character .talk, .anim-breathe, .anim-hop, .character .head, .character .wave-arm,
   .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark { animation: none; }
   .anim-panel-left, .anim-panel-right { transform: skewX(-8deg); }
   .duel-spark { display: none; }
