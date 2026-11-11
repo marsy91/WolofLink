@@ -340,7 +340,7 @@ export default function DuelPage() {
               </span>
             </div>
             <span className="anim-ring absolute top-1/2 left-1/2 h-24 w-24 rounded-full border-4 border-[#ffd66b]" style={{ animationDelay: "480ms" }} />
-            <span className="anim-slam text-glow relative font-display text-6xl font-extrabold text-[#ffd66b] italic" style={{ animationDelay: "420ms" }}>
+            <span className="anim-slam text-glow relative font-display text-6xl font-extrabold text-[#ffd66b]" style={{ animationDelay: "420ms" }}>
               {t("duel.vs")}
             </span>
           </div>
@@ -398,9 +398,9 @@ export default function DuelPage() {
   if (phase === "countdown") {
     return (
       <DuelScene lowEnd={lowEnd}>
-        <main key={count} className="anim-cam-shake safe-top safe-bottom flex min-h-dvh items-center justify-center" aria-live="polite">
+        <main key={count} className="safe-top safe-bottom flex min-h-dvh items-center justify-center" aria-live="polite">
           <span className="anim-ring absolute top-1/2 left-1/2 h-40 w-40 rounded-full border-4 border-[#ffd66b]" aria-hidden />
-          <span className="anim-slam text-glow font-display text-9xl font-extrabold text-[#ffd66b] italic">{count > 0 ? count : t("duel.go")}</span>
+          <span className="anim-slam text-glow font-display text-9xl font-extrabold text-[#ffd66b]">{count > 0 ? count : t("duel.go")}</span>
         </main>
       </DuelScene>
     );
@@ -419,7 +419,7 @@ export default function DuelPage() {
         <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
           {r && allShown && r.result === "won" ? <Confetti pieces={lowEnd ? 24 : 48} /> : null}
           {r && allShown ? (
-            <p className={`anim-slam font-display text-5xl font-extrabold italic ${r.result === "lost" ? "text-glow-white text-white" : "text-glow text-[#ffd66b]"}`}>
+            <p className={`anim-rise font-display text-5xl font-extrabold tracking-tight ${r.result === "lost" ? "text-glow-white text-white" : "text-glow text-[#ffd66b]"}`}>
               {r.result === "won" ? t("duel.won") : r.result === "draw" ? t("duel.draw") : setup.mode === "bot" ? t("bot.lost") : t("duel.lost")}
             </p>
           ) : null}
@@ -532,7 +532,7 @@ export default function DuelPage() {
           <span className="text-glow-white relative min-w-16 text-right font-display text-3xl font-extrabold">
             <Rolling value={score} />
             {floatPts ? (
-              <span key={floatPts.key} aria-hidden className="anim-float-up text-glow absolute -top-2 right-0 text-lg text-[#ffd66b]">
+              <span key={floatPts.key} aria-hidden className="anim-float-up absolute -top-3 right-0 font-display text-base font-extrabold text-[#ffd66b]">
                 +{floatPts.n}
               </span>
             ) : null}
@@ -545,7 +545,7 @@ export default function DuelPage() {
         />
         <div className="h-7 text-center">
           {streak >= 3 ? (
-            <span key={streak} className="anim-slam text-glow inline-block font-display text-xl font-extrabold text-[#ffd66b] italic">
+            <span key={streak} className="anim-rise text-glow inline-block font-display text-xl font-extrabold text-[#ffd66b]">
               🔥 {t("duel.streak", { n: streak })}
             </span>
           ) : null}
@@ -564,7 +564,7 @@ export default function DuelPage() {
                 <IconSpeaker size={40} />
               </button>
             ) : (
-              <p key={index} lang={q!.kind === "meaning" ? "wo" : undefined} className="anim-pop text-glow-white font-display text-4xl leading-tight font-extrabold">
+              <p key={index} lang={q!.kind === "meaning" ? "wo" : undefined} className="anim-rise text-glow-white font-display text-4xl leading-tight font-extrabold">
                 {q!.kind === "meaning" ? q!.entry.wo : translate(q!.entry.tr, lang)}
               </p>
             )}

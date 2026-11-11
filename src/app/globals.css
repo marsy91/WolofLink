@@ -71,9 +71,13 @@ body {
 }
 
 @keyframes pop {
-  0% { transform: scale(0.92); opacity: 0; }
-  60% { transform: scale(1.03); opacity: 1; }
-  100% { transform: scale(1); }
+  from { transform: scale(0.97); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+/* Text comes in with a short fade and lift: no scaling, so letters stay sharp. */
+@keyframes rise {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 @keyframes slide-up {
   from { transform: translateY(100%); }
@@ -83,7 +87,8 @@ body {
   20%, 60% { transform: translateX(-5px); }
   40%, 80% { transform: translateX(5px); }
 }
-.anim-pop { animation: pop 260ms ease-out both; }
+.anim-pop { animation: pop 220ms cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+.anim-rise { animation: rise 280ms cubic-bezier(0.2, 0.7, 0.3, 1) both; }
 .anim-slide-up { animation: slide-up 220ms ease-out both; }
 .anim-shake { animation: shake 320ms ease-in-out; }
 
@@ -102,8 +107,9 @@ body {
   100% { transform: scale(1); }
 }
 @keyframes float-up {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-28px); opacity: 0; }
+  0% { transform: translateY(4px); opacity: 0; }
+  20% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-16px); opacity: 0; }
 }
 @keyframes bob {
   0%, 100% { transform: translateY(0) rotate(-2deg); }
@@ -117,7 +123,7 @@ body {
 .anim-from-left { animation: from-left 420ms cubic-bezier(0.2, 0.8, 0.3, 1.1) both; }
 .anim-from-right { animation: from-right 420ms cubic-bezier(0.2, 0.8, 0.3, 1.1) both; }
 .anim-stamp { animation: stamp 700ms ease-out both; }
-.anim-float-up { animation: float-up 650ms ease-out both; }
+.anim-float-up { animation: float-up 700ms cubic-bezier(0.2, 0.7, 0.3, 1) both; }
 .anim-bob { animation: bob 2.4s ease-in-out infinite; }
 .race-boat { transition: left 600ms cubic-bezier(0.3, 0.7, 0.3, 1); }
 .timer-drain { animation: drain 7.5s linear both; }
@@ -155,8 +161,8 @@ body {
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6), inset 0 -4px 0 rgba(0, 0, 0, 0.2), 0 10px 26px rgba(242, 163, 58, 0.45);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
-.text-glow { text-shadow: 0 0 18px rgba(255, 214, 107, 0.85), 0 2px 0 rgba(0, 0, 0, 0.35); }
-.text-glow-white { text-shadow: 0 0 20px rgba(160, 220, 255, 0.6), 0 2px 0 rgba(0, 0, 0, 0.4); }
+.text-glow { text-shadow: 0 0 14px rgba(255, 214, 107, 0.45); }
+.text-glow-white { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
 .timer-glow { background: linear-gradient(90deg, #ffd66b, #ff8a3d); box-shadow: 0 0 12px rgba(255, 170, 70, 0.9); }
 .shine { position: relative; overflow: hidden; }
 .shine::after {
@@ -176,9 +182,8 @@ body {
 }
 @keyframes wake { 0% { transform: translateX(0); opacity: 0.9; } 100% { transform: translateX(-8px); opacity: 0.3; } }
 @keyframes slam {
-  0% { transform: scale(3); opacity: 0; filter: blur(8px); }
-  60% { transform: scale(0.92); opacity: 1; filter: blur(0); }
-  100% { transform: scale(1); }
+  from { transform: scale(1.35); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 @keyframes ring {
   from { transform: translate(-50%, -50%) scale(0.3); opacity: 0.9; }
@@ -203,7 +208,7 @@ body {
 @keyframes pulse-glow { 0%, 100% { box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -4px 0 rgba(0,0,0,.2), 0 10px 26px rgba(242,163,58,.45); } 50% { box-shadow: inset 0 2px 0 rgba(255,255,255,.6), inset 0 -4px 0 rgba(0,0,0,.2), 0 10px 40px rgba(242,163,58,.85); } }
 .anim-wave { animation: wave-slide linear infinite; }
 .anim-twinkle { animation: twinkle 4s ease-in-out infinite; }
-.anim-slam { animation: slam 520ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.anim-slam { animation: slam 300ms cubic-bezier(0.2, 0.8, 0.3, 1) both; }
 .anim-ring { animation: ring 700ms ease-out both; }
 .anim-cam-shake { animation: cam-shake 380ms ease-out both; }
 .anim-drop-in { animation: drop-in 600ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
@@ -216,7 +221,7 @@ body {
   .anim-panel-left, .anim-panel-right { transform: skewX(-8deg); }
   .duel-spark { display: none; }
   .shine::after, .flash-red, .flash-gold { display: none; }
-  .anim-pop, .anim-slide-up, .anim-shake { animation: none; }
+  .anim-pop, .anim-rise, .anim-slide-up, .anim-shake { animation: none; }
   .anim-from-left, .anim-from-right, .anim-stamp, .anim-float-up, .anim-bob { animation: none; }
   .timer-drain { animation: none; width: 100%; }
   * { transition-duration: 0ms !important; }
