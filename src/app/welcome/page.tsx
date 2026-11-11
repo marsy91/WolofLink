@@ -1,9 +1,8 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IconArrowLeft, IconCheck } from "@/components/icons";
 import { LogoMark, Wordmark } from "@/components/Logo";
 import { Button, Loading, ProgressBar } from "@/components/ui";
@@ -51,16 +50,22 @@ export default function Welcome() {
   const account = useAccount();
   const router = useRouter();
   const [step, setStep] = useState(0);
+  // Splash → (with accounts) choose: create an account, sign in, or continue as a guest.
+  const [choosing, setChoosing] = useState(false);
+  const [mode, setMode] = useState<"guest" | "register">("guest");
   const [goal, setGoal] = useState<GoalId>("regular");
   const [name, setName] = useState("");
 
+  // Set when setup finishes here, so the redirect below doesn't override where finish() goes.
+  const finishing = useRef(false);
   useEffect(() => {
-    if (ready && progress.profile) router.replace("/learn/");
+    if (ready && progress.profile && !finishing.current) router.replace("/learn/");
   }, [ready, progress.profile, router]);
 
   if (!ready || progress.profile) return <Loading />;
 
   const finish = () => {
+    finishing.current = true;
     const now = Date.now();
     update((p) => ({
       ...p,
@@ -74,8 +79,53 @@ export default function Welcome() {
         guest: true,
       },
     }));
-    router.replace("/learn/");
+    // Registering: set up first, then the email step saves this progress to the new account.
+    router.replace(mode === "register" ? "/account/?mode=register" : "/learn/");
   };
+
+  const startSetup = (m: "guest" | "register") => {
+    setMode(m);
+    setChoosing(false);
+    setStep(1);
+  };
+
+  if (step === 0 && choosing) {
+    return (
+      <main className="splash safe-top safe-bottom flex min-h-dvh flex-col bg-night text-sand">
+        <div className="py-3 pl-3">
+          <button
+            type="button"
+            onClick={() => setChoosing(false)}
+            aria-label={t("common.back")}
+            className="grid h-10 w-10 place-items-center rounded-full text-sand hover:bg-white/10"
+          >
+            <IconArrowLeft />
+          </button>
+        </div>
+        <div className="mx-auto flex w-full max-w-lg flex-1 flex-col justify-center gap-3 px-6 text-center">
+          <LogoMark size={72} className="mx-auto mb-2" />
+          <h1 className="font-display text-3xl font-extrabold">{t("welcome.choiceTitle")}</h1>
+          <p className="text-sand/85">{t("welcome.choiceHint")}</p>
+        </div>
+        <div className="mx-auto w-full max-w-lg space-y-3 px-6 pb-8">
+          <Button block onClick={() => startSetup("register")}>
+            {t("welcome.register")}
+          </Button>
+          <Button block variant="secondary" onClick={() => router.push("/account/?mode=signin")}>
+            {t("welcome.signIn")}
+          </Button>
+          <button
+            type="button"
+            onClick={() => startSetup("guest")}
+            className="min-h-12 w-full rounded-2xl font-display font-extrabold text-sun underline underline-offset-4"
+          >
+            {t("welcome.guest")}
+          </button>
+          <p className="text-center text-sm text-sand/75">{t("welcome.guestNote")}</p>
+        </div>
+      </main>
+    );
+  }
 
   if (step === 0) {
     return (
@@ -91,14 +141,9 @@ export default function Welcome() {
           </p>
         </div>
         <div className="mx-auto w-full max-w-lg px-6 pb-8">
-          <Button block onClick={() => setStep(1)}>
+          <Button block onClick={() => (account.available ? setChoosing(true) : startSetup("guest"))}>
             {t("onb.start")}
           </Button>
-          {account.available ? (
-            <Link href="/account/" className="mt-4 block text-center font-bold text-sun underline underline-offset-4">
-              {t("acct.haveAccount")}
-            </Link>
-          ) : null}
         </div>
       </main>
     );
@@ -109,7 +154,10 @@ export default function Welcome() {
       <div className="flex items-center gap-3 py-4">
         <button
           type="button"
-          onClick={() => setStep(step - 1)}
+          onClick={() => {
+            if (step === 1 && account.available) setChoosing(true);
+            setStep(step - 1);
+          }}
           aria-label={t("common.back")}
           className="grid h-10 w-10 place-items-center rounded-full text-night hover:bg-sand-2"
         >
@@ -185,7 +233,7 @@ export default function Welcome() {
                 className="w-full rounded-2xl border border-sand-3 bg-white px-4 py-3.5 text-lg outline-none focus:border-clay"
               />
             </label>
-            <p className="mt-4 rounded-2xl bg-sea-soft p-4 text-sea">{t("onb.guestNote")}</p>
+            <p className="mt-4 rounded-2xl bg-sea-soft p-4 text-sea">{t(mode === "register" ? "welcome.registerNext" : "onb.guestNote")}</p>
           </>
         )}
       </section>
@@ -197,7 +245,7 @@ export default function Welcome() {
           </Button>
         ) : (
           <Button block onClick={finish}>
-            {t("onb.finish")}
+            {t(mode === "register" ? "welcome.registerContinue" : "onb.finish")}
           </Button>
         )}
       </div>
