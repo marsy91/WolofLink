@@ -755,6 +755,17 @@ export const en = {
   "welcome.registerTitle": "Create your account",
   "welcome.signInTitle": "Sign in",
   "welcome.skip": "Not now, start learning",
+  "feed.stories": "Quick start",
+  "feed.continue": "Continue",
+  "feed.review": "Review {n}",
+  "feed.levelUp": "Level up",
+  "feed.phraseOfDay": "Phrase of the day",
+  "feed.phrase": "Everyday phrase",
+  "feed.share": "Share",
+  "feed.shared": "Shared",
+  "feed.more": "Show more phrases",
+  "feed.showPath": "See the full lesson path",
+  "feed.backToFeed": "← Back to the feed",
 };
 
 export type UiKey = keyof typeof en;

@@ -15,6 +15,7 @@ import {
   isThemeId,
   resolvedPalette,
   themeFor,
+  type ThemeId,
   type Token,
 } from "./themes";
 
@@ -65,6 +66,22 @@ describe("themes", () => {
       .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
     expect(failures).toEqual([]);
   });
+
+  it.each(THEME_IDS.filter((id) => !THEMES[id].dark && id !== "classic" && id !== "senegal"))(
+    "%s has its own dark palette that meets WCAG AA",
+    (id) => {
+      const def = THEMES[id];
+      expect(def.darkColors?.sand).toBeTruthy();
+      const p = resolvedPalette(def, true);
+      const pick = (t: Token | "white") => (t === "white" ? WHITE : p[t]);
+      const failures = [...DARK_PAIRS, ["white", "clay"] as Pair, ...(def.darkColors?.sea ? [["white", "sea"] as Pair] : [])]
+        .map(([text, bg, min = 4.5]) => ({ pair: `${text} on ${bg}`, ratio: contrast(pick(text), pick(bg)), min }))
+        .filter((r) => r.ratio < r.min)
+        .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
+      expect(failures).toEqual([]);
+      for (const value of Object.values(def.darkColors!)) expect(value).toMatch(/^#[0-9a-f]{6}$/);
+    },
+  );
 
   // Every background/text pair found in the screens' class names (bg first, text second).
   const SCREEN_PAIRS = (
@@ -147,15 +164,41 @@ describe("themes", () => {
       expect(r.props).toEqual({});
     });
 
-    it("forces dark mode for a dark theme and skips light palettes in dark mode", () => {
+    it("forces dark mode for a dark theme and uses a light theme's own dark palette in dark mode", () => {
       expect(run(JSON.stringify({ settings: { theme: "saloum", mode: "light" } })).mode).toBe("dark");
       const r = run(JSON.stringify({ settings: { theme: "lompoul" } }), true);
       expect(r.mode).toBe("dark");
-      expect(r.props).toEqual({});
+      expect(r.props["--color-sand"]).toBe(THEMES.lompoul.darkColors!.sand);
+      expect(r.props["--color-night"]).toBeUndefined();
+      expect(run(JSON.stringify({ settings: { theme: "classic" } }), true).props).toEqual({});
     });
 
     it("survives broken storage", () => {
       expect(() => run("{not json")).not.toThrow();
     });
   });
+});
+
+describe("themes look different from each other", () => {
+  // The colours that fill the most screen: the page, the cards and the unit banners.
+  const VISIBLE: Token[] = ["sand", "card", "sun-deep", "clay", "sea", "dusk"];
+  const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const dist = (a: string, b: string) => Math.hypot(...rgb(a).map((v, i) => v - rgb(b)[i]!));
+  // Senegal's colours live in globals.css (the flag stripe and green banners), not here.
+  const ids = THEME_IDS.filter((id) => id !== "senegal");
+  const shown = (id: ThemeId, darkSetting: boolean) => resolvedPalette(THEMES[id], THEMES[id].dark || darkSetting);
+
+  for (const darkSetting of [false, true]) {
+    it(`every pair of themes differs in at least 3 big colours (${darkSetting ? "dark" : "light"} mode)`, () => {
+      const tooClose: string[] = [];
+      for (let i = 0; i < ids.length; i++)
+        for (let j = i + 1; j < ids.length; j++) {
+          const a = shown(ids[i]!, darkSetting);
+          const b = shown(ids[j]!, darkSetting);
+          const different = VISIBLE.filter((t) => dist(a[t], b[t]) > 40).length;
+          if (different < 3) tooClose.push(`${ids[i]} ~ ${ids[j]} (${different})`);
+        }
+      expect(tooClose).toEqual([]);
+    });
+  }
 });
