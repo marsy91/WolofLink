@@ -43,3 +43,11 @@ export const PUSH_ENABLED = process.env.NEXT_PUBLIC_PUSH === "on";
  * option on the first setup screen and in Settings.
  */
 export const WOLOF_SPEAKERS_ENABLED = process.env.NEXT_PUBLIC_WOLOF_SPEAKERS === "on";
+
+/**
+ * WolofLink World: the map of learners by country and the shared weekly goal
+ * (supabase/migrations/*_world.sql, which must be applied first). Needs accounts.
+ * Set NEXT_PUBLIC_WORLD=on to show it; off by default. The owner can also pause it
+ * from the console (switch "world").
+ */
+export const WORLD_ENABLED = process.env.NEXT_PUBLIC_WORLD === "on" && ACCOUNTS_ENABLED;

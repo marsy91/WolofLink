@@ -23,6 +23,7 @@ import {
 } from "@/lib/engine";
 import { haptic } from "@/lib/native";
 import { goTo } from "@/lib/nav";
+import { LEVEL_TEST_PASS, LEVEL_TEST_SIZE, applyLevelTest, cefrLevel, levelTestEntries } from "@/lib/levels";
 import { useSwitchOff } from "@/lib/notices";
 import { canOpenLesson, isPremiumUnit } from "@/lib/premium";
 import { usePremium } from "@/lib/premium-context";
@@ -61,7 +62,7 @@ import { ReportProblem } from "./ReportProblem";
 import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 
 /** A lesson, a review of due cards, or a drill of a fixed list (e.g. the Survival 100). */
-type Props = { mode: "lesson"; lessonId: string } | { mode: "review"; drill?: readonly string[]; testOut?: string };
+type Props = { mode: "lesson"; lessonId: string } | { mode: "review"; drill?: readonly string[]; testOut?: string; levelTest?: string };
 
 function findIn(c: Course, id: string) {
   for (const unit of c.units) {
@@ -110,9 +111,15 @@ export function LessonPlayer(props: Props) {
       if (!found) return;
       exercises = buildLesson(found.lesson, { course: active, lang: contentLang, rng }, level);
     } else {
+      // Unit test-outs and level tests belong to the Wolof course.
       const testUnit = props.testOut && !reversed ? course.units.find((u) => u.id === props.testOut) : undefined;
+      const lvl = reversed ? undefined : cefrLevel(props.levelTest);
       if (testUnit && isPremiumUnit(course.units.indexOf(testUnit)) && !premium) return router.replace("/premium/");
-      if (testUnit) {
+      if (lvl) {
+        const units = course.units.filter((u) => lvl.units.includes(u.id));
+        if (!premium && units.some((u) => isPremiumUnit(course.units.indexOf(u)))) return router.replace("/premium/");
+        exercises = buildReview(levelTestEntries(units, rng), lang, rng);
+      } else if (testUnit) {
         exercises = buildReview(shuffle(testOutEntries(testUnit.lessons), rng).slice(0, TEST_OUT_SIZE), lang, rng);
       } else if (props.drill) {
         exercises = buildReview(shuffle(props.drill, rng).slice(0, 12), contentLang, rng, active);
@@ -170,6 +177,8 @@ export function LessonPlayer(props: Props) {
     if (testUnit) {
       applied.progress = applyTestOut(applied.progress, testUnit.lessons.map((l) => l.id), result.accuracy, Date.now());
     }
+    const lvl = props.mode === "review" ? cefrLevel(props.levelTest) : undefined;
+    if (lvl) applied.progress = applyLevelTest(applied.progress, lvl.id, result.accuracy, Date.now());
     update(() => applied.progress);
     setOutcome(applied);
   }, [session, sound, vibrate, update, props, progress]);
@@ -222,16 +231,21 @@ export function LessonPlayer(props: Props) {
   /* ── Intro ── */
   if (!session) {
     const testUnit = props.mode === "review" && props.testOut ? course.units.find((u) => u.id === props.testOut) : undefined;
+    const lvl = props.mode === "review" ? cefrLevel(props.levelTest) : undefined;
     const title = found
       ? translate(found.lesson.title, lang)
-      : testUnit
-        ? t("testout.title", { unit: translate(testUnit.title, lang) })
-        : t("practice.title");
+      : lvl
+        ? t("leveltest.title", { level: lvl.cefr })
+        : testUnit
+          ? t("testout.title", { unit: translate(testUnit.title, lang) })
+          : t("practice.title");
     const tip = found?.lesson.tip
       ? translate(found.lesson.tip, lang)
-      : testUnit
-        ? t("testout.body", { n: Math.round(TEST_OUT_PASS * 100) })
-        : t("practice.body");
+      : lvl
+        ? t("leveltest.body", { n: LEVEL_TEST_SIZE, p: Math.round(LEVEL_TEST_PASS * 100) })
+        : testUnit
+          ? t("testout.body", { n: Math.round(TEST_OUT_PASS * 100) })
+          : t("practice.body");
     const outOfDrops = props.mode === "lesson" && !premium && refreshDrops(progress, now).drops.count <= 0;
     return (
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
@@ -326,6 +340,13 @@ export function LessonPlayer(props: Props) {
             />
           </div>
 
+          {props.mode === "review" && props.levelTest ? (
+            <Banner icon={<IconRings size={26} />}>
+              {accuracy(session) >= LEVEL_TEST_PASS
+                ? t("leveltest.passed")
+                : t("leveltest.failed", { n: Math.round(LEVEL_TEST_PASS * 100) })}
+            </Banner>
+          ) : null}
           {props.mode === "review" && props.testOut ? (
             <Banner icon={<IconRings size={26} />}>
               {accuracy(session) >= TEST_OUT_PASS

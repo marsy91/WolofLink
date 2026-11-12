@@ -1,11 +1,11 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
+import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED, WORLD_ENABLED } from "@/lib/features";
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
-const UPDATED = "11 November 2026";
+const UPDATED = "12 November 2026";
 
 /**
  * Public privacy policy (also needed as a URL for Google Play and the App
@@ -129,6 +129,17 @@ export default function Privacy() {
           Instagram, TikTok, X or Snapchat handles: only adult friends can see the ones marked as visible, never the
           wider app, and never anyone under 18. Deleting your account removes your city, neighbourhood, requests,
           handles and blocks, and unlinks your account from any report you made or that was made about you.
+        </Section>
+      ) : null}
+
+      {WORLD_ENABLED ? (
+        <Section title="WolofLink World (map of learners)">
+          If you are signed in, you can add the country you learn from, picked from a list (the app never reads your
+          location). Nobody sees your choice: the map only shows how many learners chose each country, and a country
+          appears only once at least 3 learners chose it; smaller countries are added together. The shared weekly goal
+          adds up the XP earned this week by every learner with an account, from the progress already synced; it never
+          shows who earned it. Anyone can see these totals, including on our website. You can remove your country at any
+          time on the WolofLink World screen, and deleting your account removes it.
         </Section>
       ) : null}
 
