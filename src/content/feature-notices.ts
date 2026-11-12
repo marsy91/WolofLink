@@ -169,6 +169,28 @@ const NOTICES: Record<string, Record<NoticeKind, FeatureNotice>> = {
       ]),
     },
   },
+  world: {
+    back: {
+      title: tx(["WolofLink World is back", "WolofLink Monde est de retour", "WolofLink Mundo ha vuelto", "WolofLink Welt ist zurück", "WolofLink Mondo è tornato"]),
+      message: tx([
+        "See where Wolof learners are on the map and help this week's shared goal.",
+        "Voyez sur la carte où sont les apprenants du wolof et participez à l'objectif commun de la semaine.",
+        "Mira en el mapa dónde están quienes aprenden wolof y ayuda al objetivo común de la semana.",
+        "Sieh auf der Karte, wo Wolof gelernt wird, und hilf beim gemeinsamen Wochenziel.",
+        "Guarda sulla mappa dove si impara il wolof e contribuisci all'obiettivo comune della settimana.",
+      ]),
+    },
+    paused: {
+      title: tx(["WolofLink World is paused for a moment", "WolofLink Monde est en pause un instant", "WolofLink Mundo está en pausa un momento", "WolofLink Welt ist kurz pausiert", "WolofLink Mondo è in pausa per un momento"]),
+      message: tx([
+        "Your lessons and your progress are not affected.",
+        "Vos leçons et votre progression ne sont pas touchées.",
+        "Tus lecciones y tu progreso no se ven afectados.",
+        "Deine Lektionen und dein Fortschritt sind nicht betroffen.",
+        "Le tue lezioni e i tuoi progressi non sono interessati.",
+      ]),
+    },
+  },
   bot_duels: {
     back: {
       title: tx(["New: duel the computer", "Nouveau : duel contre l'ordinateur", "Novedad: duelo contra el ordenador", "Neu: Duell gegen den Computer", "Novità: sfida il computer"]),

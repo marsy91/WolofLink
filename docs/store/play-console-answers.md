@@ -94,7 +94,7 @@ which Google does not count as sharing) · **Processed ephemerally: No** · **Op
 |---|---|---|
 | Personal info → **Name** | Display name shown to friends, team admins and (adults only) city leagues; credit name for voice contributors | App functionality |
 | Personal info → **Email address** | Account email; shown to the owner with feedback only if the learner ticks "you can reply to me" | Account management, Developer communications |
-| Personal info → **Other info** | Home city picked from a list, friend requests, blocks, reports about other users | App functionality; Fraud prevention, security, and compliance |
+| Personal info → **Other info** | Home city picked from a list, friend requests, blocks, reports about other users (and, in builds with WolofLink World on, the country picked from a list) | App functionality; Fraud prevention, security, and compliance |
 | App activity → **App interactions** | Progress, XP, streak, duels, crowns and trophies, words seen in duels | App functionality |
 | App activity → **Other user-generated content** | Notes in problem reports; feedback messages and star ratings | App functionality |
 | App info and performance → **Other app performance data** | App version, app language, which word was reported, which screen feedback came from | App functionality |

@@ -15,9 +15,12 @@ describe("places", () => {
     }
   });
 
-  it("matches the city list in the community migration", () => {
+  it("matches the city list in the latest migration that sets it", () => {
     const dir = join(__dirname, "../../supabase/migrations");
-    const file = readdirSync(dir).find((f) => f.endsWith("_community.sql"))!;
+    const file = readdirSync(dir)
+      .sort()
+      .filter((f) => readFileSync(join(dir, f), "utf8").includes("function private.valid_city"))
+      .at(-1)!;
     const sql = readFileSync(join(dir, file), "utf8");
     const block = sql.slice(sql.indexOf("private.valid_city"), sql.indexOf("]);", sql.indexOf("private.valid_city")));
     const inDb = [...block.matchAll(/'([a-z-]+)'/g)].map((m) => m[1]).sort();
