@@ -8,6 +8,7 @@
  * copy. Pure and covered by merge.test.ts.
  */
 import type { Progress, SrsCard } from "./progress";
+import { mergeLevelTest } from "./levels";
 
 function mergeRecord<T>(a: Record<string, T>, b: Record<string, T>, pick: (x: T, y: T) => T): Record<string, T> {
   const out: Record<string, T> = { ...a };
@@ -52,6 +53,9 @@ export function mergeProgress(local: Progress, remote: Progress): Progress {
     // Keep the earliest unlock time of each badge.
     achievements: mergeRecord(local.achievements, remote.achievements, Math.min),
     reviews: Math.max(local.reviews, remote.reviews),
+    ...(local.levelTests || remote.levelTests
+      ? { levelTests: mergeRecord(local.levelTests ?? {}, remote.levelTests ?? {}, mergeLevelTest) }
+      : {}),
     settings: newer.settings,
   };
 }

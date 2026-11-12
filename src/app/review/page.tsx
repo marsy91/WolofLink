@@ -6,14 +6,16 @@ import { LessonPlayer } from "@/components/LessonPlayer";
 import { Loading } from "@/components/ui";
 import { useRestartKey } from "@/lib/nav";
 
-/** Practice of due words, or a unit test-out with ?testout=<unit id>. */
+/** Practice of due words, a unit test-out with ?testout=<unit id>, or a level test with ?level=<a1|a2>. */
 export default function ReviewPage() {
   const run = useRestartKey();
-  const [testOut, setTestOut] = useState<string | null | undefined>(undefined);
+  const [query, setQuery] = useState<{ testOut: string | null; level: string | null } | undefined>(undefined);
   useEffect(() => {
     // The page is pre-rendered; read the link after mount.
-    void Promise.resolve().then(() => setTestOut(new URLSearchParams(window.location.search).get("testout")));
+    const q = new URLSearchParams(window.location.search);
+    void Promise.resolve().then(() => setQuery({ testOut: q.get("testout"), level: q.get("level") }));
   }, [run]);
-  if (testOut === undefined) return <Loading />;
-  return testOut ? <LessonPlayer key={run} mode="review" testOut={testOut} /> : <LessonPlayer key={run} mode="review" />;
+  if (query === undefined) return <Loading />;
+  if (query.level) return <LessonPlayer key={run} mode="review" levelTest={query.level} />;
+  return query.testOut ? <LessonPlayer key={run} mode="review" testOut={query.testOut} /> : <LessonPlayer key={run} mode="review" />;
 }
