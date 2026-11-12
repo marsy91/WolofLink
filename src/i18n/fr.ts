@@ -773,6 +773,8 @@ export const fr: Dictionary = {
   "feed.more": "Voir plus de phrases",
   "feed.showPath": "Voir tout le parcours de leçons",
   "feed.backToFeed": "← Retour au fil",
+  "onb.wolofSpeakers": "Pour les wolophones : apprendre l'anglais ou le français, avec les consignes en wolof.",
+  "settings.learning": "Ce que vous apprenez",
   "world.title": "WolofLink Monde",
   "world.intro": "Des apprenants du wolof partout dans le monde, qui apprennent ensemble. Seuls des totaux sont affichés, jamais de noms.",
   "world.goalTitle": "L'objectif commun de la semaine",

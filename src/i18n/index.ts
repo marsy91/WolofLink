@@ -5,6 +5,7 @@ import { en, type Dictionary, type UiKey } from "./en";
 import { es } from "./es";
 import { fr } from "./fr";
 import { it } from "./it";
+import { wo } from "./wo";
 
 export type { UiKey };
 
@@ -24,6 +25,16 @@ export const LANG_FLAGS: Record<UiLang, string> = { en: "EN", fr: "FR", es: "ES"
 /** Look up a UI string and fill `{name}` placeholders. */
 export function t(lang: UiLang, key: UiKey, vars?: Record<string, string | number>): string {
   const raw = dictionaries[lang][key] ?? en[key];
+  if (!vars) return raw;
+  return raw.replace(/\{(\w+)\}/g, (m, name: string) => (name in vars ? String(vars[name]) : m));
+}
+
+/**
+ * The Wolof interface for Wolof speakers learning English or French: Wolof where it has been
+ * written (src/i18n/wo.ts), otherwise French.
+ */
+export function tWolof(key: UiKey, vars?: Record<string, string | number>): string {
+  const raw = wo[key] ?? fr[key] ?? en[key];
   if (!vars) return raw;
   return raw.replace(/\{(\w+)\}/g, (m, name: string) => (name in vars ? String(vars[name]) : m));
 }

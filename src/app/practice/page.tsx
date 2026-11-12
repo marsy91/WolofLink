@@ -6,6 +6,7 @@ import { IconBook, IconCalendar, IconDialogue, IconDrop, IconHeadphones, IconLif
 import { Pirogue } from "@/components/DuelRace";
 import { TabScreen } from "@/components/ui";
 import { allStories, course } from "@/content/course";
+import { courseFor } from "@/content/reverse";
 import { upcoming } from "@/content/calendar";
 import { SURVIVAL_IDS, SURVIVAL_TITLE } from "@/content/survival";
 import { translate } from "@/i18n";
@@ -19,9 +20,13 @@ import { useNow, useStore } from "@/lib/store";
 export default function Practice() {
   const { progress, lang, t } = useStore();
   const now = useNow();
-  const due = dueEntries(progress, now, 50);
+  // Wolof speakers learning English or French review only their own course.
+  const active = courseFor(progress.profile?.target);
+  const reversed = active.target !== "wo";
+  const due = dueEntries(progress, now, 50, active);
   // Mirrors LessonPlayer: due cards first, otherwise recent mistakes; 10 per session.
-  const reviewSize = Math.min(10, due.length || progress.recentMistakes.length);
+  const mistakes = progress.recentMistakes.filter((id) => id in active.entries).length;
+  const reviewSize = Math.min(10, due.length || mistakes);
   const canReview = reviewSize > 0;
   const fresh = refreshDrops(progress, now);
   const mins = minutesToNextDrop(fresh, now);
@@ -54,6 +59,10 @@ export default function Practice() {
         ) : null}
         <p className="mt-3 text-sm text-sand/75">{t("practice.refill")}</p>
       </section>
+
+      {/* Duels, Survival Wolof, dialogues, sounds and holidays teach Wolof: not for the reversed course. */}
+      {reversed ? null : (
+      <>
 
       {botOn ? (
         <section className="duel-sky relative mb-5 overflow-hidden rounded-3xl p-5 text-night" aria-labelledby="bot-h">
@@ -221,6 +230,8 @@ export default function Practice() {
           </ul>
         </section>
       ) : null}
+      </>
+      )}
     </TabScreen>
   );
 }

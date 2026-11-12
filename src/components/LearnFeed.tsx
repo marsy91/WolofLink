@@ -47,7 +47,7 @@ export function LearnFeed({ onShowPath }: { onShowPath: () => void }) {
   const nextUnit = next
     ? course.units.find((u) => u.lessons.some((l) => l.id === next.id))
     : undefined;
-  const due = dueEntries(progress, now).length;
+  const due = dueEntries(progress, now, 10, course).length;
   const story = course.units
     .map((u) =>
       u.story &&

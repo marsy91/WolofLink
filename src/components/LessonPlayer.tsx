@@ -4,7 +4,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { course, findLesson } from "@/content/course";
+import { course } from "@/content/course";
+import { courseFor, REVERSE_CONTENT_LANG, reverseCourse, targetOfLesson } from "@/content/reverse";
+import type { Course } from "@/content/types";
 import { translate, type UiKey } from "@/i18n";
 import { playTone, stopAudio } from "@/lib/audio";
 import {
@@ -52,7 +54,7 @@ import {
   type SessionState,
 } from "@/lib/session";
 import { useNow, useStore } from "@/lib/store";
-import { ExerciseView } from "./exercises";
+import { ExerciseLangs, ExerciseView } from "./exercises";
 import { Confetti } from "./Confetti";
 import { BADGE_GLYPHS, IconClose, IconDrop, IconGem, IconInfo, IconRings, IconShield, IconSpark, IconSun } from "./icons";
 import { Character } from "./Character";
@@ -62,6 +64,14 @@ import { Button, Dialog, Loading, ProgressBar, useRequireProfile } from "./ui";
 /** A lesson, a review of due cards, or a drill of a fixed list (e.g. the Survival 100). */
 type Props = { mode: "lesson"; lessonId: string } | { mode: "review"; drill?: readonly string[]; testOut?: string; levelTest?: string };
 
+function findIn(c: Course, id: string) {
+  for (const unit of c.units) {
+    const lesson = unit.lessons.find((l) => l.id === id);
+    if (lesson) return { unit, lesson };
+  }
+  return null;
+}
+
 export function LessonPlayer(props: Props) {
   const allowed = useRequireProfile();
   const { progress, lang, update, t } = useStore();
@@ -69,7 +79,15 @@ export function LessonPlayer(props: Props) {
   const router = useRouter();
   const now = useNow();
 
-  const found = props.mode === "lesson" ? findLesson(props.lessonId) : null;
+  // English or French for Wolof speakers when the lesson (or the learner's course) is a reversed one.
+  const lessonTarget = props.mode === "lesson" ? targetOfLesson(props.lessonId) : null;
+  const active = lessonTarget ? reverseCourse(lessonTarget) : props.mode === "lesson" ? course : courseFor(progress.profile?.target);
+  const reversed = active.target !== "wo";
+  const contentLang = reversed ? REVERSE_CONTENT_LANG : lang;
+  const found = props.mode === "lesson" ? findIn(active, props.lessonId) : null;
+  const langs = { learn: active.target, meaning: reversed ? "wo" : undefined };
+  // Name of the language being learned, for the Wolof instructions ("… ci angale").
+  const learnName = translate(active.title, contentLang).toLowerCase();
   const { premium } = usePremium();
   const [session, setSession] = useState<SessionState | null>(null);
   const [pending, setPending] = useState<Answer | null>(null);
@@ -91,10 +109,11 @@ export function LessonPlayer(props: Props) {
     let exercises: Exercise[];
     if (props.mode === "lesson") {
       if (!found) return;
-      exercises = buildLesson(found.lesson, { course, lang, rng }, level);
+      exercises = buildLesson(found.lesson, { course: active, lang: contentLang, rng }, level);
     } else {
-      const testUnit = props.testOut ? course.units.find((u) => u.id === props.testOut) : undefined;
-      const lvl = cefrLevel(props.levelTest);
+      // Unit test-outs and level tests belong to the Wolof course.
+      const testUnit = props.testOut && !reversed ? course.units.find((u) => u.id === props.testOut) : undefined;
+      const lvl = reversed ? undefined : cefrLevel(props.levelTest);
       if (testUnit && isPremiumUnit(course.units.indexOf(testUnit)) && !premium) return router.replace("/premium/");
       if (lvl) {
         const units = course.units.filter((u) => lvl.units.includes(u.id));
@@ -103,10 +122,11 @@ export function LessonPlayer(props: Props) {
       } else if (testUnit) {
         exercises = buildReview(shuffle(testOutEntries(testUnit.lessons), rng).slice(0, TEST_OUT_SIZE), lang, rng);
       } else if (props.drill) {
-        exercises = buildReview(shuffle(props.drill, rng).slice(0, 12), lang, rng);
+        exercises = buildReview(shuffle(props.drill, rng).slice(0, 12), contentLang, rng, active);
       } else {
-        const due = dueEntries(progress, now, 10);
-        exercises = buildReview(due.length ? due : progress.recentMistakes.slice(0, 10), lang, rng);
+        const due = dueEntries(progress, now, 10, active);
+        const mistakes = progress.recentMistakes.filter((id) => id in active.entries).slice(0, 10);
+        exercises = buildReview(due.length ? due : mistakes, contentLang, rng, active);
       }
     }
     if (exercises.length === 0) return exit();
@@ -365,13 +385,15 @@ export function LessonPlayer(props: Props) {
             <ul className="space-y-2">
               {session.mistakes.flatMap((m) =>
                 m.entryIds.map((id) => {
-                  const entry = course.entries[id]!;
+                  const entry = active.entries[id]!;
                   return (
                     <li key={`${m.key}-${id}`} className="rounded-2xl border border-sand-3 bg-white p-3">
-                      <span lang="wo" className="block font-display font-extrabold text-night">
+                      <span lang={active.target} className="block font-display font-extrabold text-night">
                         {entry.wo}
                       </span>
-                      <span className="text-muted">{translate(entry.tr, lang)}</span>
+                      <span lang={reversed ? "wo" : undefined} className="text-muted">
+                        {translate(entry.tr, contentLang)}
+                      </span>
                     </li>
                   );
                 }),
@@ -434,8 +456,10 @@ export function LessonPlayer(props: Props) {
             <span className="rounded-full bg-sun-soft px-2.5 py-0.5 text-xs font-bold text-clay-2 uppercase">{t("ex.again")}</span>
           ) : null}
         </div>
-        <h1 className="mb-5 font-display text-2xl font-extrabold text-night">{t(`ex.${ex.type}`)}</h1>
-        <ExerciseView key={ex.key} ex={ex} locked={!!feedback} onChange={setPending} onSubmit={submit} />
+        <h1 className="mb-5 font-display text-2xl font-extrabold text-night">{t(`ex.${ex.type}`, { lang: learnName })}</h1>
+        <ExerciseLangs.Provider value={langs}>
+          <ExerciseView key={ex.key} ex={ex} locked={!!feedback} onChange={setPending} onSubmit={submit} />
+        </ExerciseLangs.Provider>
       </section>
 
       {/* Footer: Check button, or feedback sheet after answering. */}
@@ -456,7 +480,7 @@ export function LessonPlayer(props: Props) {
               {feedback.correct && typed && typed !== "exact" ? (
                 <p className="mt-1 text-ink">
                   <span className="font-bold">{t(typed === "accents" ? "ex.accents" : "ex.typo")}</span>{" "}
-                  <span lang="wo" className="font-display font-extrabold">
+                  <span lang={active.target} className="font-display font-extrabold">
                     {ex.kind === "type" ? ex.entry.wo : ""}
                   </span>
                 </p>
@@ -464,7 +488,10 @@ export function LessonPlayer(props: Props) {
               {!feedback.correct && !isMatch ? (
                 <p className="mt-1 text-ink">
                   <span className="font-bold">{t("ex.answer")}</span>{" "}
-                  <span lang={ex.kind === "choice" && (ex.type === "pick_meaning" || ex.type === "pick_picture") ? undefined : "wo"} className="font-display font-extrabold">
+                  <span
+                    lang={ex.kind === "choice" && (ex.type === "pick_meaning" || ex.type === "pick_picture") ? (reversed ? "wo" : undefined) : active.target}
+                    className="font-display font-extrabold"
+                  >
                     {correctAnswerText(ex)}
                   </span>
                 </p>

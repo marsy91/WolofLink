@@ -1,7 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { RecordCompare } from "./RecordCompare";
 import type { Entry } from "@/content/types";
 import { audioSourceFor, playEntry } from "@/lib/audio";
@@ -31,6 +31,20 @@ export interface ExerciseProps<E extends Exercise = Exercise> {
 }
 
 /* ── Shared pieces ─────────────────────────────────────────────────────── */
+
+/**
+ * The languages on screen: `learn` is the language being learned (Wolof, or English/French
+ * for Wolof speakers), `meaning` the language of translations (undefined = the interface's).
+ */
+export const ExerciseLangs = createContext<{ learn: string; meaning?: string }>({ learn: "wo" });
+const useLangs = () => useContext(ExerciseLangs);
+
+/** Letters most keyboards lack, for each language being learned. Wolof's Latin alphabet also uses ŋ. */
+const SPECIAL_BY_LANG: Record<string, string[]> = {
+  wo: ["à", "é", "ë", "ó", "ñ", "ŋ"],
+  fr: ["é", "è", "à", "ç", "ê", "ù"],
+  en: [],
+};
 
 export function AudioButtons({ entry, autoplay, big }: { entry: Entry; autoplay?: boolean; big?: boolean }) {
   const { t, progress } = useStore();
@@ -76,8 +90,9 @@ function TtsNote({ entry }: { entry: Entry }) {
 }
 
 function WolofText({ children, className = "" }: { children: string; className?: string }) {
+  const L = useLangs();
   return (
-    <span lang="wo" className={`font-display font-extrabold text-night ${className}`}>
+    <span lang={L.learn} className={`font-display font-extrabold text-night ${className}`}>
       {children}
     </span>
   );
@@ -100,6 +115,7 @@ function useNumberKeys(count: number, onPick: (index: number) => void, enabled: 
 /* ── Choice-style exercises ────────────────────────────────────────────── */
 
 export function ChoiceView({ ex, locked, onChange }: ExerciseProps<ChoiceExercise>) {
+  const L = useLangs();
   const { t } = useStore();
   const [picked, setPicked] = useState<string | null>(null);
   const pick = (id: string) => {
@@ -170,7 +186,7 @@ export function ChoiceView({ ex, locked, onChange }: ExerciseProps<ChoiceExercis
                 </span>
               ) : null}
               <span
-                lang={choicesAreWolof ? "wo" : undefined}
+                lang={choicesAreWolof ? L.learn : L.meaning}
                 className={`font-bold ${choicesAreWolof ? "font-display text-lg" : "text-lg"} ${isPicture ? "" : "sm:pl-6"}`}
               >
                 {c.label}
@@ -186,6 +202,7 @@ export function ChoiceView({ ex, locked, onChange }: ExerciseProps<ChoiceExercis
 /* ── Tap-the-words sentence building ───────────────────────────────────── */
 
 export function BuildView({ ex, locked, onChange }: ExerciseProps<BuildExercise>) {
+  const L = useLangs();
   const { t } = useStore();
   const [chosen, setChosen] = useState<string[]>([]);
   const labelOf = (id: string) => ex.bank.find((b) => b.id === id)?.label ?? "";
@@ -214,7 +231,7 @@ export function BuildView({ ex, locked, onChange }: ExerciseProps<BuildExercise>
             onClick={() => set(chosen.filter((c) => c !== id))}
             aria-label={t("ex.removeTile", { w: labelOf(id) })}
             className="rounded-xl border-2 border-night/20 bg-white px-3 py-2 font-display text-lg font-extrabold text-night shadow-card"
-            lang="wo"
+            lang={L.learn}
           >
             {labelOf(id)}
           </button>
@@ -228,7 +245,7 @@ export function BuildView({ ex, locked, onChange }: ExerciseProps<BuildExercise>
             <button
               key={tile.id}
               type="button"
-              lang="wo"
+              lang={L.learn}
               disabled={locked || used}
               onClick={() => set([...chosen, tile.id])}
               aria-hidden={used}
@@ -250,6 +267,7 @@ export function BuildView({ ex, locked, onChange }: ExerciseProps<BuildExercise>
 /* ── Fill in the blank ─────────────────────────────────────────────────── */
 
 export function FillView({ ex, locked, onChange }: ExerciseProps<FillExercise>) {
+  const L = useLangs();
   const [picked, setPicked] = useState<string | null>(null);
   const pick = (id: string) => {
     if (locked) return;
@@ -261,7 +279,7 @@ export function FillView({ ex, locked, onChange }: ExerciseProps<FillExercise>) 
   return (
     <div className="flex flex-1 flex-col">
       <div className="mb-6 rounded-3xl bg-white p-5 shadow-card">
-        <p className="mb-3 flex flex-wrap items-baseline gap-2 text-2xl" lang="wo">
+        <p className="mb-3 flex flex-wrap items-baseline gap-2 text-2xl" lang={L.learn}>
           {ex.before.map((w, i) => (
             <WolofText key={`b${i}`}>{w}</WolofText>
           ))}
@@ -285,7 +303,7 @@ export function FillView({ ex, locked, onChange }: ExerciseProps<FillExercise>) 
             type="button"
             role="radio"
             aria-checked={picked === c.id}
-            lang="wo"
+            lang={L.learn}
             disabled={locked}
             onClick={() => pick(c.id)}
             className={`min-w-24 rounded-2xl border-2 px-4 py-3 font-display text-lg font-extrabold ${
@@ -303,6 +321,7 @@ export function FillView({ ex, locked, onChange }: ExerciseProps<FillExercise>) 
 /* ── Matching pairs ────────────────────────────────────────────────────── */
 
 export function MatchView({ ex, locked, onSubmit }: ExerciseProps<MatchExercise>) {
+  const L = useLangs();
   const { t } = useStore();
   const [left, setLeft] = useState<string | null>(null);
   const [right, setRight] = useState<string | null>(null);
@@ -333,7 +352,7 @@ export function MatchView({ ex, locked, onSubmit }: ExerciseProps<MatchExercise>
       <button
         key={`${side}-${id}`}
         type="button"
-        lang={side === "l" ? "wo" : undefined}
+        lang={side === "l" ? L.learn : L.meaning}
         disabled={locked || isMatched}
         aria-pressed={selected}
         onClick={() => {
@@ -375,10 +394,10 @@ export function MatchView({ ex, locked, onSubmit }: ExerciseProps<MatchExercise>
 
 /* ── Typing ─────────────────────────────────────────────────────────────── */
 
-/** Letters most keyboards lack. Wolof's Latin alphabet also uses ŋ. */
-const SPECIAL = ["à", "é", "ë", "ó", "ñ", "ŋ"];
 
 export function TypeView({ ex, locked, onChange }: ExerciseProps<TypeExercise>) {
+  const L = useLangs();
+  const special = SPECIAL_BY_LANG[L.learn] ?? [];
   const { t } = useStore();
   const [text, setText] = useState("");
   const input = useRef<HTMLInputElement>(null);
@@ -417,7 +436,7 @@ export function TypeView({ ex, locked, onChange }: ExerciseProps<TypeExercise>) 
         <span className="sr-only">{t("ex.typePlaceholder")}</span>
         <input
           ref={input}
-          lang="wo"
+          lang={L.learn}
           value={text}
           disabled={locked}
           onChange={(e) => set(e.target.value)}
@@ -430,21 +449,23 @@ export function TypeView({ ex, locked, onChange }: ExerciseProps<TypeExercise>) 
           className="w-full rounded-2xl border border-sand-3 bg-white px-4 py-4 font-display text-xl font-extrabold text-night outline-none focus:border-clay disabled:opacity-80"
         />
       </label>
-      <div role="group" aria-label={t("ex.keyboard")} className="mt-3 flex flex-wrap items-center gap-2">
-        <IconKeyboard size={20} className="text-muted" />
-        {SPECIAL.map((ch) => (
-          <button
-            key={ch}
-            type="button"
-            disabled={locked}
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={() => insert(ch)}
-            className="h-11 min-w-11 rounded-xl border-2 border-sand-3 bg-white font-display text-lg font-extrabold text-night shadow-card active:translate-y-[2px] active:shadow-none"
-          >
-            {ch}
-          </button>
-        ))}
-      </div>
+      {special.length ? (
+        <div role="group" aria-label={t("ex.keyboard")} className="mt-3 flex flex-wrap items-center gap-2">
+          <IconKeyboard size={20} className="text-muted" />
+          {special.map((ch) => (
+            <button
+              key={ch}
+              type="button"
+              disabled={locked}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => insert(ch)}
+              className="h-11 min-w-11 rounded-xl border-2 border-sand-3 bg-white font-display text-lg font-extrabold text-night shadow-card active:translate-y-[2px] active:shadow-none"
+            >
+              {ch}
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }

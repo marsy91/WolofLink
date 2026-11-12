@@ -23,10 +23,14 @@ bash scripts/ci/check-secrets.sh
    The owner does releases.
 4. **Never apply SQL to the live database.** Database changes go in as new files in
    `supabase/migrations/` (never edit one that has already merged). The owner applies them.
-5. **Never invent Wolof.** Reuse existing entries (`src/content/course.ts`, `src/content/dictionary.ts`).
-   Any *new* Wolof, or a change to existing Wolof, must be listed in the pull request under
-   "New Wolof for native-speaker review", and the pull request labelled `wolof-content`.
-   Follow the spelling conventions in `docs/wolof-review.md` (CLAD orthography).
+5. **Write Wolof carefully, and always list it.** Reuse existing entries first
+   (`src/content/course.ts`, `src/content/dictionary.ts`). The owner allows Claude to write new
+   Wolof (amended 12 November 2026) as long as it follows the spelling rules in
+   `docs/wolof-review.md` (CLAD orthography) and the dictionary: check words against the
+   existing entries and reputable references, choose words for their meaning in context, and
+   prefer plain, everyday Senegalese Wolof. Any *new* Wolof, or a change to existing Wolof, must
+   be listed in the pull request under "New Wolof for native-speaker review", and the pull
+   request labelled `wolof-content`, so a native speaker can check it later.
 6. **No trademarks or look-alikes.** No names, logos or art of other apps, games or events
    (for example the Olympics), and never name other language apps in text. Don't claim
    "native-speaker audio" unless a real recording is what plays.

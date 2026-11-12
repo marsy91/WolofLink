@@ -766,6 +766,8 @@ export const en = {
   "feed.more": "Show more phrases",
   "feed.showPath": "See the full lesson path",
   "feed.backToFeed": "← Back to the feed",
+  "onb.wolofSpeakers": "For Wolof speakers: learn English or French, with instructions in Wolof.",
+  "settings.learning": "What you are learning",
   "world.title": "WolofLink World",
   "world.intro": "Wolof learners all over the world, learning together. Only totals are shown, never names.",
   "world.goalTitle": "This week's shared goal",

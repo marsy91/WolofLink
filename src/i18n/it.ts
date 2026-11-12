@@ -770,6 +770,8 @@ export const it: Dictionary = {
   "feed.more": "Mostra altre frasi",
   "feed.showPath": "Vedi tutto il percorso delle lezioni",
   "feed.backToFeed": "← Torna al feed",
+  "onb.wolofSpeakers": "Per chi parla wolof: imparare l'inglese o il francese, con istruzioni in wolof.",
+  "settings.learning": "Cosa stai imparando",
   "world.title": "WolofLink Mondo",
   "world.intro": "Persone che imparano il wolof in tutto il mondo, insieme. Si vedono solo i totali, mai i nomi.",
   "world.goalTitle": "L'obiettivo comune della settimana",
