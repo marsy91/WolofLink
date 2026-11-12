@@ -7,6 +7,7 @@ import { LogoMark } from "@/components/Logo";
 import { Loading } from "@/components/ui";
 import { course } from "@/content/course";
 import { LEVELS, levels, type LevelId } from "@/lib/insights";
+import { CEFR_LEVELS } from "@/lib/levels";
 import { useStore } from "@/lib/store";
 
 /** A certificate for a completed level, to screenshot, print or show an employer. */
@@ -19,7 +20,11 @@ export default function CertificatePage() {
   }, []);
   if (id === undefined) return <Loading />;
   const state = levels(progress).find((l) => l.id === id);
-  if (!id || !state?.complete) {
+  // Passing the level test earns the certificate too (learners who already speak some Wolof).
+  const cefr = CEFR_LEVELS.find((c) => c.insights === id);
+  const test = cefr ? progress.levelTests?.[cefr.id] : undefined;
+  const testPassed = !!test?.passedAt;
+  if (!id || !(state?.complete || testPassed)) {
     return (
       <main className="grid min-h-dvh place-items-center p-6 text-center">
         <div>
@@ -33,7 +38,7 @@ export default function CertificatePage() {
   }
   const units = LEVELS.find((l) => l.id === id)!.units;
   const lessons = course.units.filter((u) => units.includes(u.id)).flatMap((u) => u.lessons);
-  const finished = Math.max(...lessons.map((l) => progress.lessons[l.id]?.lastAt ?? 0));
+  const finished = Math.max(...lessons.map((l) => progress.lessons[l.id]?.lastAt ?? 0), test?.passedAt ?? 0);
   const date = new Date(finished).toLocaleDateString(lang, { dateStyle: "long" });
   const canPrint = typeof window !== "undefined" && typeof window.print === "function" && !("Capacitor" in window && (window as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.());
 
@@ -49,6 +54,9 @@ export default function CertificatePage() {
         <p className="mt-4 text-muted">{t("cert.forCompleting")}</p>
         <p className="font-display text-xl font-extrabold text-night">{t(`insights.${id}`)}</p>
         <p className="mt-2 text-sm text-muted">{t("cert.detail", { units: units.length, lessons: lessons.length })}</p>
+        {testPassed && cefr ? (
+          <p className="mt-2 text-sm font-bold text-sea">{t("leveltest.certLine", { n: Math.round(test!.best * 100), level: cefr.cefr })}</p>
+        ) : null}
         <p className="mt-4 font-bold text-night">{date}</p>
         <p className="mt-6 text-[11px] leading-snug text-muted">{t("cert.note")}</p>
       </article>

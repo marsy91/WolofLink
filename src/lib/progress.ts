@@ -58,6 +58,8 @@ export interface Progress {
   stories: Record<string, { times: number; lastAt: number }>;
   /** Phrasebook ids the learner starred, most recent first. */
   savedPhrases: string[];
+  /** Level test results by CEFR level id (src/lib/levels.ts). Missing in older saves. */
+  levelTests?: Record<string, { best: number; passedAt: number | null; lastAt: number }>;
   settings: {
     sound: boolean;
     autoplay: boolean;
