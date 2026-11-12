@@ -8,6 +8,7 @@ import { course } from "@/content/course";
 import { translate } from "@/i18n";
 import { playEntry } from "@/lib/audio";
 import { currentLevel, lastWeek, levels, unitDone, wordCounts } from "@/lib/insights";
+import { CEFR_LEVELS } from "@/lib/levels";
 import { currentStreak } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
@@ -103,18 +104,38 @@ export default function ProgressPage() {
       <section className="mb-4 rounded-3xl border border-sun/50 bg-sun-soft p-4" aria-labelledby="cert-h">
         <h2 id="cert-h" className="mb-2 flex items-center gap-2 font-display text-lg font-extrabold text-night"><IconCap size={22} className="text-sun-deep" /> {t("insights.certificates")}</h2>
         <ul className="space-y-2">
-          {all.map((l) => (
-            <li key={l.id} className="flex items-center justify-between gap-3">
-              <span className="font-bold text-night">{t(`insights.${l.id}`)}</span>
-              {l.complete ? (
-                <Link href={`/certificate/?level=${l.id}`} className="rounded-xl bg-night px-3 py-2 text-sm font-extrabold text-sand">
-                  {t("insights.view")}
-                </Link>
-              ) : (
-                <span className="text-sm text-muted">{t("insights.units", { n: l.done, total: l.total })}</span>
-              )}
-            </li>
-          ))}
+          {all.map((l) => {
+            const cefr = CEFR_LEVELS.find((c) => c.insights === l.id);
+            const test = cefr ? progress.levelTests?.[cefr.id] : undefined;
+            return (
+              <li key={l.id} className="space-y-1">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-bold text-night">{t(`insights.${l.id}`)}</span>
+                  {l.complete || test?.passedAt ? (
+                    <Link href={`/certificate/?level=${l.id}`} className="rounded-xl bg-night px-3 py-2 text-sm font-extrabold text-sand">
+                      {t("insights.view")}
+                    </Link>
+                  ) : (
+                    <span className="text-sm text-muted">{t("insights.units", { n: l.done, total: l.total })}</span>
+                  )}
+                </div>
+                {cefr ? (
+                  <div className="flex items-center justify-between gap-3 text-sm">
+                    <span className="text-muted">
+                      {test?.passedAt
+                        ? t("leveltest.passedBadge", { n: Math.round(test.best * 100) })
+                        : test
+                          ? t("leveltest.best", { n: Math.round(test.best * 100) })
+                          : t(l.complete ? "leveltest.hintDone" : "leveltest.hint")}
+                    </span>
+                    <Link href={`/review/?level=${cefr.id}`} className="shrink-0 font-bold text-clay underline">
+                      {t("leveltest.take", { level: cefr.cefr })}
+                    </Link>
+                  </div>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
       </section>
     </TabScreen>

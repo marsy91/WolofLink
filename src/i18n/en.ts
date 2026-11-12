@@ -797,6 +797,16 @@ export const en = {
   "world.leaguesHint": "Adults can compete with learners in their own city.",
   "world.cardTitle": "WolofLink World",
   "world.card": "The map of Wolof learners and this week's shared goal",
+  "leveltest.title": "{level} level test",
+  "leveltest.body": "{n} questions from every unit of this level: listening, reading and writing. Score {p}% or more to pass. Mistakes don't cost drops.",
+  "leveltest.passed": "Passed! Your certificate now shows your level test score.",
+  "leveltest.failed": "Not yet: you need {n}%. Review the units and try again whenever you like.",
+  "leveltest.take": "Take the {level} test",
+  "leveltest.best": "Best score so far: {n}%",
+  "leveltest.passedBadge": "Level test passed · {n}%",
+  "leveltest.hint": "Already know some Wolof? Pass the test to earn the certificate.",
+  "leveltest.certLine": "Level test passed with {n}% (CEFR {level}, aligned by WolofLink)",
+  "leveltest.hintDone": "Check your level: score 80% to add the test result to your certificate.",
 };
 
 export type UiKey = keyof typeof en;
