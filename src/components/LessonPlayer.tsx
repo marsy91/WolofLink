@@ -476,7 +476,7 @@ export function LessonPlayer(props: Props) {
                 </p>
               ) : null}
               {"entry" in ex && ex.entry.note ? <p className="mt-1 text-sm text-muted">{translate(ex.entry.note, lang)}</p> : null}
-              {"entry" in ex && !reversed ? <ReportProblem entryId={ex.entry.id} className="mt-1" /> : null}
+              {"entry" in ex ? <ReportProblem entryId={ex.entry.id} className="mt-1" /> : null}
               <Button block className="mt-3" variant={feedback.correct ? "correct" : "wrong"} onClick={advance} autoFocus>
                 {t("common.continue")}
               </Button>

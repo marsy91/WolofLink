@@ -17,6 +17,7 @@ import { HOLIDAYS, dateIn, type DateOverrides } from "@/content/calendar";
 import { PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
 import { loadOverrides } from "@/lib/holidays";
 import { dictionaryById } from "@/content/dictionary";
+import { reverseCourse } from "@/content/reverse";
 import {
   owner,
   useConsoleRole,
@@ -1049,6 +1050,28 @@ const PROBLEM_LABEL: Record<ReportRow["problem"], string> = {
 };
 
 function WordLine({ id }: { id: string }) {
+  // Reports from Wolof speakers learning English or French carry "en:<id>" or "fr:<id>".
+  const reversed = /^(en|fr):(.+)$/.exec(id);
+  if (reversed) {
+    const target = reversed[1] as "en" | "fr";
+    const r = reverseCourse(target).entries[id];
+    const w = dictionaryById.get(reversed[2]!);
+    return (
+      <span>
+        <span lang={target} className="font-display font-extrabold text-night">
+          {r?.wo ?? id}
+        </span>{" "}
+        {w ? (
+          <span lang="wo" className="text-muted">
+            · {w.wo}
+          </span>
+        ) : null}{" "}
+        <span className="text-xs text-muted/70">
+          (Wolof speakers learning {target === "en" ? "English" : "French"} · {id})
+        </span>
+      </span>
+    );
+  }
   const e = dictionaryById.get(id);
   return e ? (
     <span>

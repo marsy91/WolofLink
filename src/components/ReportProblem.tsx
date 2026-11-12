@@ -3,13 +3,18 @@
 
 import { useState } from "react";
 import { useSwitchOff } from "@/lib/notices";
+import { t as translateKey } from "@/i18n";
 import { PROBLEMS, reportsAvailable, sendReport, type Problem } from "@/lib/reports";
 import { useStore } from "@/lib/store";
 import { Button, Dialog } from "./ui";
 
 /** A small "Report a problem" link that opens a dialog for one word or phrase. */
 export function ReportProblem({ entryId, className = "" }: { entryId: string; className?: string }) {
-  const { lang, t } = useStore();
+  const store = useStore();
+  const { lang } = store;
+  // Wolof speakers learning English or French: this dialog stays in French (the owner's choice),
+  // whatever the rest of the Wolof interface says.
+  const t: typeof store.t = store.target !== "wo" ? (key, vars) => translateKey("fr", key, vars) : store.t;
   const [open, setOpen] = useState(false);
   const [problem, setProblem] = useState<Problem>("spelling");
   const [note, setNote] = useState("");
