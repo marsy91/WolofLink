@@ -23,7 +23,8 @@ export interface Profile {
   id: string;
   name: string;
   uiLang: UiLang;
-  target: "wo";
+  /** The language being learned: Wolof, or English or French for Wolof speakers (src/content/reverse.ts). */
+  target: "wo" | "en" | "fr";
   goal: GoalId;
   createdAt: number;
   /** Guest until accounts exist; `accountId` will link a cloud user later. */
@@ -179,9 +180,10 @@ export function updateCard(card: SrsCard | undefined, correct: boolean, now: num
 }
 
 /** Entry ids due for review, missed items and the most overdue first. */
-export function dueEntries(p: Progress, now: number, limit = 10): string[] {
+/** Cards due for review; with `inCourse`, only that course's (Wolof, or English/French for Wolof speakers). */
+export function dueEntries(p: Progress, now: number, limit = 10, inCourse?: { entries: Record<string, unknown> }): string[] {
   return Object.entries(p.srs)
-    .filter(([, c]) => c.due <= now)
+    .filter(([id, c]) => c.due <= now && (!inCourse || id in inCourse.entries))
     .sort(([, a], [, b]) => a.box - b.box || a.due - b.due)
     .slice(0, limit)
     .map(([id]) => id);
@@ -395,6 +397,8 @@ export function migrate(raw: unknown, now = Date.now()): Progress {
   return {
     ...base,
     ...r,
+    // An unknown course (a newer app's, or a corrupted value) falls back to the Wolof course.
+    profile: r.profile ? { ...r.profile, target: ["wo", "en", "fr"].includes(r.profile.target) ? r.profile.target : "wo" } : null,
     streak: { ...base.streak, ...r.streak },
     drops: { ...base.drops, ...r.drops },
     settings: {

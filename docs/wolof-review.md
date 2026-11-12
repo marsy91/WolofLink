@@ -184,6 +184,189 @@ Ba ci kanam, Fanaanal ak jàmm, Nuyul ma waa kër ga (*nuyu* "to greet" is in th
 3. *Naka waa kër ga?* is also heard; is it acceptable as a variant of *Ana waa kër ga?*
 4. *Ba suba* ("until tomorrow morning") as "see you tomorrow": please confirm it is natural.
 
+## Rule for new Wolof (amended 12 November 2026)
+
+The owner allows Claude to write new Wolof (for example the Wolof interface for Wolof
+speakers learning English or French), on these conditions:
+
+1. **Spelling:** CLAD orthography as used in this file and in the course (accents on long
+   or open vowels: *à, é, ë, ó*; *ñ*, *ŋ*; doubled letters for long vowels and geminates).
+2. **Words:** reuse words already in the course and dictionary first; otherwise check each
+   word against the printed-dictionary list and the sources below, and choose it for its
+   meaning in context. Prefer plain everyday Senegalese Wolof; keep common French loanwords
+   where Wolof speakers really use them (for example *telefon*, *lekkool*), written the Wolof way.
+3. **Review:** every new line is listed in its pull request under "New Wolof for
+   native-speaker review" (label `wolof-content`) and in the section of this file for that
+   feature, marked *not yet checked by a native speaker* until a reviewer signs it off.
+
+## Wolof interface for Wolof speakers learning English or French (November 2026)
+
+*Not yet checked by a native speaker.* Written under the amended rule above for the reversed
+course (`src/content/reverse.ts`, `src/i18n/wo.ts`). Every word was checked against the course,
+the Diouf dictionary word list and the Wolof Bible word list; loanwords (*telefon*, *kont*,
+*email*, *masin*, *minit*, *profil*) are written the way they are used in Senegal. Points for the
+reviewer:
+
+1. *mën* (can) is used, as in the course (*Mën nga wax wolof?*); the Bible writes *man*.
+2. *tàggat* for "exercise", *dayo* for "level", *pàcc* for "unit", *toq* for "drop" and *ndaa* for
+   "water jar": are these the most natural words?
+3. *Sama profil* for the Profile tab, and *Dugg ni gan* for "continue as guest".
+4. *Firil ko ci angale* ("translate it into English"): or *Tekkil ko*?
+5. *Li ñuy yég* ("feelings") for unit 19: or *Yëg-yëg*?
+
+| Where | Wolof | English meaning |
+| --- | --- | --- |
+| Setup heading | Dégg nga wolof? | Do you understand Wolof? |
+| Setup option | Jàng angale / Jàng farañse | Learn English / Learn French |
+| Setup option hint | Ak ay leeral ci wolof | With explanations in Wolof |
+| Unit 1 title | Nuyoo ak xamante | Greetings and introductions |
+| Unit 2 title | Lim ak waññ | Numbers and counting |
+| Unit 3 title | Lekk ak naan | Food and drink |
+| Unit 4 title | Nit ñi ak njaboot gi | People and family |
+| Unit 5 title | Jëf yu bés bu nekk | Everyday verbs |
+| Unit 6 title | Béréb yi ak yoon wi | Places and directions |
+| Unit 7 title | Waxtu ak bés yi | Time and days |
+| Unit 8 title | Waxtaan bés bu nekk | Everyday conversation |
+| Unit 9 title | Yaram ak wér-gi-yaram | The body and health |
+| Unit 10 title | Liggéey ak lekkool | Work and school |
+| Unit 11 title | Kër gi ak dund bés bu nekk | Home and daily life |
+| Unit 12 title | Xew yi ak aada | Celebrations and culture |
+| Unit 13 title | Melo yi ak yére yi | Colours and clothes |
+| Unit 14 title | Rab ak mbindeef | Animals and nature |
+| Unit 15 title | Laaj ay laaj | Asking questions |
+| Unit 16 title | Noflaay ak tukki | Leisure and travel |
+| Unit 17 title | Aada ak teggin | Culture and manners |
+| Unit 18 title | Lekku Senegaal | Senegalese food |
+| Unit 19 title | Li ñuy yég | Feelings |
+| Unit 20 title | Lim yu mag ak njëg | Big numbers and prices |
+| Unit 21 title | Wax ci lu weesu | Talking about the past |
+| Unit 22 title | Ëllëg ak li ñu bëgg def | Tomorrow and plans |
+| Unit 23 title | Ci telefon bi | On the phone |
+| Unit 24 title | Méngale | Comparing |
+| `app.tagline` | Jàng beneen làkk, ndànk-ndànk | Learn Wolof, one small step at a time |
+| `onb.welcome` | Dalal ak jàmm ci WolofLink | Welcome to WolofLink |
+| `onb.start` | Tàmbali | Get started |
+| `onb.step` | {n} ci {total} | Step {n} of {total} |
+| `onb.learnQ` | Ban làkk nga bëgg jàng? | What language do you want to learn? |
+| `onb.goalQ` | Ñaata XP nga bëgg am bés bu nekk? | Pick a daily goal |
+| `onb.goalHint` | Mën nga koo soppi saa su la neexee. | You can change this at any time in Settings. |
+| `onb.nameQ` | Naka nga tudd? | What should we call you? |
+| `onb.namePlaceholder` | Sa tur (bu la neexee) | Your name (optional) |
+| `onb.guestNote` | Li nga jàng dañu koy denc ci telefon bii. Mën nga ubbi kont ginnaaw bi. | Your progress is saved on this device as a guest. You can create an account later. |
+| `onb.finish` | Tàmbali jàng | Start learning |
+| `goal.casual` | Ndànk | Casual |
+| `goal.regular` | Ci diggante | Regular |
+| `goal.serious` | Bu dëgër | Serious |
+| `goal.intense` | Bu kawe | Intense |
+| `goal.xpPerDay` | {n} XP bés bu nekk | {n} XP a day |
+| `goal.progress` | {x} / {y} XP tey | {x} / {y} XP today |
+| `goal.met` | Jot nga sa jubluwaay bu tey! | Daily goal reached! |
+| `common.continue` | Wéyal | Continue |
+| `common.back` | Dellu | Back |
+| `common.close` | Tëj | Close |
+| `common.cancel` | Bàyyi | Cancel |
+| `common.loading` | Xaaral tuuti… | Loading… |
+| `nav.learn` | Jàng | Learn |
+| `nav.practice` | Baamtu | Practice |
+| `nav.profile` | Sama profil | Profile |
+| `nav.phrases` | Baat yi | Dictionary |
+| `stats.streak` | {n} bés ci topp | {n}-day streak |
+| `stats.drops` | {n} toq | {n} drops |
+| `stats.xp` | {n} XP | {n} XP |
+| `path.unit` | Pàcc {n} | Unit {n} |
+| `path.comingSoon` | Dina ñëw | Coming soon |
+| `path.start` | Tàmbali | Start |
+| `path.again` | Baamtu | Practise again |
+| `path.locked` | Jeexalal njàng mi jiitu ngir ubbi ko | Finish the previous lesson to unlock |
+| `path.exercises` | {n} tàggat | {n} exercises |
+| `path.done` | Jeex na | Completed |
+| `path.level` | Dayo {n} ci {total} | Level {n} of {total} |
+| `path.levelUp` | Dayo {n} | Level {n} |
+| `path.mastered` | Mokkal nga ko | Mastered |
+| `lesson.tipTitle` | Bala ngay tàmbali | Before you start |
+| `lesson.begin` | Tàmbali | Begin |
+| `lesson.quitTitle` | Ndax danga bëgg génn? | Leave this lesson? |
+| `lesson.quitBody` | Say tontu ci njàng mii duñu leen denc. | Your answers in this lesson won't be saved. |
+| `lesson.quitConfirm` | Génn | Leave |
+| `lesson.stay` | Wéyal jàng | Keep learning |
+| `lesson.progress` | Tàggat {n} ci {total} | Exercise {n} of {total} |
+| `lesson.complete` | Jeexal nga njàng mi! | Lesson complete! |
+| `lesson.reviewComplete` | Jeexal nga baamtu bi! | Review complete! |
+| `lesson.notFound` | Gisuñu njàng moomu. | We couldn't find that lesson. |
+| `lesson.levelHint` | laaj yu gën a metti: bind ak fàttaliku | harder questions: more recall and typing |
+| `ex.pick_meaning` | Lii lan la tekki? | What does this mean? |
+| `ex.pick_wolof` | Naka lañuy waxe lii ci {lang}? | How do you say this in Wolof? |
+| `ex.pick_picture` | Ban nataal moo ko méngoo? | Which picture matches? |
+| `ex.build` | Firil ko ci {lang} | Translate into Wolof |
+| `ex.listen` | Lan nga dégg? | What do you hear? |
+| `ex.speak` | Waxal ko ci kaw | Say this aloud |
+| `ex.match` | Boolel yi méngoo | Match the pairs |
+| `ex.fill_blank` | Duggalal baat bi des | Fill in the blank |
+| `ex.type_wolof` | Bindal lii ci {lang} | Type this in Wolof |
+| `ex.listen_type` | Bindal li nga dégg | Type what you hear |
+| `ex.new` | Bees | New |
+| `ex.again` | Ñaareelu jéem | Second try |
+| `ex.check` | Seetal | Check |
+| `ex.skip` | Weesu | Skip |
+| `ex.correct` | Baax na lool! | Nice work! |
+| `ex.incorrect` | Jubul | Not quite |
+| `ex.answer` | Tontu bu jub bi: | Correct answer: |
+| `ex.play` | Déglul | Play audio |
+| `ex.slow` | Déglul ndànk | Play slowly |
+| `ex.tilesEmpty` | Laalal baat yi ci suuf ngir defar sa tontu | Tap the words below to build your answer |
+| `ex.removeTile` | Dindi {w} | Remove {w} |
+| `ex.speakHint` | Déglul, ba noppi waxal ko ci kaw. | Listen, then say it out loud. Automatic pronunciation checking is coming later. |
+| `ex.speakSaid` | Wax naa ko | I said it |
+| `ex.speakCant` | Mënuma wax léegi | Can't speak now |
+| `ex.ttsRobot` | Baatu masin la, du baatu nit. | Computer voice — recordings by native speakers are planned. |
+| `ex.ttsUnavailable` | Telefon bii mënul jàng lii ci kaw. Jàngal mbind mi. | Audio isn't available on this device yet. Read the Wolof instead. |
+| `ex.matchDone` | Boole nga lépp | All pairs matched |
+| `ex.wolof` | Wolof | Wolof |
+| `ex.typePlaceholder` | Bindal fii | Type in Wolof |
+| `ex.keyboard` | Araf yu wuute | Special letters |
+| `ex.accents` | Seetal mbind mi: | Watch the accents: |
+| `ex.typo` | Jegesi nga! Seetal mbind mi: | Almost! Check the spelling: |
+| `result.xp` | XP yi nga am | XP earned |
+| `result.accuracy` | Li nga jub | Accuracy |
+| `result.streak` | Bés ci topp | Streak |
+| `result.mistakes` | Say njuumte ngir baamtu | Your mistakes to review |
+| `result.flawless` | Amoo benn njuumte. Mat nga sëkk! | No mistakes. Flawless! |
+| `result.badge` | Ndam lu bees! | New achievement! |
+| `result.levelDone` | Dayo {n} jeex na | Level {n} complete |
+| `result.streakUp` | Sa bés ci topp yokku na: {n} bés! | Streak extended: {n} days! |
+| `fail.title` | Sa toq yi jeex nañu | Out of drops |
+| `fail.body` | Sa ndaa dafa jeex. Baamtul ngir feesal ko, walla xaaral: benn toq dina dellu saa yu 30 minit weesoo. | Your water jar is empty. Practise to refill it, or wait: one drop comes back every 30 minutes. |
+| `fail.practice` | Baamtu ngir feesal | Practise to refill |
+| `fail.home` | Dellu ci yoon wi | Back to the path |
+| `drops.title` | Ndaa ndox | Water jar |
+| `drops.full` | Sa ndaa fees na. | Your jar is full. |
+| `drops.next` | Toq bi topp ci {n} minit | Next drop in {n} min |
+| `drops.explain` | Bépp tontu bu jubul ci njàng dafay tuur benn toq. Baamtu du jël toq, te bu jeexee dafay delloo benn. | Each wrong answer in a lesson spills a drop. Review sessions never cost drops and refill one when you finish. |
+| `practice.title` | Baamtu | Practice |
+| `practice.body` | Baamtul baat yi nga xam. Ku nekk dina dellusi bala nga koy fàtte. | Review the words you've met. Each one comes back just before you'd forget it. |
+| `practice.due` | {n} ngir baamtu | {n} ready to review |
+| `practice.none` | Amul dara ngir baamtu léegi. Jeexalal benn njàng. | Nothing is due right now. Finish a lesson to fill your review deck. |
+| `practice.start` | Tàmbali baamtu | Start review |
+| `practice.mistakes` | Njuumte yu mujj yi | Recent mistakes |
+| `practice.refill` | Bu nga jeexalee benn baamtu, dangay am benn toq. | Finishing a review refills one drop. |
+| `practice.learned` | {n} baat ak kàddu yi nga jàng | {n} words and phrases learned |
+| `paused.title` | Taxaw na ba tuuti | Paused for now |
+| `paused.body` | Ñi defar WolofLink taxawal nañu lii ba tuuti. Yeneen yi ñu ngi dox. Jéem ko ci kanam. | The WolofLink team has paused this for a short while. Everything else works as usual. Please try again later. |
+| `paused.back` | Dellu | Go back |
+| `welcome.choiceTitle` | Naka nga bëgg tàmbali? | How would you like to start? |
+| `welcome.choiceHint` | Ak kont, li nga jàng dañu koy denc te mu topp la ci bépp telefon. | With an account, your progress is saved and follows you to any phone. |
+| `welcome.register` | Ubbi kont | Create an account |
+| `welcome.signIn` | Dugg | Sign in |
+| `welcome.guest` | Dugg ni gan | Continue as guest |
+| `welcome.guestNote` | Soxlawoo email. Mën nga ubbi kont ginnaaw bi ci Sama profil. | No email needed. You can create an account later in Profile. |
+| `welcome.registerNext` | Ci kanam, bindal sa email ngir ubbi sa kont te denc li nga jàng. | Next, enter your email to create your account and save your progress. |
+| `welcome.registerContinue` | Wéyal ngir ubbi kont | Continue to create account |
+| `welcome.registerTitle` | Ubbi sa kont | Create your account |
+| `welcome.signInTitle` | Dugg | Sign in |
+| `welcome.skip` | Léegi déet, tàmbali jàng | Not now, start learning |
+| `settings.learning` | Li ngay jàng | What you are learning |
+
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:

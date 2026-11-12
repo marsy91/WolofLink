@@ -772,4 +772,6 @@ export const de: Dictionary = {
   "feed.more": "Mehr Sätze zeigen",
   "feed.showPath": "Ganzen Lernpfad ansehen",
   "feed.backToFeed": "← Zurück zum Feed",
+  "onb.wolofSpeakers": "Für Wolof-Sprechende: Englisch oder Französisch lernen, mit Anleitungen auf Wolof.",
+  "settings.learning": "Was du lernst",
 };

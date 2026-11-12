@@ -3,7 +3,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { UiLang } from "@/content/types";
-import { detectLang, t as translateKey, type UiKey } from "@/i18n";
+import { detectLang, t as translateKey, tWolof, type UiKey } from "@/i18n";
 import { emptyProgress, refreshDrops, type Progress } from "./progress";
 import { localRepo, type ProgressRepo } from "./storage";
 
@@ -22,6 +22,10 @@ interface Store {
   t: (key: UiKey, vars?: Record<string, string | number>) => string;
   /** Interface language used before a profile exists (onboarding). */
   setDraftLang: (lang: UiLang) => void;
+  /** The language being learned: Wolof, or English/French for Wolof speakers (then the interface is in Wolof). */
+  target: "wo" | "en" | "fr";
+  /** Language being learned, chosen during onboarding before the profile exists. */
+  setDraftTarget: (target: "wo" | "en" | "fr") => void;
 }
 
 const StoreContext = createContext<Store | null>(null);
@@ -30,6 +34,7 @@ export function StoreProvider({ children, repo = localRepo }: { children: ReactN
   const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState<Progress>(() => emptyProgress(0));
   const [draftLang, setDraftLang] = useState<UiLang>("en");
+  const [draftTarget, setDraftTarget] = useState<"wo" | "en" | "fr">("wo");
   const [saveError, setSaveError] = useState(false);
 
   useEffect(() => {
@@ -59,10 +64,12 @@ export function StoreProvider({ children, repo = localRepo }: { children: ReactN
   }, [repo]);
 
   const lang = progress.profile?.uiLang ?? draftLang;
+  const target = progress.profile?.target ?? draftTarget;
+  const wolofUi = target !== "wo";
 
   useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
+    document.documentElement.lang = wolofUi ? "wo" : lang;
+  }, [lang, wolofUi]);
 
   const value = useMemo<Store>(
     () => ({
@@ -74,9 +81,11 @@ export function StoreProvider({ children, repo = localRepo }: { children: ReactN
       replace,
       reset,
       setDraftLang,
-      t: (key, vars) => translateKey(lang, key, vars),
+      target,
+      setDraftTarget,
+      t: (key, vars) => (wolofUi ? tWolof(key, vars) : translateKey(lang, key, vars)),
     }),
-    [ready, progress, lang, saveError, update, replace, reset],
+    [ready, progress, lang, target, wolofUi, saveError, update, replace, reset],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

@@ -8,7 +8,9 @@ import { LogoMark, Wordmark } from "@/components/Logo";
 import { Button, Loading, ProgressBar } from "@/components/ui";
 import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_FLAGS, LANG_NAMES } from "@/i18n";
+import { REVERSE_TARGETS, WOLOF_SPEAKER_LABELS } from "@/content/reverse";
 import { useAccount } from "@/lib/account";
+import { WOLOF_SPEAKERS_ENABLED } from "@/lib/features";
 import { GOALS, type GoalId } from "@/lib/progress";
 import { useStore } from "@/lib/store";
 
@@ -46,7 +48,11 @@ function OptionCard({
 }
 
 export default function Welcome() {
-  const { ready, progress, lang, setDraftLang, update, t } = useStore();
+  const { ready, progress, lang, setDraftLang, target, setDraftTarget, update, t } = useStore();
+  // Wolof speakers learning English or French skip the interface-language step: it is Wolof.
+  const reversed = target !== "wo";
+  const nextStep = (s: number) => (reversed && s === 1 ? 3 : s + 1);
+  const prevStep = (s: number) => (reversed && s === 3 ? 1 : s - 1);
   const account = useAccount();
   const router = useRouter();
   const [step, setStep] = useState(0);
@@ -73,7 +79,7 @@ export default function Welcome() {
         id: crypto.randomUUID?.() ?? String(now),
         name: name.trim(),
         uiLang: lang,
-        target: "wo",
+        target,
         goal,
         createdAt: now,
         guest: true,
@@ -156,7 +162,7 @@ export default function Welcome() {
           type="button"
           onClick={() => {
             if (step === 1 && account.available) setChoosing(true);
-            setStep(step - 1);
+            setStep(prevStep(step));
           }}
           aria-label={t("common.back")}
           className="grid h-10 w-10 place-items-center rounded-full text-night hover:bg-sand-2"
@@ -171,7 +177,7 @@ export default function Welcome() {
           <>
             <h1 className="mb-6 font-display text-3xl font-extrabold text-night">{t("onb.learnQ")}</h1>
             <div role="radiogroup" aria-label={t("onb.learnQ")} className="space-y-3">
-              <OptionCard selected onSelect={() => {}}>
+              <OptionCard selected={!reversed} onSelect={() => setDraftTarget("wo")}>
                 <span className="grid h-12 w-12 place-items-center rounded-xl bg-night font-display text-lg font-extrabold text-sun">
                   WO
                 </span>
@@ -181,7 +187,37 @@ export default function Welcome() {
                 </span>
               </OptionCard>
             </div>
-            <p className="mt-4 text-sm text-muted">{t("onb.learnMore")}</p>
+            {WOLOF_SPEAKERS_ENABLED ? (
+              <>
+                <h2 lang="wo" className="mt-8 mb-1 font-display text-2xl font-extrabold text-night">
+                  {WOLOF_SPEAKER_LABELS.heading}
+                </h2>
+                {reversed ? null : <p className="mb-3 text-sm text-muted">{t("onb.wolofSpeakers")}</p>}
+                <div role="radiogroup" aria-label={WOLOF_SPEAKER_LABELS.heading} className="mt-3 space-y-3">
+                  {REVERSE_TARGETS.map((code) => (
+                    <OptionCard
+                      key={code}
+                      selected={target === code}
+                      onSelect={() => {
+                        setDraftTarget(code);
+                        // Untranslated screens fall back to French, which most Wolof speakers read.
+                        setDraftLang("fr");
+                      }}
+                    >
+                      <span className="grid h-12 w-12 place-items-center rounded-xl bg-sand-2 font-display text-lg font-extrabold text-night">
+                        {LANG_FLAGS[code]}
+                      </span>
+                      <span lang="wo">
+                        <span className="block font-display text-xl font-extrabold">{WOLOF_SPEAKER_LABELS[code].title}</span>
+                        <span className="text-sm text-muted">{WOLOF_SPEAKER_LABELS[code].hint}</span>
+                      </span>
+                    </OptionCard>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <p className="mt-4 text-sm text-muted">{t("onb.learnMore")}</p>
+            )}
           </>
         )}
 
@@ -240,7 +276,7 @@ export default function Welcome() {
 
       <div className="py-6">
         {step < STEPS ? (
-          <Button block onClick={() => setStep(step + 1)}>
+          <Button block onClick={() => setStep(nextStep(step))}>
             {t("common.continue")}
           </Button>
         ) : (

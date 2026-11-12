@@ -56,6 +56,8 @@ const clipSource = (clip: string): AudioSource => (clip.startsWith(AI_CLIP_DIR) 
 export const hasAiClips = Object.values(manifest).some((clip) => clip.startsWith(AI_CLIP_DIR));
 
 export function audioSourceFor(entry: Entry): AudioSource {
+  // English or French for Wolof speakers: always the phone's own voice for that language.
+  if (entry.voice) return Capacitor.isNativePlatform() || (typeof window !== "undefined" && "speechSynthesis" in window) ? "tts" : "none";
   if (communityVoices.has(entry.id)) return "recording";
   const clip = clipFor(entry);
   if (clip) return clipSource(clip);
@@ -66,6 +68,7 @@ export function audioSourceFor(entry: Entry): AudioSource {
 
 export async function playEntry(entry: Entry, { slow = false } = {}): Promise<AudioSource> {
   stopAudio();
+  if (entry.voice) return speak(entry.wo, slow, entry.voice);
   const voicePath = communityVoices.get(entry.id);
   if (voicePath && resolveVoice) {
     try {
@@ -96,12 +99,12 @@ export async function playEntry(entry: Entry, { slow = false } = {}): Promise<Au
   return speak(entry.wo, slow);
 }
 
-async function speak(text: string, slow: boolean): Promise<AudioSource> {
+async function speak(text: string, slow: boolean, lang = TTS_LANG): Promise<AudioSource> {
   const rate = slow ? 0.55 : 0.85;
   if (Capacitor.isNativePlatform()) {
     try {
       const { TextToSpeech } = await import("@capacitor-community/text-to-speech");
-      await TextToSpeech.speak({ text, lang: TTS_LANG, rate, category: "playback" });
+      await TextToSpeech.speak({ text, lang, rate, category: "playback" });
       return "tts";
     } catch {
       return "none";
@@ -109,9 +112,10 @@ async function speak(text: string, slow: boolean): Promise<AudioSource> {
   }
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return "none";
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = TTS_LANG;
+  utterance.lang = lang;
   utterance.rate = rate;
-  const voice = window.speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith("fr"));
+  const prefix = lang.slice(0, 2).toLowerCase();
+  const voice = window.speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith(prefix));
   if (voice) utterance.voice = voice;
   window.speechSynthesis.speak(utterance);
   return "tts";

@@ -35,3 +35,11 @@ export const CIRCLE_ENABLED = process.env.NEXT_PUBLIC_CIRCLE === "on";
  * Android would crash on registration. Off by default.
  */
 export const PUSH_ENABLED = process.env.NEXT_PUBLIC_PUSH === "on";
+
+/**
+ * Wolof speakers learning English or French: the course in reverse with a Wolof interface
+ * (src/content/reverse.ts, src/i18n/wo.ts). The Wolof is new and waits for a native-speaker
+ * check (docs/wolof-review.md), so it ships off. Set NEXT_PUBLIC_WOLOF_SPEAKERS=on to show the
+ * option on the first setup screen and in Settings.
+ */
+export const WOLOF_SPEAKERS_ENABLED = process.env.NEXT_PUBLIC_WOLOF_SPEAKERS === "on";

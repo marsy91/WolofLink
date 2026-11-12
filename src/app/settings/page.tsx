@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { Button, Dialog, TabScreen } from "@/components/ui";
 import { UI_LANGS, type UiLang } from "@/content/types";
 import { LANG_NAMES } from "@/i18n";
+import { REVERSE_TARGETS, WOLOF_SPEAKER_LABELS } from "@/content/reverse";
+import { WOLOF_SPEAKERS_ENABLED } from "@/lib/features";
 import { IconBell } from "@/components/icons";
 import { useFriendPushToggle } from "@/components/PushInit";
 import { useAccount } from "@/lib/account";
@@ -86,6 +88,29 @@ export default function Settings() {
           />
         </label>
 
+        {WOLOF_SPEAKERS_ENABLED || profile.target !== "wo" ? (
+          <label className="block">
+            <span className="mb-1 block text-sm font-bold text-muted">{t("settings.learning")}</span>
+            <select
+              className={field}
+              value={profile.target}
+              onChange={(e) => {
+                const target = e.target.value as "wo" | "en" | "fr";
+                // Each course keeps its own lessons; untranslated Wolof screens fall back to French.
+                setProfile(target === "wo" ? { target } : { target, uiLang: "fr" });
+              }}
+            >
+              <option value="wo">Wolof</option>
+              {REVERSE_TARGETS.map((code) => (
+                <option key={code} value={code} lang="wo">
+                  {WOLOF_SPEAKER_LABELS[code].title}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
+
+        {profile.target !== "wo" ? null : (
         <label className="block">
           <span className="mb-1 block text-sm font-bold text-muted">{t("settings.uiLang")}</span>
           <select
@@ -104,6 +129,7 @@ export default function Settings() {
             ))}
           </select>
         </label>
+        )}
 
         <label className="block">
           <span className="mb-1 block text-sm font-bold text-muted">{t("settings.goal")}</span>

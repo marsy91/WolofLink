@@ -32,6 +32,12 @@ export interface Entry {
   audio?: string;
   /** Optional usage note shown after answering. */
   note?: Translations;
+  /**
+   * For courses that teach another language (Wolof speakers learning English or French,
+   * src/content/reverse.ts): read `wo` aloud with the phone voice for this language
+   * (BCP 47, e.g. "en-GB") instead of a Wolof clip.
+   */
+  voice?: string;
 }
 
 /** Authored exercise metadata. The engine resolves choices at runtime. */
@@ -123,7 +129,8 @@ export interface Unit {
 
 export interface Course {
   id: string;
-  target: "wo";
+  /** The language being learned: Wolof, or English/French for Wolof speakers. */
+  target: "wo" | "en" | "fr";
   title: Translations;
   units: Unit[];
   entries: Record<string, Entry>;

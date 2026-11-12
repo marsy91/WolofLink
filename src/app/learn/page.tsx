@@ -14,7 +14,7 @@ import {
 } from "@/components/icons";
 import { MAX_LEVEL } from "@/lib/engine";
 import { ProgressBar, TabScreen } from "@/components/ui";
-import { allLessons, course } from "@/content/course";
+import { courseFor } from "@/content/reverse";
 import type { Unit } from "@/content/types";
 import { translate } from "@/i18n";
 import { canOpenLesson, canOpenStory, isPremiumUnit } from "@/lib/premium";
@@ -33,7 +33,6 @@ const TONES: Record<Unit["tone"], string> = {
   dusk: "bg-dusk text-white",
 };
 
-const order = allLessons.map((l) => l.id);
 const VIEW_KEY = "woloflink.learnView";
 
 /** Feed themes show the feed first; the learner can switch to the path and back (remembered on this phone). */
@@ -66,7 +65,11 @@ export default function Learn() {
   const today = xpToday(progress, now);
   const goal = dailyGoal(progress);
   const name = progress.profile?.name;
-  const feedTheme = layoutFor(progress.settings.theme) === "feed";
+  // Wolof speakers learning English or French follow the reversed course (src/content/reverse.ts).
+  const active = courseFor(progress.profile?.target);
+  const reversed = active.target !== "wo";
+  const order = active.units.flatMap((u) => u.lessons.map((l) => l.id));
+  const feedTheme = layoutFor(progress.settings.theme) === "feed" && !reversed;
   const [view, setView] = useLearnView();
   const showFeed = feedTheme && view === "feed";
 
@@ -103,10 +106,10 @@ export default function Learn() {
         <LearnFeed onShowPath={() => setView("path")} />
       ) : (
         <>
-          <WordOfTheDay />
+          {reversed ? null : <WordOfTheDay />}
 
           <ol className="space-y-6">
-            {course.units.map((unit, ui) => {
+            {active.units.map((unit, ui) => {
               const Glyph = UNIT_GLYPHS[unit.glyph];
               const planned = unit.lessons.length === 0;
               return (
@@ -132,6 +135,7 @@ export default function Learn() {
                         </p>
                       ) : null}
                       {!planned &&
+                      !reversed &&
                       ui > 0 &&
                       !unlockAll &&
                       !(isPremiumUnit(ui) && !premium) &&
@@ -144,7 +148,7 @@ export default function Learn() {
                         </Link>
                       ) : null}
                     </div>
-                    {isPremiumUnit(ui) && !premium ? (
+                    {!reversed && isPremiumUnit(ui) && !premium ? (
                       <span className="ml-auto flex shrink-0 items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-xs font-extrabold text-dusk">
                         <IconGem size={14} /> {t("premium.badge")}
                       </span>
