@@ -1773,6 +1773,7 @@ const SWITCH_HELP: Record<string, string> = {
   reports: "The “Report a problem” button",
   community: "City leagues, learners near you and friend requests",
   feedback: "Profile → Send feedback (ideas, bugs, Wolof corrections, star ratings)",
+  world: "WolofLink World: the map of learners by country and the shared weekly goal (only in builds with NEXT_PUBLIC_WORLD=on)",
 };
 
 const OPT_IN_HELP: Record<string, string> = {

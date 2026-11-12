@@ -35,3 +35,11 @@ export const CIRCLE_ENABLED = process.env.NEXT_PUBLIC_CIRCLE === "on";
  * Android would crash on registration. Off by default.
  */
 export const PUSH_ENABLED = process.env.NEXT_PUBLIC_PUSH === "on";
+
+/**
+ * WolofLink World: the map of learners by country and the shared weekly goal
+ * (supabase/migrations/*_world.sql, which must be applied first). Needs accounts.
+ * Set NEXT_PUBLIC_WORLD=on to show it; off by default. The owner can also pause it
+ * from the console (switch "world").
+ */
+export const WORLD_ENABLED = process.env.NEXT_PUBLIC_WORLD === "on" && ACCOUNTS_ENABLED;

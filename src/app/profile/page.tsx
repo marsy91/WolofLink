@@ -2,13 +2,13 @@
 "use client";
 
 import Link from "next/link";
-import { BADGE_GLYPHS, IconChart, IconDialogue, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
+import { BADGE_GLYPHS, GlyphCompass, IconChart, IconDialogue, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
 import { useConsoleRole, useIsOwner } from "@/lib/owner";
 import { useSwitchOff } from "@/lib/notices";
-import { PREMIUM_ENABLED, SUPPORTER_ENABLED } from "@/lib/features";
+import { PREMIUM_ENABLED, SUPPORTER_ENABLED, WORLD_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { useRecorderStatus } from "@/lib/recorder";
 import { ACHIEVEMENTS, achievementProgress, currentStreak, MAX_SHIELDS } from "@/lib/progress";
@@ -22,6 +22,7 @@ export default function Profile() {
   const consoleRole = useConsoleRole();
   const supporterOff = useSwitchOff("supporter");
   const feedbackPaused = useSwitchOff("feedback");
+  const worldPaused = useSwitchOff("world");
   const [recorder] = useRecorderStatus();
   const { premium, unlockAll, available } = usePremium();
   const now = useNow();
@@ -126,6 +127,18 @@ export default function Profile() {
           <span className="text-sm text-muted">{t("insights.card")}</span>
         </span>
       </Link>
+
+      {WORLD_ENABLED && !worldPaused ? (
+        <Link href="/world/" className="mb-4 flex items-center gap-3 rounded-2xl border border-dusk/30 bg-white p-4 active:translate-y-[2px]">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-dusk-soft text-dusk">
+            <GlyphCompass size={22} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-display font-extrabold text-night">{t("world.cardTitle")}</span>
+            <span className="text-sm text-muted">{t("world.card")}</span>
+          </span>
+        </Link>
+      ) : null}
 
       {feedbackPaused ? null : (
         <Link href="/feedback/?from=/profile/" className="mb-4 flex items-center gap-3 rounded-2xl border border-sun/40 bg-white p-4 active:translate-y-[2px]">

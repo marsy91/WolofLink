@@ -228,3 +228,18 @@ the end of each lesson. Works without an account. Add to Data safety:
   cleared when the account is deleted. Without an account there is a shared cap
   of 300 an hour. The owner can pause it with the "feedback" switch.
 - Offline, up to 5 messages wait on the phone (local storage) and are sent later.
+
+## WolofLink World (map of learners and shared weekly goal)
+
+Migration `20261117000000_world.sql`. Only in builds with `NEXT_PUBLIC_WORLD=on`, and the owner
+can pause it (switch "world"). **Update Data safety before the first build with it switched on.**
+
+- **Personal info → Other info** (already declared for the home city): also the country a
+  signed-in learner chooses, picked from a list. Optional, not shared, purpose: App
+  functionality. Deleted with the account, or removed on the World screen.
+- **Location: still Not collected.** The country is chosen from a list; no GPS, no
+  coordinates, no IP-based location.
+- Only totals are shown, to anyone (also without an account and on the website): learners per
+  country, shown only from 3 learners up (smaller countries are added together), and the XP
+  earned this week by all learners with an account. Nobody's name or choice is shown.
+- The weekly goal uses the progress already collected for sync; nothing new is collected for it.

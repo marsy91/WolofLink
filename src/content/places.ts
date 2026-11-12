@@ -2,7 +2,7 @@
 /**
  * Cities and neighbourhoods for city leagues and "learners near you".
  * Learners pick from this list; the app never reads or stores coordinates.
- * City ids must match private.valid_city() in supabase/migrations/*_community.sql
+ * City ids must match the latest private.valid_city() in supabase/migrations/
  * (places.test.ts checks). Area ids are "<city>/<area>".
  */
 
@@ -49,8 +49,13 @@ export const CITIES: City[] = [
   { id: "ziguinchor", name: "Ziguinchor", country: "SN", areas: [] },
   { id: "kaolack", name: "Kaolack", country: "SN", areas: [] },
   { id: "mbour", name: "Mbour – Saly", country: "SN", areas: [] },
+  { id: "louga", name: "Louga", country: "SN", areas: [] },
+  { id: "diourbel", name: "Diourbel", country: "SN", areas: [] },
   { id: "banjul", name: "Banjul – Serrekunda", country: "GM", areas: [] },
   { id: "nouakchott", name: "Nouakchott", country: "MR", areas: [] },
+  { id: "abidjan", name: "Abidjan", country: "CI", areas: [] },
+  { id: "bamako", name: "Bamako", country: "ML", areas: [] },
+  { id: "casablanca", name: "Casablanca", country: "MA", areas: [] },
   {
     id: "london",
     name: "London",
@@ -102,13 +107,31 @@ export const CITIES: City[] = [
     ],
   },
   { id: "washington", name: "Washington DC", country: "US", areas: [] },
+  { id: "atlanta", name: "Atlanta", country: "US", areas: [] },
+  { id: "philadelphia", name: "Philadelphia", country: "US", areas: [] },
+  { id: "houston", name: "Houston", country: "US", areas: [] },
   { id: "montreal", name: "Montréal", country: "CA", areas: [] },
+  { id: "toronto", name: "Toronto", country: "CA", areas: [] },
+  { id: "lyon", name: "Lyon", country: "FR", areas: [] },
+  { id: "marseille", name: "Marseille", country: "FR", areas: [] },
+  { id: "bordeaux", name: "Bordeaux", country: "FR", areas: [] },
+  { id: "toulouse", name: "Toulouse", country: "FR", areas: [] },
   { id: "milan", name: "Milano", country: "IT", areas: [] },
   { id: "rome", name: "Roma", country: "IT", areas: [] },
+  { id: "turin", name: "Torino", country: "IT", areas: [] },
+  { id: "genoa", name: "Genova", country: "IT", areas: [] },
+  { id: "brescia", name: "Brescia", country: "IT", areas: [] },
+  { id: "bergamo", name: "Bergamo", country: "IT", areas: [] },
+  { id: "bologna", name: "Bologna", country: "IT", areas: [] },
+  { id: "florence", name: "Firenze", country: "IT", areas: [] },
+  { id: "naples", name: "Napoli", country: "IT", areas: [] },
   { id: "madrid", name: "Madrid", country: "ES", areas: [] },
   { id: "barcelona", name: "Barcelona", country: "ES", areas: [] },
+  { id: "valencia", name: "València", country: "ES", areas: [] },
   { id: "brussels", name: "Bruxelles – Brussel", country: "BE", areas: [] },
   { id: "berlin", name: "Berlin", country: "DE", areas: [] },
+  { id: "frankfurt", name: "Frankfurt am Main", country: "DE", areas: [] },
+  { id: "hamburg", name: "Hamburg", country: "DE", areas: [] },
 ];
 
 export const cityById = new Map(CITIES.map((c) => [c.id, c]));
