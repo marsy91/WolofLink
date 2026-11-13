@@ -815,4 +815,5 @@ export const de: Dictionary = {
   "leveltest.hint": "Du sprichst schon etwas Wolof? Bestehe den Test für die Urkunde.",
   "leveltest.certLine": "Einstufungstest mit {n} % bestanden (GER {level}, Zuordnung durch WolofLink)",
   "leveltest.hintDone": "Prüfe dein Niveau: Mit 80 % kommt das Ergebnis auf deine Urkunde.",
+  "settings.reviewedBy": "Wolof geprüft von {names}.",
 };
