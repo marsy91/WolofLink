@@ -813,4 +813,5 @@ export const it: Dictionary = {
   "leveltest.hint": "Conosci già un po' di wolof? Supera il test per ottenere l'attestato.",
   "leveltest.certLine": "Test di livello superato con il {n}% (QCER {level}, allineamento WolofLink)",
   "leveltest.hintDone": "Verifica il tuo livello: con l'80% il risultato va sul tuo attestato.",
+  "settings.reviewedBy": "Wolof revisionato da {names}.",
 };

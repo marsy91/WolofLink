@@ -809,6 +809,7 @@ export const en = {
   "leveltest.hint": "Already know some Wolof? Pass the test to earn the certificate.",
   "leveltest.certLine": "Level test passed with {n}% (CEFR {level}, aligned by WolofLink)",
   "leveltest.hintDone": "Check your level: score 80% to add the test result to your certificate.",
+  "settings.reviewedBy": "Wolof reviewed by {names}.",
 };
 
 export type UiKey = keyof typeof en;
