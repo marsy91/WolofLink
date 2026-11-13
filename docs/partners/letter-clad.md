@@ -1,22 +1,99 @@
-# Lettre de présentation : CLAD (Université Cheikh Anta Diop)
+# Approaching CLAD (Université Cheikh Anta Diop): email, letter and how to start
 
-*Modèle à adapter. Remplacez les éléments entre crochets avant l'envoi. Une version anglaise suit.*
+*Replace everything in square brackets before sending. French first (send that); English
+versions follow so you know exactly what it says.*
+
+## Who and where (checked November 2026 on clad.ucad.sn)
+
+- **Director:** Dr Augustin Ndione, Centre de Linguistique Appliquée de Dakar (CLAD)
+- **Email:** clad@ucad.edu.sn
+- **Phone / WhatsApp:** +221 33 824 52 06 · +221 78 730 11 39
+- **Address:** Université Cheikh Anta Diop, bâtiment de la FLSH, 2e étage, Fann, BP 5005, Dakar
+- **FirilMa:** CLAD's service arm. It offers translation, linguistic annotation, localisation
+  and dataset creation in Wolof, Pulaar and Seereer, and runs a French–Wolof AI translator
+  built with UCAD's IT department (DISI). The website lists no prices and no order form, so
+  quotes are requested from CLAD directly (the email below does that).
+
+## How to start (in this order)
+
+1. **Ask your teacher first** whether he knows Dr Ndione or a CLAD researcher. If he does,
+   ask him to forward the email or introduce you: a warm introduction is answered faster.
+2. **Send the email** below to clad@ucad.edu.sn. Attach, as PDFs:
+   - the letter below (signed);
+   - `docs/curriculum/level-map.md` (the level framework);
+   - 3 or 4 screenshots (from `docs/store/screenshots/`).
+   Do **not** send source code or the full course files; a demo APK can follow if they ask.
+3. **Follow up after 7–10 days** by phone or WhatsApp on +221 78 730 11 39 if there is no
+   reply ("Je vous ai écrit le [date] au sujet d'une relecture payante de WolofLink…").
+4. **Start with the paid review** (one batch, a written quote). Talk about the level framework,
+   joint test validation and a letter of support only once the first batch has gone well.
+5. **Put it in writing** before work starts: what is reviewed, price, deadline, that the
+   corrections may be published in the app, and how CLAD and the reviewers may be credited.
+   Any use of the CLAD or UCAD name or logo needs their written agreement.
 
 ---
+
+## 1. Email (French, to send)
+
+**À :** clad@ucad.edu.sn
+**Objet :** Demande de devis : relecture d'une application d'apprentissage du wolof (WolofLink)
+
+Monsieur le Directeur,
+
+Je développe WolofLink, une application gratuite pour apprendre le wolof du Sénégal, utilisée
+par des voyageurs, des personnels d'ONG et la diaspora. Tout le wolof suit l'orthographe
+officielle établie par le CLAD.
+
+Je souhaiterais confier au CLAD, par exemple via FirilMa, une **relecture payante** d'un premier
+lot : environ 450 entrées du cours (mots et phrases avec traductions) et 150 phrases de
+l'interface en wolof. Pourriez-vous m'indiquer vos conditions, un tarif et un délai ?
+
+Je joins une lettre de présentation, notre référentiel de niveaux (aligné sur le CECRL) et
+quelques captures d'écran. Je serais heureux d'en parler lors d'un court appel vidéo, ou de
+vous rencontrer à Dakar.
+
+Je vous prie d'agréer, Monsieur le Directeur, l'expression de ma haute considération.
+
+[Votre nom]
+Fondateur, WolofLink · support@woloflink.com · woloflink.com
+[Téléphone / WhatsApp]
+
+## 1. Email (English, for you)
+
+**Subject:** Request for a quote: review of a Wolof-learning app (WolofLink)
+
+Dear Director,
+
+I am developing WolofLink, a free app for learning Senegalese Wolof, used by travellers, NGO
+staff and the diaspora. All the Wolof follows the official orthography established by CLAD.
+
+I would like to commission CLAD, for example through FirilMa, for a **paid review** of a first
+batch: about 450 course entries (words and phrases with translations) and 150 lines of the
+Wolof interface. Could you tell me your terms, a price and a timescale?
+
+I attach an introduction letter, our level framework (aligned with the CEFR) and a few
+screenshots. I would be glad to discuss it on a short video call, or to meet you in Dakar.
+
+Yours faithfully,
+[Your name], Founder, WolofLink · support@woloflink.com · woloflink.com · [phone / WhatsApp]
+
+---
+
+## 2. Letter (French, attach as PDF)
 
 **[Votre nom]**
 Fondateur, WolofLink
 support@woloflink.com · woloflink.com
 
-**À l'attention de la Direction**
-Centre de linguistique appliquée de Dakar (CLAD)
-Université Cheikh Anta Diop, Dakar, Sénégal
+**Dr Augustin Ndione**
+Directeur, Centre de Linguistique Appliquée de Dakar (CLAD)
+Université Cheikh Anta Diop, bâtiment de la FLSH, 2e étage, Fann, BP 5005, Dakar, Sénégal
 
 [Lieu], le [date]
 
-**Objet : demande de collaboration pour la relecture et la validation de WolofLink, application d'apprentissage du wolof**
+**Objet : relecture et validation de WolofLink, application d'apprentissage du wolof**
 
-Madame, Monsieur le Directeur,
+Monsieur le Directeur,
 
 Je me permets de vous présenter WolofLink, une application gratuite d'apprentissage du wolof du
 Sénégal, destinée aux personnes qui parlent anglais, français, espagnol, allemand ou italien :
@@ -27,43 +104,49 @@ dictionnaire et un recueil de phrases de plus de 500 entrées avec audio, des di
 grammaire et un calendrier des fêtes du Sénégal. Elle fonctionne hors ligne, sur des téléphones
 modestes. Tout le wolof suit l'**orthographe officielle établie par le CLAD**.
 
-Nous avons aligné le parcours sur le Cadre européen commun de référence pour les langues (CECRL),
-avec des descripteurs « je peux… » par niveau et des tests de niveau A1 et A2. Cet alignement est
-le nôtre ; nous souhaitons qu'il soit examiné par des spécialistes.
+Nous avons aligné le parcours sur le Cadre européen commun de référence pour les langues
+(CECRL), avec des descripteurs « je peux… » par niveau et des tests de niveau A1 et A2. Une
+nouvelle partie permet aussi aux **wolophones d'apprendre l'anglais ou le français avec une
+interface en wolof**, ce qui rejoint, je crois, votre engagement pour les langues nationales.
+Cet alignement et ce wolof sont les nôtres : nous souhaitons qu'ils soient examinés par des
+spécialistes.
 
-C'est pourquoi je sollicite l'avis et, si possible, la collaboration du CLAD :
+C'est pourquoi je sollicite le CLAD, en commençant par une prestation simple :
 
-1. **Une relecture experte** de nos contenus et de leur conformité à l'orthographe officielle.
-2. **L'examen de notre référentiel de niveaux** et, à terme, **une validation conjointe des tests**
-   de niveau.
-3. **Une forme de reconnaissance** (lettre de soutien, attestation ou partenariat) qui permettrait
-   aux apprenants et aux organisations de s'y fier.
+1. **Une relecture payante** d'un premier lot (environ 450 entrées du cours et 150 phrases de
+   l'interface en wolof), par exemple dans le cadre de FirilMa, sur devis.
 
-En retour, nous proposons de rémunérer les relecteurs, de les créditer nominativement dans
-l'application, de partager des données anonymisées sur la progression des apprenants, et de
-mettre l'application gratuitement à la disposition des étudiants et des enseignants du CLAD.
+Si cette première collaboration vous convient, nous aimerions ensuite :
 
-Je joins notre référentiel de niveaux et notre méthode de relecture, et je serais heureux d'en
+2. soumettre à votre examen **notre référentiel de niveaux** et, à terme, **valider ensemble
+   les tests** de niveau ;
+3. envisager **une forme de reconnaissance** (lettre de soutien, attestation ou partenariat).
+
+En retour, nous créditerons nominativement le CLAD et les relecteurs dans l'application (avec
+votre accord), partagerons des données anonymisées sur la progression des apprenants, et
+mettrons l'application gratuitement à la disposition des étudiants et des enseignants du CLAD.
+
+Je joins notre référentiel de niveaux et quelques captures d'écran, et je serais heureux d'en
 discuter avec vous à votre convenance, à distance ou à Dakar.
 
-Je vous prie d'agréer, Madame, Monsieur le Directeur, l'expression de ma haute considération.
+Je vous prie d'agréer, Monsieur le Directeur, l'expression de ma haute considération.
 
 **[Votre nom]**
 
-*Pièces jointes : référentiel de niveaux (CECRL) ; méthode de relecture du wolof.*
+*Pièces jointes : référentiel de niveaux (CECRL) ; captures d'écran de l'application.*
 
 ---
 
-# Introduction letter: CLAD (Université Cheikh Anta Diop), English version
+## 2. Letter (English, for you)
 
 **[Your name]**, Founder, WolofLink · support@woloflink.com · woloflink.com
 
-To the Director, Centre de linguistique appliquée de Dakar (CLAD), Université Cheikh Anta Diop,
-Dakar, Senegal
+Dr Augustin Ndione, Director, Centre de Linguistique Appliquée de Dakar (CLAD), Université
+Cheikh Anta Diop, FLSH building, 2nd floor, Fann, BP 5005, Dakar, Senegal
 
 [Place], [date]
 
-**Subject: request for collaboration on reviewing and validating WolofLink, a Wolof-learning app**
+**Subject: review and validation of WolofLink, a Wolof-learning app**
 
 Dear Director,
 
@@ -76,25 +159,30 @@ phrasebook of over 500 entries with audio, dialogues, a grammar guide and a cale
 Senegalese holidays. It works offline on modest phones. All Wolof follows the **official
 orthography established by CLAD**.
 
-We have aligned the course with the Common European Framework of Reference for Languages
-(CEFR), with "can-do" statements per level and A1 and A2 level tests. The alignment is our own,
-and we would like specialists to examine it.
+We have aligned the course with the CEFR, with "can-do" statements per level and A1 and A2
+level tests. A new part also lets **Wolof speakers learn English or French with a Wolof
+interface**, which I believe fits your commitment to the national languages. The alignment and
+this Wolof are our own, and we would like specialists to examine them.
 
-I am therefore asking for CLAD's advice and, if possible, collaboration on:
+I am therefore approaching CLAD, starting with a simple service:
 
-1. **An expert review** of our content and its conformity with the official orthography.
-2. **A review of our level framework** and, in time, **joint validation of the level tests**.
-3. **A form of recognition** (a letter of support, attestation or partnership) that learners and
-   organisations can rely on.
+1. **A paid review** of a first batch (about 450 course entries and 150 lines of the Wolof
+   interface), for example through FirilMa, on a quote.
 
-In return, we offer to pay reviewers, credit them by name in the app, share anonymised data on
-learners' progress, and make the app free for CLAD's students and teachers.
+If this first collaboration suits you, we would then like to:
 
-I enclose our level framework and review method, and would be glad to discuss them at your
+2. submit **our level framework** for your review and, in time, **validate the level tests
+   together**;
+3. discuss **a form of recognition** (a letter of support, attestation or partnership).
+
+In return, we will credit CLAD and the reviewers by name in the app (with your agreement), share
+anonymised data on learners' progress, and make the app free for CLAD's students and teachers.
+
+I enclose our level framework and some screenshots, and would be glad to discuss them at your
 convenience, online or in Dakar.
 
 Yours faithfully,
 
 **[Your name]**
 
-*Enclosures: CEFR level framework; Wolof review method.*
+*Enclosures: CEFR level framework; app screenshots.*
