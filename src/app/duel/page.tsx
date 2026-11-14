@@ -543,6 +543,9 @@ function Duel() {
               <LambRing
                 balance={allShown ? finalBalance(r!.result) : balance(r!.my_points.slice(0, ends[revealed]), r!.their_points!.slice(0, ends[revealed]))}
                 label={t("duel.crowns", { mine: rounds.mine, name: setup.name, theirs: rounds.theirs })}
+                lowEnd={lowEnd}
+                pulse={revealed}
+                lastRight={revealed ? rounds.rounds[revealed - 1]?.winner !== "them" : undefined}
               />
               <ol className="mt-3 grid grid-cols-3 gap-2">
                 {rounds.rounds.map((round, i) => {
@@ -668,6 +671,7 @@ function Duel() {
           balance={setup.mode === "bot" ? balance(points, (setup.botPts ?? []).slice(0, points.length)) : ghostBalance(points)}
           hiddenOpponent={setup.mode !== "bot"}
           size={78}
+          lowEnd={lowEnd}
           pulse={points.length}
           lastRight={
             !points.length
