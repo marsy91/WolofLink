@@ -492,7 +492,7 @@ export const it: Dictionary = {
   "acct.errSync": "Sincronizzazione non riuscita. Riproveremo automaticamente.",
   "acct.notConfigured": "Gli account non sono disponibili in questa versione dell'app.",
   "acct.haveAccount": "Ho già un account",
-  "acct.privacy": "Salviamo solo il tuo nome, il tuo indirizzo email e i tuoi progressi.",
+  "acct.privacy": "Salviamo solo il tuo nome, la tua data di nascita, il tuo indirizzo email e i tuoi progressi.",
 
   "error.storage": "Impossibile salvare i progressi su questo dispositivo. Verifica che la memoria non sia bloccata.",
 
@@ -852,4 +852,9 @@ export const it: Dictionary = {
   "acct.name": "Il tuo nome",
   "acct.nameHint": "Compare sui tuoi certificati e agli amici che aggiungi. Puoi cambiarlo nelle Impostazioni.",
   "acct.errName": "Inserisci il tuo nome.",
+  "acct.birth": "Data di nascita",
+  "acct.birthHint": "Serve solo a verificare l'età: 13 anni per creare un account, 18 per le funzioni della comunità riservate agli adulti. Nessun altro la vede.",
+  "acct.errBirth": "Inserisci la tua data di nascita.",
+  "acct.tooYoung": "Devi avere almeno 13 anni per creare un account. Puoi continuare senza: i tuoi progressi restano su questo telefono.",
+  "community.under18": "La tua data di nascita indica che hai meno di 18 anni: leghe, richieste di amicizia e profili social restano disattivati. Puoi comunque aggiungere amici di persona con un codice.",
 };

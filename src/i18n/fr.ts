@@ -495,7 +495,7 @@ export const fr: Dictionary = {
   "acct.errSync": "La synchronisation a échoué. Nous réessaierons automatiquement.",
   "acct.notConfigured": "Les comptes ne sont pas disponibles dans cette version de l'application.",
   "acct.haveAccount": "J'ai déjà un compte",
-  "acct.privacy": "Nous enregistrons uniquement votre prénom, votre adresse e-mail et votre progression.",
+  "acct.privacy": "Nous enregistrons uniquement votre prénom, votre date de naissance, votre adresse e-mail et votre progression.",
 
   "error.storage": "Impossible d'enregistrer la progression sur cet appareil. Vérifiez que le stockage n'est pas bloqué.",
 
@@ -855,4 +855,9 @@ export const fr: Dictionary = {
   "acct.name": "Votre prénom",
   "acct.nameHint": "Affiché sur vos certificats et pour les amis que vous ajoutez. Modifiable dans Réglages.",
   "acct.errName": "Indiquez votre prénom.",
+  "acct.birth": "Date de naissance",
+  "acct.birthHint": "Sert uniquement à vérifier votre âge : 13 ans pour créer un compte, 18 ans pour les fonctions communautaires réservées aux adultes. Personne d'autre ne la voit.",
+  "acct.errBirth": "Indiquez votre date de naissance.",
+  "acct.tooYoung": "Il faut avoir 13 ans ou plus pour créer un compte. Vous pouvez continuer sans : votre progression reste sur ce téléphone.",
+  "community.under18": "Votre date de naissance indique que vous avez moins de 18 ans : les ligues, les demandes d'amis et les pseudos restent désactivés. Vous pouvez toujours ajouter des amis en personne avec un code.",
 };

@@ -20,6 +20,7 @@ import {
 } from "@/lib/community";
 import { friends } from "@/lib/friends";
 import { useSwitchOff, useSwitchOn } from "@/lib/notices";
+import { isAdult } from "@/lib/age";
 import { useStore } from "@/lib/store";
 
 const field = "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
@@ -46,7 +47,9 @@ function Switch({ label, checked, disabled, onChange }: { label: string; checked
 }
 
 export default function CommunityPage() {
-  const { t } = useStore();
+  const { t, progress } = useStore();
+  // A date of birth under 18 (given at sign-up) keeps the adult-only features off.
+  const minor = !!progress.profile?.birthDate && !isAdult(progress.profile.birthDate);
   const { user } = useAccount();
   const communityOff = useSwitchOff("community");
   const friendsOff = useSwitchOff("friends");
@@ -112,10 +115,10 @@ export default function CommunityPage() {
     setBusy(true);
     setMessage(null);
     try {
-      await community.setCommunity(draft.city || null, draft.showCity, draft.adult);
+      await community.setCommunity(draft.city || null, draft.showCity && !minor, draft.adult && !minor);
       if (nearbyOn) {
         const area = draft.city && draft.area.startsWith(`${draft.city}/`) ? draft.area : null;
-        await community.setNearby(area, !!area && draft.adult && draft.showNearby);
+        await community.setNearby(area, !!area && draft.adult && !minor && draft.showNearby);
       }
       setMessage({ text: t("community.saved"), ok: true });
       await load();
@@ -287,9 +290,11 @@ export default function CommunityPage() {
         </label>
         <Switch
           label={t("community.adult")}
-          checked={draft.adult}
+          checked={draft.adult && !minor}
+          disabled={minor}
           onChange={(v) => setDraft((d) => ({ ...d, adult: v, showCity: v && d.showCity, showNearby: v && d.showNearby }))}
         />
+        {minor ? <p className="mb-2 rounded-xl bg-sand-2 p-3 text-sm font-bold text-night">{t("community.under18")}</p> : null}
         {!draft.adult ? (
           <>
             <p className="mb-1 text-xs text-muted">{t("community.adultNeeded")}</p>

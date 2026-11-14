@@ -8,6 +8,7 @@ import { IconArrowLeft, IconLoop, IconProfile } from "@/components/icons";
 import { OrgSection } from "@/components/OrgSection";
 import { Button, Dialog, Loading } from "@/components/ui";
 import type { UiKey } from "@/i18n";
+import { canCreateAccount, isBirthDate, todayIso } from "@/lib/age";
 import { useAccount } from "@/lib/account";
 import type { CloudErrorKind } from "@/lib/cloud";
 import { EMAIL_RE } from "@/lib/cloud";
@@ -35,6 +36,11 @@ export default function AccountPage() {
   const [name, setName] = useState(progress.profile?.name ?? "");
   // Progress is read from storage after the first render: fill in the saved name once it's there.
   const savedName = progress.profile?.name ?? "";
+  const [birth, setBirth] = useState(progress.profile?.birthDate ?? "");
+  const savedBirth = progress.profile?.birthDate ?? "";
+  useEffect(() => {
+    if (savedBirth) void Promise.resolve().then(() => setBirth((b) => b || savedBirth));
+  }, [savedBirth]);
   useEffect(() => {
     if (savedName) void Promise.resolve().then(() => setName((n) => n || savedName));
   }, [savedName]);
@@ -77,9 +83,11 @@ export default function AccountPage() {
     setError(null);
     const cleanName = name.trim().replace(/\s+/g, " ");
     if (askName && !cleanName) return setError("acct.errName");
+    if (askName && !isBirthDate(birth)) return setError("acct.errBirth");
+    if (askName && !canCreateAccount(birth)) return setError("acct.tooYoung");
     if (!EMAIL_RE.test(email.trim())) return setError("acct.errEmail");
-    if (askName && progress.profile && progress.profile.name !== cleanName) {
-      update((p) => (p.profile ? { ...p, profile: { ...p.profile, name: cleanName } } : p));
+    if (askName && progress.profile && (progress.profile.name !== cleanName || progress.profile.birthDate !== birth)) {
+      update((p) => (p.profile ? { ...p, profile: { ...p.profile, name: cleanName, birthDate: birth } } : p));
     }
     setBusy(true);
     const err = await account.sendCode(email);
@@ -215,6 +223,22 @@ export default function AccountPage() {
               <span className="mt-1 block text-xs text-muted">{t("acct.nameHint")}</span>
             </label>
           ) : null}
+          {askName ? (
+            <label className="block">
+              <span className="mb-1 block text-sm font-bold text-muted">{t("acct.birth")}</span>
+              <input
+                type="date"
+                autoComplete="bday"
+                min="1900-01-01"
+                max={todayIso()}
+                value={birth}
+                disabled={busy}
+                onChange={(e) => setBirth(e.target.value)}
+                className={field}
+              />
+              <span className="mt-1 block text-xs text-muted">{t("acct.birthHint")}</span>
+            </label>
+          ) : null}
           <label className="block">
             <span className="mb-1 block text-sm font-bold text-muted">{t("acct.email")}</span>
             <input
@@ -229,7 +253,7 @@ export default function AccountPage() {
               className={field}
             />
           </label>
-          <Button block disabled={busy || !email.trim() || (askName && !name.trim())} onClick={() => void send()}>
+          <Button block disabled={busy || !email.trim() || (askName && (!name.trim() || !birth))} onClick={() => void send()}>
             {t("acct.sendCode")}
           </Button>
           <p className="text-sm text-muted">

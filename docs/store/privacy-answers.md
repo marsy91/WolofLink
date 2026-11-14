@@ -266,3 +266,12 @@ Migration `20261119000000_duel_voices.sql`. Only in builds with `NEXT_PUBLIC_VOI
 - **Personal info → Other info** (already declared for reports): a report about a recording stores
   who reported whom and an optional note; the recording itself is deleted at once.
 - The speaking exercises' record-and-compare still never leaves the phone.
+
+## Name and date of birth at sign-up
+
+Creating an account now asks for a first name (already declared as **Personal info → Name**) and a
+**date of birth**. Add the date of birth to Data safety under **Personal info → Other info**:
+collected, optional (only with an account), not shared, purpose **App functionality** and
+**Fraud prevention, security, and compliance** (age checks). It is used only to stop under-13s
+creating an account and to keep adult-only community features off for under-18s; nobody else sees
+it. It is stored with the account's synced progress and deleted with the account.

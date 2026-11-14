@@ -6,6 +6,7 @@
  * without touching game rules. Covered by progress.test.ts.
  */
 import { allLessons } from "@/content/course";
+import { isBirthDate } from "./age";
 import type { UiLang } from "@/content/types";
 import { DEFAULT_THEME, type ThemeId } from "@/lib/themes";
 
@@ -29,6 +30,8 @@ export interface Profile {
   createdAt: number;
   /** Guest until accounts exist; `accountId` will link a cloud user later. */
   guest: true;
+  /** Date of birth (YYYY-MM-DD), asked when an account is created (src/lib/age.ts). */
+  birthDate?: string;
 }
 
 export interface SrsCard {
@@ -400,7 +403,14 @@ export function migrate(raw: unknown, now = Date.now()): Progress {
     ...base,
     ...r,
     // An unknown course (a newer app's, or a corrupted value) falls back to the Wolof course.
-    profile: r.profile ? { ...r.profile, target: ["wo", "en", "fr"].includes(r.profile.target) ? r.profile.target : "wo" } : null,
+    profile: r.profile
+      ? {
+          ...r.profile,
+          target: ["wo", "en", "fr"].includes(r.profile.target) ? r.profile.target : "wo",
+          // Drop a date of birth that isn't a real date (corrupted or edited storage).
+          birthDate: isBirthDate(r.profile.birthDate) ? r.profile.birthDate : undefined,
+        }
+      : null,
     streak: { ...base.streak, ...r.streak },
     drops: { ...base.drops, ...r.drops },
     settings: {
