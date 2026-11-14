@@ -44,3 +44,18 @@ export function finalBalance(result: "won" | "lost" | "draw"): number {
 
 /** Progress through the bout, 0–1 (for the screen reader label and the crowd's noise). */
 export const boutProgress = (answered: number) => Math.min(1, answered / DUEL_LENGTH);
+
+/** How a wrestler is drawn moving (components/LambArena.tsx; the CSS is in globals.css). */
+export type WrestlerPose = "still" | "ready" | "grip" | "push" | "stumble" | "dance";
+
+/**
+ * What each wrestler is doing in the circle. Past the edge (balance beyond ±1) the winner
+ * dances and the thrown one lies still. Otherwise the last answer decides: whoever won that
+ * move pushes and the other stumbles. Before any answer they hold the grip.
+ */
+export function ringPoses(bal: number, answered: number, lastRight: boolean | undefined): { mine: WrestlerPose; theirs: WrestlerPose } {
+  if (bal > 1) return { mine: "dance", theirs: "still" };
+  if (bal < -1) return { mine: "still", theirs: "dance" };
+  if (answered > 0 && lastRight !== undefined) return lastRight ? { mine: "push", theirs: "stumble" } : { mine: "stumble", theirs: "push" };
+  return { mine: "grip", theirs: "grip" };
+}

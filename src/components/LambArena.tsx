@@ -3,11 +3,18 @@
 
 import { useId, useMemo, type ReactNode } from "react";
 import { seeded } from "@/lib/engine";
+import { ringPoses, type WrestlerPose } from "@/lib/lamb";
 
 /**
  * Wrestling (làmb) duels: an original illustration, not any real wrestler or event.
  * A crouched wrestler in a loincloth (ngemb) with a headband and arm bands, drawn facing
  * right and lit from the top left. `flip` turns him to face left.
+ *
+ * The body is drawn in parts (legs, upper body, arms, head, cloth tail) so each `pose` can move
+ * them with plain CSS (globals.css, "Wrestler limbs"): "ready" sways before the bout, "grip"
+ * tugs in the hold, "push" drives forward, "stumble" is shoved back, "dance" celebrates a throw.
+ * "still" (the default) doesn't move, for small icons. `lite` drops the endless loops on
+ * budget phones and keeps the short moves.
  */
 export function Wrestler({
   cloth,
@@ -16,6 +23,8 @@ export function Wrestler({
   size = 96,
   flip = false,
   fallen = false,
+  pose = "still",
+  lite = false,
 }: {
   cloth: string;
   trim: string;
@@ -24,6 +33,8 @@ export function Wrestler({
   flip?: boolean;
   /** Thrown out of the circle. */
   fallen?: boolean;
+  pose?: WrestlerPose;
+  lite?: boolean;
 }) {
   const id = useId().replace(/:/g, "");
   return (
@@ -32,7 +43,8 @@ export function Wrestler({
       height={size * 1.15}
       viewBox="0 0 120 138"
       aria-hidden
-      className={`wrestler block overflow-visible ${fallen ? "wrestler-fallen" : ""}`}
+      data-pose={fallen ? "still" : pose}
+      className={`wrestler block overflow-visible ${fallen ? "wrestler-fallen" : ""} ${lite ? "wrestler-lite" : ""}`}
       style={{ transform: flip ? "scaleX(-1)" : undefined }}
     >
       <defs>
@@ -50,29 +62,50 @@ export function Wrestler({
       {/* Shadow on the sand */}
       <ellipse cx="58" cy="134" rx="40" ry="4" fill="#000" opacity="0.18" />
       {/* Back leg */}
-      <path d="M52 90 L34 110 L24 132" fill="none" stroke={skin} strokeWidth="13" strokeLinecap="round" strokeLinejoin="round" />
-      <ellipse cx="22" cy="133" rx="8" ry="3.5" fill={skin} />
+      <g className="w-leg-back">
+        <path d="M52 90 L34 110 L24 132" fill="none" stroke={skin} strokeWidth="13" strokeLinecap="round" strokeLinejoin="round" />
+        <ellipse cx="22" cy="133" rx="8" ry="3.5" fill={skin} />
+      </g>
       {/* Front leg */}
-      <path d="M62 92 L78 112 L86 132" fill="none" stroke={skin} strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
-      <ellipse cx="90" cy="133" rx="8" ry="3.5" fill={skin} />
-      {/* Torso, leaning in */}
-      <path d="M44 94 C40 74 56 50 80 44 L98 52 C92 70 78 88 70 96 Z" fill={skin} />
-      <path d="M44 94 C40 74 56 50 80 44 L98 52 C92 70 78 88 70 96 Z" fill={`url(#k${id})`} />
-      {/* Back arm (behind), reaching for the grip */}
-      <path d="M80 54 L100 70 L114 68" fill="none" stroke={skin} strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" opacity="0.85" />
-      {/* Head and headband */}
-      <circle cx="100" cy="38" r="11" fill={skin} />
-      <circle cx="100" cy="38" r="11" fill={`url(#k${id})`} />
-      <path d="M89.5 35 C95 32 105 32 110.5 35" fill="none" stroke={trim} strokeWidth="3.5" strokeLinecap="round" />
-      {/* Front arm, gripping */}
-      <path d="M90 52 L108 62 L120 56" fill="none" stroke={skin} strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
-      {/* Arm band */}
-      <path d="M95 52 L101 57" stroke={trim} strokeWidth="5" strokeLinecap="round" />
+      <g className="w-leg-front">
+        <path d="M62 92 L78 112 L86 132" fill="none" stroke={skin} strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" />
+        <ellipse cx="90" cy="133" rx="8" ry="3.5" fill={skin} />
+      </g>
+      {/* Upper body: turns at the hips, carrying the arms and the head */}
+      <g className="w-upper">
+        {/* Torso, leaning in */}
+        <path d="M44 94 C40 74 56 50 80 44 L98 52 C92 70 78 88 70 96 Z" fill={skin} />
+        <path d="M44 94 C40 74 56 50 80 44 L98 52 C92 70 78 88 70 96 Z" fill={`url(#k${id})`} />
+        {/* Back arm (behind), reaching for the grip */}
+        <g className="w-arm-back">
+          <path d="M80 54 L100 70 L114 68" fill="none" stroke={skin} strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" opacity="0.85" />
+        </g>
+        {/* Raised back arm, shown only in the victory dance */}
+        <g className="w-cheer-back" opacity="0">
+          <path d="M80 54 L98 51 L113 44" fill="none" stroke={skin} strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" opacity="0.85" />
+        </g>
+        {/* Head and headband */}
+        <g className="w-head">
+          <circle cx="100" cy="38" r="11" fill={skin} />
+          <circle cx="100" cy="38" r="11" fill={`url(#k${id})`} />
+          <path d="M89.5 35 C95 32 105 32 110.5 35" fill="none" stroke={trim} strokeWidth="3.5" strokeLinecap="round" />
+        </g>
+        {/* Front arm, gripping, with its arm band */}
+        <g className="w-arm-front">
+          <path d="M90 52 L108 62 L120 56" fill="none" stroke={skin} strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M95 52 L101 57" stroke={trim} strokeWidth="5" strokeLinecap="round" />
+        </g>
+        {/* Raised front arm with its arm band, shown only in the victory dance */}
+        <g className="w-cheer-front" opacity="0">
+          <path d="M90 52 L86 36 L89 20" fill="none" stroke={skin} strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M89 47 L87.5 41" stroke={trim} strokeWidth="5" strokeLinecap="round" />
+        </g>
+      </g>
       {/* Loincloth (ngemb) with its knot and a hanging end */}
       <path d="M40 86 L72 92 L70 106 L38 100 Z" fill={cloth} />
       <path d="M40 86 L72 92 L70 106 L38 100 Z" fill={`url(#c${id})`} />
       <path d="M40 87 L72 93" stroke={trim} strokeWidth="2.5" />
-      <path d="M46 99 C44 108 40 114 36 118 L44 117 C48 112 51 106 52 100 Z" fill={cloth} />
+      <path className="w-tail" d="M46 99 C44 108 40 114 36 118 L44 117 C48 112 51 106 52 100 Z" fill={cloth} />
       {/* Small leather amulets on a cord at the waist */}
       <circle cx="56" cy="97" r="2.6" fill="#7a4a1c" />
       <circle cx="63" cy="98.5" r="2.6" fill="#7a4a1c" />
@@ -115,8 +148,9 @@ export function ArenaScene({ children, lowEnd = false }: { children: ReactNode; 
 /**
  * The sand circle with the two wrestlers locked together. `balance` runs from -1 (I am at the
  * edge) to +1 (they are); past ±1 the loser is thrown out. Every answer (`pulse` goes up) makes
- * the winner of that move lunge, kicks up sand, and slides the pair with a spring. While the
- * friend's answers are hidden, they show as a dark shape.
+ * the winner of that move lunge and drive forward while the other stumbles, kicks up sand, and
+ * slides the pair with a spring. Whoever throws the other out dances. While the friend's
+ * answers are hidden, they show as a dark shape.
  */
 export function LambRing({
   balance,
@@ -125,6 +159,7 @@ export function LambRing({
   size = 92,
   pulse = 0,
   lastRight,
+  lowEnd = false,
 }: {
   balance: number;
   label: string;
@@ -134,12 +169,15 @@ export function LambRing({
   pulse?: number;
   /** Whether the last answer was right (I shove) or wrong (they shove). */
   lastRight?: boolean;
+  /** Budget phone: short moves only, no endless limb loops. */
+  lowEnd?: boolean;
 }) {
   const b = Math.max(-1.4, Math.min(1.4, balance));
   const theyFell = b > 1;
   const iFell = b < -1;
   // The pair slides across the circle; a throw then happens at the edge, inside the screen.
   const shift = `${Math.max(-1, Math.min(1, b)) * 36}%`;
+  const poses = ringPoses(b, pulse, lastRight);
   const shove = pulse > 0 && lastRight !== undefined ? (lastRight ? "anim-shove-fwd" : "anim-shove-back") : "";
   return (
     <div className="relative h-44 w-full" role="img" aria-label={label}>
@@ -151,13 +189,15 @@ export function LambRing({
       {/* Full-width layer, so the slide is measured against the ring, not the wrestlers. */}
       <div className="lamb-pair absolute inset-x-0 bottom-3 flex justify-center" style={{ transform: `translateX(${shift})` }}>
         <div key={pulse} className={`relative flex items-end ${shove}`}>
-          <span className={`-mr-6 ${iFell ? "lamb-thrown-left" : "anim-strain"} ${lastRight && pulse ? "lamb-lunge-right" : ""}`}>
-            <Wrestler cloth="#c2502f" trim="#f2c14e" size={size} fallen={iFell} />
+          <span
+            className={`-mr-6 ${iFell ? "lamb-thrown-left" : theyFell ? "lamb-dance" : "anim-strain"} ${poses.mine === "push" ? "lamb-lunge-right" : ""}`}
+          >
+            <Wrestler cloth="#c2502f" trim="#f2c14e" size={size} fallen={iFell} pose={poses.mine} lite={lowEnd} />
           </span>
           <span
-            className={`${theyFell ? "lamb-thrown-right" : "anim-strain"} ${hiddenOpponent ? "lamb-shadow" : ""} ${lastRight === false && pulse ? "lamb-lunge-left" : ""}`}
+            className={`${theyFell ? "lamb-thrown-right" : iFell ? "lamb-dance" : "anim-strain"} ${hiddenOpponent ? "lamb-shadow" : ""} ${poses.theirs === "push" ? "lamb-lunge-left" : ""}`}
           >
-            <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={size} flip fallen={theyFell} />
+            <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={size} flip fallen={theyFell} pose={poses.theirs} lite={lowEnd} />
           </span>
           {pulse > 0 ? (
             <span aria-hidden className="lamb-dust-burst pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2">
