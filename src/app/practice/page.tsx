@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { IconBook, IconCalendar, IconDialogue, IconDrop, IconHeadphones, IconLifebuoy, IconLoop, IconSpeaker } from "@/components/icons";
-import { Pirogue } from "@/components/DuelRace";
+import { Wrestler } from "@/components/LambArena";
 import { TabScreen } from "@/components/ui";
 import { allStories, course } from "@/content/course";
 import { courseFor } from "@/content/reverse";
@@ -65,11 +65,14 @@ export default function Practice() {
       <>
 
       {botOn ? (
-        <section className="duel-sky relative mb-5 overflow-hidden rounded-3xl p-5 text-night" aria-labelledby="bot-h">
+        <section className="arena-sky relative mb-5 overflow-hidden rounded-3xl p-5 text-night" aria-labelledby="bot-h">
           <span aria-hidden className="duel-glow absolute inset-0" />
           <div className="relative mb-2 flex items-center gap-3">
             <span aria-hidden className="anim-bob shrink-0">
-              <Pirogue hull="#c2502f" trim="#f2c14e" size={56} />
+              <span className="flex items-end">
+                <span className="-mr-3"><Wrestler cloth="#c2502f" trim="#f2c14e" size={40} /></span>
+                <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={40} flip />
+              </span>
             </span>
             <h2 id="bot-h" className="text-glow-white font-display text-xl font-extrabold">
               {t("bot.title")}

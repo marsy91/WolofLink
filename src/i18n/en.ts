@@ -813,6 +813,7 @@ export const en = {
   "duel.lang.wo": "Wolof",
   "duel.lang.en": "English",
   "duel.lang.fr": "French",
+  "duel.arena": "Wrestling ring: question {n} of {total}",
 };
 
 export type UiKey = keyof typeof en;

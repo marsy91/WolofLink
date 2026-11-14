@@ -817,4 +817,5 @@ export const it: Dictionary = {
   "duel.lang.wo": "wolof",
   "duel.lang.en": "inglese",
   "duel.lang.fr": "francese",
+  "duel.arena": "Arena di lotta: domanda {n} di {total}",
 };
