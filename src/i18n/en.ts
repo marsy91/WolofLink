@@ -488,7 +488,7 @@ export const en = {
   "acct.errSync": "Sync failed. We'll try again automatically.",
   "acct.notConfigured": "Accounts aren't available in this version of the app.",
   "acct.haveAccount": "I already have an account",
-  "acct.privacy": "We store only your email address and your learning progress.",
+  "acct.privacy": "We store only your name, your email address and your learning progress.",
 
   "error.storage": "Progress couldn't be saved on this device. Check that storage isn't blocked.",
 
@@ -845,6 +845,9 @@ export const en = {
   "duel.rightLabel": "Right answers",
   "duel.faster": "faster",
   "duel.crownsShort": "Crowns {mine}–{theirs}",
+  "acct.name": "Your name",
+  "acct.nameHint": "Shown on your certificates and to friends you add. You can change it in Settings.",
+  "acct.errName": "Please enter your name.",
 };
 
 export type UiKey = keyof typeof en;

@@ -142,4 +142,6 @@ export const wo: Partial<Dictionary> = {
   "duel.ask.meaning": "Lii lan la tekki?",
   "duel.ask.wolof": "Naka lañuy waxe lii ci {lang}?",
   "duel.ask.listen": "Lan nga dégg?",
+  "acct.name": "Sa tur",
+  "acct.errName": "Bindal sa tur.",
 };

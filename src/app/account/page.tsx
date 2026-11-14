@@ -27,10 +27,17 @@ const ERRORS: Record<CloudErrorKind, UiKey> = {
 };
 
 export default function AccountPage() {
-  const { ready, progress, lang, t } = useStore();
+  const { ready, progress, lang, t, update } = useStore();
   const account = useAccount();
   const router = useRouter();
   const [email, setEmail] = useState("");
+  // Signing up asks for a name as well as the email (used on certificates and for friends).
+  const [name, setName] = useState(progress.profile?.name ?? "");
+  // Progress is read from storage after the first render: fill in the saved name once it's there.
+  const savedName = progress.profile?.name ?? "";
+  useEffect(() => {
+    if (savedName) void Promise.resolve().then(() => setName((n) => n || savedName));
+  }, [savedName]);
   const [code, setCode] = useState("");
   // Supabase sends 6 digits by default; 8 if the project setting is changed.
   const codeOk = code.length >= 6 && code.length <= 8;
@@ -65,9 +72,15 @@ export default function AccountPage() {
   const field =
     "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3.5 text-lg outline-none focus:border-clay disabled:opacity-60";
 
+  const askName = mode !== "signin";
   const send = async () => {
     setError(null);
+    const cleanName = name.trim().replace(/\s+/g, " ");
+    if (askName && !cleanName) return setError("acct.errName");
     if (!EMAIL_RE.test(email.trim())) return setError("acct.errEmail");
+    if (askName && progress.profile && progress.profile.name !== cleanName) {
+      update((p) => (p.profile ? { ...p, profile: { ...p.profile, name: cleanName } } : p));
+    }
     setBusy(true);
     const err = await account.sendCode(email);
     setBusy(false);
@@ -186,6 +199,22 @@ export default function AccountPage() {
         /* ── Enter email ── */
         <div className="space-y-4">
           <p className="text-muted">{t("acct.why")}</p>
+          {askName ? (
+            <label className="block">
+              <span className="mb-1 block text-sm font-bold text-muted">{t("acct.name")}</span>
+              <input
+                type="text"
+                autoComplete="given-name"
+                autoCapitalize="words"
+                maxLength={30}
+                value={name}
+                disabled={busy}
+                onChange={(e) => setName(e.target.value)}
+                className={field}
+              />
+              <span className="mt-1 block text-xs text-muted">{t("acct.nameHint")}</span>
+            </label>
+          ) : null}
           <label className="block">
             <span className="mb-1 block text-sm font-bold text-muted">{t("acct.email")}</span>
             <input
@@ -200,7 +229,7 @@ export default function AccountPage() {
               className={field}
             />
           </label>
-          <Button block disabled={busy || !email.trim()} onClick={() => void send()}>
+          <Button block disabled={busy || !email.trim() || (askName && !name.trim())} onClick={() => void send()}>
             {t("acct.sendCode")}
           </Button>
           <p className="text-sm text-muted">

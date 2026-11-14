@@ -41,7 +41,10 @@ export default function Privacy() {
         <ul className="list-disc space-y-1 pl-5">
           <li>Your learning progress (XP, streak, completed lessons and dialogues, review schedule and badges).</li>
           <li>Your settings (interface language, daily goal, sound, vibration and reminder time).</li>
-          <li>An optional first name you type during setup, shown only to you.</li>
+          <li>
+            Your first name: optional during setup, and asked when you create an account. It appears on your certificates;
+            other people only see a name if you choose one for Friends.
+          </li>
         </ul>
         <p className="mt-2">
           {ACCOUNTS_ENABLED ? "Without an account, this" : "This"} information is saved only in the app&apos;s private
@@ -53,7 +56,7 @@ export default function Privacy() {
         <Section title="Optional account and cloud sync">
           <p>If you create an account, we process:</p>
           <ul className="mt-2 list-disc space-y-1 pl-5">
-            <li>your email address, to send you sign-in codes and identify your account;</li>
+            <li>your email address, to send you sign-in codes and identify your account, and the first name you gave;</li>
             <li>a copy of the progress and settings listed above, so they sync between your devices.</li>
           </ul>
           <p className="mt-2">

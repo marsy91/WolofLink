@@ -492,7 +492,7 @@ export const it: Dictionary = {
   "acct.errSync": "Sincronizzazione non riuscita. Riproveremo automaticamente.",
   "acct.notConfigured": "Gli account non sono disponibili in questa versione dell'app.",
   "acct.haveAccount": "Ho già un account",
-  "acct.privacy": "Salviamo solo il tuo indirizzo email e i tuoi progressi.",
+  "acct.privacy": "Salviamo solo il tuo nome, il tuo indirizzo email e i tuoi progressi.",
 
   "error.storage": "Impossibile salvare i progressi su questo dispositivo. Verifica che la memoria non sia bloccata.",
 
@@ -849,4 +849,7 @@ export const it: Dictionary = {
   "duel.rightLabel": "Risposte giuste",
   "duel.faster": "più veloce",
   "duel.crownsShort": "Corone {mine}–{theirs}",
+  "acct.name": "Il tuo nome",
+  "acct.nameHint": "Compare sui tuoi certificati e agli amici che aggiungi. Puoi cambiarlo nelle Impostazioni.",
+  "acct.errName": "Inserisci il tuo nome.",
 };
