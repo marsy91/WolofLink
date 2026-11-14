@@ -11,7 +11,8 @@ import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
 import { duelState, duels, type DuelRow, type DuelWords } from "@/lib/duels";
 import { formatCode, friends, normaliseCode, ranks, type BoardRow, type FriendCard } from "@/lib/friends";
-import { SUPPORTER_ENABLED } from "@/lib/features";
+import { SUPPORTER_ENABLED, VOICE_SWAP_ENABLED } from "@/lib/features";
+import { VoiceWaiting } from "@/components/DuelVoice";
 import { useSwitchOff } from "@/lib/notices";
 import { Paused } from "@/components/Paused";
 import { usePremium } from "@/lib/premium-context";
@@ -258,6 +259,8 @@ export default function FriendsPage() {
           {message.text}
         </p>
       ) : null}
+
+      {!duelsOff && VOICE_SWAP_ENABLED ? <VoiceWaiting /> : null}
 
       {!duelsOff && duelRows && duelRows.length ? (
         <section className="mb-5">

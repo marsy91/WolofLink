@@ -98,7 +98,7 @@ which Google does not count as sharing) · **Processed ephemerally: No** · **Op
 | App activity → **App interactions** | Progress, XP, streak, duels, crowns and trophies, words seen in duels | App functionality |
 | App activity → **Other user-generated content** | Notes in problem reports; feedback messages and star ratings | App functionality |
 | App info and performance → **Other app performance data** | App version, app language, which word was reported, which screen feedback came from | App functionality |
-| Audio → **Voice or sound recordings** | Only native speakers we invite who accept the recording terms; learners are never recorded | App functionality |
+| Audio → **Voice or sound recordings** | Native speakers we invite who accept the recording terms (and, only in builds with voice swap on, adult learners who record one duel word for a friend, deleted within 3 days) | App functionality |
 | Device or other IDs | Push token, only if friend notifications are turned on | App functionality |
 | App activity → **Other actions** *(only if the form asks separately)* | Wrong friend-code attempts, counted for one day to stop guessing | Fraud prevention, security, and compliance |
 

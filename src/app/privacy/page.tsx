@@ -1,7 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED, WORLD_ENABLED } from "@/lib/features";
+import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED, VOICE_SWAP_ENABLED, WORLD_ENABLED } from "@/lib/features";
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
@@ -151,8 +151,22 @@ export default function Privacy() {
           automatically (a speech-recognition model transcribes each clip to make sure it matches the line and contains
           nothing offensive), and listened to by a reviewer. Only approved recordings are played to learners, with the
           name the contributor chose in the credits. Contributors can ask for their recordings to be deleted at any time
-          by writing to support@woloflink.com; deleting their account deletes them too. Learners&apos; voices are never sent
-          anywhere (see “Device features”).
+          by writing to support@woloflink.com; deleting their account deletes them too.
+          {VOICE_SWAP_ENABLED
+            ? " Apart from voice swap in duels (below), learners' voices are never sent anywhere (see “Device features”)."
+            : " Learners' voices are never sent anywhere (see “Device features”)."}
+        </Section>
+      ) : null}
+
+      {VOICE_SWAP_ENABLED ? (
+        <Section title="Voice swap in duels (adults only)">
+          In a duel between a Wolof learner and a Wolof speaker, two friends who have both confirmed they are 18 or over can
+          each choose to record one word from that duel for the other to hear. Only that word can be recorded (no free
+          speech), only the friend in that duel can hear it, and it is stored on our servers for a short time only: it is
+          deleted 10 minutes after the friend first plays it, and after 3 days in any case. Deleting the duel or your account
+          deletes it too. If a recording is inappropriate, the friend can report it: it is deleted straight away and the
+          report (who reported whom, and an optional note) is read only by the WolofLink owner and team members they
+          authorise. Recording is always optional and needs your microphone permission.
         </Section>
       ) : null}
 
@@ -183,8 +197,9 @@ export default function Privacy() {
           <li>
             <strong>Microphone:</strong> only when you tap it. In speaking exercises you can record yourself to compare
             with the model voice: that recording stays on your phone, is never uploaded and is deleted when you move on.
-            The recording screen for native speakers we invite is the only place where a recording is sent (see
-            “Voice recordings”).
+            {VOICE_SWAP_ENABLED
+              ? "A recording is only sent from the recording screen for native speakers we invite (see “Voice recordings”) and when you choose to record a word for a friend in a duel (see “Voice swap in duels”)."
+              : "The recording screen for native speakers we invite is the only place where a recording is sent (see “Voice recordings”)."}
           </li>
           <li>
             <strong>Camera:</strong> only when you tap “Scan” to add a friend in person. The picture is read on your
