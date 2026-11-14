@@ -4,9 +4,45 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { course } from "@/content/course";
 import { UI_LANGS } from "@/content/types";
-import { buildDuel, crownsFor, duelProblem, duelState, optionLabel, pickDuelEntries, pointsFor, roundOf, type DuelRow } from "./duels";
+import { baseEntryId, buildDuel, crownsFor, duelProblem, duelState, optionLabel, pickDuelEntries, pointsFor, roundOf, type DuelRow } from "./duels";
 import { normalize } from "./engine";
 import { emptyProgress } from "./progress";
+
+describe("two-way duels", () => {
+  it("gives each player the same words, each in their own direction", () => {
+    for (let seed = 1; seed <= 20; seed++) {
+      const ids = pickDuelEntries(emptyProgress(0), seed);
+      const wo = buildDuel(seed, ids, "wo");
+      for (const target of ["en", "fr"] as const) {
+        const rev = buildDuel(seed, ids, target);
+        expect(rev.map((q) => baseEntryId(q.entry.id))).toEqual(wo.map((q) => q.entry.id));
+        expect(rev.map((q) => q.kind)).toEqual(wo.map((q) => q.kind));
+        for (const q of rev) {
+          expect(q.options).toHaveLength(4);
+          expect(q.options[q.answer]!.id).toBe(q.entry.id);
+          // Reversed questions: the text to learn is English/French, the meaning Wolof.
+          if (q.entry.id.startsWith(`${target}:`)) {
+            expect(q.entry.voice).toMatch(new RegExp(`^${target}-`));
+            expect(q.entry.tr.fr).toBe(course.entries[baseEntryId(q.entry.id)]!.wo);
+            expect(new Set(q.options.map((o) => normalize(o.wo))).size).toBe(4);
+          }
+        }
+        // Rebuilding gives exactly the same duel.
+        expect(buildDuel(seed, ids, target).map((q) => q.options.map((o) => o.id))).toEqual(rev.map((q) => q.options.map((o) => o.id)));
+      }
+    }
+  });
+
+  it("counts reversed cards as the same words for practice duels", () => {
+    const p = emptyProgress(0);
+    const ids = Object.keys(course.entries).slice(0, 12);
+    p.srs = Object.fromEntries(ids.map((id) => [`en:${id}`, { box: 1, due: 0 }])) as typeof p.srs;
+    const picked = pickDuelEntries(p, 3);
+    expect(picked.every((id) => ids.includes(id))).toBe(true);
+    expect(baseEntryId("fr:g.salaam")).toBe("g.salaam");
+    expect(baseEntryId("g.salaam")).toBe("g.salaam");
+  });
+});
 
 describe("duels", () => {
   it("picks 10 different real entries, from the first units for a new learner", () => {

@@ -367,6 +367,17 @@ reviewer:
 | `settings.learning` | Li ngay jàng | What you are learning |
 
 
+
+### Added for two-way duels (November 2026, not yet checked)
+
+| Key | Wolof | English meaning |
+| --- | --- | --- |
+| `duel.twoWay` | Duel ci ñaari làkk: yow dangay tontu ci {mine}, {name} dina tontu ci {theirs}. | Two-way duel: you answer in {mine}, {name} answers in {theirs}. |
+| `duel.lang.wo` / `en` / `fr` | wolof / angale / farañse | Wolof / English / French |
+| `duel.ask.meaning` | Lii lan la tekki? | What does it mean? |
+| `duel.ask.wolof` | Naka lañuy waxe lii ci {lang}? | How do you say it in {lang}? |
+| `duel.ask.listen` | Lan nga dégg? | What do you hear? |
+
 ## Still needs a native speaker
 
 Please have a Senegalese Wolof speaker check these first:

@@ -243,3 +243,12 @@ can pause it (switch "world"). **Update Data safety before the first build with 
   country, shown only from 3 learners up (smaller countries are added together), and the XP
   earned this week by all learners with an account. Nobody's name or choice is shown.
 - The weekly goal uses the progress already collected for sync; nothing new is collected for it.
+
+## Two-way duels
+
+Migration `20261118000000_two_way_duels.sql`. A Wolof learner can duel a Wolof speaker who is
+learning English or French; each answers in their own direction.
+
+- **App activity → App interactions** (already declared): the course a learner follows (Wolof,
+  English or French) is kept on their friend profile and shown only to their friends and duel
+  partners. Not shared with third parties; deleted with the account. Nothing new to declare.

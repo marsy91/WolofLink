@@ -5,7 +5,7 @@ import { ACCOUNTS_ENABLED, PAID_ENABLED, SUPPORTER_ENABLED, WORLD_ENABLED } from
 
 export const metadata: Metadata = { title: "Privacy policy — WolofLink" };
 
-const UPDATED = "12 November 2026";
+const UPDATED = "14 November 2026";
 
 /**
  * Public privacy policy (also needed as a URL for Google Play and the App
@@ -109,6 +109,8 @@ export default function Privacy() {
           Messaging); turning them off or deleting your account removes it. If you play word duels with a friend, we
           keep your duel scores and crowns, and which Wolof words you have had in duels and whether you got them
           right, so you never get the same word twice and earn each trophy once; deleting your account removes it.
+          Your friends (and anyone you are in a duel with) can also see which course you follow: Wolof, or English
+          or French for Wolof speakers, so a duel can be played in both directions.
           <br />
           <br />
           <strong>Friend requests, city leagues and blocking.</strong> If you choose a home city and confirm you are 18

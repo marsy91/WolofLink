@@ -813,4 +813,8 @@ export const es: Dictionary = {
   "leveltest.hint": "¿Ya sabes algo de wolof? Aprueba la prueba para obtener el certificado.",
   "leveltest.certLine": "Prueba de nivel aprobada con un {n} % (MCER {level}, alineación de WolofLink)",
   "leveltest.hintDone": "Comprueba tu nivel: consigue un 80 % para añadir el resultado a tu certificado.",
+  "duel.twoWay": "Duelo en dos sentidos: tú respondes en {mine} y {name} en {theirs}. ¡Las mismas palabras para los dos!",
+  "duel.lang.wo": "wolof",
+  "duel.lang.en": "inglés",
+  "duel.lang.fr": "francés",
 };
