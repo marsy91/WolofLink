@@ -22,6 +22,12 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>WolofLink uses the camera only to scan a friend's QR code so you can add them.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>WolofLink uses the microphone so you can record yourself saying Wolof words and compare with the model voice, and to send voice in duels with friends.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>

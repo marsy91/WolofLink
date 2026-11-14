@@ -8,12 +8,13 @@
 import { Capacitor } from "@capacitor/core";
 import type { UiLang } from "@/content/types";
 import { getCloud } from "./cloud";
-import { PUSH_ENABLED } from "./features";
+import { PUSH_ENABLED, PUSH_IOS_ENABLED } from "./features";
+import { pushAllowedOn } from "./platform-rules";
 
 export type PushResult = "on" | "off" | "denied" | "unsupported";
 
 export function pushSupported(): boolean {
-  return PUSH_ENABLED && Capacitor.isNativePlatform() && getCloud() !== null;
+  return pushAllowedOn(Capacitor.getPlatform(), PUSH_ENABLED, PUSH_IOS_ENABLED) && getCloud() !== null;
 }
 
 let listening = false;
@@ -56,6 +57,7 @@ export async function setFriendPush(on: boolean, lang: UiLang, navigate: (path: 
 /** Asks the server to notify the friend; silent if push isn't set up. */
 export function notifyFriend(kind: "nudge" | "duel" | "result", ids: { id?: string; to?: string }) {
   const cloud = getCloud();
+  // Sending stays on from every platform: an iPhone learner can still nudge an Android friend.
   if (!PUSH_ENABLED || !cloud?.invoke) return;
   void cloud.invoke("notify-friend", { kind, ...ids }).catch(() => {});
 }
