@@ -853,7 +853,7 @@ export const es: Dictionary = {
   "acct.nameHint": "Aparece en tus certificados y para las amistades que añadas. Puedes cambiarlo en Ajustes.",
   "acct.errName": "Escribe tu nombre.",
   "acct.birth": "Fecha de nacimiento",
-  "acct.birthHint": "Solo sirve para comprobar tu edad: 13 años para crear una cuenta y 18 para las funciones de comunidad solo para adultos. Nadie más la ve.",
+  "acct.birthHint": "Solo sirve para comprobar tu edad. Nadie más la ve.",
   "acct.errBirth": "Escribe tu fecha de nacimiento.",
   "acct.tooYoung": "Hay que tener 13 años o más para crear una cuenta. Puedes seguir aprendiendo sin ella: tu progreso se queda en este teléfono.",
   "community.under18": "Tu fecha de nacimiento indica que tienes menos de 18 años, así que las ligas, las solicitudes y los perfiles sociales siguen desactivados. Puedes añadir amistades en persona con un código.",

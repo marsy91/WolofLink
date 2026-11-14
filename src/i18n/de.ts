@@ -855,7 +855,7 @@ export const de: Dictionary = {
   "acct.nameHint": "Erscheint auf deinen Zertifikaten und bei Freunden, die du hinzufügst. In den Einstellungen änderbar.",
   "acct.errName": "Bitte gib deinen Namen ein.",
   "acct.birth": "Geburtsdatum",
-  "acct.birthHint": "Dient nur zur Altersprüfung: ab 13 für ein Konto, ab 18 für die Community-Funktionen für Erwachsene. Niemand sonst sieht es.",
+  "acct.birthHint": "Dient nur zur Altersprüfung. Niemand sonst sieht es.",
   "acct.errBirth": "Bitte gib dein Geburtsdatum ein.",
   "acct.tooYoung": "Für ein Konto musst du mindestens 13 sein. Du kannst ohne Konto weiterlernen: dein Fortschritt bleibt auf diesem Handy.",
   "community.under18": "Laut deinem Geburtsdatum bist du unter 18, deshalb bleiben Städteligen, Anfragen und Social-Media-Namen aus. Freunde kannst du weiter persönlich per Code hinzufügen.",

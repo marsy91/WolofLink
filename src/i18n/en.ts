@@ -849,7 +849,7 @@ export const en = {
   "acct.nameHint": "Shown on your certificates and to friends you add. You can change it in Settings.",
   "acct.errName": "Please enter your name.",
   "acct.birth": "Date of birth",
-  "acct.birthHint": "Only used to check your age: you need to be 13 to create an account, and 18 for the adult-only community features. Nobody else sees it.",
+  "acct.birthHint": "Only used to check your age. Nobody else sees it.",
   "acct.errBirth": "Please enter your date of birth.",
   "acct.tooYoung": "You need to be 13 or over to create an account. You can keep learning without one: your progress stays on this phone.",
   "community.under18": "Your date of birth shows you're under 18, so city leagues, friend requests and social handles stay off. You can still add friends in person with a code.",
