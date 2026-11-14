@@ -114,36 +114,61 @@ export function ArenaScene({ children, lowEnd = false }: { children: ReactNode; 
 
 /**
  * The sand circle with the two wrestlers locked together. `balance` runs from -1 (I am at the
- * edge) to +1 (they are); past ±1 the loser is thrown out. While the friend's answers are
- * hidden, they show as a dark shape.
+ * edge) to +1 (they are); past ±1 the loser is thrown out. Every answer (`pulse` goes up) makes
+ * the winner of that move lunge, kicks up sand, and slides the pair with a spring. While the
+ * friend's answers are hidden, they show as a dark shape.
  */
 export function LambRing({
   balance,
   label,
   hiddenOpponent = false,
   size = 92,
+  pulse = 0,
+  lastRight,
 }: {
   balance: number;
   label: string;
   hiddenOpponent?: boolean;
   size?: number;
+  /** Number of answers so far: each new one plays a shove. */
+  pulse?: number;
+  /** Whether the last answer was right (I shove) or wrong (they shove). */
+  lastRight?: boolean;
 }) {
   const b = Math.max(-1.4, Math.min(1.4, balance));
   const theyFell = b > 1;
   const iFell = b < -1;
   // The pair slides across the circle; a throw then happens at the edge, inside the screen.
-  const shift = `${Math.max(-1, Math.min(1, b)) * 26}%`;
+  const shift = `${Math.max(-1, Math.min(1, b)) * 36}%`;
+  const shove = pulse > 0 && lastRight !== undefined ? (lastRight ? "anim-shove-fwd" : "anim-shove-back") : "";
   return (
     <div className="relative h-44 w-full" role="img" aria-label={label}>
       <div aria-hidden className="lamb-ring absolute inset-x-[4%] bottom-1 h-20 rounded-[50%]" />
       <div aria-hidden className="lamb-ring-inner absolute inset-x-[12%] bottom-4 h-14 rounded-[50%]" />
-      <div className="lamb-pair absolute bottom-3 left-1/2 flex items-end" style={{ transform: `translateX(calc(-50% + ${shift}))` }}>
-        <span className={`-mr-6 ${iFell ? "lamb-thrown-left" : "anim-strain"}`}>
-          <Wrestler cloth="#c2502f" trim="#f2c14e" size={size} fallen={iFell} />
-        </span>
-        <span className={`${theyFell ? "lamb-thrown-right" : "anim-strain"} ${hiddenOpponent ? "lamb-shadow" : ""}`}>
-          <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={size} flip fallen={theyFell} />
-        </span>
+      {/* Edge markers glow as the pair gets close to them */}
+      <span aria-hidden className="lamb-edge absolute bottom-6 left-[5%] h-10 w-2 rounded-full" style={{ opacity: Math.max(0, -b) }} />
+      <span aria-hidden className="lamb-edge absolute right-[5%] bottom-6 h-10 w-2 rounded-full" style={{ opacity: Math.max(0, b) }} />
+      {/* Full-width layer, so the slide is measured against the ring, not the wrestlers. */}
+      <div className="lamb-pair absolute inset-x-0 bottom-3 flex justify-center" style={{ transform: `translateX(${shift})` }}>
+        <div key={pulse} className={`relative flex items-end ${shove}`}>
+          <span className={`-mr-6 ${iFell ? "lamb-thrown-left" : "anim-strain"} ${lastRight && pulse ? "lamb-lunge-right" : ""}`}>
+            <Wrestler cloth="#c2502f" trim="#f2c14e" size={size} fallen={iFell} />
+          </span>
+          <span
+            className={`${theyFell ? "lamb-thrown-right" : "anim-strain"} ${hiddenOpponent ? "lamb-shadow" : ""} ${lastRight === false && pulse ? "lamb-lunge-left" : ""}`}
+          >
+            <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={size} flip fallen={theyFell} />
+          </span>
+          {pulse > 0 ? (
+            <span aria-hidden className="lamb-dust-burst pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2">
+              <i />
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+          ) : null}
+        </div>
       </div>
     </div>
   );
