@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Confetti } from "@/components/Confetti";
-import { DuelRace, DuelScene } from "@/components/DuelRace";
+import { ArenaScene, LambRing, Wrestler } from "@/components/LambArena";
 import { IconClose, IconSpeaker } from "@/components/icons";
 import { Paused } from "@/components/Paused";
 import { Loading } from "@/components/ui";
@@ -18,7 +18,8 @@ import { botPoints, isBotLevel, BOT_LEVELS, type BotLevel } from "@/lib/duel-bot
 import { useConsoleRole } from "@/lib/owner";
 import { goTo, useRestartKey } from "@/lib/nav";
 import { useNoticesState, useSwitchOff } from "@/lib/notices";
-import { isLowEnd, playSfx, type Sfx } from "@/lib/sfx";
+import { isLowEnd, playDrumRoll, playSfx, type Sfx } from "@/lib/sfx";
+import { balance, finalBalance, ghostBalance } from "@/lib/lamb";
 import { useStore } from "@/lib/store";
 import type { LearnTarget } from "@/content/reverse";
 
@@ -161,14 +162,18 @@ function Duel() {
       .catch(() => undefined);
   }, [friendKey]);
 
-  // The VS slams in: a clang and a camera shake.
+  // The wrestlers face off: a drum roll, then the VS slams in with a camera shake.
   useEffect(() => {
     if (phase !== "intro" || setup === null || setup === "missing") return;
+    let stopRoll = () => {};
     const id = window.setTimeout(() => {
-      if (progress.settings.sound) playSfx("clang");
+      if (progress.settings.sound) stopRoll = playDrumRoll();
       shake();
     }, 480);
-    return () => window.clearTimeout(id);
+    return () => {
+      window.clearTimeout(id);
+      stopRoll();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, setup === null]);
 
@@ -215,14 +220,14 @@ function Duel() {
   if (isBot && !botAllowed) return <Paused back="/practice/" />;
   if (setup === "missing") {
     return (
-      <DuelScene lowEnd>
+      <ArenaScene lowEnd>
         <main className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
           <p className="text-lg text-night/85">{t("duel.missing")}</p>
           <Link href="/friends/" className="font-bold text-clay underline">
             {t("duel.back")}
           </Link>
         </main>
-      </DuelScene>
+      </ArenaScene>
     );
   }
 
@@ -329,6 +334,7 @@ function Duel() {
     if (correct) setFloatPts({ n: got, key: index });
     else shake();
     if (sound) playTone(correct ? "correct" : "wrong");
+    if (correct) sfx("slap");
     if (correct && streak + 1 >= 3) sfx("crown");
     void haptic(correct ? "correct" : "wrong");
     window.setTimeout(() => {
@@ -349,23 +355,27 @@ function Duel() {
   const learnLang = target;
   const meaningLang = target === "wo" ? undefined : "wo";
 
-  // How far each pirogue has sailed: one step per question, a bit further for speed.
-  const sailed = (pts: number[]) => pts.reduce((a, p) => a + (p > 0 ? 0.7 + (0.3 * (p - 100)) / 50 : 0.35), 0) / DUEL_LENGTH;
 
   // ── Intro: face-off ──
   if (phase === "intro" || phase === "starting") {
     return (
-      <DuelScene lowEnd={lowEnd}>
+      <ArenaScene lowEnd={lowEnd}>
         <main ref={stage} className="safe-top safe-bottom flex min-h-dvh flex-col p-6 text-center">
           <div className="relative mt-6 flex h-56 items-center justify-center" aria-hidden>
             <div className="anim-panel-left absolute top-4 left-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#e0703f] to-[#7a2a14] shadow-[0_6px_0_#7a2a14]">
-              <span className="grid h-24 w-24 skew-x-[8deg] place-items-center rounded-full bg-white/15 font-display text-5xl font-extrabold text-white ring-4 ring-white/60">
-                {initial(myName || t("friends.you"))}
+              <span className="relative skew-x-[8deg]">
+                <Wrestler cloth="#c2502f" trim="#f2c14e" size={112} />
+                <span className="absolute -top-2 -left-2 grid h-10 w-10 place-items-center rounded-full bg-white/90 font-display text-xl font-extrabold text-[#7a2a14]">
+                  {initial(myName || t("friends.you"))}
+                </span>
               </span>
             </div>
             <div className="anim-panel-right absolute top-4 right-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#9a5ab8] to-[#3b1a52] shadow-[0_6px_0_#3b1a52]">
-              <span className="grid h-24 w-24 skew-x-[8deg] place-items-center rounded-full bg-white/15 font-display text-5xl font-extrabold text-white ring-4 ring-white/60">
-                {setup.mode === "bot" ? "🤖" : initial(setup.name)}
+              <span className="relative skew-x-[8deg]">
+                <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={112} flip />
+                <span className="absolute -top-2 -right-2 grid h-10 w-10 place-items-center rounded-full bg-white/90 font-display text-xl font-extrabold text-[#3b1a52]">
+                  {setup.mode === "bot" ? "🤖" : initial(setup.name)}
+                </span>
               </span>
             </div>
             <span className="anim-ring absolute top-1/2 left-1/2 h-24 w-24 rounded-full border-4 border-[#ffc93c]" style={{ animationDelay: "480ms" }} />
@@ -424,19 +434,19 @@ function Duel() {
             {soundToggle}
           </div>
         </main>
-      </DuelScene>
+      </ArenaScene>
     );
   }
 
   // ── Countdown ──
   if (phase === "countdown") {
     return (
-      <DuelScene lowEnd={lowEnd}>
+      <ArenaScene lowEnd={lowEnd}>
         <main key={count} className="safe-top safe-bottom flex min-h-dvh items-center justify-center" aria-live="polite">
           <span className="anim-ring absolute top-1/2 left-1/2 h-40 w-40 rounded-full border-4 border-[#ffc93c]" aria-hidden />
           <span className="anim-slam text-glow font-display text-9xl font-extrabold text-clay">{count > 0 ? count : t("duel.go")}</span>
         </main>
-      </DuelScene>
+      </ArenaScene>
     );
   }
 
@@ -445,11 +455,9 @@ function Duel() {
     const r = outcome?.kind === "result" ? outcome.r : null;
     const rounds = r?.their_points ? crownsFor(r.my_points, r.their_points) : null;
     const allShown = revealed >= 3 || !rounds;
-    // The leader reaches the finish line; the other boat ends where their answers took them.
-    const lead = r?.their_points ? Math.max(sailed(r.my_points), sailed(r.their_points)) || 1 : 1;
     const ends = [0, 3, 6, 10];
     return (
-      <DuelScene lowEnd={lowEnd}>
+      <ArenaScene lowEnd={lowEnd}>
         <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
           {r && allShown && r.result === "won" ? <Confetti pieces={lowEnd ? 24 : 48} /> : null}
           {r && allShown ? (
@@ -459,9 +467,8 @@ function Duel() {
           ) : null}
           {rounds ? (
             <div className="w-full">
-              <DuelRace
-                mine={sailed(r!.my_points.slice(0, ends[revealed])) / lead}
-                theirs={sailed(r!.their_points!.slice(0, ends[revealed])) / lead}
+              <LambRing
+                balance={allShown ? finalBalance(r!.result) : balance(r!.my_points.slice(0, ends[revealed]), r!.their_points!.slice(0, ends[revealed]))}
                 label={t("duel.crowns", { mine: rounds.mine, name: setup.name, theirs: rounds.theirs })}
               />
               <ol className="mt-3 grid grid-cols-3 gap-2">
@@ -552,13 +559,13 @@ function Duel() {
             </Link>
           ) : null}
         </main>
-      </DuelScene>
+      </ArenaScene>
     );
   }
 
   // ── Question ──
   return (
-    <DuelScene lowEnd={lowEnd}>
+    <ArenaScene lowEnd={lowEnd}>
       {flash ? <div key={`${flash.kind}${flash.key}`} aria-hidden className={`pointer-events-none fixed inset-0 z-20 ${flash.kind === "red" ? "flash-red" : "flash-gold"}`} /> : null}
       <main ref={stage} className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col px-5">
         <div className="flex items-center gap-3 pt-3">
@@ -577,10 +584,11 @@ function Duel() {
             ) : null}
           </span>
         </div>
-        <DuelRace
-          mine={sailed(points)}
-          theirs={setup.mode === "bot" ? sailed((setup.botPts ?? []).slice(0, points.length)) : null}
-          label={t("duel.race", { n: index + 1, total: questions.length })}
+        <LambRing
+          balance={setup.mode === "bot" ? balance(points, (setup.botPts ?? []).slice(0, points.length)) : ghostBalance(points)}
+          hiddenOpponent={setup.mode !== "bot"}
+          size={78}
+          label={t("duel.arena", { n: index + 1, total: questions.length })}
         />
         <div className="h-7 text-center">
           {streak >= 3 ? (
@@ -632,6 +640,6 @@ function Duel() {
         </div>
         <div className="h-10" />
       </main>
-    </DuelScene>
+    </ArenaScene>
   );
 }

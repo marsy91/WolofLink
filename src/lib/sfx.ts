@@ -4,7 +4,22 @@
  * they add nothing to the app's size. Callers check Settings → Sound first.
  */
 
-export type Sfx = "tick" | "go" | "clang" | "crown" | "cheer" | "whoosh";
+export type Sfx = "tick" | "go" | "clang" | "crown" | "cheer" | "whoosh" | "drum" | "slap";
+
+/** A drum hit: a low tone that drops in pitch, like a hand on a drum skin. */
+function drum(c: AudioContext, start: number, from: number, to: number, peak: number) {
+  const osc = c.createOscillator();
+  const gain = c.createGain();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(from, start);
+  osc.frequency.exponentialRampToValueAtTime(to, start + 0.18);
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(peak, start + 0.005);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.35);
+  osc.connect(gain).connect(c.destination);
+  osc.start(start);
+  osc.stop(start + 0.4);
+}
 
 let ctx: AudioContext | null = null;
 
@@ -78,6 +93,16 @@ export function playSfx(kind: Sfx) {
         tone(c, 1047, t, 0.35, 0.12, "triangle");
         tone(c, 1568, t + 0.08, 0.45, 0.1, "triangle");
         break;
+      case "drum":
+        // A deep open hit with a short slap on top.
+        drum(c, t, 180, 70, 0.35);
+        noise(c, t, 0.05, 0.12, 2500, 1500);
+        break;
+      case "slap":
+        // A sharp, high hit (a push or a throw).
+        drum(c, t, 420, 200, 0.2);
+        noise(c, t, 0.07, 0.2, 3500, 2000);
+        break;
       case "cheer":
         noise(c, t, 1.2, 0.12, 600, 1400);
         [523, 659, 784, 1047].forEach((f, i) => tone(c, f, t + i * 0.09, 0.4, 0.1, "triangle"));
@@ -86,6 +111,16 @@ export function playSfx(kind: Sfx) {
   } catch {
     // Sound is optional.
   }
+}
+
+/**
+ * A short drum roll for the start of a wrestling duel (a pattern of deep and sharp hits).
+ * Returns a function that stops it early.
+ */
+export function playDrumRoll(): () => void {
+  const pattern: [number, Sfx][] = [[0, "drum"], [180, "slap"], [300, "slap"], [480, "drum"], [660, "drum"], [780, "slap"], [960, "drum"], [1080, "slap"], [1200, "slap"], [1320, "drum"]];
+  const ids = pattern.map(([ms, k]) => window.setTimeout(() => playSfx(k), ms));
+  return () => ids.forEach((id) => window.clearTimeout(id));
 }
 
 /** Fewer particles and effects on budget phones (few cores or little memory). */

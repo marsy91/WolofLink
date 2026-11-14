@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Pirogue } from "@/components/DuelRace";
+import { Wrestler } from "@/components/LambArena";
 import { useAccount } from "@/lib/account";
 import { duelState, duels } from "@/lib/duels";
 import { friends } from "@/lib/friends";
@@ -34,10 +34,15 @@ export function NudgeBanner() {
     };
   }, [user]);
   const turnBanner = turns.length ? (
-    <section role="status" className="duel-sky relative mb-4 flex items-center gap-3 overflow-hidden rounded-3xl p-4 text-night shadow-card">
+    <section role="status" className="arena-sky relative mb-4 flex items-center gap-3 overflow-hidden rounded-3xl p-4 text-night shadow-card">
       <span aria-hidden className="duel-glow absolute inset-0" />
       <span aria-hidden className="anim-bob relative shrink-0">
-        <Pirogue hull="#c2502f" trim="#f2c14e" size={52} />
+        <span className="flex items-end">
+          <span className="-mr-3">
+            <Wrestler cloth="#c2502f" trim="#f2c14e" size={36} />
+          </span>
+          <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={36} flip />
+        </span>
       </span>
       <p className="text-glow-white relative min-w-0 flex-1 font-display font-extrabold">{t("duel.yourTurnBanner", { name: turns[0]!.name, n: turns.length })}</p>
       <Link href={`/duel/?id=${encodeURIComponent(turns[0]!.id)}`} className="btn-game relative shrink-0 rounded-xl px-4 py-2 text-sm font-extrabold uppercase">

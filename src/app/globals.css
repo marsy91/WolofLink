@@ -252,6 +252,44 @@ body {
 .story-scene .ss-far { transform: translate(calc(var(--px, 0) * -5px), calc(var(--py, 0) * -3px)); transition: transform 200ms ease-out; }
 .story-scene .ss-mid { transform: translate(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -4px)); transition: transform 200ms ease-out; }
 .story-scene .ss-near { transform: translate(calc(var(--px, 0) * -18px), calc(var(--py, 0) * -6px)); transition: transform 200ms ease-out; }
+
+/* Wrestling (làmb) duels: the arena behind the duel screens (components/LambArena.tsx). */
+.arena-sky { background: linear-gradient(180deg, #ffb36b 0%, #ffd29a 30%, #ffe9c6 52%, #f6dcae 62%, #e9c48a 100%); }
+.arena-lights {
+  background:
+    radial-gradient(ellipse 30% 60% at 12% -10%, rgba(255, 255, 230, 0.75), transparent 70%),
+    radial-gradient(ellipse 30% 60% at 88% -10%, rgba(255, 255, 230, 0.75), transparent 70%);
+}
+.arena-crowd {
+  top: 5.5%; height: 10%;
+  background:
+    radial-gradient(circle at 50% 70%, #6b3b2a 0 34%, transparent 36%) 0 0 / 22px 20px,
+    radial-gradient(circle at 50% 70%, #8a4d36 0 34%, transparent 36%) 11px 9px / 22px 20px,
+    linear-gradient(180deg, transparent 0 45%, #5a3123 45% 100%);
+  opacity: 0.3;
+}
+.arena-bunting {
+  top: 4%; height: 12px;
+  background: conic-gradient(from 135deg at 50% 0, #2e9e62 0 25%, transparent 0 75%, #2e9e62 0) 0 0 / 28px 14px,
+              conic-gradient(from 135deg at 50% 0, #f2c14e 0 25%, transparent 0 75%, #f2c14e 0) 14px 0 / 28px 14px;
+  opacity: 0.9;
+}
+.arena-sand { height: 34%; background: radial-gradient(ellipse 90% 70% at 50% 30%, #f4dcae 0%, #e8c78f 60%, #d9b073 100%); }
+.arena-dust { background: #fff3d6; }
+.lamb-ring { border: 7px dashed #b98a4e; background: radial-gradient(ellipse at 50% 40%, #f7e3bb, #ecd09c); box-shadow: inset 0 -6px 0 rgba(120, 80, 30, 0.15); }
+.lamb-ring-inner { border: 2px solid rgba(160, 110, 60, 0.35); }
+.lamb-pair { transition: transform 650ms cubic-bezier(0.3, 0.8, 0.3, 1); }
+.wrestler { filter: drop-shadow(0 3px 2px rgba(60, 30, 10, 0.25)); transition: transform 500ms ease; }
+.lamb-shadow .wrestler { filter: brightness(0.25) saturate(0); opacity: 0.6; }
+@keyframes strain { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(1px) rotate(-1.2deg); } }
+.anim-strain { display: inline-block; animation: strain 1.1s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes thrown-right { to { transform: translate(46px, 10px) rotate(78deg); } }
+@keyframes thrown-left { to { transform: translate(-46px, 10px) rotate(-78deg); } }
+.lamb-thrown-right { display: inline-block; transform-origin: 50% 100%; animation: thrown-right 700ms cubic-bezier(0.5, 0, 0.6, 1.4) 200ms both; }
+.lamb-thrown-left { display: inline-block; transform-origin: 50% 100%; animation: thrown-left 700ms cubic-bezier(0.5, 0, 0.6, 1.4) 200ms both; }
+@keyframes crowd { 0%, 100% { background-position-y: 0, 9px, 0; } 50% { background-position-y: -2px, 7px, 0; } }
+.anim-crowd { animation: crowd 0.9s ease-in-out infinite; }
+
 /* Painted dialogue backdrop (components/StoryScene.tsx). */
 @keyframes ss-drift { from { transform: translateX(0); } to { transform: translateX(-30px); } }
 @keyframes ss-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }
@@ -263,7 +301,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .character .blink, .character .talk, .anim-breathe, .anim-hop, .character .head, .character .wave-arm, .character .hair-follow,
   .story-scene .ss-clouds, .story-scene .ss-grass, .story-scene .ss-seed,
-  .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark { animation: none; }
+  .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark, .anim-strain, .anim-crowd { animation: none; }
+  .lamb-thrown-right { animation: none; transform: translate(46px, 10px) rotate(78deg); }
+  .lamb-thrown-left { animation: none; transform: translate(-46px, 10px) rotate(-78deg); }
   .anim-panel-left, .anim-panel-right { transform: skewX(-8deg); }
   .duel-spark { display: none; }
   .flash-red, .flash-gold { display: none; }
