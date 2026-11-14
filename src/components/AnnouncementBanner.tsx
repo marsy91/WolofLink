@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
+import { IconClose, IconMegaphone } from "./icons";
 import { useEffect, useState } from "react";
 import { translate } from "@/i18n";
 import { dismiss, dismissedIds, useNotices } from "@/lib/notices";
@@ -21,8 +22,8 @@ export function AnnouncementBanner() {
     <>
       {shown.map((a) => (
         <section key={a.id} aria-label={t("notice.label")} className="mb-4 flex items-start gap-3 rounded-3xl border border-sea/40 bg-sea-soft p-4">
-          <span aria-hidden className="text-2xl leading-none">
-            📣
+          <span aria-hidden className="text-sea">
+            <IconMegaphone size={26} />
           </span>
           <div className="min-w-0 flex-1">
             <p className="font-display text-lg leading-tight font-extrabold text-night">{translate(a.title, lang)}</p>
@@ -37,7 +38,7 @@ export function AnnouncementBanner() {
             }}
             className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-muted"
           >
-            ✕
+            <IconClose size={18} />
           </button>
         </section>
       ))}

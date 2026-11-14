@@ -845,4 +845,11 @@ export const fr: Dictionary = {
   "voice.reported": "Signalé. L'enregistrement a été supprimé.",
   "voice.waiting": "{name} vous a envoyé un mot à deviner",
   "voice.listen": "Écouter",
+  "duel.lostTitle": "Presque !",
+  "duel.lostHint": "Relancez un défi depuis Amis.",
+  "bot.lostHint": "Réessayez, ou choisissez un niveau plus facile.",
+  "duel.rightCount": "{n}/{total} bonnes réponses",
+  "duel.rightLabel": "Bonnes réponses",
+  "duel.faster": "plus rapide",
+  "duel.crownsShort": "Couronnes {mine}–{theirs}",
 };

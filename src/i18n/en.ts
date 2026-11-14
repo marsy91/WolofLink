@@ -838,6 +838,13 @@ export const en = {
   "voice.reported": "Reported. The recording has been deleted.",
   "voice.waiting": "{name} sent you a word to guess",
   "voice.listen": "Listen",
+  "duel.lostTitle": "So close!",
+  "duel.lostHint": "Challenge them back from Friends.",
+  "bot.lostHint": "Try again, or pick an easier level.",
+  "duel.rightCount": "{n}/{total} right",
+  "duel.rightLabel": "Right answers",
+  "duel.faster": "faster",
+  "duel.crownsShort": "Crowns {mine}–{theirs}",
 };
 
 export type UiKey = keyof typeof en;

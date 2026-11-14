@@ -842,4 +842,11 @@ export const es: Dictionary = {
   "voice.reported": "Denunciado. La grabación se ha borrado.",
   "voice.waiting": "{name} te ha enviado una palabra para adivinar",
   "voice.listen": "Escuchar",
+  "duel.lostTitle": "¡Casi!",
+  "duel.lostHint": "Desafíale de nuevo desde Amigos.",
+  "bot.lostHint": "Inténtalo de nuevo o elige un nivel más fácil.",
+  "duel.rightCount": "{n}/{total} aciertos",
+  "duel.rightLabel": "Aciertos",
+  "duel.faster": "más rápido",
+  "duel.crownsShort": "Coronas {mine}–{theirs}",
 };

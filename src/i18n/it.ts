@@ -842,4 +842,11 @@ export const it: Dictionary = {
   "voice.reported": "Segnalato. La registrazione è stata cancellata.",
   "voice.waiting": "{name} ti ha inviato una parola da indovinare",
   "voice.listen": "Ascolta",
+  "duel.lostTitle": "Quasi!",
+  "duel.lostHint": "Sfidali di nuovo da Amici.",
+  "bot.lostHint": "Riprova o scegli un livello più facile.",
+  "duel.rightCount": "{n}/{total} giuste",
+  "duel.rightLabel": "Risposte giuste",
+  "duel.faster": "più veloce",
+  "duel.crownsShort": "Corone {mine}–{theirs}",
 };

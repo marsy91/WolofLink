@@ -844,4 +844,11 @@ export const de: Dictionary = {
   "voice.reported": "Gemeldet. Die Aufnahme wurde gelöscht.",
   "voice.waiting": "{name} hat dir ein Wort zum Raten geschickt",
   "voice.listen": "Anhören",
+  "duel.lostTitle": "Knapp!",
+  "duel.lostHint": "Fordere sie unter Freunde erneut heraus.",
+  "bot.lostHint": "Versuch es nochmal oder wähle eine leichtere Stufe.",
+  "duel.rightCount": "{n}/{total} richtig",
+  "duel.rightLabel": "Richtige Antworten",
+  "duel.faster": "schneller",
+  "duel.crownsShort": "Kronen {mine}–{theirs}",
 };

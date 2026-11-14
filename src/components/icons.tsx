@@ -421,6 +421,75 @@ export const IconCap = (p: IconProps) => (
     <path d="M6.5 11.7v4.3c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.3M21.5 9.5v5" />
   </Svg>
 );
+/** Duels: a crown for each round won. */
+export const IconCrown = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3.5 8.5 7.5 12l4.5-6 4.5 6 4-3.5-1.8 9.5H5.3L3.5 8.5Z" />
+    <path d="M5.5 20.5h13" />
+  </Svg>
+);
+/** Practice duel opponent: a friendly robot head. */
+export const IconRobot = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="4.5" y="7.5" width="15" height="11" rx="3" />
+    <path d="M12 7.5V4.5M9 13h.01M15 13h.01M9.5 16h5M2.5 12v3M21.5 12v3" />
+    <circle cx="12" cy="3.5" r="1" />
+  </Svg>
+);
+/** Streaks: a flame. */
+export const IconFlame = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 21.5c-3.9 0-6.5-2.7-6.5-6.2 0-3.2 2.2-5.3 3.6-7.4.4 1.6 1.4 2.8 2.6 3.3-.2-3.2 1.1-5.8 3.4-7.7.2 3.4 4.4 5.9 4.4 11.4 0 3.8-3 6.6-7.5 6.6Z" />
+    <path d="M12 21.5c-1.7 0-3-1.2-3-2.9 0-1.9 1.6-2.9 2.4-4.4.9 1.3 3.6 2.4 3.6 4.6 0 1.6-1.3 2.7-3 2.7Z" />
+  </Svg>
+);
+/** Duels list: two crossed swords. */
+export const IconSwords = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M3.5 3.5h3l10 10M14 16.5l2.5-2.5M16.5 16.5 20 20M18.5 21.5l3-3" />
+    <path d="M20.5 3.5h-3l-10 10M10 16.5 7.5 14M7.5 16.5 4 20M5.5 21.5l-3-3" />
+  </Svg>
+);
+/** Paused feature: two bars in a circle. */
+export const IconPause = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M10 9v6M14 9v6" />
+  </Svg>
+);
+/** Nudge: a waving hand. */
+export const IconHand = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 10V4a1.5 1.5 0 0 1 3 0v7M14 10.5V5.5a1.5 1.5 0 0 1 3 0V14c0 4-2.7 7-6.5 7-2.4 0-4-1.1-5.3-3L3.4 14.8a1.5 1.5 0 0 1 2.5-1.7L8 15.5" />
+  </Svg>
+);
+/** Supporter badge: a heart. */
+export const IconHeart = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z" />
+  </Svg>
+);
+/** Report a problem: a small flag. */
+export const IconFlag = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M5 21V4M5 4.5c4-2.5 7 2.5 11 0v8c-4 2.5-7-2.5-11 0" />
+  </Svg>
+);
+/** Announcements: a megaphone. */
+export const IconMegaphone = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 10v4h3l8 4.5v-13L7 10H4Z" />
+    <path d="M18 9.5a3.5 3.5 0 0 1 0 5M7 14l1.5 5.5h2.5L10 15" />
+  </Svg>
+);
+/** League ranks: a medal with its number drawn by the caller. */
+export const IconMedal = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M8 3.5 10.5 9M16 3.5 13.5 9" />
+    <circle cx="12" cy="15" r="5.5" />
+  </Svg>
+);
+
 /** Full-screen "show" card: four corners. */
 export const IconExpand = (p: IconProps) => (
   <Svg {...p}>

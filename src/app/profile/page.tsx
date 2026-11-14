@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { BADGE_GLYPHS, GlyphCompass, IconChart, IconDialogue, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
+import { BADGE_GLYPHS, GlyphCompass, IconChart, IconHeart, IconDialogue, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
@@ -40,7 +40,8 @@ export default function Profile() {
             {profile?.name || t("profile.guest")}
             {SUPPORTER_ENABLED && premium ? (
               <span className="ml-2 inline-block rounded-full bg-sun-soft px-2 py-0.5 align-middle text-xs font-extrabold text-night">
-                💛 {t("supporter.badge")}
+                <IconHeart size={14} className="mr-1 inline-block align-[-2px] text-berry" />
+                {t("supporter.badge")}
               </span>
             ) : null}
           </h1>
@@ -83,8 +84,8 @@ export default function Profile() {
           href="/premium/"
           className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sun/60 bg-sun-soft p-4 active:translate-y-[2px]"
         >
-          <span aria-hidden className="text-3xl">
-            💛
+          <span aria-hidden className="text-berry">
+            <IconHeart size={30} />
           </span>
           <span className="flex-1">
             <span className="block font-display font-extrabold text-night">{t("supporter.title")}</span>

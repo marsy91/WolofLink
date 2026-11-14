@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
+import { IconPause } from "./icons";
 import Link from "next/link";
 import { useStore } from "@/lib/store";
 
@@ -9,8 +10,8 @@ export function Paused({ back = "/learn/" }: { back?: string }) {
   const { t } = useStore();
   return (
     <main className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
-      <span aria-hidden className="text-5xl">
-        ⏸️
+      <span aria-hidden className="text-muted">
+        <IconPause size={56} />
       </span>
       <h1 className="font-display text-2xl font-extrabold text-night">{t("paused.title")}</h1>
       <p className="text-muted">{t("paused.body")}</p>

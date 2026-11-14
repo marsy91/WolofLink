@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
+import { IconFlag } from "./icons";
 import { useState } from "react";
 import { useSwitchOff } from "@/lib/notices";
 import { t as translateKey } from "@/i18n";
@@ -49,7 +50,8 @@ export function ReportProblem({ entryId, className = "" }: { entryId: string; cl
         }}
         className={`text-sm font-bold text-muted underline underline-offset-2 ${className}`}
       >
-        <span aria-hidden>⚑</span> {t("report.open")}
+        <IconFlag size={14} className="mr-1 inline-block align-[-2px]" />
+        {t("report.open")}
       </button>
       <Dialog open={open} onClose={close} title={t("report.open")}>
         {state === "sent" ? (
