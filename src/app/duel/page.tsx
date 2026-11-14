@@ -20,6 +20,7 @@ import { goTo, useRestartKey } from "@/lib/nav";
 import { useNoticesState, useSwitchOff } from "@/lib/notices";
 import { isLowEnd, playSfx, type Sfx } from "@/lib/sfx";
 import { useStore } from "@/lib/store";
+import type { LearnTarget } from "@/content/reverse";
 
 interface Setup {
   mode: "challenge" | "reply" | "bot";
@@ -78,7 +79,9 @@ export default function DuelPage() {
 
 function Duel() {
   const router = useRouter();
-  const { lang, t, progress, update } = useStore();
+  const { lang, t, progress, update, target } = useStore();
+  // Two-way duels: each player answers in the language they are learning (Wolof, or English/French).
+  const [theirTarget, setTheirTarget] = useState<LearnTarget | null>(null);
   const [setup, setSetup] = useState<Setup | null | "missing">(null);
   const [phase, setPhase] = useState<Phase>("intro");
   const [myName, setMyName] = useState("");
@@ -144,6 +147,19 @@ function Duel() {
     // Only on first load: the duel must not change while it's being played.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Two-way duels: tell friends which course I follow, and find out theirs (quietly, best effort).
+  const friendKey = setup && setup !== "missing" ? setup.friendId : undefined;
+  useEffect(() => {
+    duels.setLearning(target).catch(() => undefined);
+  }, [target]);
+  useEffect(() => {
+    if (!friendKey) return;
+    duels
+      .friendLearning(friendKey)
+      .then(setTheirTarget)
+      .catch(() => undefined);
+  }, [friendKey]);
 
   // The VS slams in: a clang and a camera shake.
   useEffect(() => {
@@ -239,7 +255,7 @@ function Duel() {
 
   const begin = (s: Setup) => {
     try {
-      setQuestions(buildDuel(s.seed!, s.entries!));
+      setQuestions(buildDuel(s.seed!, s.entries!, target));
       setSetup(s);
       setIndex(0);
       setPoints([]);
@@ -329,6 +345,10 @@ function Duel() {
     }, correct ? 700 : 1050);
   };
 
+  // Languages on screen: the one being learned, and the meaning's (Wolof for Wolof speakers).
+  const learnLang = target;
+  const meaningLang = target === "wo" ? undefined : "wo";
+
   // How far each pirogue has sailed: one step per question, a bit further for speed.
   const sailed = (pts: number[]) => pts.reduce((a, p) => a + (p > 0 ? 0.7 + (0.3 * (p - 100)) / 50 : 0.35), 0) / DUEL_LENGTH;
 
@@ -360,6 +380,11 @@ function Duel() {
                 ? t("bot.intro", { n: DUEL_LENGTH })
                 : t(setup.mode === "challenge" ? "duel.introChallenge" : "duel.introReply", { n: DUEL_LENGTH, name: setup.name })}
             </p>
+            {setup.mode !== "bot" && theirTarget && theirTarget !== target ? (
+              <p className="glass-card glow-gold rounded-2xl px-4 py-2 font-bold text-night">
+                {t("duel.twoWay", { mine: t(`duel.lang.${target}`), name: setup.name, theirs: t(`duel.lang.${theirTarget}`) })}
+              </p>
+            ) : null}
             {setup.mode === "bot" ? (
               <div className="w-full">
                 <p className="mb-2 text-sm font-bold text-muted">{t("bot.pickLevel")}</p>
@@ -566,7 +591,7 @@ function Duel() {
         </div>
 
         <div className="flex flex-1 flex-col justify-center">
-          <p className="mb-2 text-center text-sm font-bold tracking-wider text-muted uppercase">{t(`duel.ask.${q!.kind}`)}</p>
+          <p className="mb-2 text-center text-sm font-bold tracking-wider text-muted uppercase">{t(`duel.ask.${q!.kind}`, { lang: t(`duel.lang.${target}`) })}</p>
           <div className="mb-4 flex min-h-28 items-center justify-center text-center">
             {q!.kind === "listen" ? (
               <button
@@ -578,7 +603,7 @@ function Duel() {
                 <IconSpeaker size={40} />
               </button>
             ) : (
-              <p key={index} lang={q!.kind === "meaning" ? "wo" : undefined} className="anim-rise text-glow-white font-display text-4xl leading-tight font-extrabold">
+              <p key={index} lang={q!.kind === "meaning" ? learnLang : meaningLang} className="anim-rise text-glow-white font-display text-4xl leading-tight font-extrabold">
                 {q!.kind === "meaning" ? q!.entry.wo : translate(q!.entry.tr, lang)}
               </p>
             )}
@@ -596,7 +621,7 @@ function Duel() {
                   type="button"
                   disabled={picked !== null}
                   onClick={() => choose(i)}
-                  lang={q!.kind === "meaning" ? undefined : "wo"}
+                  lang={q!.kind === "meaning" ? meaningLang : learnLang}
                   className={`glass-card min-h-14 rounded-2xl px-4 py-3 text-left text-lg font-bold text-night ${state}`}
                 >
                   {optionLabel(q!, o, lang)}

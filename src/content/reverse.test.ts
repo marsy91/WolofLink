@@ -106,7 +106,7 @@ describe("Wolof interface", () => {
       expect(text!.trim(), key).not.toBe("");
       const extra = vars(text!).filter((v) => !vars(en[key as keyof typeof en]).includes(v));
       // Instructions may name the language being learned.
-      expect(extra.filter((v) => !(v === "lang" && key.startsWith("ex."))), key).toEqual([]);
+      expect(extra.filter((v) => !(v === "lang" && (key.startsWith("ex.") || key.startsWith("duel.ask.")))), key).toEqual([]);
     }
     expect(tWolof("lesson.begin")).toBe("Tàmbali");
     expect(tWolof("ex.build", { lang: "angale" })).toBe("Firil ko ci angale");

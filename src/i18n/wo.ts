@@ -135,4 +135,11 @@ export const wo: Partial<Dictionary> = {
   "welcome.signInTitle": "Dugg",
   "welcome.skip": "Léegi déet, tàmbali jàng",
   "settings.learning": "Li ngay jàng",
+  "duel.twoWay": "Duel ci ñaari làkk: yow dangay tontu ci {mine}, {name} dina tontu ci {theirs}.",
+  "duel.lang.wo": "wolof",
+  "duel.lang.en": "angale",
+  "duel.lang.fr": "farañse",
+  "duel.ask.meaning": "Lii lan la tekki?",
+  "duel.ask.wolof": "Naka lañuy waxe lii ci {lang}?",
+  "duel.ask.listen": "Lan nga dégg?",
 };

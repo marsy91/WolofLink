@@ -10,7 +10,8 @@
  * questions are 3 rounds and each round won earns a crown; more crowns wins.
  */
 import { course } from "@/content/course";
-import type { Entry, UiLang } from "@/content/types";
+import { isReverseTarget, reverseCourse, type LearnTarget } from "@/content/reverse";
+import type { Course, Entry, UiLang } from "@/content/types";
 import { translate } from "@/i18n";
 import { getCloud } from "./cloud";
 import { notifyFriend } from "./push";
@@ -30,12 +31,43 @@ export interface DuelQuestion {
   answer: number;
 }
 
-const unitOf = new Map<string, string[]>();
-for (const unit of course.units) {
-  const ids = [...new Set(unit.lessons.flatMap((l) => l.entries))];
-  for (const id of ids) unitOf.set(id, ids);
+/** Per course: which entries share a unit (near distractors) and every entry id (far ones). */
+interface Pools {
+  unitOf: Map<string, string[]>;
+  all: string[];
 }
-const ALL_IDS = Object.keys(course.entries).sort();
+const pools = new Map<string, Pools>();
+function poolsFor(c: Course): Pools {
+  let p = pools.get(c.id);
+  if (!p) {
+    const unitOf = new Map<string, string[]>();
+    for (const unit of c.units) {
+      const ids = [...new Set(unit.lessons.flatMap((l) => l.entries))];
+      for (const id of ids) unitOf.set(id, ids);
+    }
+    pools.set(c.id, (p = { unitOf, all: Object.keys(c.entries).sort() }));
+  }
+  return p;
+}
+
+/**
+ * Two-way duels: the server's entries are Wolof-course ids; a Wolof speaker learning English
+ * or French plays the same words turned around ("en:<id>"). Entries with no reversed version
+ * (the same word in both languages) stay as Wolof-course questions.
+ */
+function entryFor(id: string, target: LearnTarget): { entry: Entry; c: Course } {
+  if (isReverseTarget(target)) {
+    const rc = reverseCourse(target);
+    const r = rc.entries[`${target}:${id}`];
+    if (r) return { entry: r, c: rc };
+  }
+  const entry = course.entries[id];
+  if (!entry) throw new Error(`Unknown entry ${id}`);
+  return { entry, c: course };
+}
+
+/** The Wolof-course id behind an entry id ("en:g.salaam" → "g.salaam"). */
+export const baseEntryId = (id: string) => id.replace(/^(en|fr):/, "");
 
 /**
  * 10 entries for a practice duel (older flow). Real duels get their entries from the
@@ -43,25 +75,30 @@ const ALL_IDS = Object.keys(course.entries).sort();
  */
 export function pickDuelEntries(progress: Progress, seed: number): string[] {
   const rng = seeded(seed);
-  const learned = Object.keys(progress.srs).filter((id) => course.entries[id]);
+  // Cards from the reversed course count as the same words.
+  const learned = [...new Set(Object.keys(progress.srs).map(baseEntryId))].filter((id) => course.entries[id]);
   const starter = course.units.slice(0, 3).flatMap((u) => u.lessons.flatMap((l) => l.entries));
   const pool = [...new Set(learned.length >= DUEL_LENGTH ? learned : [...learned, ...starter])];
   return shuffle(pool, rng).slice(0, DUEL_LENGTH);
 }
 
-/** Rebuilds the duel's questions from its seed and entries (same for both players). */
-export function buildDuel(seed: number, entryIds: string[]): DuelQuestion[] {
+/**
+ * Rebuilds the duel's questions from its seed and entries. Both players get the same words in
+ * the same order and question types; with `target` "en" or "fr" (a Wolof speaker learning English
+ * or French) each question is in their direction, so a two-way duel is fair to both.
+ */
+export function buildDuel(seed: number, entryIds: string[], target: LearnTarget = "wo"): DuelQuestion[] {
   const rng = seeded(seed ^ 0x5eed);
   const kinds: DuelKind[] = ["meaning", "wolof", "listen"];
   return entryIds.map((id, i) => {
-    const entry = course.entries[id];
-    if (!entry) throw new Error(`Unknown entry ${id}`);
-    const near = (unitOf.get(id) ?? []).filter((x) => x !== id);
-    const far = ALL_IDS.filter((x) => x !== id && !near.includes(x));
+    const { entry, c } = entryFor(id, target);
+    const { unitOf, all } = poolsFor(c);
+    const near = (unitOf.get(entry.id) ?? []).filter((x) => x !== entry.id);
+    const far = all.filter((x) => x !== entry.id && !near.includes(x));
     const distractors: Entry[] = [];
     const seen = new Set([normalize(entry.wo), normalize(entry.tr.en)]);
     for (const cand of [...shuffle(near, rng), ...shuffle(far, rng)]) {
-      const e = course.entries[cand]!;
+      const e = c.entries[cand]!;
       if (seen.has(normalize(e.wo)) || seen.has(normalize(e.tr.en))) continue;
       seen.add(normalize(e.wo));
       seen.add(normalize(e.tr.en));
@@ -187,6 +224,15 @@ function cloud() {
 }
 
 export const duels = {
+  /** Tells friends which course this learner follows (two-way duels); quiet if it fails. */
+  setLearning: async (target: LearnTarget) => {
+    await cloud().rpc<void>("set_learning", { target });
+  },
+  /** A friend's (or duel partner's) course: "wo", "en", "fr", or null if unknown. */
+  friendLearning: async (friend: string): Promise<LearnTarget | null> => {
+    const v = await cloud().rpc<string | null>("friend_learning", { friend });
+    return v === "wo" || v === "en" || v === "fr" ? v : null;
+  },
   list: async () => (await cloud().rpc<DuelRow[]>("my_duels")) ?? [],
   /** Starts a duel: the server picks 10 entries new to both players. */
   start: async (friend: string) => {

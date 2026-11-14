@@ -815,4 +815,8 @@ export const de: Dictionary = {
   "leveltest.hint": "Du sprichst schon etwas Wolof? Bestehe den Test für die Urkunde.",
   "leveltest.certLine": "Einstufungstest mit {n} % bestanden (GER {level}, Zuordnung durch WolofLink)",
   "leveltest.hintDone": "Prüfe dein Niveau: Mit 80 % kommt das Ergebnis auf deine Urkunde.",
+  "duel.twoWay": "Duell in beide Richtungen: Du antwortest auf {mine}, {name} auf {theirs}. Dieselben Wörter für beide!",
+  "duel.lang.wo": "Wolof",
+  "duel.lang.en": "Englisch",
+  "duel.lang.fr": "Französisch",
 };
