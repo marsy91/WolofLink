@@ -668,6 +668,15 @@ function Duel() {
           balance={setup.mode === "bot" ? balance(points, (setup.botPts ?? []).slice(0, points.length)) : ghostBalance(points)}
           hiddenOpponent={setup.mode !== "bot"}
           size={78}
+          pulse={points.length}
+          lastRight={
+            !points.length
+              ? undefined
+              : setup.mode === "bot"
+                ? // Against the computer, whoever won this move shoves.
+                  balance(points, (setup.botPts ?? []).slice(0, points.length)) >= balance(points.slice(0, -1), (setup.botPts ?? []).slice(0, points.length - 1))
+                : points[points.length - 1]! > 0
+          }
           label={t("duel.arena", { n: index + 1, total: questions.length })}
         />
         <div className="h-7 text-center">
