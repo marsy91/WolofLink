@@ -252,3 +252,17 @@ learning English or French; each answers in their own direction.
 - **App activity → App interactions** (already declared): the course a learner follows (Wolof,
   English or French) is kept on their friend profile and shown only to their friends and duel
   partners. Not shared with third parties; deleted with the account. Nothing new to declare.
+
+## Voice swap in duels (adults only)
+
+Migration `20261119000000_duel_voices.sql`. Only in builds with `NEXT_PUBLIC_VOICE_SWAP=on`.
+**Update Data safety before the first build with it switched on.**
+
+- **Audio → Voice or sound recordings** (already declared for invited contributors): now also
+  learners who choose to record one duel word for a friend. Optional; adults only (18+
+  confirmed), friends only, in two-way duels only. Not shared with third parties; purpose: App
+  functionality. Stored briefly: deleted 10 minutes after the friend first hears it, or after 3
+  days at most, and with the duel or the account.
+- **Personal info → Other info** (already declared for reports): a report about a recording stores
+  who reported whom and an optional note; the recording itself is deleted at once.
+- The speaking exercises' record-and-compare still never leaves the phone.

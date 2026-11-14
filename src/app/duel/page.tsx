@@ -22,9 +22,12 @@ import { isLowEnd, playDrumRoll, playSfx, type Sfx } from "@/lib/sfx";
 import { balance, finalBalance, ghostBalance } from "@/lib/lamb";
 import { useStore } from "@/lib/store";
 import type { LearnTarget } from "@/content/reverse";
+import { VoiceListenPanel, VoiceRecordPanel } from "@/components/DuelVoice";
+import { duelVoice, isTwoWay, spokenLang, voiceEntryFor, type DuelClip } from "@/lib/duel-voice";
+import { VOICE_SWAP_ENABLED } from "@/lib/features";
 
 interface Setup {
-  mode: "challenge" | "reply" | "bot";
+  mode: "challenge" | "reply" | "bot" | "listen";
   /** Duel the computer: its level and its points for each question. */
   level?: BotLevel;
   botPts?: number[];
@@ -83,6 +86,9 @@ function Duel() {
   const { lang, t, progress, update, target } = useStore();
   // Two-way duels: each player answers in the language they are learning (Wolof, or English/French).
   const [theirTarget, setTheirTarget] = useState<LearnTarget | null>(null);
+  // Voice swap (two-way duels between adult friends): hear their word, then record one back.
+  const [voice, setVoice] = useState<"none" | "loading" | "listen" | "record" | "done">("none");
+  const [clip, setClip] = useState<DuelClip | null>(null);
   const [setup, setSetup] = useState<Setup | null | "missing">(null);
   const [phase, setPhase] = useState<Phase>("intro");
   const [myName, setMyName] = useState("");
@@ -132,7 +138,16 @@ function Duel() {
       .then((c) => setMyName(c?.display_name ?? ""))
       .catch(() => undefined);
     const bot = q.get("bot");
-    if (isBotLevel(bot)) {
+    const listen = q.get("listen");
+    if (listen && VOICE_SWAP_ENABLED) {
+      duels
+        .list()
+        .then((rows) => {
+          const d = rows.find((r) => r.id === listen);
+          setSetup(d ? { mode: "listen", duelId: d.id, friendId: d.other_id, name: d.other_name, seed: d.seed, entries: d.entries } : "missing");
+        })
+        .catch(() => setSetup("missing"));
+    } else if (isBotLevel(bot)) {
       void Promise.resolve().then(() => setSetup({ mode: "bot", level: bot, name: t("bot.name") }));
     } else if (friend) {
       void Promise.resolve().then(() => setSetup({ mode: "challenge", friendId: friend, name: q.get("name") ?? "" }));
@@ -161,6 +176,27 @@ function Duel() {
       .then(setTheirTarget)
       .catch(() => undefined);
   }, [friendKey]);
+
+  // Voice swap: fetch the friend's word (marks it heard on the server) when it's time to listen.
+  const wantsClip =
+    VOICE_SWAP_ENABLED &&
+    voice === "none" &&
+    setup !== null &&
+    setup !== "missing" &&
+    !!setup.duelId &&
+    (setup.mode === "listen" || (setup.mode === "reply" && outcome?.kind === "result" && revealed >= 3 && isTwoWay(target, theirTarget)));
+  const clipDuel = setup && setup !== "missing" ? setup.duelId : undefined;
+  useEffect(() => {
+    if (!wantsClip || !clipDuel) return;
+    void Promise.resolve().then(() => setVoice("loading"));
+    duelVoice
+      .get(clipDuel)
+      .then((c) => {
+        setClip(c);
+        setVoice(c ? "listen" : "record");
+      })
+      .catch(() => setVoice("record"));
+  }, [wantsClip, clipDuel]);
 
   // The wrestlers face off: a drum roll, then the VS slams in with a camera shake.
   useEffect(() => {
@@ -230,6 +266,43 @@ function Duel() {
       </ArenaScene>
     );
   }
+
+  // ── Listen mode: a word your friend recorded for you (from Friends) ──
+  if (setup.mode === "listen") {
+    return (
+      <ArenaScene lowEnd>
+        <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6">
+          {voice === "listen" && clip ? (
+            <VoiceListenPanel clip={clip} entries={setup.entries ?? []} seed={setup.seed ?? 0} name={setup.name} duelId={setup.duelId!} onDone={() => router.replace("/friends/")} />
+          ) : voice === "none" || voice === "loading" ? (
+            <Loading />
+          ) : (
+            <p className="text-lg text-night/85">{t("duel.missing")}</p>
+          )}
+          <Link href="/friends/" className="rounded-full bg-white/90 px-3 py-1 font-bold text-night underline">
+            {t("duel.back")}
+          </Link>
+        </main>
+      </ArenaScene>
+    );
+  }
+
+  // Voice swap during a duel: who records which word (in the language they speak well).
+  const canVoice = VOICE_SWAP_ENABLED && !!setup.duelId && setup.seed !== undefined && !!setup.entries && isTwoWay(target, theirTarget);
+  const voicePanel =
+    canVoice && theirTarget ? (
+      voice === "listen" && clip ? (
+        <VoiceListenPanel clip={clip} entries={setup.entries!} seed={setup.seed!} name={setup.name} duelId={setup.duelId!} onDone={() => setVoice("record")} />
+      ) : voice === "record" ? (
+        <VoiceRecordPanel
+          duelId={setup.duelId!}
+          entryId={voiceEntryFor(setup.seed!, setup.entries!, setup.mode === "challenge" ? "challenger" : "opponent")}
+          lang={spokenLang(target, theirTarget)}
+          name={setup.name}
+          onDone={() => setVoice("done")}
+        />
+      ) : null
+    ) : null;
 
   const soundToggle = (
     <button
@@ -510,6 +583,12 @@ function Duel() {
               </p>
               <p className="text-sm text-muted">{t("duel.trophiesHow")}</p>
               <p className="text-lg text-night">{t("duel.sent", { name: setup.name })}</p>
+              {canVoice && voice === "none" ? (
+                <button type="button" onClick={() => setVoice("record")} className="btn-game rounded-2xl px-6 py-3 font-display font-extrabold uppercase">
+                  {t("voice.recordTitle", { name: setup.name })}
+                </button>
+              ) : null}
+              {voicePanel}
             </>
           ) : null}
           {r && allShown ? (
@@ -519,6 +598,7 @@ function Duel() {
               ) : (
                 <p className="text-muted">{t("duel.scores", { mine: r.my_score, name: setup.name, theirs: r.their_score })}</p>
               )}
+              {setup.mode === "reply" ? voicePanel : null}
               {setup.mode === "bot" ? (
                 <p className="text-sm text-muted">{t("bot.noTrophies")}</p>
               ) : (

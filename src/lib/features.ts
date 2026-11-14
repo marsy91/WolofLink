@@ -51,3 +51,11 @@ export const WOLOF_SPEAKERS_ENABLED = process.env.NEXT_PUBLIC_WOLOF_SPEAKERS ===
  * from the console (switch "world").
  */
 export const WORLD_ENABLED = process.env.NEXT_PUBLIC_WORLD === "on" && ACCOUNTS_ENABLED;
+
+/**
+ * Voice swap in two-way duels: adult friends record one duel word for each other
+ * (supabase/migrations/*_duel_voices.sql, which must be applied first). It collects voice
+ * recordings from learners, so update Play Data safety before switching it on.
+ * Set NEXT_PUBLIC_VOICE_SWAP=on to show it; off by default.
+ */
+export const VOICE_SWAP_ENABLED = process.env.NEXT_PUBLIC_VOICE_SWAP === "on" && ACCOUNTS_ENABLED;
