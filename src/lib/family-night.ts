@@ -83,7 +83,12 @@ export function nightQuestion(level: FamilyLevel, rng: Rng, turn: number, used: 
   const distinct = (e: Entry) => [normalize(e.wo), normalize(e.tr.en), e.pic ?? ""];
   const taken = new Set(distinct(entry).filter(Boolean));
   const options = [entry];
-  for (const cand of shuffle(pool, rng)) {
+  // Wrong answers of the same kind first (a word with words, a phrase with phrases), so the
+  // length or shape of an option never gives the answer away.
+  const isPhrase = (e: Entry) => /\s/.test(e.wo.trim());
+  const shuffled = shuffle(pool, rng);
+  const candidates = [...shuffled.filter((e) => isPhrase(e) === isPhrase(entry)), ...shuffled.filter((e) => isPhrase(e) !== isPhrase(entry))];
+  for (const cand of candidates) {
     if (options.length === OPTIONS[level]) break;
     const keys = distinct(cand).filter(Boolean);
     if (keys.some((k) => taken.has(k))) continue;

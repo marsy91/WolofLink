@@ -12,6 +12,7 @@ import { canCreateAccount, isBirthDate, todayIso } from "@/lib/age";
 import { useAccount } from "@/lib/account";
 import type { CloudErrorKind } from "@/lib/cloud";
 import { EMAIL_RE } from "@/lib/cloud";
+import { useSwitchOn } from "@/lib/notices";
 import { useStore } from "@/lib/store";
 
 const ERRORS: Record<CloudErrorKind, UiKey> = {
@@ -50,6 +51,8 @@ export default function AccountPage() {
   const [step, setStep] = useState<"email" | "code">("email");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<UiKey | null>(null);
+  // With Family play on, a child under 13 is pointed to a family profile instead.
+  const familyOn = useSwitchOn("family");
   const [notice, setNotice] = useState<UiKey | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   /**
@@ -84,7 +87,7 @@ export default function AccountPage() {
     const cleanName = name.trim().replace(/\s+/g, " ");
     if (askName && !cleanName) return setError("acct.errName");
     if (askName && !isBirthDate(birth)) return setError("acct.errBirth");
-    if (askName && !canCreateAccount(birth)) return setError("acct.tooYoung");
+    if (askName && !canCreateAccount(birth)) return setError(familyOn ? "acct.tooYoungFamily" : "acct.tooYoung");
     if (!EMAIL_RE.test(email.trim())) return setError("acct.errEmail");
     if (askName && progress.profile && (progress.profile.name !== cleanName || progress.profile.birthDate !== birth)) {
       update((p) => (p.profile ? { ...p, profile: { ...p.profile, name: cleanName, birthDate: birth } } : p));

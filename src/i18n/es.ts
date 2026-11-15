@@ -875,8 +875,6 @@ export const es: Dictionary = {
   "family.night": "Noche Làmb familiar",
   "family.mainOnly": "Vuelve primero a la cuenta principal.",
   "family.grownupNeeded": "Un adulto necesita desbloquear esto.",
-  "family.switchCard": "Estás jugando como {name}. Toca para cambiar.",
-  "family.addSuccess": "¡{name} está listo para aprender!",
   "acct.tooYoungFamily": "Necesitas tener 13 años o más para crear una cuenta. Pide a un adulto que te añada a la familia.",
   "acct.goToFamily": "Ir a Familia",
   "grown.title": "Control de adulto",

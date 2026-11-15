@@ -870,8 +870,6 @@ export const en = {
   "family.night": "Family Làmb Night",
   "family.mainOnly": "Switch back to the main account first.",
   "family.grownupNeeded": "A grown-up needs to unlock this.",
-  "family.switchCard": "You are playing as {name}. Tap to switch.",
-  "family.addSuccess": "{name} is ready to learn!",
   "acct.tooYoungFamily": "You need to be 13 or over to create an account. Ask a grown-up to add you to the family.",
   "acct.goToFamily": "Go to Family",
 

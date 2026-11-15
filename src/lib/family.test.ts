@@ -15,6 +15,7 @@ import {
   removeMember,
   screenNeeds,
   switchTo,
+  switchNeedsGrownUp,
 } from "./family";
 import { emptyProgress, migrate, type Progress } from "./progress";
 
@@ -100,5 +101,19 @@ describe("family profiles", () => {
     expect(screenNeeds("/settings/", "", kid)).toBe("grownup");
     expect(screenNeeds("/settings/", "", aunt)).toBeNull();
     expect(screenNeeds("/learn/", "", kid)).toBeNull();
+  });
+
+  it("asks for a grown-up when a child switches away or anyone switches into a child", () => {
+    const make = (name: string, level: "little" | "kid" | "grown", id: string) =>
+      newMember(main().profile!, { name, level, avatar: "#1f7a6d" }, id).profile!;
+    const grown = make("Mum", "grown", "g");
+    const kid = make("Awa", "kid", "k");
+    const little = make("Bara", "little", "l");
+    const mainP = main().profile!;
+    expect(switchNeedsGrownUp(mainP, grown)).toBe(false);
+    expect(switchNeedsGrownUp(grown, mainP)).toBe(false);
+    expect(switchNeedsGrownUp(mainP, kid)).toBe(true);
+    expect(switchNeedsGrownUp(kid, mainP)).toBe(true);
+    expect(switchNeedsGrownUp(little, kid)).toBe(true);
   });
 });

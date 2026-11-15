@@ -165,6 +165,14 @@ export const MAIN_ONLY = ["/account/", "/friends/", "/friend/", "/world/", "/com
 /** Screens a child needs a grown-up for. */
 export const GROWN_UP = ["/settings/"];
 
+/**
+ * Whether switching from the profile in use to `target` needs the grown-up check: a child
+ * moving to anyone else's profile, or anyone moving into a child's profile.
+ */
+export function switchNeedsGrownUp(active: Profile | null | undefined, target: Profile): boolean {
+  return isChild(active) || isChild(target);
+}
+
 /** What a screen needs from the profile in use. Duels against a friend count as online; against the computer they don't. */
 export function screenNeeds(path: string, search: string, profile: Profile | null | undefined): "main" | "grownup" | null {
   if (!profile?.member) return null;
