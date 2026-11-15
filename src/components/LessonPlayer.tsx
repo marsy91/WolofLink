@@ -188,7 +188,7 @@ export function LessonPlayer(props: Props) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!session || session.status !== "playing") return;
-      if (e.key === "Enter" && !(e.target instanceof HTMLButtonElement)) {
+      if (e.key === "Enter" && !e.isComposing && !(e.target instanceof HTMLButtonElement)) {
         if (session.feedback) advance();
         else if (pending) submit(pending);
       }

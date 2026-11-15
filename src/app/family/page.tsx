@@ -12,6 +12,7 @@ import { useCallback, useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IconArrowLeft, IconSwords, IconTrophy } from "@/components/icons";
 import { GrownUpGate } from "@/components/GrownUpGate";
+import { Dialog } from "@/components/ui";
 import { useStore } from "@/lib/store";
 import { useFamily } from "@/lib/family-context";
 import { useSwitchOn } from "@/lib/notices";
@@ -219,29 +220,30 @@ export default function FamilyPage() {
       )}
 
       {/* Confirm remove dialog */}
-      {confirmRemove !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-xs rounded-2xl bg-card p-6 shadow-xl">
-            <p className="mb-4 text-center font-bold text-night">
-              {t("family.confirmRemove", { name: allMembers.find((p) => p.id === confirmRemove)?.name ?? "" })}
-            </p>
-            <div className="flex gap-3">
-              <button
-                className="flex-1 rounded-xl border border-sand-3 py-3 font-bold text-muted"
-                onClick={() => setConfirmRemove(null)}
-              >
-                {t("common.cancel")}
-              </button>
-              <button
-                className="flex-1 rounded-xl bg-red-500 py-3 font-bold text-white"
-                onClick={() => doRemove(confirmRemove)}
-              >
-                {t("family.remove")}
-              </button>
-            </div>
+      {confirmRemove !== null ? (
+        <Dialog
+          open
+          title={t("family.confirmRemove", { name: allMembers.find((p) => p.id === confirmRemove)?.name ?? "" })}
+          onClose={() => setConfirmRemove(null)}
+        >
+          <div className="mt-4 flex gap-3">
+            <button
+              type="button"
+              className="flex-1 rounded-xl border border-sand-3 py-3 font-bold text-muted"
+              onClick={() => setConfirmRemove(null)}
+            >
+              {t("common.cancel")}
+            </button>
+            <button
+              type="button"
+              className="flex-1 rounded-xl bg-red-500 py-3 font-bold text-white"
+              onClick={() => doRemove(confirmRemove)}
+            >
+              {t("family.remove")}
+            </button>
           </div>
-        </div>
-      )}
+        </Dialog>
+      ) : null}
 
       {/* Notice when not main */}
       {iAmChild && (

@@ -69,6 +69,15 @@ body {
   border-radius: 10px;
 }
 
+/* Modal dialogs: scrolling inside or over the backdrop must not scroll the page behind. */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
 /* Woven-band ornament used on unit banners (original geometric pattern). */
 .weave {
   background-image:
