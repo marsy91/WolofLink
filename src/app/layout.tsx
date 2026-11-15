@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import { AccountProvider } from "@/lib/account";
 import { FamilyProvider } from "@/lib/family-context";
+import { FamilyGuard } from "@/components/FamilyGuard";
 import { PremiumProvider } from "@/lib/premium-context";
 import { PushInit } from "@/components/PushInit";
 import { ThemeApplier } from "@/components/ThemeApplier";
@@ -47,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <FamilyProvider>
               <PremiumProvider>
                 <PushInit />
-                {children}
+                <FamilyGuard>{children}</FamilyGuard>
               </PremiumProvider>
             </FamilyProvider>
           </AccountProvider>

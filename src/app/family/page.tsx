@@ -16,7 +16,7 @@ import { Dialog } from "@/components/ui";
 import { useStore } from "@/lib/store";
 import { useFamily } from "@/lib/family-context";
 import { useSwitchOn } from "@/lib/notices";
-import { AVATARS, FAMILY_LEVELS, avatarOf, isChild, isMain, levelOf, MAX_FAMILY, members, type FamilyLevel } from "@/lib/family";
+import { AVATARS, FAMILY_LEVELS, avatarOf, isChild, isMain, levelOf, MAX_FAMILY, members, switchNeedsGrownUp, type FamilyLevel } from "@/lib/family";
 import { grownUpOpen } from "@/lib/grownup";
 
 export default function FamilyPage() {
@@ -114,8 +114,8 @@ export default function FamilyPage() {
                 </p>
               </div>
               {/* Switch / remove */}
-              {!isActive && iAmMain && (
-                <GrownUpGate skip={!isChild(p) || grownUpOpen()} onPass={() => doSwitch(p.id)}>
+              {!isActive && (
+                <GrownUpGate skip={!switchNeedsGrownUp(profile, p) || grownUpOpen()} onPass={() => doSwitch(p.id)}>
                   {(ask) => (
                     <button
                       className="shrink-0 rounded-xl bg-clay/10 px-3 py-2 text-sm font-bold text-clay"

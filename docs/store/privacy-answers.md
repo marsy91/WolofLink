@@ -275,3 +275,18 @@ collected, optional (only with an account), not shared, purpose **App functional
 **Fraud prevention, security, and compliance** (age checks). It is used only to stop under-13s
 creating an account and to keep adult-only community features off for under-18s; nobody else sees
 it. It is stored with the account's synced progress and deleted with the account.
+
+## Family play (profiles on a shared phone)
+
+Migration `20261120000000_family_switches.sql`. Off until the owner turns on the `family` switch.
+**No change to Data safety:** family members' names, levels, colours and progress are stored only
+on the device and are never sent to our servers. Data safety covers data that leaves the device,
+so there is nothing new to declare.
+
+- Family members cannot open online screens (account, friends, community, World, feedback, owner
+  console, Premium); the app sends them to the Family screen instead. Only the main learner syncs.
+- Children (5–12) need a grown-up check (a multiplication question) to open Settings or switch
+  profiles. Duels against the computer stay available to them; duels with friends do not.
+- **Target audience:** family play is meant for children too. Before turning it on in a release,
+  review the Play Console *Target audience and content* answers (currently 13+) and Families policy
+  requirements with the owner, since adding under-13 age groups brings extra Google Play rules.

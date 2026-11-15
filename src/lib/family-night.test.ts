@@ -49,6 +49,14 @@ describe("Family Làmb Night questions", () => {
     }
   });
 
+  it("offers a word with other words and a phrase with other phrases", () => {
+    const isPhrase = (wo: string) => /\s/.test(wo.trim());
+    for (let seed = 1; seed <= 200; seed++) {
+      const q = nightQuestion("grown", seeded(seed), seed % 2 === 0 ? 0 : 1);
+      for (const o of q.options) expect([q.entry.wo, isPhrase(o.wo)]).toEqual([q.entry.wo, isPhrase(q.entry.wo)]);
+    }
+  });
+
   it("doesn't repeat a word in a bout and rebuilds the same question every time", () => {
     const b = bout([true, false, true, true, false, true, true, true]);
     expect(questionNow(b).entry.id).toBe(questionNow(b).entry.id);
