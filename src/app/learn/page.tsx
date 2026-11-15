@@ -8,8 +8,11 @@ import { layoutFor } from "@/lib/themes";
 import {
   IconBook,
   IconCheck,
+  IconFlame,
   IconGem,
   IconLock,
+  IconSwords,
+  IconTrophy,
   UNIT_GLYPHS,
 } from "@/components/icons";
 import { MAX_LEVEL } from "@/lib/engine";
@@ -23,7 +26,7 @@ import { SeasonBanner } from "@/components/SeasonBanner";
 import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import { WordOfTheDay } from "@/components/WordOfTheDay";
 import { usePremium } from "@/lib/premium-context";
-import { dailyGoal, isUnlocked, xpToday } from "@/lib/progress";
+import { currentStreak, dailyGoal, isUnlocked, xpToday } from "@/lib/progress";
 import { useNow, useStore } from "@/lib/store";
 
 const TONES: Record<Unit["tone"], string> = {
@@ -64,6 +67,7 @@ export default function Learn() {
   const now = useNow();
   const today = xpToday(progress, now);
   const goal = dailyGoal(progress);
+  const streak = currentStreak(progress, now);
   const name = progress.profile?.name;
   // Wolof speakers learning English or French follow the reversed course (src/content/reverse.ts).
   const active = courseFor(progress.profile?.target);
@@ -101,6 +105,44 @@ export default function Learn() {
           label={t("goal.progress", { x: today, y: goal })}
         />
       </section>
+
+      {/* ── Laamb Arena quick-action card ── */}
+      {!reversed && (
+        <Link
+          href="/friends/"
+          className="card-interactive mb-6 flex items-center gap-4 overflow-hidden rounded-3xl p-5 text-white shadow-md"
+          style={{ background: "linear-gradient(135deg, #1d2550 0%, #a8421a 100%)" }}
+          aria-label={t("learn.duelCard")}
+        >
+          {/* Wrestler pair motif */}
+          <span className="relative shrink-0 text-4xl leading-none select-none" aria-hidden>
+            🤼
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-bold tracking-widest uppercase opacity-80">
+              {t("learn.duelLabel")}
+            </p>
+            <h2 className="font-display text-xl font-extrabold leading-tight">
+              {t("learn.duelTitle")}
+            </h2>
+            <p className="mt-0.5 truncate text-sm opacity-85">
+              {t("learn.duelHint")}
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-col items-end gap-1 text-sm font-bold">
+            {streak > 0 && (
+              <span className="flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1">
+                <IconFlame size={14} className="text-sun" />
+                {streak}
+              </span>
+            )}
+            <span className="flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1">
+              <IconSwords size={14} />
+              {t("learn.duelGo")}
+            </span>
+          </div>
+        </Link>
+      )}
 
       {showFeed ? (
         <LearnFeed onShowPath={() => setView("path")} />

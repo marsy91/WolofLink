@@ -49,6 +49,11 @@ export const en = {
   "path.again": "Practise again",
   "path.locked": "Finish the previous lesson to unlock",
   "path.exercises": "{n} exercises",
+  "learn.duelLabel": "Laamb Arena",
+  "learn.duelTitle": "Challenge a friend to a duel",
+  "learn.duelHint": "Earn trophies, unlock arenas, climb the ranks",
+  "learn.duelCard": "Go to Laamb Arena",
+  "learn.duelGo": "Fight",
   "path.done": "Completed",
 
   "lesson.tipTitle": "Before you start",

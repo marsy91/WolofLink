@@ -51,6 +51,11 @@ export const de: Dictionary = {
   "path.again": "Wiederholen",
   "path.locked": "Schließe die vorige Lektion ab, um sie freizuschalten",
   "path.exercises": "{n} Übungen",
+  "learn.duelLabel": "Laamb-Arena",
+  "learn.duelTitle": "Fordere einen Freund zum Duell heraus",
+  "learn.duelHint": "Trophäen sammeln, Arenen freischalten",
+  "learn.duelCard": "Zur Laamb-Arena",
+  "learn.duelGo": "Kämpfen",
   "path.done": "Abgeschlossen",
 
   "lesson.tipTitle": "Bevor es losgeht",

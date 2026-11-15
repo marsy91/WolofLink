@@ -61,6 +61,11 @@ export interface ThemeDef {
   id: ThemeId;
   /** Always shown in dark mode. */
   dark: boolean;
+  /**
+   * Hidden themes are still active if a learner has one saved (backward compat)
+   * but are not shown in the settings picker.
+   */
+  hidden?: boolean;
   /** Three colours for the picker tile. */
   swatch: readonly [string, string, string];
   /** Phone status-bar colour. */
@@ -168,6 +173,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   lompoul: {
     id: "lompoul",
     dark: false,
+    hidden: true,
     swatch: ["#f3e3c3", "#f2a93b", "#3d2a14"],
     bar: "#3d2a14",
     colors: {
@@ -240,6 +246,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   goree: {
     id: "goree",
     dark: false,
+    hidden: true,
     layout: "feed",
     swatch: ["#f2a93b", "#b8431f", "#0b6782"],
     bar: "#252a6e",
@@ -277,6 +284,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   capskirring: {
     id: "capskirring",
     dark: false,
+    hidden: true,
     swatch: ["#bfdedc", "#b24a17", "#0a3d40"],
     bar: "#0a3d40",
     colors: {
@@ -314,6 +322,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   niokolo: {
     id: "niokolo",
     dark: false,
+    hidden: true,
     swatch: ["#d9cfb3", "#9a4a12", "#2f3a1c"],
     bar: "#2f3a1c",
     colors: {
@@ -351,6 +360,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   calao: {
     id: "calao",
     dark: false,
+    hidden: true,
     swatch: ["#f2b632", "#b8321f", "#1b1a24"],
     bar: "#1b1a24",
     colors: {
@@ -387,6 +397,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   baobab: {
     id: "baobab",
     dark: false,
+    hidden: true,
     swatch: ["#ffffff", "#5a4632", "#1b1a24"],
     bar: "#1b1a24",
     colors: {
@@ -443,6 +454,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   saloum: {
     id: "saloum",
     dark: true,
+    hidden: true,
     swatch: ["#22132a", "#9a4f89", "#f2a93b"],
     bar: "#22132a",
     colors: {
@@ -467,6 +479,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   classic: {
     id: "classic",
     dark: false,
+    hidden: true,
     swatch: ["#1d2550", "#b9481f", "#f2a93b"],
     bar: "#1d2550",
     colors: {},
@@ -474,6 +487,7 @@ export const THEMES: Record<ThemeId, ThemeDef> = {
   senegal: {
     id: "senegal",
     dark: false,
+    hidden: true,
     swatch: ["#00853f", "#fdef42", "#e31b23"],
     bar: "#0b4a2b",
     colors: {},
@@ -485,6 +499,13 @@ export const THEME_TOKENS: readonly Token[] = [
   ...(Object.keys(CLASSIC) as Token[]),
   "card",
 ];
+
+/**
+ * The 3 signature palettes shown in the settings picker.
+ * Hidden themes (classic, senegal, and retired regional ones) stay in THEMES for
+ * backward-compat but are not surfaced to new learners.
+ */
+export const VISIBLE_THEME_IDS = THEME_IDS.filter((id) => !THEMES[id].hidden);
 
 /** The Learn screen layout a saved theme setting uses. */
 export function layoutFor(v: unknown): "path" | "feed" {

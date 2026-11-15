@@ -16,7 +16,7 @@ import { hasAiClips } from "@/lib/audio";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
-import { DEFAULT_THEME, THEME_IDS, THEMES, themeFor } from "@/lib/themes";
+import { DEFAULT_THEME, THEMES, VISIBLE_THEME_IDS, themeFor } from "@/lib/themes";
 import { credits, loadVoices } from "@/lib/voices";
 
 import { APP_VERSION as VERSION } from "@/lib/version";
@@ -150,8 +150,8 @@ export default function Settings() {
 
         <fieldset id="theme" className="scroll-mt-20 rounded-2xl border border-sand-3 bg-white px-4 py-3">
           <legend className="px-1 font-display text-lg font-extrabold text-night">{t("settings.theme")}</legend>
-          <div className="grid grid-cols-2 gap-3 pt-1" role="radiogroup" aria-label={t("settings.theme")}>
-            {THEME_IDS.map((id) => {
+          <div className="grid grid-cols-1 gap-3 pt-1" role="radiogroup" aria-label={t("settings.theme")}>
+            {VISIBLE_THEME_IDS.map((id) => {
               const def = THEMES[id];
               const on = theme.id === id;
               return (
@@ -161,18 +161,26 @@ export default function Settings() {
                   role="radio"
                   aria-checked={on}
                   onClick={() => setSettings({ theme: id })}
-                  className={`flex flex-col rounded-2xl border-2 p-3 text-left ${on ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
+                  className={`card-interactive flex items-center gap-4 rounded-2xl border-2 p-4 text-left ${on ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
                 >
-                  <span className="mb-2 flex h-8 overflow-hidden rounded-lg" aria-hidden>
+                  {/* Swatch strip */}
+                  <span className="flex h-14 w-14 shrink-0 overflow-hidden rounded-xl shadow-sm" aria-hidden>
                     {def.swatch.map((c) => (
                       <span key={c} className="flex-1" style={{ background: c }} />
                     ))}
                   </span>
-                  <span className="font-bold">
-                    {t(`theme.${id}`)}
-                    {id === DEFAULT_THEME ? <span className="ml-1 text-xs font-normal text-muted">· {t("theme.default")}</span> : null}
+                  <span className="flex-1">
+                    <span className="block font-display font-extrabold text-night">
+                      {t(`theme.${id}`)}
+                      {id === DEFAULT_THEME ? <span className="ml-2 text-xs font-normal text-muted">({t("theme.default")})</span> : null}
+                    </span>
+                    <span className="mt-0.5 block text-sm leading-snug text-muted">{t(`theme.${id}.about`)}</span>
                   </span>
-                  <span className="text-xs leading-snug text-muted">{t(`theme.${id}.about`)}</span>
+                  {on && (
+                    <span className="shrink-0 grid h-6 w-6 place-items-center rounded-full bg-clay text-white text-xs font-extrabold" aria-hidden>
+                      ✓
+                    </span>
+                  )}
                 </button>
               );
             })}

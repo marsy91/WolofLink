@@ -50,6 +50,11 @@ export const it: Dictionary = {
   "path.again": "Ripeti",
   "path.locked": "Completa la lezione precedente per sbloccarla",
   "path.exercises": "{n} esercizi",
+  "learn.duelLabel": "Arena Laamb",
+  "learn.duelTitle": "Sfida un amico a un duello",
+  "learn.duelHint": "Vinci trofei e sblocca arene",
+  "learn.duelCard": "Vai all'arena Laamb",
+  "learn.duelGo": "Combatti",
   "path.done": "Completata",
 
   "lesson.tipTitle": "Prima di iniziare",
