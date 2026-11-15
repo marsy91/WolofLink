@@ -23,10 +23,10 @@ export function WordOfTheDay() {
         <IconSpeaker size={22} />
       </button>
       <div className="min-w-0">
-        <p id="wotd-h" className="text-xs font-bold tracking-widest text-muted uppercase">
+        <p id="wotd-h" className="text-sm font-medium text-muted">
           {t("wotd.title")}
         </p>
-        <p lang="wo" className="font-display text-xl leading-tight font-extrabold text-night">
+        <p lang="wo" className="font-display text-xl leading-tight font-semibold text-night">
           {e.wo}
         </p>
         <p className="text-sm text-muted">{translate(e.tr, lang)}</p>

@@ -88,7 +88,7 @@ export default function Learn() {
         </button>
       ) : null}
       <section className="mb-6 rounded-3xl bg-white p-4 shadow-card">
-        <h1 className="mb-1 font-display text-xl font-extrabold text-night">
+        <h1 className="mb-1 font-display text-xl font-semibold text-night">
           {name ? `Salaam aleekum, ${name}!` : "Salaam aleekum!"}
         </h1>
         <p className="mb-3 text-sm text-muted">
@@ -123,10 +123,10 @@ export default function Learn() {
                       <Glyph size={28} />
                     </span>
                     <div>
-                      <p className="text-xs font-bold tracking-widest uppercase opacity-90">
+                      <p className="text-sm font-medium opacity-90">
                         {t("path.unit", { n: ui + 1 })}
                       </p>
-                      <h2 className="font-display text-xl leading-tight font-extrabold">
+                      <h2 className="font-display text-xl leading-tight font-semibold">
                         {translate(unit.title, lang)}
                       </h2>
                       {planned ? (
@@ -193,7 +193,7 @@ export default function Learn() {
                                 className="flex items-center gap-3 rounded-2xl border border-sand-3/60 bg-white p-4 shadow-card transition active:translate-y-[2px] active:shadow-none"
                               >
                                 <div className="flex-1">
-                                  <h3 className="font-display text-lg font-extrabold text-night">
+                                  <h3 className="font-display text-lg font-semibold text-night">
                                     {translate(lesson.title, lang)}
                                   </h3>
                                   <p className="text-sm text-muted">
@@ -254,7 +254,7 @@ export default function Learn() {
                             ) : (
                               <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-sand-3 p-4 text-muted">
                                 <div className="flex-1">
-                                  <h3 className="font-display text-lg font-extrabold">
+                                  <h3 className="font-display text-lg font-semibold">
                                     {translate(lesson.title, lang)}
                                   </h3>
                                   <p className="text-sm">{t("path.locked")}</p>
@@ -308,10 +308,10 @@ export default function Learn() {
                                       className="shrink-0 text-dusk"
                                     />
                                     <div className="flex-1">
-                                      <p className="text-xs font-bold tracking-widest text-dusk uppercase">
+                                      <p className="text-sm font-medium text-dusk">
                                         {t("story.label")}
                                       </p>
-                                      <h3 className="font-display text-lg font-extrabold text-night">
+                                      <h3 className="font-display text-lg font-semibold text-night">
                                         {translate(unit.story.title, lang)}
                                       </h3>
                                     </div>
@@ -327,10 +327,10 @@ export default function Learn() {
                                   <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-sand-3 p-4 text-muted">
                                     <IconBook size={28} className="shrink-0" />
                                     <div className="flex-1">
-                                      <p className="text-xs font-bold tracking-widest uppercase">
+                                      <p className="text-sm font-medium">
                                         {t("story.label")}
                                       </p>
-                                      <h3 className="font-display text-lg font-extrabold">
+                                      <h3 className="font-display text-lg font-semibold">
                                         {translate(unit.story.title, lang)}
                                       </h3>
                                       <p className="text-sm">
