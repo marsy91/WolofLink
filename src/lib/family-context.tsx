@@ -9,7 +9,7 @@
  */
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { type Family, addCrown, addMember, emptyFamily, loadFamily, newMember, parseFamily, removeMember, saveFamily, switchTo, type AddProblem } from "./family";
 import { type FamilyLevel } from "./family";
 import { useStore } from "./store";
@@ -33,20 +33,16 @@ interface FamilyCtx {
 const Ctx = createContext<FamilyCtx | null>(null);
 
 export function FamilyProvider({ children }: { children: ReactNode }) {
-  const { progress, replace } = useStore();
+  const { progress, replace, ready } = useStore();
   const activeId = progress.profile?.id;
 
-  const [family, setFamily] = useState<Family>(() =>
-    typeof window !== "undefined" ? loadFamily(activeId) : emptyFamily()
-  );
-
-  // Reload when activeId changes (e.g. after a switch).
-  const prevId = useRef(activeId);
+  // Start empty so the first client render matches the pre-built page, then load the saved
+  // family once the store is ready and again whenever the active profile changes (a switch).
+  const [family, setFamily] = useState<Family>(emptyFamily);
   useEffect(() => {
-    if (prevId.current === activeId) return;
-    prevId.current = activeId;
-    setFamily(loadFamily(activeId));
-  }, [activeId]);
+    if (!ready) return;
+    void Promise.resolve().then(() => setFamily(loadFamily(activeId)));
+  }, [ready, activeId]);
 
   const persist = useCallback((f: Family) => {
     setFamily(f);

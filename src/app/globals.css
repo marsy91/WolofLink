@@ -566,9 +566,12 @@ body {
 /* Icons on the (now light) night tiles. */
 :root[data-mode="dark"] .bg-night.text-sun { color: #94600f; }
 :root[data-mode="dark"] .weave { filter: brightness(0.92); }
-/* The welcome splash stays dark navy in both modes. */
-:root[data-mode="dark"] .splash { --color-night: #1d2550; --color-sand: #f8f6f2; }
-:root[data-mode="dark"][data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }
+/* The welcome splash stays dark navy in every mode and theme, so the navy logo tile blends in
+   and the text colours always contrast (a light theme's own "night" can be a plum or green). */
+.splash { --color-night: #1d2550; --color-sand: #f8f6f2; }
+:root[data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }
+/* "Link" in the wordmark uses the theme accent, which is too dark on navy: use a warm light one. */
+.splash .text-clay { color: #f0956a; }
 
 /* Feed layout cards (src/components/LearnFeed.tsx): always a deep card with light text, in
    light and dark mode, like the design. In dark mode "night" flips to a light ink, so the

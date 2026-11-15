@@ -139,7 +139,7 @@ export default function OwnerPage() {
             <IconArrowLeft />
           </button>
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-bold tracking-[0.2em] text-sand/60 uppercase">WolofLink</p>
+            <p className="text-[11px] font-bold tracking-[0.2em] text-sand/75 uppercase">WolofLink</p>
             <h1 className="font-display text-2xl leading-tight font-extrabold">
               {role && role !== "owner" ? "Team console" : "Owner console"}
             </h1>

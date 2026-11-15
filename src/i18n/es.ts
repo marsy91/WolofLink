@@ -873,7 +873,6 @@ export const es: Dictionary = {
   "family.full": "Puedes tener hasta {n} miembros de la familia en un teléfono.",
   "family.errName": "Por favor, introduce un nombre.",
   "family.night": "Noche Làmb familiar",
-  "family.crowns": "{n} 🏆",
   "family.mainOnly": "Vuelve primero a la cuenta principal.",
   "family.grownupNeeded": "Un adulto necesita desbloquear esto.",
   "family.switchCard": "Estás jugando como {name}. Toca para cambiar.",

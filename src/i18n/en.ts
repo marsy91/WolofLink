@@ -868,7 +868,6 @@ export const en = {
   "family.full": "You can have up to {n} family members on one phone.",
   "family.errName": "Please enter a name.",
   "family.night": "Family Làmb Night",
-  "family.crowns": "{n} 🏆",
   "family.mainOnly": "Switch back to the main account first.",
   "family.grownupNeeded": "A grown-up needs to unlock this.",
   "family.switchCard": "You are playing as {name}. Tap to switch.",

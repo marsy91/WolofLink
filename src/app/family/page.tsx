@@ -10,7 +10,7 @@
 import Link from "next/link";
 import { useCallback, useId, useState } from "react";
 import { useRouter } from "next/navigation";
-import { GlyphFamily, IconArrowLeft } from "@/components/icons";
+import { IconArrowLeft, IconSwords, IconTrophy } from "@/components/icons";
 import { GrownUpGate } from "@/components/GrownUpGate";
 import { useStore } from "@/lib/store";
 import { useFamily } from "@/lib/family-context";
@@ -73,7 +73,10 @@ export default function FamilyPage() {
         <Link href="/profile/" aria-label={t("common.back")} className="grid h-10 w-10 place-items-center rounded-xl border border-sand-3 bg-white text-night">
           <IconArrowLeft />
         </Link>
-        <h1 className="font-display text-xl font-extrabold text-night">{t("family.title")}</h1>
+        <div>
+          <h1 className="font-display text-xl font-extrabold leading-tight text-night">{t("family.title")}</h1>
+          <p className="text-sm text-muted">{t("family.subtitle")}</p>
+        </div>
       </div>
 
       {/* Profile cards */}
@@ -85,6 +88,7 @@ export default function FamilyPage() {
           return (
             <div
               key={p.id}
+              aria-current={isActive ? "true" : undefined}
               className={`flex items-center gap-3 rounded-2xl border p-4 ${isActive ? "border-clay bg-clay/5" : "border-sand-3 bg-white"}`}
             >
               {/* Avatar circle */}
@@ -97,11 +101,15 @@ export default function FamilyPage() {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="font-display font-extrabold text-night">
-                  {p.name} {isActive ? <span className="ml-1 rounded-full bg-clay px-2 py-0.5 text-xs text-white">▶</span> : null}
+                  {p.name}
                 </p>
                 <p className="text-sm text-muted">
                   {t(`family.level.${levelOf(p)}`)}
-                  {crowns > 0 ? <span className="ml-2">{t("family.crowns", { n: String(crowns) })}</span> : null}
+                  {crowns > 0 ? (
+                    <span className="ml-2 inline-flex items-center gap-1 font-bold text-sun-deep">
+                      <IconTrophy size={14} /> {crowns}
+                    </span>
+                  ) : null}
                 </p>
               </div>
               {/* Switch / remove */}
@@ -112,7 +120,7 @@ export default function FamilyPage() {
                       className="shrink-0 rounded-xl bg-clay/10 px-3 py-2 text-sm font-bold text-clay"
                       onClick={ask}
                     >
-                      {t("family.switchTo", { name: "" }).replace("{name}", "").trim() === "" ? "▶" : t("family.switchTo", { name: p.name })}
+                      {t("family.switchTo", { name: p.name })}
                     </button>
                   )}
                 </GrownUpGate>
@@ -202,7 +210,7 @@ export default function FamilyPage() {
           href="/family/night/"
           className="mb-4 flex items-center gap-4 rounded-2xl border border-clay/30 bg-gradient-to-r from-clay/10 to-transparent p-5"
         >
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-clay text-2xl text-white">🤼</span>
+          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-clay text-white"><IconSwords size={28} /></span>
           <div>
             <p className="font-display font-extrabold text-night">{t("night.title")}</p>
             <p className="text-sm text-muted">{t("night.subtitle")}</p>

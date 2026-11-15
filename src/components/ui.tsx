@@ -10,11 +10,13 @@ import { useNow, useStore } from "@/lib/store";
 import { LogoMark } from "./Logo";
 import { GlyphChat, IconDrop, IconLoop, IconPath, IconPodium, IconProfile, IconSpark, IconSun } from "./icons";
 
-type Variant = "primary" | "secondary" | "ghost" | "correct" | "wrong";
+type Variant = "primary" | "secondary" | "onDark" | "ghost" | "correct" | "wrong";
 
 const VARIANTS: Record<Variant, string> = {
   primary: "bg-clay text-white shadow-[0_2px_0_var(--color-clay-2)] active:translate-y-[2px] active:shadow-none",
   secondary: "bg-white text-night border border-sand-3 shadow-card active:translate-y-[1px] active:shadow-none",
+  /** Outline button for always-dark surfaces such as the welcome splash (fixed colours: the white fill of "secondary" turns dark in dark mode). */
+  onDark: "bg-transparent text-sand border-2 border-sand/40 active:translate-y-[1px]",
   ghost: "bg-transparent text-night underline-offset-4 hover:underline",
   correct: "bg-sea text-white shadow-[0_2px_0_var(--color-sea-2)] active:translate-y-[2px] active:shadow-none",
   wrong: "bg-berry text-white shadow-[0_2px_0_var(--color-berry-2)] active:translate-y-[2px] active:shadow-none",
