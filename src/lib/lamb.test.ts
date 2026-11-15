@@ -1,6 +1,6 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 import { describe, expect, it } from "vitest";
-import { balance, boutProgress, finalBalance, ghostBalance, move, strength } from "./lamb";
+import { balance, boutProgress, finalBalance, ghostBalance, move, ringPoses, strength } from "./lamb";
 
 describe("wrestling duel balance", () => {
   it("makes every right answer a clear push, faster ones further", () => {
@@ -39,5 +39,19 @@ describe("wrestling duel balance", () => {
     expect(finalBalance("lost")).toBeLessThan(-1);
     expect(finalBalance("draw")).toBe(0);
     expect(boutProgress(5)).toBe(0.5);
+  });
+
+  it("picks each wrestler's move: grip, then push and stumble, then the winner dances", () => {
+    expect(ringPoses(0, 0, undefined)).toEqual({ mine: "grip", theirs: "grip" });
+    expect(ringPoses(0.2, 1, true)).toEqual({ mine: "push", theirs: "stumble" });
+    expect(ringPoses(-0.1, 2, false)).toEqual({ mine: "stumble", theirs: "push" });
+    // At the edge but still in: the bout goes on.
+    expect(ringPoses(1, 9, true)).toEqual({ mine: "push", theirs: "stumble" });
+    // The results screen shows no single answer: a draw stays in the grip.
+    expect(ringPoses(finalBalance("draw"), 0, undefined)).toEqual({ mine: "grip", theirs: "grip" });
+    expect(ringPoses(finalBalance("won"), 0, undefined)).toEqual({ mine: "dance", theirs: "still" });
+    expect(ringPoses(finalBalance("lost"), 0, undefined)).toEqual({ mine: "still", theirs: "dance" });
+    // A throw wins over the last answer.
+    expect(ringPoses(1.35, 10, false)).toEqual({ mine: "dance", theirs: "still" });
   });
 });

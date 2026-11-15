@@ -440,7 +440,7 @@ function Duel() {
           <div className="relative mt-6 flex h-56 items-center justify-center" aria-hidden>
             <div className="anim-panel-left absolute top-4 left-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#e0703f] to-[#7a2a14] shadow-[0_6px_0_#7a2a14]">
               <span className="relative skew-x-[8deg]">
-                <Wrestler cloth="#c2502f" trim="#f2c14e" size={112} />
+                <Wrestler cloth="#c2502f" trim="#f2c14e" size={112} pose="ready" lite={lowEnd} />
                 <span className="absolute -bottom-3 left-1/2 max-w-[9rem] -translate-x-1/2 truncate rounded-full bg-white/90 px-3 py-1 font-display text-sm font-extrabold text-[#7a2a14]">
                   {myName || t("friends.you")}
                 </span>
@@ -448,7 +448,7 @@ function Duel() {
             </div>
             <div className="anim-panel-right absolute top-4 right-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#9a5ab8] to-[#3b1a52] shadow-[0_6px_0_#3b1a52]">
               <span className="relative skew-x-[8deg]">
-                <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={112} flip />
+                <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={112} flip pose="ready" lite={lowEnd} />
                 <span className="absolute -bottom-3 left-1/2 flex max-w-[9rem] -translate-x-1/2 items-center gap-1 truncate rounded-full bg-white/90 px-3 py-1 font-display text-sm font-extrabold text-[#3b1a52]">
                   {setup.mode === "bot" ? <IconRobot size={16} /> : null}
                   {setup.name}
