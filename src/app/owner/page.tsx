@@ -1802,6 +1802,8 @@ const SWITCH_HELP: Record<string, string> = {
 const OPT_IN_HELP: Record<string, string> = {
   nearby: "Learners near you (adults pick a neighbourhood) and friends-only social handles. Check the privacy page and Play Data safety first.",
   bot_duels: "Duel the computer: a practice duel against a computer opponent (easy, medium, hard), on the Practice tab. Played on the phone, no trophies. You can try it any time with the links below.",
+  family: "Family profiles on a shared phone. Everyone (all ages, 5+) gets their own profile, progress and avatar. The main learner stays in control; children need a grown-up check for sensitive screens. All data stays on the phone — nothing about extra members ever leaves the device.",
+  family_night: "Family Làmb Night: a pass-the-phone Wolof wrestling tournament for 2–6 family members. All ages. Questions match each player's level (pictures for little ones, words for children, phrases for grown-ups). Needs Family to be switched on first.",
 };
 
 const blankNotice = (): Omit<AnnouncementRow, "id"> & { id: string | null } => ({
@@ -1874,7 +1876,7 @@ function NoticesTab({ say }: { say: Say }) {
         <h2 className="mb-1 font-display text-lg font-extrabold text-night">Switch on a feature</h2>
         <p className="mb-3 text-sm text-muted">
           Built into the app but off until you switch it on. Apps pick it up within an hour; switching it off hides it
-          again. Only adults (18+) can ever use these.
+          again. The nearby and bot_duels switches are adults-only (18+). Family and Family Night are for everyone.
         </p>
         {!switches ? <Loading /> : null}
         {switches

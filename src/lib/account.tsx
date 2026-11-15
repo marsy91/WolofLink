@@ -107,22 +107,24 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   }, [cloud]);
 
   const signedIn = !!user;
+  // Family members' progress stays on the phone only: never sync a non-main profile.
+  const isMainProfile = !progress.profile?.member;
 
   // Sync on sign-in (once local progress is loaded) and when the app returns to the foreground.
   useEffect(() => {
-    if (!signedIn || !ready) return;
+    if (!signedIn || !ready || !isMainProfile) return;
     void syncNow();
     const onVisible = () => document.visibilityState === "visible" && void syncNow();
     document.addEventListener("visibilitychange", onVisible);
     return () => document.removeEventListener("visibilitychange", onVisible);
-  }, [signedIn, ready, syncNow]);
+  }, [signedIn, ready, isMainProfile, syncNow]);
 
-  // Push local changes shortly after they happen.
+  // Push local changes shortly after they happen (main profile only).
   useEffect(() => {
-    if (!signedIn || !ready || syncedVersion.current === progress.updatedAt) return;
+    if (!signedIn || !ready || !isMainProfile || syncedVersion.current === progress.updatedAt) return;
     const id = window.setTimeout(() => void syncNow(), PUSH_DELAY_MS);
     return () => window.clearTimeout(id);
-  }, [signedIn, ready, progress.updatedAt, syncNow]);
+  }, [signedIn, ready, isMainProfile, progress.updatedAt, syncNow]);
 
   const value = useMemo<Account>(
     () => ({

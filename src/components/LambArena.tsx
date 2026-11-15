@@ -128,6 +128,7 @@ export function LambRing({
   pulse = 0,
   lastRight,
   lowEnd = false,
+  colours,
 }: {
   balance: number;
   label: string;
@@ -138,6 +139,8 @@ export function LambRing({
   /** Whether the last answer was right (I shove) or wrong (they shove). */
   lastRight?: boolean;
   lowEnd?: boolean;
+  /** Optional custom wrestler loincloth colours for Family Làmb Night. */
+  colours?: { left: { cloth: string; trim: string }; right: { cloth: string; trim: string } };
 }) {
   const b = Math.max(-1.4, Math.min(1.4, balance));
   const theyFell = b > 1;
@@ -181,12 +184,12 @@ export function LambRing({
           <div className="lamb-pair lamb3d-pair absolute inset-x-0 flex justify-center" style={{ transform: `translateX(${shift}) translateZ(30px)` }}>
             <div key={pulse} className={`relative flex items-end ${shove}`}>
               <span className={`lamb3d-me -mr-6 ${iFell ? "lamb-thrown-left" : "anim-strain"} ${lastRight && pulse ? "lamb-lunge-right" : ""}`}>
-                <Wrestler cloth="#c2502f" trim="#f2c14e" size={size} fallen={iFell} />
+                <Wrestler cloth={colours?.left.cloth ?? "#c2502f"} trim={colours?.left.trim ?? "#f2c14e"} size={size} fallen={iFell} />
               </span>
               <span
                 className={`lamb3d-them ${theyFell ? "lamb-thrown-right" : "anim-strain"} ${hiddenOpponent ? "lamb-shadow" : ""} ${lastRight === false && pulse ? "lamb-lunge-left" : ""}`}
               >
-                <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={size} flip fallen={theyFell} />
+                <Wrestler cloth={colours?.right.cloth ?? "#7b3f8c"} trim={colours?.right.trim ?? "#ffffff"} skin="#4a2e1e" size={size} flip fallen={theyFell} />
               </span>
               {pulse > 0 ? (
                 <span aria-hidden className="lamb-dust-burst pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2">

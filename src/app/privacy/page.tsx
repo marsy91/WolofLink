@@ -49,6 +49,11 @@ export default function Privacy() {
             Your date of birth, asked when you create an account. It is only used to check your age: you need to be 13 or
             over to create an account, and adult-only community features stay off for anyone under 18. Nobody else sees it.
           </li>
+          <li>
+            <strong>Family profiles (optional):</strong> when Family play is turned on, every extra family member gets their
+            own name, level and colour on the shared phone. These profiles and their progress are stored only on the device.
+            Nothing about family members is ever sent to our servers; they cannot create accounts or use online features.
+          </li>
         </ul>
         <p className="mt-2">
           {ACCOUNTS_ENABLED ? "Without an account, this" : "This"} information is saved only in the app&apos;s private
