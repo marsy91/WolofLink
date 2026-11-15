@@ -20,8 +20,10 @@ bash scripts/ci/check-secrets.sh
    `android/app/google-services.json`). If you see a secret anywhere, stop and tell the owner.
 2. **Never push to `main` without the checks passing,** and never force-push or rewrite its
    history. Don't create branches; if a change isn't ready, keep it local until it is.
-3. **Never build or upload a release,** change `versionCode`/`versionName`, or touch signing.
-   The owner does releases.
+3. **Build a release only when the owner asks.** Then you may bump `versionCode`/`versionName`
+   and build the signed APK and AAB with the owner's upload key. Never commit the key or
+   `keystore.properties`, delete the temporary signing file after the build, and never upload
+   to the Play Store or App Store: the owner does that.
 4. **Never apply SQL to the live database.** Database changes go in as new files in
    `supabase/migrations/` (never edit one that has already merged). The owner applies them.
 5. **Write Wolof carefully, and always list it.** Reuse existing entries first
@@ -38,9 +40,10 @@ bash scripts/ci/check-secrets.sh
 
 ## Owner-only areas
 Changes to these need the owner's explicit approval before you push them, and the commit
-message must say so plainly: `supabase/`, `android/`, `.github/`,
-`.env*`, `src/lib/cloud.ts`, `src/lib/billing.ts`, `src/lib/features.ts`,
-`src/app/privacy/`, `src/app/terms/`, `SECURITY.md`, `docs/store/`, `LICENSE`.
+message must say so plainly: `supabase/` (database), `.env*` (settings and keys),
+`src/lib/billing.ts` (payments) and `android/` (the Android app and signing). Other files,
+including the privacy and terms pages, follow the normal rules, but say in the commit message
+when a change touches privacy, store answers or the licence.
 
 ## Rules for the code
 - **Every visible text** goes in all five dictionaries (`src/i18n/en.ts`, `fr.ts`, `es.ts`,
