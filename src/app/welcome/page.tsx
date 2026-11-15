@@ -117,7 +117,7 @@ export default function Welcome() {
           <Button block onClick={() => startSetup("register")}>
             {t("welcome.register")}
           </Button>
-          <Button block variant="secondary" onClick={() => router.push("/account/?mode=signin")}>
+          <Button block variant="onDark" onClick={() => router.push("/account/?mode=signin")}>
             {t("welcome.signIn")}
           </Button>
           <button
