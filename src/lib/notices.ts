@@ -14,7 +14,7 @@ import { getCloud } from "./cloud";
 
 export const SWITCH_KEYS = ["friends", "duels", "voices", "supporter", "reports", "community", "feedback", "world"] as const;
 export type SwitchKey = (typeof SWITCH_KEYS)[number];
-export const OPT_IN_KEYS = ["nearby", "bot_duels"] as const;
+export const OPT_IN_KEYS = ["nearby", "bot_duels", "family", "family_night"] as const;
 export type OptInKey = (typeof OPT_IN_KEYS)[number];
 
 export interface Announcement {

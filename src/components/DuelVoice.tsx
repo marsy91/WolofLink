@@ -8,7 +8,7 @@ import { stopAudio } from "@/lib/audio";
 import { base64ToUrl, duelVoice, listenChoices, VOICE_MAX_MS, wordIn, type DuelClip } from "@/lib/duel-voice";
 import { pickMime } from "@/lib/recorder";
 import { useStore } from "@/lib/store";
-import { IconMic, IconSpeaker } from "./icons";
+import { IconFlag, IconHeadphones, IconMic, IconSpeaker } from "./icons";
 
 const card = "glass-card w-full rounded-3xl p-5 text-left";
 const btn = "btn-game min-h-12 rounded-2xl px-5 font-display font-extrabold uppercase";
@@ -242,7 +242,8 @@ export function VoiceListenPanel({
         ) : null}
         {report === "no" || report === "failed" ? (
           <button type="button" onClick={() => setReport("confirm")} className="text-sm font-bold text-night/80 underline">
-            ⚑ {t("voice.report")}
+            <IconFlag size={14} className="mr-1 inline-block align-[-2px]" />
+            {t("voice.report")}
           </button>
         ) : null}
       </div>
@@ -289,8 +290,8 @@ export function VoiceWaiting() {
             href={`/duel/?listen=${encodeURIComponent(r.duel_id)}`}
             className="arena-sky flex items-center gap-3 rounded-3xl p-4 font-display font-extrabold text-night shadow-card"
           >
-            <span aria-hidden className="text-2xl">
-              🎧
+            <span aria-hidden className="text-clay">
+              <IconHeadphones size={26} />
             </span>
             <span className="min-w-0 flex-1">{t("voice.waiting", { name: r.speaker_name })}</span>
             <span className="btn-game rounded-xl px-3 py-1.5 text-sm uppercase">{t("voice.listen")}</span>

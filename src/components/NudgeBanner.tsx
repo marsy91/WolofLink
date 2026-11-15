@@ -1,6 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
+import { IconClose, IconHand } from "@/components/icons";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Wrestler } from "@/components/LambArena";
@@ -56,15 +57,15 @@ export function NudgeBanner() {
     <>
     {turnBanner}
     <section role="status" className="mb-4 flex items-center gap-3 rounded-3xl border border-sea/30 bg-sea-soft p-4">
-      <span aria-hidden className="text-3xl">
-        👋
+      <span aria-hidden className="text-sea">
+        <IconHand size={30} />
       </span>
       <p className="min-w-0 flex-1 font-bold text-night">{t("friends.nudgedYou", { name: who })}</p>
       <Link href="/friends/" className="text-sm font-bold text-sea underline">
         {t("friends.see")}
       </Link>
-      <button type="button" aria-label={t("common.close")} onClick={() => setNames([])} className="text-muted">
-        ✕
+      <button type="button" aria-label={t("common.close")} onClick={() => setNames([])} className="grid h-9 w-9 place-items-center text-muted">
+        <IconClose size={18} />
       </button>
     </section>
     </>

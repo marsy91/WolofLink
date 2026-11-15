@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { IconCap } from "@/components/icons";
+import { IconCap, IconCheck } from "@/components/icons";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import { course } from "@/content/course";
 import { translate } from "@/i18n";
@@ -90,7 +90,7 @@ export default function ProgressPage() {
             {done.map((u) => (
               <li key={u.id} className="flex gap-2 text-night">
                 <span className="text-sea" aria-hidden>
-                  ✓
+                  <IconCheck size={18} />
                 </span>
                 {translate(u.title, lang)}
               </li>

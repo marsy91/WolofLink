@@ -235,6 +235,50 @@ const NOTICES: Record<string, Record<NoticeKind, FeatureNotice>> = {
       ]),
     },
   },
+  family: {
+    back: {
+      title: tx(["Family play is on!", "Le jeu en famille est activé !", "¡El juego familiar está activado!", "Familienspiel ist an!", "Il gioco in famiglia è attivo!"]),
+      message: tx([
+        "Everyone on the phone gets their own profile and progress. Tap Family on the profile screen.",
+        "Chaque membre de la famille a son propre profil. Accédez à Famille depuis la page profil.",
+        "Cada miembro de la familia tiene su propio perfil. Toca Familia en la pantalla de perfil.",
+        "Jedes Familienmitglied bekommt sein eigenes Profil. Tippe auf Familie im Profil.",
+        "Ogni membro della famiglia ha il proprio profilo. Tocca Famiglia nel profilo.",
+      ]),
+    },
+    paused: {
+      title: tx(["Family play is paused for a moment", "Le jeu en famille est en pause un instant", "El juego familiar está en pausa un momento", "Familienspiel ist kurz pausiert", "Il gioco in famiglia è in pausa per un momento"]),
+      message: tx([
+        "Everyone's progress is safe. We'll bring it back soon.",
+        "La progression de chacun est en sécurité. Nous le réactiverons bientôt.",
+        "El progreso de todos está a salvo. Lo devolveremos pronto.",
+        "Der Fortschritt aller ist sicher. Wir bringen es bald zurück.",
+        "I progressi di tutti sono al sicuro. Lo riporteremo presto.",
+      ]),
+    },
+  },
+  family_night: {
+    back: {
+      title: tx(["New: Family Làmb Night!", "Nouveau : Soirée Làmb en famille !", "¡Novedad: Noche Làmb familiar!", "Neu: Familien-Làmb-Nacht!", "Novità: Notte Làmb in famiglia!"]),
+      message: tx([
+        "Pass the phone and wrestle! Up to 6 players, all ages, in a Wolof word tournament. Find it in Family.",
+        "Passez le téléphone et luttez ! Jusqu'à 6 joueurs, tous âges, dans un tournoi de mots en wolof. Trouvez-le dans Famille.",
+        "¡Pasa el teléfono y lucha! Hasta 6 jugadores, todas las edades, en un torneo de palabras en wolof. Encuéntralo en Familia.",
+        "Gib das Telefon weiter und kämpfe! Bis zu 6 Spieler, alle Altersgruppen, in einem Wolof-Wortturnier. Du findest es in Familie.",
+        "Passa il telefono e lotta! Fino a 6 giocatori, tutte le età, in un torneo di parole wolof. Trovalo in Famiglia.",
+      ]),
+    },
+    paused: {
+      title: tx(["Family Làmb Night is paused", "La soirée Làmb en famille est en pause", "La noche Làmb familiar está en pausa", "Familien-Làmb-Nacht ist pausiert", "La notte Làmb in famiglia è in pausa"]),
+      message: tx([
+        "We'll bring it back soon. Regular play is not affected.",
+        "Nous le réactiverons bientôt. Le jeu habituel n'est pas touché.",
+        "Lo devolveremos pronto. El juego normal no se ve afectado.",
+        "Wir bringen es bald zurück. Das normale Spielen ist nicht betroffen.",
+        "Lo riporteremo presto. Il gioco normale non è interessato.",
+      ]),
+    },
+  },
 };
 
 /** The ready-written notice for a switch, or null if there isn't one. */

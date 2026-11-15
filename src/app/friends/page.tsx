@@ -7,6 +7,7 @@ import { ArenaCard } from "@/components/ArenaCard";
 import { QrFriend } from "@/components/QrFriend";
 import { useFriendPushToggle } from "@/components/PushInit";
 import { Button, Dialog, Loading, TabScreen } from "@/components/ui";
+import { IconBell, IconClose, IconCrown, IconFlame, IconHand, IconHeart, IconMedal, IconSwords, IconTrophy } from "@/components/icons";
 import { useAccount } from "@/lib/account";
 import { CloudError } from "@/lib/cloud";
 import { duelState, duels, type DuelRow, type DuelWords } from "@/lib/duels";
@@ -19,7 +20,18 @@ import { usePremium } from "@/lib/premium-context";
 import { useStore } from "@/lib/store";
 
 const field = "w-full rounded-2xl border border-sand-3 bg-white px-4 py-3 text-base outline-none focus:border-clay";
-const MEDALS = ["🥇", "🥈", "🥉"];
+/** Gold, silver and bronze for the top three places. */
+const MEDAL_COLOURS = ["text-[#c99a16]", "text-[#8a95a5]", "text-[#a8662e]"];
+
+/** A small icon and number, used in the friends board (streak, trophies, crowns). */
+function Stat({ icon, n }: { icon: React.ReactNode; n: number }) {
+  return (
+    <span className="ml-2 inline-flex items-center gap-0.5 align-[-3px]">
+      {icon}
+      {n}
+    </span>
+  );
+}
 
 export default function FriendsPage() {
   const { progress, t } = useStore();
@@ -196,8 +208,8 @@ export default function FriendsPage() {
     <TabScreen title={t("friends.title")}>
       {push.supported && !push.on ? (
         <section className="mb-4 flex items-center gap-3 rounded-3xl border border-sun/50 bg-sun-soft p-4">
-          <span aria-hidden className="text-2xl">
-            🔔
+          <span aria-hidden className="text-sun-deep">
+            <IconBell size={26} />
           </span>
           <p className="min-w-0 flex-1 text-sm font-bold text-night">{pushDenied ? t("push.denied") : t("push.card")}</p>
           {!pushDenied ? (
@@ -264,7 +276,9 @@ export default function FriendsPage() {
 
       {!duelsOff && duelRows && duelRows.length ? (
         <section className="mb-5">
-          <h2 className="mb-2 font-display text-xl font-extrabold text-night">⚔️ {t("duel.listTitle")}</h2>
+          <h2 className="mb-2 font-display text-xl font-extrabold text-night"><IconSwords size={22} className="mr-1.5 inline-block align-[-3px]" />
+            {t("duel.listTitle")}
+          </h2>
           <ul className="space-y-2">
             {duelRows.slice(0, 8).map((d) => {
               const st = duelState(d);
@@ -276,7 +290,7 @@ export default function FriendsPage() {
                       {t(`duel.state.${st}`)}
                       {st === "won" || st === "lost" || st === "draw"
                         ? d.my_crowns != null && d.their_crowns != null
-                          ? ` · 👑 ${d.my_crowns} – ${d.their_crowns}`
+                          ? ` · ${t("duel.crownsShort", { mine: d.my_crowns, theirs: d.their_crowns })}`
                           : ` · ${d.my_score} – ${d.their_score}`
                         : ""}
                     </span>
@@ -307,7 +321,16 @@ export default function FriendsPage() {
               key={r.user_id}
               className={`flex items-center gap-3 rounded-2xl border-2 p-3 ${r.is_me ? "border-clay bg-sun-soft" : "border-sand-3 bg-white"}`}
             >
-              <span className="w-8 text-center font-display text-xl font-extrabold text-night">{MEDALS[places[i]! - 1] ?? places[i]}</span>
+              <span className="relative grid w-8 place-items-center font-display text-sm font-extrabold text-night">
+                {places[i]! <= 3 ? (
+                  <>
+                    <IconMedal size={30} className={MEDAL_COLOURS[places[i]! - 1]} />
+                    <span className="absolute top-[13px]">{places[i]}</span>
+                  </>
+                ) : (
+                  <span className="text-xl">{places[i]}</span>
+                )}
+              </span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate font-bold text-night">
                   {r.is_me ? r.display_name : (
@@ -316,13 +339,13 @@ export default function FriendsPage() {
                     </Link>
                   )}
                   {r.is_me ? ` (${t("friends.you")})` : ""}
-                  {r.is_me && SUPPORTER_ENABLED && premium ? " 💛" : ""}
+                  {r.is_me && SUPPORTER_ENABLED && premium ? <IconHeart size={16} className="ml-1 inline-block align-[-2px] text-berry" /> : null}
                 </span>
                 <span className="text-sm text-muted">
                   {t("friends.xp", { n: r.week_xp })}
-                  {r.streak > 0 ? ` · 🔥 ${r.streak}` : ""}
-                  {r.trophies ? ` · 🏆 ${r.trophies}` : ""}
-                  {r.week_crowns ? ` · 👑 ${r.week_crowns}` : ""}
+                  {r.streak > 0 ? <Stat icon={<IconFlame size={15} className="text-clay" />} n={r.streak} /> : null}
+                  {r.trophies ? <Stat icon={<IconTrophy size={15} className="text-sun-deep" />} n={r.trophies} /> : null}
+                  {r.week_crowns ? <Stat icon={<IconCrown size={15} className="text-sun-deep" />} n={r.week_crowns} /> : null}
                 </span>
               </span>
               {!r.is_me ? (
@@ -333,7 +356,7 @@ export default function FriendsPage() {
                     aria-label={t("duel.challenge", { name: r.display_name })}
                     className="rounded-xl bg-night px-3 py-2 text-sm font-bold text-sand"
                   >
-                    ⚔️
+                    <IconSwords size={18} />
                   </Link>
                   )}
                   <button
@@ -343,7 +366,7 @@ export default function FriendsPage() {
                     aria-label={t("friends.nudge")}
                     className="rounded-xl bg-sea-soft px-3 py-2 text-sm font-bold text-sea disabled:opacity-50"
                   >
-                    👋
+                    <IconHand size={18} />
                   </button>
                   <button
                     type="button"
@@ -351,7 +374,7 @@ export default function FriendsPage() {
                     onClick={() => setRemoving(r)}
                     className="grid h-9 w-9 place-items-center rounded-xl text-muted"
                   >
-                    ✕
+                    <IconClose size={18} />
                   </button>
                 </>
               ) : null}

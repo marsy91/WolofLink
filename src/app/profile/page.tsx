@@ -2,12 +2,12 @@
 "use client";
 
 import Link from "next/link";
-import { BADGE_GLYPHS, GlyphCompass, IconChart, IconDialogue, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
+import { BADGE_GLYPHS, GlyphCompass, GlyphFamily, IconChart, IconHeart, IconDialogue, IconGem, IconHeadphones, IconLock, IconMic, IconProfile, IconRosette, IconShield, IconSliders, IconTrophy } from "@/components/icons";
 import { ProgressBar, TabScreen } from "@/components/ui";
 import type { UiKey } from "@/i18n";
 import { useAccount } from "@/lib/account";
 import { useConsoleRole, useIsOwner } from "@/lib/owner";
-import { useSwitchOff } from "@/lib/notices";
+import { useSwitchOff, useSwitchOn } from "@/lib/notices";
 import { PREMIUM_ENABLED, SUPPORTER_ENABLED, WORLD_ENABLED } from "@/lib/features";
 import { usePremium } from "@/lib/premium-context";
 import { useRecorderStatus } from "@/lib/recorder";
@@ -23,6 +23,7 @@ export default function Profile() {
   const supporterOff = useSwitchOff("supporter");
   const feedbackPaused = useSwitchOff("feedback");
   const worldPaused = useSwitchOff("world");
+  const familyOn = useSwitchOn("family");
   const [recorder] = useRecorderStatus();
   const { premium, unlockAll, available } = usePremium();
   const now = useNow();
@@ -40,7 +41,8 @@ export default function Profile() {
             {profile?.name || t("profile.guest")}
             {SUPPORTER_ENABLED && premium ? (
               <span className="ml-2 inline-block rounded-full bg-sun-soft px-2 py-0.5 align-middle text-xs font-extrabold text-night">
-                💛 {t("supporter.badge")}
+                <IconHeart size={14} className="mr-1 inline-block align-[-2px] text-berry" />
+                {t("supporter.badge")}
               </span>
             ) : null}
           </h1>
@@ -83,8 +85,8 @@ export default function Profile() {
           href="/premium/"
           className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-sun/60 bg-sun-soft p-4 active:translate-y-[2px]"
         >
-          <span aria-hidden className="text-3xl">
-            💛
+          <span aria-hidden className="text-berry">
+            <IconHeart size={30} />
           </span>
           <span className="flex-1">
             <span className="block font-display font-extrabold text-night">{t("supporter.title")}</span>
@@ -117,6 +119,18 @@ export default function Profile() {
           <span className="text-sm text-muted">{t(`theme.${themeFor(progress.settings.theme).id}`)}</span>
         </span>
       </Link>
+
+      {familyOn ? (
+        <Link href="/family/" className="mb-4 flex items-center gap-3 rounded-2xl border border-clay/30 bg-white p-4 active:translate-y-[2px]">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-clay/10 text-clay">
+            <GlyphFamily size={22} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-display font-extrabold text-night">{t("family.title")}</span>
+            <span className="text-sm text-muted">{t("family.subtitle")}</span>
+          </span>
+        </Link>
+      ) : null}
 
       <Link href="/progress/" className="mb-4 flex items-center gap-3 rounded-2xl border border-sea/30 bg-white p-4 active:translate-y-[2px]">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sea-soft text-sea">

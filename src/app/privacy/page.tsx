@@ -41,7 +41,19 @@ export default function Privacy() {
         <ul className="list-disc space-y-1 pl-5">
           <li>Your learning progress (XP, streak, completed lessons and dialogues, review schedule and badges).</li>
           <li>Your settings (interface language, daily goal, sound, vibration and reminder time).</li>
-          <li>An optional first name you type during setup, shown only to you.</li>
+          <li>
+            Your first name: optional during setup, and asked when you create an account. It appears on your certificates;
+            other people only see a name if you choose one for Friends.
+          </li>
+          <li>
+            Your date of birth, asked when you create an account. It is only used to check your age: you need to be 13 or
+            over to create an account, and adult-only community features stay off for anyone under 18. Nobody else sees it.
+          </li>
+          <li>
+            <strong>Family profiles (optional):</strong> when Family play is turned on, every extra family member gets their
+            own name, level and colour on the shared phone. These profiles and their progress are stored only on the device.
+            Nothing about family members is ever sent to our servers; they cannot create accounts or use online features.
+          </li>
         </ul>
         <p className="mt-2">
           {ACCOUNTS_ENABLED ? "Without an account, this" : "This"} information is saved only in the app&apos;s private
@@ -53,7 +65,7 @@ export default function Privacy() {
         <Section title="Optional account and cloud sync">
           <p>If you create an account, we process:</p>
           <ul className="mt-2 list-disc space-y-1 pl-5">
-            <li>your email address, to send you sign-in codes and identify your account;</li>
+            <li>your email address, to send you sign-in codes and identify your account, and the first name and date of birth you gave;</li>
             <li>a copy of the progress and settings listed above, so they sync between your devices.</li>
           </ul>
           <p className="mt-2">
@@ -217,8 +229,9 @@ export default function Privacy() {
       </Section>
 
       <Section title="Children">
-        WolofLink is suitable for learners of all ages and does not knowingly collect personal information from anyone,
-        including children.
+        WolofLink is suitable for learners of all ages and works fully without an account. You need to be 13 or over to
+        create an account (we check the date of birth you give), and adult-only community features stay off for anyone
+        under 18.
       </Section>
 
       <Section title="Your rights">

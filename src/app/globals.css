@@ -69,6 +69,15 @@ body {
   border-radius: 10px;
 }
 
+/* Modal dialogs: scrolling inside or over the backdrop must not scroll the page behind. */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
 /* Woven-band ornament used on unit banners (original geometric pattern). */
 .weave {
   background-image:
@@ -261,18 +270,28 @@ body {
     radial-gradient(ellipse 30% 60% at 88% -10%, rgba(255, 255, 230, 0.75), transparent 70%);
 }
 .arena-crowd {
-  top: 5.5%; height: 10%;
+  top: 4%; height: 12%;
   background:
-    radial-gradient(circle at 50% 70%, #6b3b2a 0 34%, transparent 36%) 0 0 / 22px 20px,
-    radial-gradient(circle at 50% 70%, #8a4d36 0 34%, transparent 36%) 11px 9px / 22px 20px,
-    linear-gradient(180deg, transparent 0 45%, #5a3123 45% 100%);
-  opacity: 0.3;
+    radial-gradient(ellipse 9px 11px at 12% 60%, #8a4d36 98%, transparent) ,
+    radial-gradient(ellipse 10px 12px at 27% 55%, #6b3b2a 98%, transparent),
+    radial-gradient(ellipse 9px 11px at 41% 62%, #9a5a3e 98%, transparent),
+    radial-gradient(ellipse 10px 12px at 58% 56%, #74412e 98%, transparent),
+    radial-gradient(ellipse 9px 11px at 73% 61%, #8a4d36 98%, transparent),
+    radial-gradient(ellipse 10px 12px at 88% 57%, #6b3b2a 98%, transparent),
+    linear-gradient(180deg, transparent 0 50%, rgba(110, 60, 38, 0.55) 50% 100%);
+  filter: blur(3px);
+  opacity: 0.45;
 }
+/* Floodlight glints instead of bunting. */
 .arena-bunting {
-  top: 4%; height: 12px;
-  background: conic-gradient(from 135deg at 50% 0, #2e9e62 0 25%, transparent 0 75%, #2e9e62 0) 0 0 / 28px 14px,
-              conic-gradient(from 135deg at 50% 0, #f2c14e 0 25%, transparent 0 75%, #f2c14e 0) 14px 0 / 28px 14px;
-  opacity: 0.9;
+  top: 3%; height: 10px;
+  background:
+    radial-gradient(circle at 10% 50%, rgba(255, 250, 220, 0.9) 0 3px, transparent 6px),
+    radial-gradient(circle at 30% 50%, rgba(255, 250, 220, 0.8) 0 2px, transparent 5px),
+    radial-gradient(circle at 50% 50%, rgba(255, 250, 220, 0.9) 0 3px, transparent 6px),
+    radial-gradient(circle at 70% 50%, rgba(255, 250, 220, 0.8) 0 2px, transparent 5px),
+    radial-gradient(circle at 90% 50%, rgba(255, 250, 220, 0.9) 0 3px, transparent 6px);
+  filter: blur(0.5px);
 }
 .arena-sand { height: 34%; background: radial-gradient(ellipse 90% 70% at 50% 30%, #f4dcae 0%, #e8c78f 60%, #d9b073 100%); }
 .arena-dust { background: #fff3d6; }
@@ -421,6 +440,65 @@ body {
 :root[data-mode] .arena-scene.arena-scene.arena-scene .text-berry,
 :root[data-mode] .arena-sky.arena-sky.arena-sky .text-berry { color: #b3261e; }
 
+
+/* Wrestling duels in 3D (components/LambArena.tsx, LambRing): CSS 3D, runs on the GPU. */
+.lamb3d { perspective: 760px; perspective-origin: 50% 18%; overflow: hidden; }
+.lamb3d-camera, .lamb3d-rig { transform-style: preserve-3d; }
+.lamb3d-rig { transition: transform 900ms cubic-bezier(0.3, 1.25, 0.5, 1); }
+.lamb3d-stands {
+  left: -20%; right: -20%; top: 2%; height: 32%;
+  transform: translateZ(-180px) scale(1.3);
+  background:
+    radial-gradient(ellipse 14px 17px at 8% 45%, #8a4d36 98%, transparent),
+    radial-gradient(ellipse 15px 18px at 20% 40%, #6b3b2a 98%, transparent),
+    radial-gradient(ellipse 14px 17px at 33% 47%, #9a5a3e 98%, transparent),
+    radial-gradient(ellipse 15px 18px at 46% 41%, #74412e 98%, transparent),
+    radial-gradient(ellipse 14px 17px at 59% 46%, #8a4d36 98%, transparent),
+    radial-gradient(ellipse 15px 18px at 72% 40%, #6b3b2a 98%, transparent),
+    radial-gradient(ellipse 14px 17px at 85% 46%, #9a5a3e 98%, transparent),
+    radial-gradient(ellipse 15px 18px at 96% 41%, #74412e 98%, transparent),
+    linear-gradient(180deg, transparent 0 40%, rgba(110, 60, 38, 0.6) 40% 100%);
+  filter: blur(4px);
+  opacity: 0.5;
+  -webkit-mask: linear-gradient(180deg, #000 55%, transparent);
+  mask: linear-gradient(180deg, #000 55%, transparent);
+}
+.lamb3d-floor {
+  left: 3%; right: 3%; bottom: 6%; height: 72%;
+  transform: rotateX(64deg); transform-origin: 50% 100%; transform-style: preserve-3d;
+}
+.lamb3d-sand { background: radial-gradient(ellipse at 50% 45%, #fbe9c4 0%, #efd29b 55%, #dcb276 100%); box-shadow: 0 30px 50px rgba(90, 50, 15, 0.35); }
+.lamb3d-sandbags {
+  background: repeating-conic-gradient(from 0deg, #c39457 0 5deg, #a8783f 5deg 6deg, #b88a4f 6deg 11deg, #946634 11deg 12deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 22px), #000 calc(100% - 21px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 22px), #000 calc(100% - 21px));
+  box-shadow: inset 0 -10px 0 rgba(60, 35, 10, 0.25);
+}
+.lamb3d-line { border: 3px solid rgba(150, 100, 50, 0.35); }
+.lamb3d-follow { transition: transform 820ms cubic-bezier(0.34, 1.45, 0.5, 1); }
+.lamb3d-spot { left: 25%; right: 25%; top: 15%; bottom: 10%; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 252, 230, 0.75), rgba(255, 252, 230, 0)); mix-blend-mode: screen; }
+.lamb3d-shadow { left: 34%; right: 34%; top: 46%; height: 22%; border-radius: 50%; background: radial-gradient(closest-side, rgba(40, 20, 5, 0.45), rgba(40, 20, 5, 0)); }
+.lamb3d-edge-l { left: 2%; top: 30%; width: 14px; height: 40%; }
+.lamb3d-edge-r { right: 2%; top: 30%; width: 14px; height: 40%; }
+.lamb3d-pair { bottom: 17%; }
+.lamb3d-me { display: inline-block; transform: rotateY(14deg); }
+.lamb3d-them { display: inline-block; transform: rotateY(-14deg); }
+.lamb3d-impact { left: 50%; top: 52%; }
+.lamb3d-impact i { position: absolute; width: 14px; height: 14px; border-radius: 9999px; background: #f6e2b5; opacity: 0; animation: impact-ring 700ms ease-out both; }
+.lamb3d-impact i:nth-child(1) { --ix: -70px; --iy: -10px; }
+.lamb3d-impact i:nth-child(2) { --ix: -40px; --iy: -40px; animation-delay: 25ms; }
+.lamb3d-impact i:nth-child(3) { --ix: 0px; --iy: -55px; animation-delay: 40ms; }
+.lamb3d-impact i:nth-child(4) { --ix: 40px; --iy: -40px; animation-delay: 25ms; }
+.lamb3d-impact i:nth-child(5) { --ix: 70px; --iy: -10px; }
+.lamb3d-impact i:nth-child(6) { --ix: 0px; --iy: 30px; animation-delay: 60ms; }
+@keyframes impact-ring { 0% { opacity: 0.95; transform: translate(-50%, -50%) scale(0.5); } 100% { opacity: 0; transform: translate(calc(-50% + var(--ix)), calc(-50% + var(--iy))) scale(2.4); } }
+@keyframes cam-punch { 0% { transform: translateZ(0) rotateX(0); } 22% { transform: translateZ(46px) rotateX(-2deg) translateY(4px); } 100% { transform: translateZ(0) rotateX(0); } }
+.anim-cam-punch { transform-style: preserve-3d; animation: cam-punch 620ms cubic-bezier(0.2, 0.9, 0.3, 1) both; }
+@keyframes cam-finish { 0% { transform: translateZ(0) rotateX(0); } 40% { transform: translateZ(50px) rotateX(-3deg) translateY(6px); } 100% { transform: translateZ(30px) rotateX(-2deg) translateY(4px); } }
+.anim-cam-finish { transform-style: preserve-3d; animation: cam-finish 1200ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes hit-flash { 0% { opacity: 0.55; } 100% { opacity: 0; } }
+.lamb3d-flash { background: radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 55%); animation: hit-flash 280ms ease-out both; }
+
 /* Painted dialogue backdrop (components/StoryScene.tsx). */
 @keyframes ss-drift { from { transform: translateX(0); } to { transform: translateX(-30px); } }
 @keyframes ss-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(5deg); } }
@@ -432,7 +510,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .character .blink, .character .talk, .anim-breathe, .anim-hop, .character .head, .character .wave-arm, .character .hair-follow,
   .story-scene .ss-clouds, .story-scene .ss-grass, .story-scene .ss-seed,
-  .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark, .anim-strain, .anim-crowd, .anim-shove-fwd, .anim-shove-back, .lamb-lunge-right, .lamb-lunge-left { animation: none; }
+  .anim-wave, .anim-twinkle, .anim-slam, .anim-ring, .anim-cam-shake, .anim-drop-in, .anim-panel-left, .anim-panel-right, .anim-pulse-glow, .wake, .duel-spark, .anim-strain, .anim-crowd, .anim-shove-fwd, .anim-shove-back, .lamb-lunge-right, .lamb-lunge-left, .anim-cam-punch, .anim-cam-finish, .lamb3d-flash { animation: none; }
+  .lamb3d-impact { display: none; }
   .lamb-dust-burst { display: none; }
   .lamb-thrown-right { animation: none; transform: translate(46px, 10px) rotate(78deg); }
   .lamb-thrown-left { animation: none; transform: translate(-46px, 10px) rotate(-78deg); }
@@ -473,7 +552,7 @@ body {
   --color-sand: #fbfaef;
   --color-sand-2: #f2f0d6;
   --color-sand-3: #dedab0;
-  --color-clay: #00853f;
+  --color-clay: #007538;
   --color-clay-2: #005f2d;
   --color-sun: #fdef42;
   --color-sun-soft: #fdf8c4;
@@ -482,7 +561,7 @@ body {
   --color-sea-2: #064726;
   --color-night-3: #052b18;
   --color-sun-2: #c7b51c;
-  --color-sun-deep: #00853f;
+  --color-sun-deep: #007538;
   --color-berry-2: #7d0a1c;
   --color-berry: #c8102e;
   --color-berry-soft: #fde7ea;
@@ -575,9 +654,12 @@ body {
 /* Icons on the (now light) night tiles. */
 :root[data-mode="dark"] .bg-night.text-sun { color: #94600f; }
 :root[data-mode="dark"] .weave { filter: brightness(0.92); }
-/* The welcome splash stays dark navy in both modes. */
-:root[data-mode="dark"] .splash { --color-night: #1d2550; --color-sand: #f8f6f2; }
-:root[data-mode="dark"][data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }
+/* The welcome splash stays dark navy in every mode and theme, so the navy logo tile blends in
+   and the text colours always contrast (a light theme's own "night" can be a plum or green). */
+.splash { --color-night: #1d2550; --color-sand: #f8f6f2; }
+:root[data-theme="senegal"] .splash { --color-night: #0b4a2b; --color-sand: #fbfaef; }
+/* "Link" in the wordmark uses the theme accent, which is too dark on navy: use a warm light one. */
+.splash .text-clay { color: #f0956a; }
 
 /* Feed layout cards (src/components/LearnFeed.tsx): always a deep card with light text, in
    light and dark mode, like the design. In dark mode "night" flips to a light ink, so the

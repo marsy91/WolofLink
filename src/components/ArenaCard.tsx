@@ -9,7 +9,7 @@ import { playEntry } from "@/lib/audio";
 import type { DuelWords } from "@/lib/duels";
 import { useStore } from "@/lib/store";
 import { Confetti } from "./Confetti";
-import { IconSpeaker } from "./icons";
+import { IconLock, IconSpeaker, IconTrophy } from "./icons";
 
 const SEEN_KEY = "woloflink.arena.seen";
 
@@ -64,7 +64,9 @@ export function ArenaCard({ trophies, words: duelWords }: { trophies: number; wo
       ) : null}
       <div className="mt-4">
         <div className="mb-1 flex justify-between text-sm font-bold">
-          <span>🏆 {trophies}</span>
+          <span className="inline-flex items-center gap-1">
+            <IconTrophy size={16} /> {trophies}
+          </span>
           <span>{next ? t("arena.next", { n: next.trophies, name: next.name }) : t("arena.last")}</span>
         </div>
         <div className="h-3 overflow-hidden rounded-full bg-white/25" role="progressbar" aria-label={next ? t("arena.next", { n: next.trophies, name: next.name }) : t("arena.last")} aria-valuenow={Math.round(toNext * 100)} aria-valuemin={0} aria-valuemax={100}>
@@ -78,9 +80,11 @@ export function ArenaCard({ trophies, words: duelWords }: { trophies: number; wo
         <ol className="mt-2 space-y-1">
           {ARENAS.map((a, i) => (
             <li key={a.id} className={`flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm ${i === index ? "bg-white/25 font-extrabold" : i < index ? "opacity-90" : "opacity-60"}`}>
-              <span aria-hidden>{i <= index ? a.emoji : "🔒"}</span>
+              <span aria-hidden>{i <= index ? a.emoji : <IconLock size={14} />}</span>
               <span className="flex-1">{a.name}</span>
-              <span>🏆 {a.trophies}</span>
+              <span className="inline-flex items-center gap-1">
+                <IconTrophy size={14} /> {a.trophies}
+              </span>
             </li>
           ))}
         </ol>

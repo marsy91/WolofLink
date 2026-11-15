@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { IconCheck, IconClose, IconGem } from "@/components/icons";
+import { IconCheck, IconClose, IconGem, IconHeart } from "@/components/icons";
 import { Button, Loading, RedirectTo, useRequireProfile } from "@/components/ui";
 import { course } from "@/content/course";
 import type { UiKey } from "@/i18n";
@@ -134,8 +134,8 @@ function PremiumPage() {
       <div className="mb-6 rounded-3xl bg-night p-6 text-center text-sand">
         <span className="mx-auto mb-3 grid h-16 w-16 place-items-center rounded-2xl bg-white/10 text-sun">
           {supporter ? (
-            <span aria-hidden className="text-4xl">
-              💛
+            <span aria-hidden className="text-berry">
+              <IconHeart size={40} />
             </span>
           ) : (
             <IconGem size={36} />

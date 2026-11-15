@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Confetti } from "@/components/Confetti";
 import { ArenaScene, LambRing, Wrestler } from "@/components/LambArena";
-import { IconClose, IconSpeaker } from "@/components/icons";
+import { IconCheck, IconClose, IconCrown, IconFlame, IconRobot, IconSpeaker, IconTrophy } from "@/components/icons";
 import { Paused } from "@/components/Paused";
 import { Loading } from "@/components/ui";
 import { translate } from "@/i18n";
 import { playEntry, playTone } from "@/lib/audio";
-import { buildDuel, crownsFor, duelProblem, duels, optionLabel, pickDuelEntries, pointsFor, roundOf, DUEL_LENGTH, type DuelQuestion, type DuelResult } from "@/lib/duels";
+import { ROUNDS, buildDuel, crownsFor, duelProblem, duels, optionLabel, pickDuelEntries, pointsFor, roundOf, DUEL_LENGTH, type DuelQuestion, type DuelResult } from "@/lib/duels";
 import { friends } from "@/lib/friends";
 import { haptic } from "@/lib/native";
 import { botPoints, isBotLevel, BOT_LEVELS, type BotLevel } from "@/lib/duel-bot";
@@ -42,6 +42,9 @@ interface Setup {
 
 type Phase = "intro" | "starting" | "countdown" | "play" | "done";
 type Outcome = { kind: "sent"; trophies: number } | { kind: "result"; r: DuelResult };
+
+/** Right answers a player gave in round `i` (0–2). */
+const rightIn = (pts: number[], i: number) => pts.slice(ROUNDS[i]![0], ROUNDS[i]![1]).filter((p) => p > 0).length;
 
 /** Milliseconds since `from` (called from tap handlers, not during render). */
 const msSince = (from: number) => performance.now() - from;
@@ -438,16 +441,17 @@ function Duel() {
             <div className="anim-panel-left absolute top-4 left-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#e0703f] to-[#7a2a14] shadow-[0_6px_0_#7a2a14]">
               <span className="relative skew-x-[8deg]">
                 <Wrestler cloth="#c2502f" trim="#f2c14e" size={112} pose="ready" lite={lowEnd} />
-                <span className="absolute -top-2 -left-2 grid h-10 w-10 place-items-center rounded-full bg-white/90 font-display text-xl font-extrabold text-[#7a2a14]">
-                  {initial(myName || t("friends.you"))}
+                <span className="absolute -bottom-3 left-1/2 max-w-[9rem] -translate-x-1/2 truncate rounded-full bg-white/90 px-3 py-1 font-display text-sm font-extrabold text-[#7a2a14]">
+                  {myName || t("friends.you")}
                 </span>
               </span>
             </div>
             <div className="anim-panel-right absolute top-4 right-[-6%] flex h-44 w-[56%] items-center justify-center rounded-3xl bg-gradient-to-br from-[#9a5ab8] to-[#3b1a52] shadow-[0_6px_0_#3b1a52]">
               <span className="relative skew-x-[8deg]">
                 <Wrestler cloth="#7b3f8c" trim="#ffffff" skin="#4a2e1e" size={112} flip pose="ready" lite={lowEnd} />
-                <span className="absolute -top-2 -right-2 grid h-10 w-10 place-items-center rounded-full bg-white/90 font-display text-xl font-extrabold text-[#3b1a52]">
-                  {setup.mode === "bot" ? "🤖" : initial(setup.name)}
+                <span className="absolute -bottom-3 left-1/2 flex max-w-[9rem] -translate-x-1/2 items-center gap-1 truncate rounded-full bg-white/90 px-3 py-1 font-display text-sm font-extrabold text-[#3b1a52]">
+                  {setup.mode === "bot" ? <IconRobot size={16} /> : null}
+                  {setup.name}
                 </span>
               </span>
             </div>
@@ -534,16 +538,21 @@ function Duel() {
         <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
           {r && allShown && r.result === "won" ? <Confetti pieces={lowEnd ? 24 : 48} /> : null}
           {r && allShown ? (
-            <p className={`anim-rise font-display text-5xl font-extrabold tracking-tight ${r.result === "lost" ? "text-glow-white" : "text-glow text-clay"}`}>
-              {r.result === "won" ? t("duel.won") : r.result === "draw" ? t("duel.draw") : setup.mode === "bot" ? t("bot.lost") : t("duel.lost")}
-            </p>
+            <div className="anim-rise">
+              <p className={`font-display text-4xl font-extrabold tracking-tight ${r.result === "lost" ? "text-glow-white" : "text-glow text-clay"}`}>
+                {r.result === "won" ? t("duel.won") : r.result === "draw" ? t("duel.draw") : t("duel.lostTitle")}
+              </p>
+              {r.result === "lost" ? <p className="mt-1 text-night/80">{t(setup.mode === "bot" ? "bot.lostHint" : "duel.lostHint")}</p> : null}
+            </div>
           ) : null}
           {rounds ? (
             <div className="w-full">
               <LambRing
-                lowEnd={lowEnd}
                 balance={allShown ? finalBalance(r!.result) : balance(r!.my_points.slice(0, ends[revealed]), r!.their_points!.slice(0, ends[revealed]))}
                 label={t("duel.crowns", { mine: rounds.mine, name: setup.name, theirs: rounds.theirs })}
+                lowEnd={lowEnd}
+                pulse={revealed}
+                lastRight={revealed ? rounds.rounds[revealed - 1]?.winner !== "them" : undefined}
               />
               <ol className="mt-3 grid grid-cols-3 gap-2">
                 {rounds.rounds.map((round, i) => {
@@ -552,9 +561,14 @@ function Duel() {
                   return (
                     <li key={i} className={`glass-card rounded-2xl p-2 ${shown ? "" : "opacity-40"} ${won ? "glow-gold shine" : ""}`}>
                       <span className="block text-xs font-bold tracking-wider text-muted uppercase">{t("duel.round", { n: i + 1 })}</span>
-                      <span className="block font-display text-lg font-extrabold text-night">{shown ? `${round.mine} – ${round.theirs}` : "…"}</span>
-                      <span aria-hidden className={`block h-8 text-2xl ${won ? "anim-drop-in" : ""}`}>
-                        {shown ? (round.winner === "me" ? "👑" : round.winner === "them" ? "·" : "=") : ""}
+                      <span className="block font-display text-lg font-extrabold text-night tabular-nums">
+                        {shown ? `${rightIn(r!.my_points, i)} – ${rightIn(r!.their_points!, i)}` : "…"}
+                      </span>
+                      <span aria-hidden className={`flex h-8 items-center justify-center gap-1 ${won ? "anim-drop-in text-sun-deep" : "text-muted"}`}>
+                        {shown && round.winner ? <IconCrown size={22} className={round.winner === "me" ? "" : "opacity-40"} /> : shown ? "=" : ""}
+                        {shown && round.winner && rightIn(r!.my_points, i) === rightIn(r!.their_points!, i) ? (
+                          <span className="text-xs font-bold">{t("duel.faster")}</span>
+                        ) : null}
                       </span>
                     </li>
                   );
@@ -562,9 +576,8 @@ function Duel() {
               </ol>
             </div>
           ) : null}
-          <p className="text-sm font-bold tracking-widest text-muted uppercase">{t("duel.yourScore")}</p>
-          <p className="text-glow-white font-display text-7xl font-extrabold">
-            <Rolling value={score} />
+          <p className="text-glow-white font-display text-5xl font-extrabold tabular-nums">
+            {t("duel.rightCount", { n: points.filter((p) => p > 0).length, total: DUEL_LENGTH })}
           </p>
           {sendState === "sending" ? <Loading /> : null}
           {sendState === "failed" ? (
@@ -580,7 +593,7 @@ function Duel() {
           {outcome?.kind === "sent" ? (
             <>
               <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-2xl font-extrabold text-clay">
-                🏆 {t("duel.trophies", { n: outcome.trophies })}
+                <IconTrophy size={24} className="mr-1 inline-block align-[-4px]" /> {t("duel.trophies", { n: outcome.trophies })}
               </p>
               <p className="text-sm text-muted">{t("duel.trophiesHow")}</p>
               <p className="text-lg text-night">{t("duel.sent", { name: setup.name })}</p>
@@ -605,7 +618,7 @@ function Duel() {
               ) : (
                 <>
                   <p className="glass-card glow-gold shine anim-drop-in rounded-full px-5 py-2 font-display text-xl font-extrabold text-clay">
-                    🏆 {t("duel.trophies", { n: r.trophies_won })}
+                    <IconTrophy size={22} className="mr-1 inline-block align-[-4px]" /> {t("duel.trophies", { n: r.trophies_won })}
                   </p>
                   <p className="text-sm text-muted">{t("duel.trophiesHow")}</p>
                 </>
@@ -656,20 +669,21 @@ function Duel() {
           <span className="glass-card rounded-full px-3 py-1 text-xs font-extrabold tracking-wider uppercase">{t("duel.round", { n: roundOf(index) + 1 })}</span>
           <span className="flex-1" />
           {soundToggle}
-          <span className="text-glow-white relative min-w-16 text-right font-display text-3xl font-extrabold">
-            <Rolling value={score} />
+          <span className="text-glow-white relative flex min-w-16 items-center justify-end gap-1 font-display text-3xl font-extrabold tabular-nums" aria-label={t("duel.rightLabel")}>
+            <IconCheck size={26} className="text-sea" />
+            <Rolling value={points.filter((p) => p > 0).length} />
             {floatPts ? (
               <span key={floatPts.key} aria-hidden className="anim-float-up absolute -top-3 right-0 font-display text-base font-extrabold text-clay">
-                +{floatPts.n}
+                +1
               </span>
             ) : null}
           </span>
         </div>
         <LambRing
-          lowEnd={lowEnd}
           balance={setup.mode === "bot" ? balance(points, (setup.botPts ?? []).slice(0, points.length)) : ghostBalance(points)}
           hiddenOpponent={setup.mode !== "bot"}
           size={78}
+          lowEnd={lowEnd}
           pulse={points.length}
           lastRight={
             !points.length
@@ -684,7 +698,7 @@ function Duel() {
         <div className="h-7 text-center">
           {streak >= 3 ? (
             <span key={streak} className="anim-rise text-glow inline-block font-display text-xl font-extrabold text-clay">
-              🔥 {t("duel.streak", { n: streak })}
+              <IconFlame size={22} className="mr-1 inline-block align-[-4px]" /> {t("duel.streak", { n: streak })}
             </span>
           ) : null}
         </div>
