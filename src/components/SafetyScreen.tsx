@@ -1,7 +1,7 @@
 // Copyright (c) 2026 marsy91 (the WolofLink owner). All rights reserved. See LICENSE.
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { LogoMark } from "@/components/Logo";
 import type { UiLang } from "@/content/types";
 import { t, type UiKey } from "@/i18n";
@@ -13,9 +13,12 @@ import { readSafetyLang } from "@/lib/safety-lang";
  * store or a provider is what broke. "Back to lessons" reloads the app fresh, which clears any
  * broken state; saved progress is on the phone and isn't touched.
  */
+/** The language doesn't change while this screen is up, so there is nothing to listen to. */
+const noSubscribe = () => () => {};
+
 export function SafetyScreen({ kind, onRetry }: { kind: "crash" | "missing"; onRetry?: () => void }) {
-  const [lang, setLang] = useState<UiLang>("en");
-  useEffect(() => setLang(readSafetyLang()), []);
+  // Read once on the phone; English while prerendering, so the saved page matches.
+  const lang = useSyncExternalStore<UiLang>(noSubscribe, readSafetyLang, () => "en");
   const tr = (key: UiKey) => t(lang, key);
   const crash = kind === "crash";
 
@@ -39,6 +42,8 @@ export function SafetyScreen({ kind, onRetry }: { kind: "crash" | "missing"; onR
           ) : null}
           <button
             type="button"
+            // A full reload on purpose: it throws away whatever state broke. Progress is on the phone.
+            // eslint-disable-next-line @next/next/no-location-assign-relative-destination
             onClick={() => window.location.assign("/")}
             className={`inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-5 py-3 font-display text-base font-extrabold tracking-wide ${
               crash && onRetry ? "bg-transparent text-night underline-offset-4 hover:underline" : "bg-night text-white"
