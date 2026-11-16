@@ -905,4 +905,5 @@ export const es: Dictionary = {
   "night.kind.wolof": "¿Cómo se dice esto en wolof?",
   "night.kind.listen": "¿Qué escuchaste?",
 
+  "settings.reviewedBy": "Wolof revisado por {names}.",
 };

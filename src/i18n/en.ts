@@ -903,6 +903,7 @@ export const en = {
   "night.kind.meaning": "What does this mean?",
   "night.kind.wolof": "How do you say this in Wolof?",
   "night.kind.listen": "What did you hear?",
+  "settings.reviewedBy": "Wolof reviewed by {names}.",
 };
 
 

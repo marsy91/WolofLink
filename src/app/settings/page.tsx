@@ -13,6 +13,7 @@ import { IconBell } from "@/components/icons";
 import { useFriendPushToggle } from "@/components/PushInit";
 import { useAccount } from "@/lib/account";
 import { hasAiClips } from "@/lib/audio";
+import { REVIEWERS, reviewerNames } from "@/content/reviewers";
 import { remindersSupported, syncReminder, type ReminderResult } from "@/lib/native";
 import { GOALS, type GoalId, type Progress } from "@/lib/progress";
 import { useStore } from "@/lib/store";
@@ -244,6 +245,7 @@ export default function Settings() {
           <h2 className="mb-1 font-display text-lg font-extrabold text-night">{t("settings.about")}</h2>
           <p className="text-sm text-muted">{t("settings.aboutBody")}</p>
           {hasAiClips ? <p className="mt-2 text-sm text-muted">{t("settings.voice")}</p> : null}
+          {REVIEWERS.length ? <p className="mt-2 text-sm text-muted">{t("settings.reviewedBy", { names: reviewerNames() })}</p> : null}
           {voiceCredits.length ? (
             <p className="mt-2 text-sm text-muted">{t("settings.voices", { names: voiceCredits.map(([n]) => n).join(", ") })}</p>
           ) : null}
