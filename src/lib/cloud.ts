@@ -10,7 +10,8 @@
  */
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Progress } from "./progress";
-import { ACCOUNTS_ENABLED } from "./features";
+import { ACCOUNTS_ENABLED, REVIEW_EMAIL } from "./features";
+import { isReviewEmail } from "./platform-rules";
 import { authStorage } from "./secure-storage";
 
 export interface CloudUser {
@@ -150,6 +151,8 @@ function supabaseBackend(url: string, anonKey: string): CloudBackend {
     },
     async sendCode(email) {
       if (!EMAIL_RE.test(email)) throw new CloudError("invalid_email", "invalid email");
+      // The App Review account has a fixed password and no inbox the reviewer can read: send nothing.
+      if (isReviewEmail(email, REVIEW_EMAIL)) return;
       try {
         const { error } = await (await sb()).auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
         if (error) throw error;
@@ -159,7 +162,11 @@ function supabaseBackend(url: string, anonKey: string): CloudBackend {
     },
     async verifyCode(email, code) {
       try {
-        const { data, error } = await (await sb()).auth.verifyOtp({ email, token: code.trim(), type: "email" });
+        const client = await sb();
+        // App Review account: the "code" box holds its fixed password (see platform-rules.ts).
+        const { data, error } = isReviewEmail(email, REVIEW_EMAIL)
+          ? await client.auth.signInWithPassword({ email: email.trim(), password: code.trim() })
+          : await client.auth.verifyOtp({ email, token: code.trim(), type: "email" });
         if (error) throw error;
         const user = userOf(data.user);
         if (!user) throw new CloudError("invalid_code", "no user");

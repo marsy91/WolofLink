@@ -15,6 +15,8 @@
  * - NEXT_PUBLIC_CIRCLE=on    shows the Circle tab (a demo ranking with sample
  *                            learners until real circles exist).
  */
+import { reviewEmailFrom } from "./platform-rules";
+
 export const PREMIUM_ENABLED = process.env.NEXT_PUBLIC_PREMIUM === "on";
 
 export const SUPPORTER_ENABLED = process.env.NEXT_PUBLIC_SUPPORTER === "on" && !PREMIUM_ENABLED;
@@ -35,6 +37,20 @@ export const CIRCLE_ENABLED = process.env.NEXT_PUBLIC_CIRCLE === "on";
  * Android would crash on registration. Off by default.
  */
 export const PUSH_ENABLED = process.env.NEXT_PUBLIC_PUSH === "on";
+
+/**
+ * Push on iPhone too. Needs the Firebase iOS setup, an APNs key and the Push Notifications
+ * capability first (docs/store/ios-review.md), so it is off by default even when
+ * NEXT_PUBLIC_PUSH is on. Set NEXT_PUBLIC_PUSH_IOS=on once that is done.
+ */
+export const PUSH_IOS_ENABLED = process.env.NEXT_PUBLIC_PUSH_IOS === "on";
+
+/**
+ * App Review login: the one account that signs in with a fixed 8-digit password (typed in the
+ * code box) instead of the emailed code, so Apple's and Google's reviewers can get in.
+ * Empty (default): off. See docs/store/ios-review.md.
+ */
+export const REVIEW_EMAIL = reviewEmailFrom(process.env.NEXT_PUBLIC_REVIEW_EMAIL);
 
 /**
  * Wolof speakers learning English or French: the course in reverse with a Wolof interface
