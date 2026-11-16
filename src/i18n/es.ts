@@ -906,4 +906,11 @@ export const es: Dictionary = {
   "night.kind.listen": "¿Qué escuchaste?",
 
   "settings.reviewedBy": "Wolof revisado por {names}.",
+  // Crash and "page not found" screens (components/SafetyScreen.tsx)
+  "oops.crashTitle": "Algo salió mal",
+  "oops.crashBody": "Lo sentimos, esta pantalla dejó de funcionar. Tu progreso está guardado en tu teléfono, así que no se pierde nada.",
+  "oops.missingTitle": "Página no encontrada",
+  "oops.missingBody": "Esta página no existe o se ha movido. Tu progreso está a salvo.",
+  "oops.retry": "Intentar de nuevo",
+  "oops.home": "Volver a las lecciones",
 };

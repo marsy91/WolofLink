@@ -904,6 +904,13 @@ export const en = {
   "night.kind.wolof": "How do you say this in Wolof?",
   "night.kind.listen": "What did you hear?",
   "settings.reviewedBy": "Wolof reviewed by {names}.",
+  // Crash and "page not found" screens (components/SafetyScreen.tsx)
+  "oops.crashTitle": "Something went wrong",
+  "oops.crashBody": "Sorry, this screen stopped working. Your progress is saved on your phone, so nothing is lost.",
+  "oops.missingTitle": "Page not found",
+  "oops.missingBody": "This page doesn't exist, or it has moved. Your progress is safe.",
+  "oops.retry": "Try again",
+  "oops.home": "Back to lessons",
 };
 
 
