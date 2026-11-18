@@ -28,7 +28,7 @@ export default function CertificatePage() {
     return (
       <main className="grid min-h-dvh place-items-center p-6 text-center">
         <div>
-          <p className="mb-3 text-muted">{t("cert.notYet")}</p>
+          <h1 className="mb-3 text-muted">{t("cert.notYet")}</h1>
           <Link href="/progress/" className="font-bold text-clay underline">
             {t("insights.title")}
           </Link>

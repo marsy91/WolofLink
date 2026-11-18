@@ -33,7 +33,7 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
         onClick={() => onChange(!checked)}
         className={`relative h-8 w-14 shrink-0 rounded-full transition ${checked ? "bg-sea" : "bg-sand-3"}`}
       >
-        <span className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-all ${checked ? "left-7" : "left-1"}`} />
+        <span className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-[left] ${checked ? "left-7" : "left-1"}`} />
       </button>
     </label>
   );
@@ -80,7 +80,7 @@ export default function Settings() {
       <div className="space-y-5">
         <label className="block">
           <span className="mb-1 block text-sm font-bold text-muted">{t("settings.name")}</span>
-          <input
+          <input autoComplete="given-name"
             className={field}
             value={profile.name}
             maxLength={30}

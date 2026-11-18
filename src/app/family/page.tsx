@@ -68,7 +68,7 @@ export default function FamilyPage() {
   );
 
   return (
-    <div className="min-h-dvh bg-bg px-4 pb-10 pt-safe-top">
+    <main className="min-h-dvh bg-bg px-4 pb-10 pt-safe-top">
       {/* Header */}
       <div className="mb-6 flex items-center gap-3 pt-4">
         <Link href="/profile/" aria-label={t("common.back")} className="grid h-10 w-10 place-items-center rounded-xl border border-sand-3 bg-white text-night">
@@ -90,7 +90,7 @@ export default function FamilyPage() {
             <div
               key={p.id}
               aria-current={isActive ? "true" : undefined}
-              className={`flex items-center gap-3 rounded-2xl border p-4 ${isActive ? "border-clay bg-clay/5" : "border-sand-3 bg-white"}`}
+              className={`flex flex-wrap items-center gap-3 rounded-2xl border p-4 ${isActive ? "border-clay bg-clay/5" : "border-sand-3 bg-white"}`}
             >
               {/* Avatar circle */}
               <div
@@ -100,8 +100,8 @@ export default function FamilyPage() {
               >
                 {p.name.slice(0, 1).toUpperCase()}
               </div>
-              <div className="min-w-0 flex-1">
-                <p className="font-display font-extrabold text-night">
+              <div className="min-w-0 flex-1 basis-32">
+                <p className="font-display font-extrabold break-words text-night">
                   {p.name}
                 </p>
                 <p className="text-sm text-muted">
@@ -113,26 +113,28 @@ export default function FamilyPage() {
                   ) : null}
                 </p>
               </div>
-              {/* Switch / remove */}
+              {/* Switch / remove: they drop to their own row when the card is too narrow */}
               {!isActive && (
+              <div className="ml-auto flex max-w-full min-w-0 items-center gap-2">
                 <GrownUpGate skip={!switchNeedsGrownUp(profile, p) || grownUpOpen()} onPass={() => doSwitch(p.id)}>
                   {(ask) => (
                     <button
-                      className="shrink-0 rounded-xl bg-clay/10 px-3 py-2 text-sm font-bold text-clay"
+                      className="max-w-[9rem] min-w-0 truncate rounded-xl bg-clay/10 px-3 py-2 text-sm font-bold text-clay"
                       onClick={ask}
                     >
                       {t("family.switchTo", { name: p.name })}
                     </button>
                   )}
                 </GrownUpGate>
-              )}
-              {!isActive && iAmMain && !isMain(p) && (
-                <button
-                  className="ml-1 shrink-0 rounded-xl border border-red-200 px-3 py-2 text-sm font-bold text-red-500"
-                  onClick={() => setConfirmRemove(p.id)}
-                >
-                  {t("family.remove")}
-                </button>
+                {iAmMain && !isMain(p) && (
+                  <button
+                    className="shrink-0 rounded-xl border border-red-200 px-3 py-2 text-sm font-bold text-red-500"
+                    onClick={() => setConfirmRemove(p.id)}
+                  >
+                    {t("family.remove")}
+                  </button>
+                )}
+              </div>
               )}
             </div>
           );
@@ -156,7 +158,7 @@ export default function FamilyPage() {
           <label htmlFor={nameId} className="mb-1 block text-sm font-semibold text-night">
             {t("family.namePlaceholder")}
           </label>
-          <input
+          <input autoComplete="off"
             id={nameId}
             type="text"
             className="mb-3 w-full rounded-xl border border-sand-3 bg-bg px-4 py-3 text-night focus:outline-none focus:ring-2 focus:ring-clay"
@@ -249,6 +251,6 @@ export default function FamilyPage() {
       {iAmChild && (
         <p className="mt-6 text-center text-sm text-muted">{t("family.mainOnly")}</p>
       )}
-    </div>
+    </main>
   );
 }

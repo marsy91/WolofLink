@@ -151,7 +151,7 @@ export function OrgSection({ defaultName }: { defaultName: string }) {
       </label>
       <label className="block">
         <span className="mb-1 block text-sm font-bold text-muted">{t("org.name")}</span>
-        <input value={name} disabled={busy} maxLength={60} onChange={(e) => setName(e.target.value)} className={field} />
+        <input autoComplete="nickname" value={name} disabled={busy} maxLength={60} onChange={(e) => setName(e.target.value)} className={field} />
       </label>
       <label className="flex items-start gap-3 text-sm text-muted">
         <input

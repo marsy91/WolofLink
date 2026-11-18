@@ -36,8 +36,8 @@ export default function Profile() {
         <span className="grid h-16 w-16 place-items-center rounded-2xl bg-night text-sun">
           <IconProfile size={34} />
         </span>
-        <div className="flex-1">
-          <h1 className="font-display text-2xl font-extrabold text-night">
+        <div className="min-w-0 flex-1">
+          <h1 className="font-display text-2xl font-extrabold break-words text-night">
             {profile?.name || t("profile.guest")}
             {SUPPORTER_ENABLED && premium ? (
               <span className="ml-2 inline-block rounded-full bg-sun-soft px-2 py-0.5 align-middle text-xs font-extrabold text-night">

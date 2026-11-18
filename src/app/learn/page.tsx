@@ -88,7 +88,7 @@ export default function Learn() {
         </button>
       ) : null}
       <section className="mb-6 rounded-3xl bg-white p-4 shadow-card">
-        <h1 className="mb-1 font-display text-xl font-extrabold text-night">
+        <h1 className="mb-1 font-display text-xl font-extrabold break-words text-night">
           {name ? `Salaam aleekum, ${name}!` : "Salaam aleekum!"}
         </h1>
         <p className="mb-3 text-sm text-muted">

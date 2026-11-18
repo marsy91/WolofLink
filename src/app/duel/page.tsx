@@ -261,7 +261,7 @@ function Duel() {
     return (
       <ArenaScene lowEnd>
         <main className="mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 p-6 text-center">
-          <p className="text-lg text-night/85">{t("duel.missing")}</p>
+          <h1 className="text-lg text-night/85">{t("duel.missing")}</h1>
           <Link href="/friends/" className="font-bold text-clay underline">
             {t("duel.back")}
           </Link>

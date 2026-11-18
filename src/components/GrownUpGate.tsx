@@ -67,7 +67,7 @@ export function GrownUpGate({ skip, onPass, children }: Props) {
           <label htmlFor={id} className="mb-1 block text-sm font-semibold text-night">
             {t("grown.answer")}
           </label>
-          <input
+          <input autoComplete="off"
             id={id}
             type="number"
             inputMode="numeric"

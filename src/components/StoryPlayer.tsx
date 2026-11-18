@@ -123,7 +123,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
     return (
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 px-6 text-center">
         <IconGem size={48} className="text-dusk" />
-        <p className="text-lg">{t("premium.lessonLocked")}</p>
+        <h1 className="text-lg">{t("premium.lessonLocked")}</h1>
         <Button onClick={() => router.replace("/premium/")}>{t("premium.see")}</Button>
       </main>
     );
@@ -133,7 +133,7 @@ export function StoryPlayer({ storyId }: { storyId: string }) {
     return (
       <main className="safe-top safe-bottom mx-auto flex min-h-dvh max-w-lg flex-col items-center justify-center gap-4 px-6 text-center">
         <IconBook size={48} className="text-dusk" />
-        <p className="text-lg">{t("story.locked")}</p>
+        <h1 className="text-lg">{t("story.locked")}</h1>
         <Button onClick={exit}>{t("fail.home")}</Button>
       </main>
     );

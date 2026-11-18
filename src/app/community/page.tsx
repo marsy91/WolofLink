@@ -40,7 +40,7 @@ function Switch({ label, checked, disabled, onChange }: { label: string; checked
         onClick={() => onChange(!checked)}
         className={`relative h-8 w-14 shrink-0 rounded-full transition disabled:opacity-40 ${checked ? "bg-sea" : "bg-sand-3"}`}
       >
-        <span className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-all ${checked ? "left-7" : "left-1"}`} />
+        <span className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-[left] ${checked ? "left-7" : "left-1"}`} />
       </button>
     </label>
   );
@@ -388,7 +388,7 @@ function HandleRow({
     <div className="mb-3 border-b border-sand-3/50 pb-3 last:border-0">
       <label className="block">
         <span className="mb-1 block text-sm font-bold text-muted">{label}</span>
-        <input
+        <input autoComplete="off"
           className={field}
           value={handle}
           maxLength={31}

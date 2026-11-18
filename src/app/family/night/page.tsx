@@ -177,7 +177,7 @@ export default function FamilyNightPage() {
 
   if (phase.kind === "setup") {
     return (
-      <div className="min-h-dvh bg-bg px-4 pb-10 pt-safe-top">
+      <main className="min-h-dvh bg-bg px-4 pb-10 pt-safe-top">
         <div className="mb-6 flex items-center gap-3 pt-4">
           <Link href="/family/" aria-label={t("common.back")} className="grid h-10 w-10 place-items-center rounded-xl border border-sand-3 bg-white text-night">
             <IconArrowLeft />
@@ -227,30 +227,30 @@ export default function FamilyNightPage() {
         >
           {t("night.start")}
         </button>
-      </div>
+      </main>
     );
   }
 
   if (phase.kind === "pass") {
     const p = profileById(phase.to);
     return (
-      <div className="splash flex min-h-dvh flex-col items-center justify-center bg-night px-6 pb-10 pt-safe-top">
+      <main className="splash flex min-h-dvh flex-col items-center justify-center bg-night px-6 pb-10 pt-safe-top">
         <div
           className="mb-6 grid h-24 w-24 place-items-center rounded-full text-4xl font-extrabold text-white"
           style={{ background: p ? avatarOf(p) : "#c2502f" }}
         >
           {p?.name.slice(0, 1).toUpperCase() ?? "?"}
         </div>
-        <h2 className="mb-10 text-center font-display text-2xl font-extrabold text-white">
+        <h1 className="mb-10 text-center font-display text-2xl font-extrabold text-white">
           {t("night.passes", { name: p?.name ?? "" })}
-        </h2>
+        </h1>
         <button
           className="w-full max-w-xs rounded-2xl bg-clay py-5 font-display text-xl font-extrabold text-white"
           onClick={phase.onContinue}
         >
           {t("common.continue")}
         </button>
-      </div>
+      </main>
     );
   }
 
@@ -270,7 +270,7 @@ export default function FamilyNightPage() {
     const roundNum = tournament.rounds.length;
 
     return (
-      <div className="flex min-h-dvh flex-col bg-bg pb-safe-bottom pt-safe-top">
+      <main className="flex min-h-dvh flex-col bg-bg pb-safe-bottom pt-safe-top">
         {/* Round header */}
         <div className="flex items-center gap-2 px-4 pt-4 text-sm font-bold text-muted">
           <span>
@@ -363,7 +363,7 @@ export default function FamilyNightPage() {
             </p>
           )}
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -372,7 +372,7 @@ export default function FamilyNightPage() {
     const wp = profileById(winner);
     const howKey = how === "thrown" ? "night.thrown" : how === "points" ? "night.pointsWin" : "night.crowdWin";
     return (
-      <div className="flex min-h-dvh flex-col items-center justify-center bg-bg px-6 pb-10 pt-safe-top">
+      <main className="flex min-h-dvh flex-col items-center justify-center bg-bg px-6 pb-10 pt-safe-top">
         <div
           className="mb-4 grid h-24 w-24 place-items-center rounded-full text-4xl font-extrabold text-white"
           style={{ background: wp ? avatarOf(wp) : "#c2502f" }}
@@ -388,7 +388,7 @@ export default function FamilyNightPage() {
         >
           {t("common.continue")}
         </button>
-      </div>
+      </main>
     );
   }
 
@@ -396,7 +396,7 @@ export default function FamilyNightPage() {
     const { id } = phase;
     const cp = profileById(id);
     return (
-      <div className="splash relative flex min-h-dvh flex-col items-center justify-center bg-night px-6 pb-10 pt-safe-top">
+      <main className="splash relative flex min-h-dvh flex-col items-center justify-center bg-night px-6 pb-10 pt-safe-top">
         <Confetti pieces={48} />
         <div
           className="mb-4 grid h-28 w-28 place-items-center rounded-full border-4 border-sun text-5xl font-extrabold text-white shadow-xl"
@@ -422,7 +422,7 @@ export default function FamilyNightPage() {
             {t("common.back")}
           </Link>
         </div>
-      </div>
+      </main>
     );
   }
 

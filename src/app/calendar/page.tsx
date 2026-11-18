@@ -53,7 +53,7 @@ export default function CalendarPage() {
               onClick={() => void setRemind(!remindOn)}
               className={`relative h-8 w-14 shrink-0 rounded-full transition ${remindOn ? "bg-sea" : "bg-sand-3"}`}
             >
-              <span className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-all ${remindOn ? "left-7" : "left-1"}`} />
+              <span className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-[left] ${remindOn ? "left-7" : "left-1"}`} />
             </button>
           </label>
           {remindState === "denied" ? <p className="mt-2 text-sm font-bold text-clay">{t("remind.denied")}</p> : null}

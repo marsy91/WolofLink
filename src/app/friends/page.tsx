@@ -139,7 +139,7 @@ export default function FriendsPage() {
           <p className="mb-3 text-ink">{t("friends.intro")}</p>
           <label className="mb-3 block">
             <span className="mb-1 block text-sm font-bold text-muted">{t("friends.nameLabel")}</span>
-            <input className={field} maxLength={30} value={name} onChange={(e) => setName(e.target.value)} />
+            <input autoComplete="nickname" className={field} maxLength={30} value={name} onChange={(e) => setName(e.target.value)} />
           </label>
           {message ? (
             <p role="alert" className="mb-3 text-sm font-bold text-berry">
@@ -238,7 +238,7 @@ export default function FriendsPage() {
           {t("friends.addLabel")}
         </label>
         <div className="flex gap-2">
-          <input
+          <input autoComplete="off"
             id="friend-code"
             className={`${field} tracking-widest uppercase`}
             placeholder="ABCD 2345"
