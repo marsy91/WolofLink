@@ -44,7 +44,7 @@ export default function Practice() {
           <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-sun">
             <IconLoop size={28} />
           </span>
-          <p className="font-display text-xl font-extrabold">
+          <p className="review-title font-display text-xl font-extrabold">
             {canReview ? t("practice.due", { n: reviewSize }) : t("practice.caughtUp")}
           </p>
         </div>
