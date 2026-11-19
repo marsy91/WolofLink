@@ -112,6 +112,7 @@ export const es: Dictionary = {
   "practice.body": "Repasa las palabras que conoces. Cada una vuelve justo antes de que la olvides.",
   "practice.due": "{n} para repasar",
   "practice.none": "No hay nada pendiente. Termina una lección para llenar tu mazo de repaso.",
+  "practice.caughtUp": "Todo al día",
   "practice.start": "Empezar repaso",
   "practice.mistakes": "Errores recientes",
   "practice.refill": "Terminar un repaso llena una gota.",

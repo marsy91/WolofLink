@@ -45,7 +45,7 @@ export default function Practice() {
             <IconLoop size={28} />
           </span>
           <p className="font-display text-xl font-extrabold">
-            {canReview ? t("practice.due", { n: reviewSize }) : t("practice.title")}
+            {canReview ? t("practice.due", { n: reviewSize }) : t("practice.caughtUp")}
           </p>
         </div>
         <p className="mb-4 text-sand/85">{canReview ? t("practice.body") : t("practice.none")}</p>

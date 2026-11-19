@@ -110,6 +110,7 @@ export const en = {
   "practice.body": "Review the words you've met. Each one comes back just before you'd forget it.",
   "practice.due": "{n} ready to review",
   "practice.none": "Nothing is due right now. Finish a lesson to fill your review deck.",
+  "practice.caughtUp": "All caught up",
   "practice.start": "Start review",
   "practice.mistakes": "Recent mistakes",
   "practice.refill": "Finishing a review refills one drop.",

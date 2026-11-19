@@ -112,6 +112,7 @@ export const it: Dictionary = {
   "practice.body": "Ripassa le parole che hai incontrato. Ognuna torna poco prima che tu la dimentichi.",
   "practice.due": "{n} da ripassare",
   "practice.none": "Nulla da ripassare ora. Completa una lezione per riempire il tuo mazzo.",
+  "practice.caughtUp": "Tutto in pari",
   "practice.start": "Inizia il ripasso",
   "practice.mistakes": "Errori recenti",
   "practice.refill": "Completare un ripasso riempie una goccia.",

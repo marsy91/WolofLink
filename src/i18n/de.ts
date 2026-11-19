@@ -114,6 +114,7 @@ export const de: Dictionary = {
   "practice.body": "Wiederhole die Wörter, die du kennst. Jedes kommt zurück, kurz bevor du es vergessen würdest.",
   "practice.due": "{n} zum Wiederholen bereit",
   "practice.none": "Gerade ist nichts fällig. Schließe eine Lektion ab, um deinen Stapel zu füllen.",
+  "practice.caughtUp": "Alles erledigt",
   "practice.start": "Wiederholung starten",
   "practice.mistakes": "Letzte Fehler",
   "practice.refill": "Eine abgeschlossene Wiederholung füllt einen Tropfen auf.",

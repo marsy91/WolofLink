@@ -655,6 +655,8 @@ dialog::backdrop {
 :root[data-mode="dark"] .bg-white\/90.text-night { color: #1d2550; }
 /* Icons on the (now light) night tiles. */
 :root[data-mode="dark"] .bg-night.text-sun { color: #94600f; }
+/* Same for an icon in a tile inside such a card (Practice, Profile, Premium, lesson banners). */
+:root[data-mode="dark"] .bg-night .bg-white\/10.text-sun { color: #94600f; }
 :root[data-mode="dark"] .weave { filter: brightness(0.92); }
 /* The welcome splash stays dark navy in every mode and theme, so the navy logo tile blends in
    and the text colours always contrast (a light theme's own "night" can be a plum or green). */

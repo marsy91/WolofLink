@@ -115,6 +115,7 @@ export const fr: Dictionary = {
   "practice.body": "Revoyez les mots rencontrés. Chacun revient juste avant que vous ne l'oubliiez.",
   "practice.due": "{n} à réviser",
   "practice.none": "Rien à réviser pour l'instant. Terminez une leçon pour remplir votre paquet.",
+  "practice.caughtUp": "Tout est à jour",
   "practice.start": "Commencer la révision",
   "practice.mistakes": "Erreurs récentes",
   "practice.refill": "Terminer une révision remplit une goutte.",
